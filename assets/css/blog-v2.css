@@ -39,7 +39,7 @@
     var(--blog-gold);
 
   font-size:
-    8px;
+    11px;
 
   font-weight:
     700;
@@ -85,7 +85,7 @@
     #fff;
 
   font-size:
-    clamp(30px, 3.8vw, 44px);
+    clamp(33px, 3.8vw, 47px);
 
   font-weight:
     600;
@@ -119,7 +119,7 @@
     var(--blog-muted);
 
   font-size:
-    11px;
+    14px;
 
   line-height:
     1.8;
@@ -169,7 +169,7 @@
     var(--blog-gold);
 
   font-size:
-    22px;
+    25px;
 
 }
 
@@ -180,7 +180,7 @@
     #77787b;
 
   font-size:
-    7px;
+    10px;
 
   font-weight:
     700;
@@ -234,7 +234,7 @@
     #68696c;
 
   font-size:
-    7px;
+    10px;
 
   font-weight:
     700;
@@ -287,7 +287,7 @@
     #85868a;
 
   font-size:
-    8px;
+    11px;
 
   cursor:
     pointer;
@@ -307,7 +307,7 @@
     .45;
 
   font-size:
-    6px;
+    9px;
 
 }
 
@@ -510,7 +510,7 @@
     #6d6e72;
 
   font-size:
-    6px;
+    9px;
 
   text-align:
     center;
@@ -634,7 +634,7 @@
     var(--blog-gold);
 
   font-size:
-    6px;
+    9px;
 
   font-weight:
     700;
@@ -651,7 +651,7 @@
     #fff;
 
   font-size:
-    9px;
+    12px;
 
 }
 
@@ -691,7 +691,7 @@
     #202125;
 
   font-size:
-    6px;
+    9px;
 
   font-weight:
     700;
@@ -760,7 +760,7 @@
     var(--blog-gold);
 
   font-size:
-    7px;
+    10px;
 
   font-weight:
     700;
@@ -777,7 +777,7 @@
     #717276;
 
   font-size:
-    6px;
+    9px;
 
   letter-spacing:
     .7px;
@@ -806,7 +806,7 @@
     var(--blog-gold);
 
   font-size:
-    7px;
+    10px;
 
   font-weight:
     700;
@@ -834,7 +834,7 @@
     #fff;
 
   font-size:
-    clamp(27px,3.4vw,39px);
+    clamp(20px,3.4vw,42px);
 
   line-height:
     1.15;
@@ -862,7 +862,7 @@
     var(--blog-muted);
 
   font-size:
-    10px;
+    13px;
 
   line-height:
     1.8;
@@ -912,7 +912,7 @@
     #696a6e;
 
   font-size:
-    6px;
+    9px;
 
   font-weight:
     700;
@@ -929,7 +929,7 @@
     #c4c5c7;
 
   font-size:
-    8px;
+    11px;
 
   font-weight:
     500;
@@ -967,7 +967,7 @@
     #222 !important;
 
   font-size:
-    8px;
+    11px;
 
   font-weight:
     600;
@@ -1032,7 +1032,7 @@
     #fff;
 
   font-size:
-    26px;
+    29px;
 
 }
 
@@ -1054,7 +1054,7 @@
     #747579;
 
   font-size:
-    7px;
+    10px;
 
 }
 
@@ -1256,7 +1256,7 @@
     var(--blog-gold);
 
   font-size:
-    7px;
+    10px;
 
   font-weight:
     700;
@@ -1366,7 +1366,7 @@
     var(--blog-gold);
 
   font-size:
-    6px;
+    9px;
 
   font-weight:
     700;
@@ -1386,7 +1386,7 @@
     #fff;
 
   font-size:
-    16px;
+    19px;
 
   line-height:
     1.4;
@@ -1403,7 +1403,7 @@
     var(--blog-muted);
 
   font-size:
-    9px;
+    12px;
 
   line-height:
     1.7;
@@ -1434,7 +1434,7 @@
     #737478;
 
   font-size:
-    6px;
+    9px;
 
   letter-spacing:
     .7px;
@@ -1470,7 +1470,7 @@
     0 0 auto;
 
   font-size:
-    7px;
+    10px;
 
   font-weight:
     700;
@@ -1668,7 +1668,7 @@
     #c7c8ca;
 
   font-size:
-    7px;
+    10px;
 
 }
 
@@ -1699,7 +1699,7 @@
     var(--blog-gold);
 
   font-size:
-    6px;
+    9px;
 
   font-weight:
     700;
@@ -1895,7 +1895,7 @@
     #aeafb2;
 
   font-size:
-    8px;
+    11px;
 
   font-style:
     italic;
@@ -1949,7 +1949,7 @@
     #fff;
 
   font-size:
-    28px;
+    31px;
 
   line-height:
     1.3;
@@ -2037,7 +2037,7 @@
     rgba(235,176,32,.35);
 
   font-size:
-    18px;
+    21px;
 
   font-weight:
     700;
@@ -2057,7 +2057,7 @@
     var(--blog-gold);
 
   font-size:
-    6px;
+    9px;
 
   font-weight:
     700;
@@ -2074,7 +2074,7 @@
     #c9cacc;
 
   font-size:
-    10px;
+    13px;
 
   font-weight:
     500;
@@ -2088,7 +2088,7 @@
     #66676a;
 
   font-size:
-    6px;
+    9px;
 
   letter-spacing:
     .7px;
@@ -2145,7 +2145,7 @@
     #fff;
 
   font-size:
-    27px;
+    30px;
 
   line-height:
     1.3;
@@ -2167,7 +2167,7 @@
     var(--blog-muted);
 
   font-size:
-    9px;
+    12px;
 
   line-height:
     1.7;
@@ -2243,7 +2243,7 @@
     rgba(235,176,32,.22);
 
   font-size:
-    23px;
+    26px;
 
   font-weight:
     700;
@@ -2257,7 +2257,7 @@
     var(--blog-gold);
 
   font-size:
-    6px;
+    9px;
 
   font-weight:
     700;
@@ -2277,7 +2277,7 @@
     #c5c6c8;
 
   font-size:
-    10px;
+    13px;
 
   line-height:
     1.55;
@@ -2307,7 +2307,7 @@
     #717276;
 
   font-size:
-    5px;
+    8px;
 
   font-weight:
     700;
@@ -2393,7 +2393,7 @@
     var(--blog-gold);
 
   font-size:
-    21px;
+    24px;
 
 }
 
@@ -2410,7 +2410,7 @@
     #fff;
 
   font-size:
-    22px;
+    23px;
 
   line-height:
     1.35;
@@ -2438,7 +2438,7 @@
     var(--blog-muted);
 
   font-size:
-    9px;
+    12px;
 
   line-height:
     1.7;
@@ -2474,7 +2474,7 @@
     #222 !important;
 
   font-size:
-    8px;
+    12px;
 
   font-weight:
     600;
@@ -2655,7 +2655,7 @@
   .blog-v2-intro h2 {
 
     font-size:
-      31px;
+      34px;
 
   }
 
@@ -2840,7 +2840,7 @@
 
 #blog .blog-v2-intro-side > p {
 
-  font-size: 13px;
+  font-size: 16px;
 
   line-height: 1.8;
 
@@ -2851,7 +2851,7 @@
 
 #blog .blog-v2-eyebrow {
 
-  font-size: 9px;
+  font-size: 12px;
 
 }
 
@@ -2860,21 +2860,21 @@
 
 #blog .blog-v2-filter-wrap > span {
 
-  font-size: 9px;
+  font-size: 12px;
 
 }
 
 
 #blog .blog-filter-btn {
 
-  font-size: 10px;
+  font-size: 13px;
 
 }
 
 
 #blog .blog-filter-btn small {
 
-  font-size: 8px;
+  font-size: 11px;
 
 }
 
@@ -2883,7 +2883,7 @@
 
 #blog .blog-v2-stats span {
 
-  font-size: 9px;
+  font-size: 12px;
 
 }
 
@@ -2893,21 +2893,21 @@
 #blog .blog-v2-index > span,
 #blog .blog-category-line {
 
-  font-size: 9px;
+  font-size: 12px;
 
 }
 
 
 #blog .blog-v2-index small {
 
-  font-size: 8px;
+  font-size: 11px;
 
 }
 
 
 #blog .blog-featured-content > p {
 
-  font-size: 13px;
+  font-size: 16px;
 
   line-height: 1.8;
 
@@ -2916,21 +2916,21 @@
 
 #blog .blog-featured-meta span {
 
-  font-size: 8px;
+  font-size: 11px;
 
 }
 
 
 #blog .blog-featured-meta strong {
 
-  font-size: 10px;
+  font-size: 13px;
 
 }
 
 
 #blog .blog-v2-read-btn {
 
-  font-size: 10px;
+  font-size: 13px;
 
 }
 
@@ -2939,14 +2939,14 @@
 
 #blog .blog-card-category {
 
-  font-size: 8px;
+  font-size: 11px;
 
 }
 
 
 #blog .blog-v2-card-content > p {
 
-  font-size: 11px;
+  font-size: 14px;
 
   line-height: 1.75;
 
@@ -2955,14 +2955,14 @@
 
 #blog .blog-card-meta {
 
-  font-size: 8px;
+  font-size: 11px;
 
 }
 
 
 #blog .blog-card-read span {
 
-  font-size: 9px;
+  font-size: 12px;
 
 }
 
@@ -2971,21 +2971,21 @@
 
 #blog .blog-interest-item small {
 
-  font-size: 8px;
+  font-size: 11px;
 
 }
 
 
 #blog .blog-interest-item strong {
 
-  font-size: 12px;
+  font-size: 15px;
 
 }
 
 
 #blog .blog-interest-count {
 
-  font-size: 8px;
+  font-size: 11px;
 
 }
 
@@ -2994,28 +2994,28 @@
 
 #blog .blog-thinking-intro p {
 
-  font-size: 11px;
+  font-size: 14px;
 
 }
 
 
 #blog .blog-thinking-grid small {
 
-  font-size: 8px;
+  font-size: 11px;
 
 }
 
 
 #blog .blog-thinking-grid h4 {
 
-  font-size: 12px;
+  font-size: 15px;
 
 }
 
 
 #blog .thinking-status {
 
-  font-size: 7px;
+  font-size: 10px;
 
 }
 
@@ -3024,14 +3024,14 @@
 
 #blog .blog-v2-final p {
 
-  font-size: 11px;
+  font-size: 14px;
 
 }
 
 
 #blog .blog-v2-final-btn {
 
-  font-size: 10px;
+  font-size: 13px;
 
 }
 
@@ -3049,7 +3049,7 @@ and
   .blog-v2-intro-side > p {
 
     font-size:
-      14px;
+      17px;
 
   }
 
@@ -3058,7 +3058,7 @@ and
   .blog-v2-eyebrow {
 
     font-size:
-      10px;
+      13px;
 
   }
 
@@ -3067,7 +3067,7 @@ and
   .blog-filter-btn {
 
     font-size:
-      11px;
+      13px;
 
   }
 
@@ -3076,7 +3076,7 @@ and
   .blog-featured-content > p {
 
     font-size:
-      13px;
+      16px;
 
   }
 
@@ -3085,7 +3085,7 @@ and
   .blog-v2-card-content > p {
 
     font-size:
-      12px;
+      15px;
 
   }
 
@@ -3097,7 +3097,7 @@ and
   .blog-card-meta {
 
     font-size:
-      10px;
+      13px;
 
   }
 
