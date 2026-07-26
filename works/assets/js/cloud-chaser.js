@@ -33,7 +33,7 @@
 
     // Add soft animated clouds to hero and breadcrumb areas without changing images.
     if (!reducedMotion) {
-      document.querySelectorAll(".hero-layout1, .breadcumb-wrapper").forEach((host, hostIndex) => {
+      document.querySelectorAll(".hero-layout1, .breadcumb-wrapper, .vs-breadcrumb").forEach((host, hostIndex) => {
         if (host.querySelector(":scope > .cc-cloud-layer")) return;
 
         const layer = document.createElement("div");
@@ -69,7 +69,7 @@
     }
 
     // Hero copy enters as one centered group.
-    document.querySelectorAll(".hero-layout1 .hero-content, .breadcumb-content").forEach((element) => {
+    document.querySelectorAll(".hero-layout1 .hero-content, .breadcumb-content, .vs-breadcrumb .breadcrumb-content").forEach((element) => {
       element.classList.add("cc-hero-enter");
     });
 
