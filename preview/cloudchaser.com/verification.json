@@ -1,0 +1,21 @@
+{
+  "html_files": [
+    "404.html",
+    "about.html",
+    "activities.html",
+    "blog-details.html",
+    "blog.html",
+    "contact.html",
+    "destination-details.html",
+    "destinations.html",
+    "faq.html",
+    "index-2.html",
+    "index.html",
+    "trips.html"
+  ],
+  "poppins_on_all_pages": true,
+  "cloud_chaser_js_on_all_pages": true,
+  "gallery_links": 10,
+  "preloaders": 12,
+  "notes": []
+}
