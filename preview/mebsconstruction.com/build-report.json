@@ -1,0 +1,114 @@
+[
+  {
+    "file": "404.html",
+    "title": "Page Not Found | MeBS Construction",
+    "footer": true,
+    "mebs_css": true,
+    "mebs_js": true
+  },
+  {
+    "file": "about.html",
+    "title": "About MeBS Construction | Engineering-Led Builders",
+    "footer": true,
+    "mebs_css": true,
+    "mebs_js": true
+  },
+  {
+    "file": "career-details.html",
+    "title": "Structural Engineer Talent Pool | MeBS Construction",
+    "footer": true,
+    "mebs_css": true,
+    "mebs_js": true
+  },
+  {
+    "file": "careers.html",
+    "title": "Careers | MeBS Construction",
+    "footer": true,
+    "mebs_css": true,
+    "mebs_js": true
+  },
+  {
+    "file": "contact.html",
+    "title": "Contact MeBS Construction",
+    "footer": true,
+    "mebs_css": true,
+    "mebs_js": true
+  },
+  {
+    "file": "core-values.html",
+    "title": "Redirecting | MeBS Construction",
+    "footer": true,
+    "mebs_css": true,
+    "mebs_js": true
+  },
+  {
+    "file": "engineer-details.html",
+    "title": "Senior Project Engineer | MeBS Construction",
+    "footer": true,
+    "mebs_css": true,
+    "mebs_js": true
+  },
+  {
+    "file": "experience.html",
+    "title": "Project Experience | MeBS Construction",
+    "footer": true,
+    "mebs_css": true,
+    "mebs_js": true
+  },
+  {
+    "file": "faq.html",
+    "title": "Construction FAQs | MeBS Construction",
+    "footer": true,
+    "mebs_css": true,
+    "mebs_js": true
+  },
+  {
+    "file": "index.html",
+    "title": "MeBS Construction | Residential & Commercial Construction",
+    "footer": true,
+    "mebs_css": true,
+    "mebs_js": true
+  },
+  {
+    "file": "project-details.html",
+    "title": "Our Design-to-Delivery Process | MeBS Construction",
+    "footer": true,
+    "mebs_css": true,
+    "mebs_js": true
+  },
+  {
+    "file": "project-standard.html",
+    "title": "Redirecting | MeBS Construction",
+    "footer": true,
+    "mebs_css": true,
+    "mebs_js": true
+  },
+  {
+    "file": "projects.html",
+    "title": "Projects | MeBS Construction",
+    "footer": true,
+    "mebs_css": true,
+    "mebs_js": true
+  },
+  {
+    "file": "services.html",
+    "title": "Construction Services | MeBS Construction",
+    "footer": true,
+    "mebs_css": true,
+    "mebs_js": true
+  },
+  {
+    "file": "team.html",
+    "title": "Our Engineers | MeBS Construction",
+    "footer": true,
+    "mebs_css": true,
+    "mebs_js": true
+  },
+  {
+    "file": "values.html",
+    "title": "Our Values | MeBS Construction",
+    "footer": true,
+    "mebs_css": true,
+    "mebs_js": true
+  }
+]
