@@ -1,0 +1,68 @@
+#container {
+    max-width: 1000px;  
+}
+
+
+.custom-button {
+    background-color: #D9A31C; 
+    border: none;
+    border-radius: 5px; 
+    color: #000;
+    padding: 10px 25px;
+    color: aliceblue;
+    font-size: 14px; 
+    font-weight: 500;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.05); 
+    transition: background-color 0.3s; 
+    margin-bottom: 100px;
+  }
+  .custom-button2 {
+    background-color: transparent; /* Make the background transparent */
+    border: 2px solid #e9d093; /* Add a border with your desired color */
+    border-radius: 5px; 
+    color: #D9A31C; /* Text color - can match the border color */
+    padding: 10px 25px;
+    font-size: 14px; 
+    font-weight: 500;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.05); 
+    transition: all 0.3s; /* Transition for all properties for a smoother effect */
+    margin-bottom: 100px;
+}
+  .custom-button:hover {
+    background-color: #c8981e; /* Slightly darker on hover */
+  }
+  .custom-button2:hover {
+    background-color: #D9A31C; /* Solid color on hover */
+    color: aliceblue; /* Text color on hover */
+}
+
+  .margin-right {
+    margin-right: 10px; /* Adjust the pixel value to the desired spacing */
+  }
+  
+  .dropzone {
+    border: 2px dashed #cccccc;
+    border-radius: 4px;
+    padding: 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: border 0.24s ease-in-out;
+  }
+  
+  .dropzone:hover {
+    border-color: #333333;
+  }
+  
+  .btn-cancel {
+    background-color: #838e98; /* Bootstrap's gray color for the 'secondary' variant */
+    color: rgb(255, 255, 255); /* Adjust text color as needed */
+    border-color: #6c757d; /* Usually the same as the background for a solid button */
+  }
+  
+  .btn-cancel:hover {
+    background-color: #5a6268; /* A slightly darker gray for hover state */
+    border-color: #545b62; /* Adjust the border color for hover state as needed */
+  }
+  
+
+  

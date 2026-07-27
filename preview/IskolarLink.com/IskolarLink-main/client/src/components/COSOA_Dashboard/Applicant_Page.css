@@ -1,0 +1,14 @@
+
+
+.applicant-requirement-name{
+    display:flex;
+    justify-content: center;
+}
+
+.applicant-download-text{
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    font-size: 1.1rem;
+    color: var(--red);
+}

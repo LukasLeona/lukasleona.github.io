@@ -1,0 +1,23 @@
+{
+  "development": {
+    "username": "iskolarl_iskolarlink",
+    "password": "KimLukeByronRenee@2023",
+    "database": "iskolarl_iskolarlink",
+    "host": "server214.orangehost.com",
+    "dialect": "mysql"
+  },
+  "test": {
+    "username": "iskolarl_iskolarlink",
+    "password": "KimLukeByronRenee@2023",
+    "database": "iskolarl_iskolarlink",
+    "host": "server214.orangehost.com",
+    "dialect": "mysql"
+  },
+  "production": {
+    "username": "iskolarl_iskolarlink",
+    "password": "KimLukeByronRenee@2023",
+    "database": "iskolarl_iskolarlink",
+    "host": "server214.orangehost.com",
+    "dialect": "mysql"
+  }
+}

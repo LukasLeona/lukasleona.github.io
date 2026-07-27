@@ -1,0 +1,117 @@
+.card-img {
+    max-width: 200px;
+    max-height: 240px;
+  }
+  
+  @include media-breakpoint-down(md) {
+    .card-img {
+      max-width: 100%;
+      max-height: 200px;
+    }
+  }
+
+  .who-we-are-section {
+    background-color: #f4f4f4; /* Example background color */
+    padding: 20px; /* Add padding as needed */
+  }
+  
+  .title {
+    font-size: 28px; /* Adjust the size as needed */
+    color: #000; /* Title color */
+    margin-bottom: 10px; /* Space below the title */
+  }
+  
+  .description {
+    font-size: 20px; /* Adjust the size as needed */
+    color: #666; /* Description text color */
+  }
+  
+  .custom-logo-size {
+    max-width: 120%; /* Adjust the size as needed */
+    height: auto; /* maintain aspect ratio */
+  }
+
+  .fc-toolbar-title {
+    font-size: 22px !important; /* Adjust the font size to your preference */
+    color: #800; /* Adjust the font color as needed */
+    margin-bottom: -30px  !important;
+    outline: none !important; 
+  }
+  
+.fc-prev-button{
+  background-color: #800 !important; /* Using !important to ensure override */
+  color: white; /* Change text color if needed */
+  border-color: #800 !important; 
+  margin-right: 10px !important;
+  outline: none !important; 
+}
+
+.fc-next-button {
+  background-color: #800 !important; /* Using !important to ensure override */
+  color: white; /* Change text color if needed */
+  border-color: #800 d !important; /* If there's a border, make it the same color as the background */
+}
+
+/* If you also want to change the hover state of the buttons */
+.fc-prev-button:hover,
+.fc-next-button:hover {
+  background-color: #800 !important; /* Darker red on hover */
+  border-color: #800  !important;
+}
+
+.fc-today-button {
+  background-color: #800 !important; /* Set the background color to red */
+  color: white; /* Set the text color to white */
+  border-color: #800 !important; /* Ensure the border color is also red */
+}
+
+.fc-today-button:hover {
+  background-color: #800 !important; /* Darker red on hover */
+  border-color: #800 !important; /* Match the border color on hover */
+}
+
+.fc-col-header-cell-cushion {
+  font-weight: bold !important; /* Makes the text bold */
+  color: black !important; 
+  text-decoration: none !important;
+  font-family: '', sans-serif; 
+}
+
+.fc-daygrid-day-number {
+  color: black; /* Sets the text color to black */
+  text-decoration: none !important;
+  font-size: 20px !important;
+}
+
+.fc-event-title {
+  color: #800; /* Sets the text color to black */
+}
+
+.image {
+ margin-left: -22px;
+}
+.officer-card1 {
+  width: 250%; /* This will make the image take the full width of the card */
+  height: 250%; /* Adjust the height as needed */
+  object-fit: cover; /* This will cover the area without stretching the image */
+
+}
+.officer-card {
+  width: 100%; /* This will make the image take the full width of the card */
+  height: 100%; /* Adjust the height as needed */
+  object-fit: cover; /* This will cover the area without stretching the image */
+}
+.card-img-top {
+  width: 100%; /* This will make the image take the full width of the card */
+  height: 100%; /* Adjust the height as needed */
+  object-fit: cover; /* This will cover the area without stretching the image */
+}
+
+.officer-card-title {
+  font-size: 1.5rem; /* Adjust the size as you see fit */
+  font-weight: bold; /* Optional: if you want the title to be bold */
+}
+
+.officer-card-text {
+  font-size: 1.25rem; /* Adjust the size as you see fit */
+}

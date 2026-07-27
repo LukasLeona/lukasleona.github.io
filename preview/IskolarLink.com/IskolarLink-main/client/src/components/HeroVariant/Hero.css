@@ -1,0 +1,56 @@
+/* Hero */
+.herovariant-bg {
+    background-image: url('/public/hero.png');
+    background-size: cover;
+    background-position: center;
+}
+.herovariant-bg2 {
+    background-image: url('/public/hero1.png');
+    background-size: cover;
+    background-position: center;
+}
+.herovariant-bg5 {
+    background-image: url('/public/hero5.png');
+    background-size: cover;
+    background-position: center;
+}
+.herovariant-bg6 {
+    background-image: url('/public/hero6.png');
+    background-size: cover;
+    background-position: center;
+}
+
+.herovariant-bg7 {
+    background-image: url('/public/hero7.png');
+    background-size: cover;
+    background-position: center;
+}
+
+.herovariant-bg {
+    border-bottom-left-radius: 150% 25%;
+    border-bottom-right-radius: 150% 25%;
+    height: 50vh;
+}
+.herovariant-bg2 {
+    border-bottom-left-radius: 150% 25%;
+    border-bottom-right-radius: 150% 25%;
+    height: 50vh;
+}
+
+.herovariant-bg5 {
+    border-bottom-left-radius: 150% 25%;
+    border-bottom-right-radius: 150% 25%;
+    height: 50vh;
+}
+.herovariant-bg6 {
+    border-bottom-left-radius: 150% 25%;
+    border-bottom-right-radius: 150% 25%;
+    height: 50vh;
+}
+
+.herovariant-bg7 {
+    border-bottom-left-radius: 150% 25%;
+    border-bottom-right-radius: 150% 25%;
+    height: 50vh;
+}
+

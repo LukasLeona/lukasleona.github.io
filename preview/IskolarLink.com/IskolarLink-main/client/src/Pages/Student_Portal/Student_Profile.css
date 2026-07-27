@@ -1,0 +1,12 @@
+.social-icon {
+    font-size: 30px; 
+    margin-right: 10px; /* Adjust spacing as needed */
+  /* Or any color you prefer */
+    transition: color 0.3s;
+    /* More styling here */
+  }
+  
+.social-icon:hover {
+    color: yellow; 
+    transform: scale(1.1);/* Color changes to red on hover */
+}

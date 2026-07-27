@@ -1,0 +1,270 @@
+/* Approved CSS */
+.logo-card {
+  max-height: 3rem;
+  max-width: 3rem;
+}
+
+.darkyellow-icon {
+  color: var(--dark-yellow) !important;
+}
+
+/* Pending CSS */
+.reg-h3 {
+    font-weight: -0.1px;
+    font-size: 20px;
+    line-height: 24px;
+}
+
+.modal-header {
+    border-bottom: 0 ;
+}
+
+.modal-title {
+    font-size: 40px;
+}
+
+.modal-subtitle {
+    margin-top: -35px;
+    font-size: 15px;
+}
+
+.contact-div h1 {
+    font-size: 32px;
+    line-height: 42px;
+    letter-spacing: -1%;
+}
+
+.contact-div p, .req, .login-q {
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: -0.1px;
+}
+
+.announcement-image {
+    max-width: 100%; /* Set the maximum width of the image */
+    max-height: 200px; /* Set the maximum height of the image */
+    object-fit: cover; /* Ensure the image maintains its aspect ratio */
+  }
+  
+.officer-image {
+  max-width: 100%;
+  max-height: 200px;
+  object-fit: cover;
+}
+
+  .custom-card {
+    max-width: 50%; /* Adjust the maximum width as needed */
+  }
+
+  .user-avatar {
+    max-width: 40px; /* Adjust the maximum width as needed */
+    max-height: 40px; /* Adjust the maximum height as needed */
+    padding-right: 4%;
+  }
+  
+
+
+  .login-modal {
+    background-image: url("/public/Login.png");
+    background-repeat: no-repeat;
+    background-position: top;
+    border-radius: 20px; 
+    backface-visibility: hidden;
+    box-shadow: 10px 10px 20px 20px rgba(109, 88, 88, 0.5);
+}
+ 
+.register-modal {
+    background-image: url("/public/Login.png");
+    background-repeat: no-repeat;
+    background-position: top;
+    border-radius: 20px; 
+    backface-visibility: hidden;
+    box-shadow: 10px 10px 20px 20px rgba(109, 88, 88, 0.5);
+}
+
+.login-form, .register-form{
+    background-color: white; 
+    border-radius: 10px;
+    max-width: 80%;
+    margin: 0 auto;
+  }
+  
+  .btn-close {
+    background-color: white;
+    color: white !important; 
+  }
+
+  .modal-title {
+    font-size: 60px;
+    line-height: auto;
+  }
+
+  .modal-subtitle {
+    font-size: 20px;
+    line-height: auto;
+  }
+
+  .login-modal .form-label {
+    font-size: 18px;
+    line-height: 20px;
+    letter-spacing: -0.1px;
+  }
+  
+  .register-modal .form-label {
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: -0.1px;
+  }
+
+  .form-control, .forgot-pw, .login-q, .reg-q{
+    font-size: 15px;
+    line-height: 22px;
+    letter-spacing: -0.1px;
+  }
+
+  .form-check {
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: -0.1px;
+  }
+
+  .reg2-p {
+    font-size: 14px;
+    line-height: auto;
+    letter-spacing: 0;
+  }
+
+  .officer-card {
+    max-width: 30%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+.option-pending {
+  background-color: var(--dark-yellow);
+  color: white;
+}
+
+.option-approve {
+  background-color: green;
+  color: white;
+}
+
+.option-return {
+  background-color: blue;
+  color: white;
+}
+
+.option-reject {
+  background-color: var(--red);
+  color: white;
+}
+
+.apply-now-btn {
+  color: white; /* This sets the text color to white */
+  background-color: #800; 
+  border: none; 
+  transition: background-color 0.3s; 
+
+}
+
+.apply-now-btn:hover {
+  color: white; 
+  background-color: gray; 
+}
+
+.btn-warning {
+  color: white; /* This sets the text color to white for all 'warning' variant buttons */
+}
+
+
+.offcanvas {
+  --bs-offcanvas-width: 23%;
+}
+
+
+.card-image-orgvariant {
+  width: 100%;
+  height: 15vw;
+  object-fit: contain;
+
+}
+
+.login-form .position-relative .fa {
+  cursor: pointer;
+  right: 10px; /* Adjust as needed */
+  top: 100px; /* Centers the icon vertically */
+  transform: translateY(-50%);
+}
+.accordion-button:not(.collapsed) {
+  background-color: #800 !important;
+  color: white !important; /* Change text color to white */
+}
+
+.list-group-item-no-outline {
+  outline: none !important;
+  box-shadow: none !important;
+  border: none !important;
+  margin-bottom: 10px;
+
+}
+.list-group-item-no-outline:focus,
+.list-group-item-no-outline:active {
+  outline: none !important;
+  box-shadow: none !important;
+  border: none !important;
+  margin-bottom: 20px;
+}
+
+.no-border {
+  border: none !important;
+}
+
+.nav-item-hover:hover {
+  background-color: var(--light-red) !important;
+  color: var(--red) !important;
+}
+
+.nav-item-hover:hover {
+  background-color: var(--light-red) !important;
+  color: var(--red) !important;
+}
+
+.nav-item-hover:active {
+  background-color: var(--light-red) !important;
+  color: var(--red) !important;
+}
+
+.list-group-item:hover {
+  background-color: var(--light-red) !important; /* This will change the background of the item */
+  color: var(--red) !important; /* This changes the text color so it stands out */
+  border-radius: 10px;
+}
+
+.list-group-item:active {
+  background-color: var(--light-red) !important; /* This will change the background of the item */
+  color: var(--red) !important; /* This changes the text color so it stands out */
+  border-radius: 7px;
+}
+
+.list-group-item-no-outline {
+  background-color: transparent !important;
+}
+
+.btn-primary {
+  background-color: var(--red) !important;
+  border-color: var(--red) !important;
+  --bs-btn-active-bg: #565e64;
+  --bs-btn-active-border-color: #565e54;
+}
+
+.btn-primary:hover{
+  background-color: var(--light-black) !important;
+  border-color: var(--light-black) !important;
+}
+
+.btn-disabled1 {
+  background-color: var(--light-black) !important;
+  border-color: var(--light-black) !important;
+  color: white !important;
+}

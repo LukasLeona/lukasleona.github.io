@@ -1,0 +1,4 @@
+.accordion-button:not(.collapsed) {
+    background-color: var(--dark-yellow);
+    color: white;
+}

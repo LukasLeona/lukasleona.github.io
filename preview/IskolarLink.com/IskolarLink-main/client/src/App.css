@@ -1,0 +1,419 @@
+/* Global */
+:root {
+  --red: #880000;
+  --dark-yellow: #D9A31C;
+  --yellow: #FFDF00;
+  --light-black: #272D37;
+  --subtitle-black: #333333;
+  --disabled-gray: #33333399;
+  --black: #111111;
+  --gray: #A5ACBA;
+  --light-gray: #F2F2F2;
+  --gray2: #5F6D7E;
+  --light-red: #EA00001A;
+  --light-yellow: #FFB60033;
+  --light-blue: #0101FF26;
+  --blue: #0101FF;
+  --green: #027A48;
+  --light-green:#ECFDF3;
+}
+
+.text-subtitleblack {
+  color: var(--subtitle-black);
+}
+
+.text-red {
+  color: var(--red) !important;  /*Overrides bootstrap's text-red*/
+}
+
+.bg-red {
+  background-color: var(--red) !important;
+}
+
+.bg-lightred {
+  background-color: var(--light-red) !important;
+}
+
+.bg-yellow {
+  background-color: var(--dark-yellow);
+}
+
+.text-yellow {
+  color: var(--dark-yellow) !important; /*Overrides bootstrap's text-yellow*/
+}
+
+.bg-transparent {
+  background-color: rgba(255, 255, 255, 0.5);
+  border: none;
+}
+
+.bg-lightgray {
+  background-color: var(--light-gray);
+}
+
+.text-gray2 {
+  color: var(--gray2);
+}
+
+.text-lightblack {
+  color:var(--light-black);
+}
+
+.muted-border {
+  border-color: #D0D5DD; 
+}
+
+@font-face {
+  font-family: Urbanist;
+  src: url(../public/Urbanist-VariableFont_wght.ttf);
+}
+
+.Urbanist {
+  font-family: Urbanist, sans-serif;
+  font-weight: 800;
+}
+
+@font-face {
+  font-family: Inter;
+  src: url(../public/Inter-VariableFont_slnt\,wght.ttf);
+}
+
+.Inter {
+  font-family: Inter;
+  font-weight: 600;
+}
+
+@font-face {
+  font-family: 'Poppins';
+  src: url(../public/Poppins-Bold.ttf);
+}
+
+.Poppins {
+  font-family: Poppins, sans-serif;
+  font-weight: 700;
+}
+
+.Inter-normal {
+  font-family: Inter;
+  font-weight: 400;
+}
+
+.Inter-med {
+  font-family: Inter;
+  font-weight: 500;
+}
+
+.Inter-b {
+  font-family: Inter;
+  font-weight: 700;
+}
+
+.Inter-extrab {
+  font-family: Inter;
+  font-weight: 800;
+}
+
+.shortened-text {
+  overflow-wrap: break-word;
+  max-width: 31.25rem;
+}
+
+.no-decoration {
+  text-decoration: none;
+}
+
+.vh-70 {
+  height: 70vh;
+}
+
+.vh-50 {
+  height: 50vh;
+}
+
+.round-25 {
+  border-radius: 4%;
+}
+
+body {
+  color: var(--light-black); /* Set the default text color */
+}
+
+/* Navbar Specific */
+Navbar {
+  height: 86px;   
+}
+.nav-link-active {
+  color: #D9A31C !important; /* This will ensure the color applies over the default styles */
+}
+
+.navbar-brand {
+  font-size: 25px;
+}
+
+.nav-link, Button {
+  font-size: 15px;
+}
+
+.btn-primary {
+  background-color: var(--red);
+  border-color: var(--red);
+  --bs-btn-active-bg: #565e64;
+  --bs-btn-active-border-color: #565e54;
+}
+
+.btn-primary-outline:hover,.btn-primary-outline:focus {
+  color:var(--red);
+}
+
+.btn-outline-danger {
+  border-color: var(--red);
+  color: var(--red);
+}
+
+.btn-outline-danger:hover, .btn-outline-danger:active {
+  border-color: var(--red);
+  background-color: var(--red);
+  color: white;
+}
+.dropdown-toggle-primary,
+.dropdown-toggle-primary.show {
+  background-color: var(--red) !important;
+  border-color: var(--red) !important;
+}
+
+.dropdown-toggle-primary:hover{
+  background-color: var(--light-black) !important;
+  border-color: var(--light-black) !important;
+}
+
+
+.btn-secondary {
+  background-color: var(--dark-yellow);
+  border-color: var(--dark-yellow);
+}
+
+
+.navbar-nav .nav-link:hover {
+  color: var(--dark-yellow) !important;
+}
+
+.btn-primary:hover{
+  background-color: var(--light-black);
+  border-color: var(--light-black);
+}
+
+
+/* Footer Specific */
+
+.bg-dark {
+  background-color: var(--black) !important;
+}
+
+.text-muted {
+  color: var(--gray) !important;
+}
+
+.bg-muted {
+  background-color: var(--gray) !important;
+}
+
+footer, .data-footer {
+  font-size: 16px;
+}
+
+.footer-brand{
+  font-size: 28px;
+}
+
+.social-icon{
+  margin-right: 1.5rem;
+}
+
+
+.link-button {
+  text-decoration: none; /* Remove underline by default */
+  color: inherit; /* Use the inherited text color */
+
+  /* Define styles for when the link is hovered */
+  &:hover {
+    text-decoration: underline; /* Add underline on hover */
+    color: var(--dark-yellow) !important;
+  }
+}
+
+.card {
+  border-color: #EAEBF0;
+}
+
+
+/* Accreditation Form Progress Bar */
+.progressbar {
+  width: 100vw;
+  height: 10px;
+  background-color: white;
+  margin-bottom: 50px;
+}
+
+.progressbar div {
+  width: 33.3%;
+  height: 100%;
+  background-color: rgb(98, 0, 255);
+}
+
+
+.transparent-navbar {
+  background-color: rgba(128, 128, 128, 0.5) !important; /* Adjust the alpha (last value) for transparency */
+  transition: background-color 0.9s ease;
+}
+
+.transparent-navbar .navbar-brand,
+.transparent-navbar .nav-link,
+.transparent-navbar .navbar-toggler-icon {
+  color: #ffffff !important;
+}
+
+.solid-navbar {
+  background-color: #ffffff !important;
+  color: black !important;
+}
+
+.border-primary {
+  border-color: var(--red) !important;
+}
+
+.nav-pills .nav-link:hover{
+  color: var(--dark-yellow) !important;
+}
+
+.form-check-input:checked {
+  background-color: var(--red) !important;
+  color: var(--red) !important;
+  border: none;
+}
+
+.form-check-input, .form-check-input:disabled {
+  border-color: var(--gray2) !important;
+}
+
+.form-check-input[type="radio"]:checked {
+  border-color: var(--red) !important;
+  background-color: var(--red) !important;
+}
+
+
+.muted-border:focus,
+.muted-border:hover {
+  border-color: #D0D5DD !important;
+  color: var(--red);
+}
+
+.responsive-dropdown {
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+/* Media query for responsiveness */
+@media (max-width: 768px) {
+  .responsive-dropdown {
+    max-height: 150px;
+  }
+}
+
+.setting-logo {
+    max-width: '100px';
+    max-height: '100px';
+    width: '100%';
+    height: 'auto';
+    border-radius: '50%';
+    display: 'block';
+}
+.rounded-modal .modal-content {
+  border-radius: 20px; /* Adjust the value as you see fit for more or less curvature */
+}
+
+.badge-danger {
+  background-color: var(--light-red) !important;
+  color: var(--red) !important;
+}
+
+.text-65px {
+  font-size: 4.0625rem;
+}
+
+.text-52px {
+  font-size: 3.25rem;
+}
+
+.text-45px {
+  font-size: 2.8125rem;
+}
+
+.text-36px {
+  font-size: 2.25rem;
+}
+
+.text-35px {
+  font-size: 2.1875rem;
+}
+
+.text-32px {
+  font-size: 2rem;
+}
+
+.text-30px {
+  font-size: 1.875rem;
+}
+
+.text-25px {
+  font-size: 1.5625rem;
+}
+
+.text-22px {
+  font-size: 1.375rem;
+}
+
+.text-21px {
+  font-size: 1.3125rem;
+}
+
+.text-20px {
+  font-size: 1.25rem;
+}
+
+.text-18px {
+  font-size: 1.125rem;
+}
+
+.text-16px {
+  font-size: 1rem;
+}
+
+.text-15px {
+  font-size: 0.9375rem;
+}
+
+.text-14px {
+  font-size: 0.875rem;
+}
+
+.remove-bold {
+  font-weight: 400 !important;
+}
+
+.add-bold {
+  font-weight: bold !important;
+}
+
+.glass-morphism {
+  background-color: rgba(255, 255, 255, 0.7); /* Adjust the alpha value for opacity */
+  backdrop-filter: blur(150px); /* Adjust the blur value for the glass effect */
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);/* Optional: Add a subtle shadow */
+  transition: background-color 0.3s ease; /* Add a smooth transition effect */
+}
+
+.fixed-top {
+  position: fixed;
+  width: 100%;
+  z-index: 1000;
+  transition: background-color 0.5s ease;
+}
