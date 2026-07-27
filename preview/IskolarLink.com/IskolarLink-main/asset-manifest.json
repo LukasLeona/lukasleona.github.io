@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/preview/IskolarLink.com/IskolarLink-main/static/css/main.67e41235.css",
-    "main.js": "/preview/IskolarLink.com/IskolarLink-main/static/js/main.0bacfa9f.js",
+    "main.js": "/preview/IskolarLink.com/IskolarLink-main/static/js/main.df640f28.js",
     "static/js/787.c4e7f8f9.chunk.js": "/preview/IskolarLink.com/IskolarLink-main/static/js/787.c4e7f8f9.chunk.js",
     "static/media/hero6.png": "/preview/IskolarLink.com/IskolarLink-main/static/media/hero6.7100f5b29292e07f4fcb.png",
     "static/media/hero.png": "/preview/IskolarLink.com/IskolarLink-main/static/media/hero.d2df9a1b212b3d17d6e3.png",
@@ -15,11 +15,11 @@
     "static/media/logo.svg": "/preview/IskolarLink.com/IskolarLink-main/static/media/logo.345aea57a0ba5534a8b099e293809266.svg",
     "index.html": "/preview/IskolarLink.com/IskolarLink-main/index.html",
     "main.67e41235.css.map": "/preview/IskolarLink.com/IskolarLink-main/static/css/main.67e41235.css.map",
-    "main.0bacfa9f.js.map": "/preview/IskolarLink.com/IskolarLink-main/static/js/main.0bacfa9f.js.map",
+    "main.df640f28.js.map": "/preview/IskolarLink.com/IskolarLink-main/static/js/main.df640f28.js.map",
     "787.c4e7f8f9.chunk.js.map": "/preview/IskolarLink.com/IskolarLink-main/static/js/787.c4e7f8f9.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.67e41235.css",
-    "static/js/main.0bacfa9f.js"
+    "static/js/main.df640f28.js"
   ]
 }
