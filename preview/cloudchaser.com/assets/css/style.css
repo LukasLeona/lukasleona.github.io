@@ -12161,3 +12161,89 @@ body.cloud-chaser-site .tour-package-slider .tour-package-content > .vs-btn {
     min-height: 0;
   }
 }
+
+
+/* =========================================================
+   CLOUD CHASER — WHY CLOUD CHASER FINAL ALIGNMENT
+   Improves heading contrast and keeps all service cards equal.
+========================================================= */
+
+/* Keep the section heading fully readable against the dark background.
+   This also neutralizes inline text-splitting/highlight styles. */
+body.cloud-chaser-site .vs-services-style1 .title-area .sec-title,
+body.cloud-chaser-site .vs-services-style1 .title-area .sec-title *,
+body.cloud-chaser-site .vs-services-style1 .title-area .sec-title span,
+body.cloud-chaser-site .vs-services-style1 .title-area .sec-title div {
+  color: #ffffff !important;
+  background: transparent !important;
+  background-color: transparent !important;
+  -webkit-text-fill-color: #ffffff !important;
+  box-shadow: none !important;
+  text-shadow: none !important;
+}
+
+/* Stretch every service-card column and card to the same height. */
+body.cloud-chaser-site .vs-services-style1 .row.g-4 > [class*="col-lg-6"] {
+  display: flex;
+}
+
+body.cloud-chaser-site .vs-services-style1 .vs-services-box-style1 {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+}
+
+/* Use one consistent image proportion across the four cards. */
+body.cloud-chaser-site .vs-services-style1 .vs-services-box-style1 .services-thumb {
+  flex: 0 0 auto;
+  aspect-ratio: 1.46 / 1;
+}
+
+body.cloud-chaser-site .vs-services-style1 .vs-services-box-style1 .services-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Make the content area fill the remaining space. */
+body.cloud-chaser-site .vs-services-style1 .vs-services-box-style1 .services-content {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+}
+
+body.cloud-chaser-site .vs-services-style1 .vs-services-box-style1 .services-content-inner {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  width: 100%;
+}
+
+/* Reserve two title lines so “Easy planning” aligns with longer titles. */
+body.cloud-chaser-site .vs-services-style1 .vs-services-box-style1 .services-title {
+  display: flex;
+  align-items: flex-start;
+  min-height: 2.65em;
+  line-height: 1.3;
+}
+
+body.cloud-chaser-site .vs-services-style1 .vs-services-box-style1 .services-content-inner p {
+  margin-bottom: 0;
+}
+
+@media (max-width: 991px) {
+  body.cloud-chaser-site .vs-services-style1 .vs-services-box-style1 .services-title {
+    min-height: 0;
+  }
+}
+
+@media (max-width: 767px) {
+  body.cloud-chaser-site .vs-services-style1 .row.g-4 > [class*="col-lg-6"] {
+    display: block;
+  }
+
+  body.cloud-chaser-site .vs-services-style1 .vs-services-box-style1 {
+    height: auto;
+  }
+}
