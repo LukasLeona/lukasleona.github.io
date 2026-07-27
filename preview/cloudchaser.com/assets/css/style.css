@@ -12089,3 +12089,75 @@ body.cc-modal-open {
     animation: none !important;
   }
 }
+
+/* =========================================================
+   CLOUD CHASER — EQUAL-SIZE CURATED JOURNEY CARDS
+   Keeps every visible package card aligned regardless of
+   title, destination, badge, or price text length.
+========================================================= */
+body.cloud-chaser-site .tour-package-slider .swiper-wrapper {
+  align-items: stretch;
+}
+
+body.cloud-chaser-site .tour-package-slider .swiper-slide {
+  display: flex;
+  height: auto;
+}
+
+body.cloud-chaser-site .tour-package-slider .tour-package-box {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+}
+
+body.cloud-chaser-site .tour-package-slider .tour-package-thumb {
+  flex: 0 0 auto;
+  aspect-ratio: 1.45 / 1;
+}
+
+body.cloud-chaser-site .tour-package-slider .tour-package-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+body.cloud-chaser-site .tour-package-slider .tour-package-content {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  width: 100%;
+}
+
+body.cloud-chaser-site .tour-package-slider .tour-package-content .title {
+  min-height: 3.05em;
+  margin-bottom: 0;
+  line-height: 1.35;
+}
+
+body.cloud-chaser-site .tour-package-slider .pricing-container {
+  flex: 1 1 auto;
+  width: 100%;
+}
+
+body.cloud-chaser-site .tour-package-slider .package-location,
+body.cloud-chaser-site .tour-package-slider .package-time {
+  min-height: 3.15em;
+  align-items: flex-start !important;
+}
+
+body.cloud-chaser-site .tour-package-slider .tour-package-content > .vs-btn {
+  margin-top: auto;
+}
+
+@media (max-width: 575px) {
+  body.cloud-chaser-site .tour-package-slider .tour-package-thumb {
+    aspect-ratio: 4 / 3;
+  }
+
+  body.cloud-chaser-site .tour-package-slider .tour-package-content .title,
+  body.cloud-chaser-site .tour-package-slider .package-location,
+  body.cloud-chaser-site .tour-package-slider .package-time {
+    min-height: 0;
+  }
+}
