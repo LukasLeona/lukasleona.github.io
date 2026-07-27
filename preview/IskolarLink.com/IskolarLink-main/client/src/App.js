@@ -3,7 +3,7 @@ import './App.css';
 import axios from 'axios';
 import { saveAs } from 'file-saver';
 import { Navbar, Container, Nav, Button, Row, Col, Modal, NavDropdown, Offcanvas, Image} from 'react-bootstrap';
-import { BrowserRouter as Router, Route, Routes} from 'react-router-dom';
+import { HashRouter as Router, Route, Routes } from 'react-router-dom';
 import { LinkContainer } from 'react-router-bootstrap';
 import COSOA from './Pages/COSOA';
 import COSOA_Home from './Pages/COSOA_Portal/COSOA_Home';
@@ -98,7 +98,11 @@ function App() {
   useEffect(() => {
     if(authState.role === 'organization'){
       setActiveMenu('org');
-      axios.post(`${process.env.REACT_APP_BASE_URL}`/menu, {menu: 'org'})}
+     axios.post(
+  `${process.env.REACT_APP_BASE_URL}/menu`,
+  { menu: 'org' }
+);
+    }
       else{
         axios.get(`${process.env.REACT_APP_BASE_URL}/menu/`).then((response) => {
           if(response.data.error){
@@ -274,28 +278,37 @@ function App() {
             </Col>
             <Col xs={12} md={6} className="text-center mt-3 mt-md-0">
               {/* Footer Navigation Links (Vertical for small screens) */}
-              <ul className="nav d-flex flex-column flex-md-row" style={{ listStyleType: 'none' }}>
-                <li className="nav-item">
-                  <a className="nav-link text-muted" href="/cosoa">
-                    PUP COSOA
-                  </a>
-                </li>
-                <li className="nav-item">
-                  <a className="nav-link text-muted" href="/organizations">
-                    Accredited Organizations
-                  </a>
-                </li>
-                <li className="nav-item">
-                  <a className="nav-link text-muted" href="/appdocs">
-                    Application Documents
-                  </a>
-                </li>
-                <li className="nav-item">
-                  <a className="nav-link text-muted" href="/faqs">
-                    FAQs
-                  </a>
-                </li>
-              </ul>
+            <ul
+  className="nav d-flex flex-column flex-md-row"
+  style={{ listStyleType: 'none' }}
+>
+  <li className="nav-item">
+    <Link className="nav-link text-muted" to="/cosoa">
+      PUP COSOA
+    </Link>
+  </li>
+
+  <li className="nav-item">
+    <Link className="nav-link text-muted" to="/organizations">
+      Accredited Organizations
+    </Link>
+  </li>
+
+  <li className="nav-item">
+    <Link className="nav-link text-muted" to="/appdocs">
+      Application Documents
+    </Link>
+  </li>
+
+  <li className="nav-item">
+    <Link className="nav-link text-muted" to="/faqs">
+      FAQs
+    </Link>
+  </li>
+</ul>
+
+
+
             </Col>
             <Col xs={12} md={3} className="mt-3 mt-md-0 text-end">
               {/* Social Media Icons */}
