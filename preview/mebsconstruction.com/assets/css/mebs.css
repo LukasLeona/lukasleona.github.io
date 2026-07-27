@@ -1228,3 +1228,652 @@ body.mebs-site {
   }
   .mebs-reveal { opacity: 1; transform: none; }
 }
+
+
+/* ==========================================================
+   REVISION 3 — screenshot-driven refinements
+   ========================================================== */
+:root {
+  --tp-secoundery-color: #FFB22C !important;
+  --tp-orange-color: #854836 !important;
+  --tp-gray-color: #F7F7F7 !important;
+}
+
+.mebs-site .tp-secoundery-bg,
+.mebs-site .tp-linear-bg-7,
+.mebs-site [class*="secoundery-bg"] {
+  background-color: #FFB22C !important;
+}
+
+.mebs-site .tp-text-secoundery,
+.mebs-site [class*="text-secoundery"] {
+  color: #854836 !important;
+}
+
+/* Featured projects */
+.mebs-featured-projects-v3 { padding-bottom: 130px; }
+.mebs-featured-heading { align-items: center; }
+
+.mebs-featured-heading-side {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 22px;
+}
+
+.mebs-featured-heading-side p {
+  margin: 0;
+  font-size: 17px;
+  line-height: 1.75;
+}
+
+.mebs-featured-grid-v3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: stretch;
+}
+
+.mebs-featured-grid-v3 .mebs-feature-card {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+}
+
+.mebs-featured-grid-v3 .mebs-feature-media,
+.mebs-featured-grid-v3 .mebs-feature-card-large .mebs-feature-media {
+  height: 330px;
+}
+
+.mebs-featured-grid-v3 .mebs-feature-media::after {
+  content: "";
+  position: absolute;
+  left: 22px;
+  right: 22px;
+  bottom: 0;
+  height: 5px;
+  background: #FFB22C;
+  border-radius: 999px 999px 0 0;
+}
+
+.mebs-featured-grid-v3 .mebs-feature-media img {
+  object-position: center;
+  filter: saturate(.92) contrast(1.03);
+}
+
+.mebs-featured-grid-v3 .mebs-feature-content {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+
+.mebs-featured-grid-v3 .mebs-feature-content p { min-height: 0; }
+.mebs-featured-grid-v3 .mebs-specs { margin-top: auto; }
+.mebs-featured-grid-v3 .mebs-text-link { align-self: flex-start; }
+
+/* Planning guide cards */
+.mebs-guides-section {
+  padding: 135px 0;
+  background: #F7F7F7;
+}
+
+.mebs-guides-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: 30px;
+  margin-bottom: 48px;
+}
+
+.mebs-guides-heading h2 {
+  margin: 0;
+  max-width: 850px;
+  font-size: clamp(42px, 5vw, 70px);
+  line-height: .98;
+  letter-spacing: -.055em;
+}
+
+.mebs-guides-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 22px;
+}
+
+.mebs-guide-card {
+  overflow: hidden;
+  border: 1px solid rgba(0, 0, 0, .13);
+  border-radius: 24px;
+  background: #fff;
+  transition: transform .4s ease, box-shadow .4s ease;
+}
+
+.mebs-guide-card:hover {
+  transform: translateY(-7px);
+  box-shadow: 0 24px 80px rgba(0, 0, 0, .12);
+}
+
+.mebs-guide-image {
+  position: relative;
+  display: block;
+  height: 270px;
+  overflow: hidden;
+}
+
+.mebs-guide-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transition: transform .7s cubic-bezier(.2,.7,.2,1);
+}
+
+.mebs-guide-card:hover .mebs-guide-image img { transform: scale(1.045); }
+
+.mebs-guide-image > span {
+  position: absolute;
+  top: 18px;
+  left: 18px;
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  color: #000;
+  background: #FFB22C;
+  border-radius: 50%;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.mebs-guide-content { padding: 26px; }
+
+.mebs-guide-content > span {
+  color: #854836;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.mebs-guide-content h3 {
+  min-height: 96px;
+  margin: 12px 0;
+  font-size: 25px;
+  line-height: 1.2;
+}
+
+.mebs-guide-content p {
+  min-height: 104px;
+  line-height: 1.7;
+}
+
+.mebs-guide-content > a {
+  color: #000;
+  font-size: 14px;
+  font-weight: 800;
+  border-bottom: 1px solid rgba(0,0,0,.32);
+}
+
+.mebs-guide-card-featured {
+  color: #fff;
+  background: #000;
+}
+
+.mebs-guide-card-featured h3,
+.mebs-guide-card-featured a { color: #fff; }
+.mebs-guide-card-featured p { color: rgba(255,255,255,.67); }
+
+/* About project-standard panel */
+.mebs-proof-section {
+  padding: 120px 0 135px;
+  background: #F7F7F7;
+}
+
+.mebs-proof-shell {
+  display: grid;
+  grid-template-columns: 1.05fr .95fr;
+  overflow: hidden;
+  min-height: 620px;
+  border-radius: 28px;
+  background: #854836;
+  box-shadow: 0 25px 80px rgba(0,0,0,.13);
+}
+
+.mebs-proof-image {
+  position: relative;
+  min-height: 620px;
+  overflow: hidden;
+}
+
+.mebs-proof-image > img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.mebs-proof-image::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,.76), transparent 58%);
+}
+
+.mebs-proof-image-caption {
+  position: absolute;
+  z-index: 1;
+  right: 34px;
+  bottom: 34px;
+  left: 34px;
+}
+
+.mebs-proof-image-caption span {
+  display: block;
+  margin-bottom: 10px;
+  color: #FFB22C;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .12em;
+}
+
+.mebs-proof-image-caption strong {
+  max-width: 520px;
+  color: #fff;
+  font-size: clamp(25px, 3vw, 42px);
+  line-height: 1.12;
+}
+
+.mebs-proof-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 54px;
+}
+
+.mebs-proof-quote blockquote {
+  margin: 0 0 24px;
+  color: #fff;
+  font-size: clamp(28px, 3.4vw, 48px);
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -.04em;
+}
+
+.mebs-proof-quote > p { color: rgba(255,255,255,.65); }
+
+.mebs-proof-metrics {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.mebs-proof-metrics article {
+  min-height: 165px;
+  padding: 20px;
+  border: 1px solid rgba(255,255,255,.18);
+  border-radius: 18px;
+  background: rgba(0,0,0,.12);
+}
+
+.mebs-proof-metrics strong {
+  display: block;
+  margin-bottom: 22px;
+  color: #FFB22C;
+  font-size: 42px;
+}
+
+.mebs-proof-metrics span {
+  color: rgba(255,255,255,.72);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+/* Services process stages */
+.mebs-process-strip {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-top: 42px;
+  padding: 0;
+  background: transparent;
+}
+
+.mebs-process-strip i { display: none; }
+
+.mebs-process-strip span {
+  position: relative;
+  min-height: 108px;
+  padding: 22px;
+  color: #000;
+  background: #FFB22C;
+  border: 1px solid rgba(0,0,0,.12);
+  border-radius: 18px;
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+.mebs-process-strip span:nth-of-type(even) {
+  color: #fff;
+  background: #854836;
+}
+
+.mebs-process-strip span::after {
+  content: "→";
+  position: absolute;
+  right: 18px;
+  bottom: 16px;
+  font-size: 20px;
+}
+
+.mebs-process-strip span:last-of-type::after { content: "✓"; }
+
+/* Projects */
+.mebs-projects-page { padding-top: 120px; }
+.mebs-projects-intro { margin-bottom: 38px; }
+
+.mebs-projects-intro > p {
+  color: #4f4844;
+  font-size: 17px;
+}
+
+.mebs-projects-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+}
+
+.mebs-project-card,
+.mebs-project-card-wide {
+  grid-column: auto;
+}
+
+.mebs-project-image,
+.mebs-project-card-wide .mebs-project-image,
+.mebs-project-card-tall .mebs-project-image {
+  height: 330px;
+}
+
+.mebs-project-card-content p { min-height: 54px; }
+
+.mebs-project-card-cta {
+  min-height: auto;
+  padding: 42px;
+}
+
+/* Contact */
+.mebs-contact-detail-section {
+  padding: 120px 0 140px;
+  background:
+    linear-gradient(rgba(0,0,0,.032) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,0,0,.032) 1px, transparent 1px),
+    #F7F7F7;
+  background-size: 46px 46px;
+}
+
+.mebs-contact-detail-shell {
+  display: grid;
+  grid-template-columns: .9fr 1.1fr;
+  overflow: hidden;
+  border: 1px solid rgba(0,0,0,.12);
+  border-radius: 28px;
+  background: #fff;
+  box-shadow: 0 25px 80px rgba(0,0,0,.1);
+}
+
+.mebs-contact-information {
+  padding: 58px;
+  color: #fff;
+  background:
+    radial-gradient(circle at 100% 0%, rgba(255,178,44,.25), transparent 38%),
+    #000;
+}
+
+.mebs-contact-information h2 {
+  margin-bottom: 22px;
+  color: #fff;
+  font-size: clamp(42px, 4.8vw, 68px);
+  line-height: .98;
+  letter-spacing: -.055em;
+}
+
+.mebs-contact-information > p {
+  color: rgba(255,255,255,.68);
+  font-size: 17px;
+  line-height: 1.75;
+}
+
+.mebs-contact-direct {
+  display: grid;
+  gap: 12px;
+  margin: 36px 0;
+}
+
+.mebs-contact-direct a {
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 18px 0;
+  color: #fff;
+  border-bottom: 1px solid rgba(255,255,255,.17);
+}
+
+.mebs-contact-direct span {
+  color: #FFB22C;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+.mebs-contact-direct strong {
+  text-align: right;
+  font-size: 17px;
+}
+
+.mebs-contact-offices {
+  margin-bottom: 34px;
+  padding: 20px;
+  border: 1px solid rgba(255,255,255,.17);
+  border-radius: 16px;
+}
+
+.mebs-contact-offices span {
+  display: block;
+  margin-bottom: 8px;
+  color: #FFB22C;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .1em;
+}
+
+.mebs-contact-offices p {
+  margin: 0;
+  color: rgba(255,255,255,.7);
+  line-height: 1.6;
+}
+
+.mebs-contact-next { display: grid; gap: 12px; }
+
+.mebs-contact-next div {
+  display: grid;
+  grid-template-columns: 42px 1fr;
+  gap: 12px;
+  align-items: center;
+}
+
+.mebs-contact-next strong {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  color: #000;
+  background: #FFB22C;
+  border-radius: 50%;
+  font-size: 11px;
+}
+
+.mebs-contact-next span {
+  color: rgba(255,255,255,.76);
+  font-size: 13px;
+}
+
+.mebs-contact-form { padding: 58px; }
+.mebs-contact-form-heading { margin-bottom: 30px; }
+
+.mebs-contact-form-heading > span {
+  color: #854836;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.mebs-contact-form-heading h3 {
+  margin: 8px 0;
+  font-size: clamp(32px, 3.5vw, 48px);
+}
+
+.mebs-contact-form-heading p { margin: 0; }
+
+.mebs-contact-form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+}
+
+.mebs-contact-form label {
+  display: block;
+  margin-bottom: 16px;
+}
+
+.mebs-contact-form label > span {
+  display: block;
+  margin-bottom: 8px;
+  color: #000;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.mebs-contact-form input,
+.mebs-contact-form select,
+.mebs-contact-form textarea {
+  width: 100%;
+  color: #000;
+  background: #F7F7F7;
+  border: 1px solid rgba(0,0,0,.12);
+  border-radius: 14px;
+}
+
+.mebs-contact-form input,
+.mebs-contact-form select {
+  height: 56px;
+  padding: 0 16px;
+}
+
+.mebs-contact-form textarea {
+  min-height: 155px;
+  padding: 16px;
+  resize: vertical;
+}
+
+.mebs-contact-form .mebs-submit-btn {
+  margin-top: 4px;
+  border: 0;
+}
+
+.mebs-form-status {
+  min-height: 24px;
+  margin: 14px 0 0;
+  color: #854836;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+/* Fixed controls */
+.mebs-site .back-to-top-wrapper {
+  right: 25px !important;
+  bottom: 92px !important;
+  z-index: 99 !important;
+}
+
+.mebs-site .back-to-top-btn {
+  color: #000 !important;
+  background: #F7F7F7 !important;
+  border: 1px solid rgba(0,0,0,.18) !important;
+  box-shadow: 0 10px 30px rgba(0,0,0,.14);
+}
+
+.mebs-site .back-to-top-btn:hover {
+  background: #854836 !important;
+  color: #fff !important;
+}
+
+.mebs-quote-shortcut {
+  right: 24px;
+  bottom: 24px;
+}
+
+.mebs-footer { margin-bottom: 18px; }
+
+@media (max-width: 1199px) {
+  .mebs-featured-grid-v3,
+  .mebs-guides-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .mebs-featured-grid-v3 .mebs-feature-card:first-child,
+  .mebs-guide-card-featured {
+    grid-column: 1 / -1;
+  }
+
+  .mebs-proof-shell,
+  .mebs-contact-detail-shell {
+    grid-template-columns: 1fr;
+  }
+
+  .mebs-proof-image { min-height: 520px; }
+}
+
+@media (max-width: 767px) {
+  .mebs-featured-grid-v3,
+  .mebs-guides-grid,
+  .mebs-proof-metrics,
+  .mebs-process-strip,
+  .mebs-projects-grid,
+  .mebs-contact-form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .mebs-featured-grid-v3 .mebs-feature-card:first-child,
+  .mebs-guide-card-featured {
+    grid-column: auto;
+  }
+
+  .mebs-featured-heading-side,
+  .mebs-guides-heading {
+    align-items: flex-start;
+  }
+
+  .mebs-guides-heading { flex-direction: column; }
+
+  .mebs-guide-content h3,
+  .mebs-guide-content p {
+    min-height: 0;
+  }
+
+  .mebs-proof-content,
+  .mebs-contact-information,
+  .mebs-contact-form {
+    padding: 30px 22px;
+  }
+
+  .mebs-contact-direct a {
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .mebs-contact-direct strong { text-align: left; }
+
+  .mebs-site .back-to-top-wrapper {
+    right: 12px !important;
+    bottom: 72px !important;
+  }
+
+  .mebs-quote-shortcut {
+    right: 12px;
+    bottom: 12px;
+  }
+}

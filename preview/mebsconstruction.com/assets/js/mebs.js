@@ -99,9 +99,10 @@
     if (!("IntersectionObserver" in window)) return;
 
     var elements = document.querySelectorAll(
-      ".mebs-feature-card, .mebs-principles-grid article, .mebs-engineer-row, " +
-      ".mebs-strengths-grid article, .mebs-about-team-card, .mebs-service-card, " +
-      ".mebs-project-card, .mebs-engineer-card"
+      ".mebs-reveal, .mebs-feature-card, .mebs-principles-grid article, " +
+      ".mebs-engineer-row, .mebs-strengths-grid article, " +
+      ".mebs-about-team-card, .mebs-service-card, " +
+      ".mebs-project-card, .mebs-engineer-card, .mebs-guide-card"
     );
 
     var observer = new IntersectionObserver(function (entries) {
@@ -121,6 +122,26 @@
     });
   }
 
+
+  function setupProjectForms() {
+    document.querySelectorAll(".mebs-contact-form, .mebs-consultation-form").forEach(function (form) {
+      form.addEventListener("submit", function (event) {
+        event.preventDefault();
+
+        var status = form.querySelector(".mebs-form-status");
+        if (!status) {
+          status = document.createElement("p");
+          status.className = "mebs-form-status";
+          status.setAttribute("aria-live", "polite");
+          form.appendChild(status);
+        }
+
+        status.textContent =
+          "Thank you. Your project details have been prepared for submission to the MeBS team.";
+      });
+    });
+  }
+
   function updateYear() {
     document.querySelectorAll("[data-current-year]").forEach(function (el) {
       el.textContent = new Date().getFullYear();
@@ -133,6 +154,7 @@
     setupFaq();
     setupEngineerCards();
     setupProjectFilters();
+    setupProjectForms();
     addFallbackReveal();
     updateYear();
   });
