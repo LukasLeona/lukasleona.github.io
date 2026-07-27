@@ -7,6 +7,9 @@ import { AuthContext } from '../../helpers/AuthContent'
 import { useContext } from 'react';
 import {useNavigate} from 'react-router-dom';
 
+const publicImage = (filename) =>
+  `${process.env.PUBLIC_URL}/${filename}`;
+
   const Hero = () => {
     const [index, setIndex] = useState(0);
 
@@ -19,22 +22,24 @@ import {useNavigate} from 'react-router-dom';
     const handleButtonClick = () => {
       navigate('/organizations');
     };
-  
 
-    const backgroundImages = [
-      'url(/Media/1.png)',
-      'url(/Media/2.png)',
-      'url(/Media/3.png)',
-      'url(/Media/4.png)',
-      'url(/Media/5.png)',
-      'url(/Media/6.png)',
-      'url(/Media/7.png)',
-      'url(/Media/8.png)',
-      'url(/Media/9.png)',
-      'url(/Media/22.png)',
-      'url(/Media/23.png)',
-      'url(/Media/24.png)',
-    ];
+  
+    const publicUrl = process.env.PUBLIC_URL;
+
+const backgroundImages = [
+  `url("${publicUrl}/Media/1.png")`,
+  `url("${publicUrl}/Media/2.png")`,
+  `url("${publicUrl}/Media/3.png")`,
+  `url("${publicUrl}/Media/4.png")`,
+  `url("${publicUrl}/Media/5.png")`,
+  `url("${publicUrl}/Media/6.png")`,
+  `url("${publicUrl}/Media/7.png")`,
+  `url("${publicUrl}/Media/8.png")`,
+  `url("${publicUrl}/Media/9.png")`,
+  `url("${publicUrl}/Media/22.png")`,
+  `url("${publicUrl}/Media/23.png")`,
+  `url("${publicUrl}/Media/24.png")`,
+];
 
     const slides = backgroundImages.map((image, idx) => (
       <Carousel.Item key={idx}>
@@ -73,19 +78,28 @@ import {useNavigate} from 'react-router-dom';
   };
 
 const HeroVariant = ({ h1Text, pText }) => {
-    return (
-        <div className="herovariant-bg d-flex align-items-center">
-            <Container className="text-center">
-                <h1 className="hero-h1 Inter-b text-white">{h1Text}</h1>
-                <p className="hero-p Inter-normal text-white pt-2 pb-3">{pText}</p>
-            </Container>
-        </div>
-    );
+  return (
+    <div
+      className="herovariant-bg d-flex align-items-center"
+      style={{ backgroundImage: `url("${publicImage('hero.png')}")` }}
+    >
+      <Container className="text-center">
+        <h1 className="hero-h1 Inter-b text-white">{h1Text}</h1>
+        <p className="hero-p Inter-normal text-white pt-2 pb-3">
+          {pText}
+        </p>
+      </Container>
+    </div>
+  );
 };
 
 const HeroVariant1 = ({ h1Text, pText }) => {
   return (
-      <div className="herovariant-bg2 d-flex align-items-center">
+      <div
+        className="herovariant-bg2 d-flex align-items-center"
+        style={{
+          backgroundImage: `url("${publicImage('hero1.png')}")`
+        }}      >
           <Container className="text-center">
               <h1 className="hero-h1 Inter-b text-white">{h1Text}</h1>
               <p className="hero-p Inter-normal text-white pt-2 pb-3">{pText}</p>
@@ -114,7 +128,12 @@ const HeroVariant2 = ({ imgSrc, name, webmail }) => {
     
 
   return (
-      <div className="herovariant-bg d-flex align-items-center">
+      <div
+  className="herovariant-bg d-flex align-items-center"
+  style={{
+    backgroundImage: `url("${publicImage('hero.png')}")`
+  }}
+>
           <Container>
             <Row>
             <Col md={1} className="mb-3 pe-0 mx-4">
@@ -145,7 +164,12 @@ const HeroVariant2 = ({ imgSrc, name, webmail }) => {
 
 const HeroVariant3 = ({  h1Text, pText  }) => {
   return (
-      <div className="herovariant-bg d-flex align-items-center">
+      <div
+  className="herovariant-bg d-flex align-items-center"
+  style={{
+    backgroundImage: `url("${publicImage('hero.png')}")`
+  }}
+>
         <Container className="text-center">
           <h1 className="hero-h1 Inter-b text-white">{h1Text}</h1>
           <p className="hero-p Inter-normal text-white pt-2 pb-3">{pText}</p>
@@ -156,7 +180,12 @@ const HeroVariant3 = ({  h1Text, pText  }) => {
 
 const HeroVariant4 = ({  h1Text  }) => {
   return (
-      <div className="herovariant-bg d-flex align-items-center">
+     <div
+  className="herovariant-bg d-flex align-items-center"
+  style={{
+    backgroundImage: `url("${publicImage('hero.png')}")`
+  }}
+>
         <Container className="text-start">
           <Col xs={6}>
           <h1 className="hero-h1 Inter-b text-white">{h1Text}</h1>
@@ -170,7 +199,12 @@ const HeroVariant4 = ({  h1Text  }) => {
 
 const HeroVariant5 = ({ h1Text, pText }) => {
   return (
-      <div className="herovariant-bg5 d-flex align-items-center">
+      <div
+  className="herovariant-bg5 d-flex align-items-center"
+  style={{
+    backgroundImage: `url("${publicImage('hero5.png')}")`
+  }}
+>
           <Container className="text-center">
               <h1 className="hero-h1 Inter-b text-white">{h1Text}</h1>
               <p className="hero-p Inter-normal text-white pt-2 pb-3">{pText}</p>
@@ -181,7 +215,12 @@ const HeroVariant5 = ({ h1Text, pText }) => {
 
 const HeroVariant6 = ({ h1Text, pText }) => {
   return (
-      <div className="herovariant-bg6 d-flex align-items-center">
+     <div
+  className="herovariant-bg6 d-flex align-items-center"
+  style={{
+    backgroundImage: `url("${publicImage('hero6.png')}")`
+  }}
+>
           <Container className="text-center">
               <h1 className="hero-h1 Inter-b text-white">{h1Text}</h1>
               <p className="hero-p Inter-normal text-white pt-2 pb-3">{pText}</p>
@@ -192,7 +231,12 @@ const HeroVariant6 = ({ h1Text, pText }) => {
 
 const HeroVariant7 = ({ h1Text, pText }) => {
   return (
-      <div className="herovariant-bg7 d-flex align-items-center">
+      <div
+  className="herovariant-bg7 d-flex align-items-center"
+  style={{
+    backgroundImage: `url("${publicImage('hero7.png')}")`
+  }}
+>
           <Container className="text-center">
               <h1 className="hero-h1 Inter-b text-white">{h1Text}</h1>
               <p className="hero-p Inter-normal text-white pt-2 pb-3">{pText}</p>
@@ -208,7 +252,12 @@ const HeroVariant8 = ({ imgSrc, name, webmail }) => {
   const {activeMenu, setActiveMenu} = menu;
 
   return (
-      <div className="herovariant-bg d-flex align-items-center">
+      <div
+  className="herovariant-bg d-flex align-items-center"
+  style={{
+    backgroundImage: `url("${publicImage('hero.png')}")`
+  }}
+>
           <Container>
             <Row>
             <Col md={1} className="mb-3 pe-0 mx-4">
