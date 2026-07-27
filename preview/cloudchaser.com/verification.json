@@ -1,5 +1,5 @@
 {
-  "html_files": [
+  "html_files_updated": [
     "404.html",
     "about.html",
     "activities.html",
@@ -13,9 +13,55 @@
     "index.html",
     "trips.html"
   ],
-  "poppins_on_all_pages": true,
-  "cloud_chaser_js_on_all_pages": true,
-  "gallery_links": 10,
-  "preloaders": 12,
-  "notes": []
+  "favicon_reference": "assets/img/logo.svg",
+  "curated_cards": [
+    {
+      "title": "Dubai Desert & City Lights Escape",
+      "location": "Dubai, United Arab Emirates",
+      "duration": "5 Days - 4 Nights",
+      "badge": "City & Desert",
+      "price": "₱44,900",
+      "old_price": "₱49,900"
+    },
+    {
+      "title": "El Nido Couples’ Island Retreat",
+      "location": "Palawan, Philippines",
+      "duration": "5 Days - 4 Nights",
+      "badge": "Romantic Escape",
+      "price": "₱29,900",
+      "old_price": "₱34,500"
+    },
+    {
+      "title": "Bali Jungle Rafting & Ubud Escape",
+      "location": "Bali, Indonesia",
+      "duration": "6 Days - 5 Nights",
+      "badge": "Adventure Pick",
+      "price": "₱37,900",
+      "old_price": "₱42,900"
+    },
+    {
+      "title": "Cebu Heritage, Food & Beach Break",
+      "location": "Cebu, Philippines",
+      "duration": "4 Days - 3 Nights",
+      "badge": "Local Favorite",
+      "price": "₱22,500",
+      "old_price": "₱26,900"
+    },
+    {
+      "title": "Seoul Cafés, Culture & City Nights",
+      "location": "Seoul, South Korea",
+      "duration": "5 Days - 4 Nights",
+      "badge": "Trending Trip",
+      "price": "₱35,900",
+      "old_price": "₱40,500"
+    },
+    {
+      "title": "Chiang Mai Nature & Adventure Trail",
+      "location": "Chiang Mai, Thailand",
+      "duration": "5 Days - 4 Nights",
+      "badge": "Nature Escape",
+      "price": "₱28,900",
+      "old_price": "₱33,500"
+    }
+  ]
 }

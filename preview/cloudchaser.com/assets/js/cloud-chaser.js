@@ -150,3 +150,73 @@
     });
   });
 })();
+
+
+/* Final polish: demo trip-request confirmation. */
+(function () {
+  "use strict";
+
+  const initDemoRequest = () => {
+    const form = document.querySelector('.cc-trip-request-form, .destination-request form');
+    if (!form || form.dataset.ccDemoReady === 'true') return;
+    form.dataset.ccDemoReady = 'true';
+
+    const modal = document.createElement('div');
+    modal.className = 'cc-demo-modal';
+    modal.hidden = true;
+    modal.setAttribute('role', 'dialog');
+    modal.setAttribute('aria-modal', 'true');
+    modal.setAttribute('aria-labelledby', 'cc-demo-modal-title');
+    modal.innerHTML = `
+      <div class="cc-demo-modal__dialog">
+        <div class="cc-demo-modal__icon" aria-hidden="true">
+          <i class="fa-solid fa-check"></i>
+        </div>
+        <span class="cc-demo-modal__eyebrow">Demo confirmation</span>
+        <h2 id="cc-demo-modal-title">Your request was sent!</h2>
+        <p>Thanks for sharing your trip details. Cloud Chaser will get back to you shortly to help shape your itinerary.</p>
+        <button class="cc-demo-modal__close" type="button">Got it</button>
+      </div>`;
+    document.body.appendChild(modal);
+
+    const closeButton = modal.querySelector('.cc-demo-modal__close');
+    let previousFocus = null;
+
+    const closeModal = () => {
+      modal.hidden = true;
+      document.body.classList.remove('cc-modal-open');
+      if (previousFocus && typeof previousFocus.focus === 'function') previousFocus.focus();
+    };
+
+    const openModal = () => {
+      previousFocus = document.activeElement;
+      modal.hidden = false;
+      document.body.classList.add('cc-modal-open');
+      window.requestAnimationFrame(() => closeButton?.focus());
+    };
+
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+      }
+      openModal();
+      form.reset();
+    });
+
+    closeButton?.addEventListener('click', closeModal);
+    modal.addEventListener('click', (event) => {
+      if (event.target === modal) closeModal();
+    });
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && !modal.hidden) closeModal();
+    });
+  };
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initDemoRequest, { once: true });
+  } else {
+    initDemoRequest();
+  }
+})();

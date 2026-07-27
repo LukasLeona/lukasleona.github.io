@@ -11815,3 +11815,277 @@ body.cloud-chaser-site .cc-footer-bottom-links a:hover { color: #ffb0b0 !importa
   body.cloud-chaser-site .cc-footer-newsletter-wrap { grid-column: auto; }
   body.cloud-chaser-site .cc-footer-bottom-links { gap: 14px; }
 }
+
+
+/* =========================================================
+   CLOUD CHASER — FINAL UI POLISH
+   Footer spacing, detail-card wrapping, search contrast,
+   demo request confirmation, and logo-only preloader.
+========================================================= */
+
+/* Footer CTA: add breathing room above the eyebrow text. */
+body.cloud-chaser-site .cc-footer-cta {
+  padding-top: 46px;
+}
+body.cloud-chaser-site .cc-footer-eyebrow {
+  margin-top: 2px;
+}
+
+/* Destination details: allow all labels and values to wrap inside their cards. */
+body.cloud-chaser-site .vs-destination-single .destination-single-info .trip-info {
+  align-items: stretch;
+  gap: 22px;
+}
+body.cloud-chaser-site .vs-destination-single .trip-info-box,
+body.cloud-chaser-site .widget_trip .trip-info-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  width: 100%;
+  min-width: 0;
+  min-height: 112px;
+  height: auto !important;
+  padding: 17px 18px 19px;
+  overflow: hidden;
+}
+body.cloud-chaser-site .trip-info-box .header {
+  align-items: flex-start;
+  min-width: 0;
+  gap: 8px;
+  color: #64727b;
+  font-size: 13px;
+  line-height: 1.35;
+}
+body.cloud-chaser-site .trip-info-box .header svg {
+  flex: 0 0 auto;
+  margin-top: 1px;
+  color: #ff8188;
+}
+body.cloud-chaser-site .trip-info-box .header span,
+body.cloud-chaser-site .trip-info-box .info-title {
+  min-width: 0;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  word-break: normal;
+  white-space: normal;
+}
+body.cloud-chaser-site .trip-info-box .info-title {
+  margin: 8px 0 0;
+  color: #26343d;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.42;
+  letter-spacing: 0;
+  text-transform: none;
+}
+body.cloud-chaser-site .widget_trip .trip-info-box {
+  min-height: 0;
+  margin-bottom: 14px;
+}
+
+/* Itinerary and FAQ accordions: real inner padding prevents edge clipping. */
+body.cloud-chaser-site .vs-destination-single .destination-ltinerary .accordion-item,
+body.cloud-chaser-site .vs-destination-single .destination-faq .accordion-item {
+  overflow: hidden;
+}
+body.cloud-chaser-site .vs-destination-single .destination-ltinerary .accordion-button,
+body.cloud-chaser-site .vs-destination-single .destination-ltinerary .accordion-item:first-of-type .accordion-button,
+body.cloud-chaser-site .vs-destination-single .destination-faq .accordion-button,
+body.cloud-chaser-site .accordion-style2 .accordion-button {
+  min-height: 68px;
+  padding: 20px 54px 20px 24px !important;
+  color: #26343d;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.45;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+body.cloud-chaser-site .accordion-style2 .accordion-button::after {
+  position: absolute;
+  right: 22px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+body.cloud-chaser-site .vs-destination-single .destination-ltinerary .accordion-body,
+body.cloud-chaser-site .vs-destination-single .destination-faq .accordion-body,
+body.cloud-chaser-site .accordion-style2 .accordion-body {
+  padding: 0 24px 24px !important;
+  color: #61707a;
+  font-size: 14px;
+  line-height: 1.75;
+  text-transform: none;
+}
+body.cloud-chaser-site .accordion-style2 .accordion-body p {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+body.cloud-chaser-site .destination-ltinerary .d-flex,
+body.cloud-chaser-site .destination-faq .d-flex {
+  flex-wrap: wrap;
+  row-gap: 10px;
+}
+
+/* Popup and sidebar search fields must remain readable on white. */
+body.cloud-chaser-site .popup-search-box form input,
+body.cloud-chaser-site .widget_search .search-form input {
+  background: #ffffff !important;
+  color: #26343d !important;
+  caret-color: #26343d;
+  -webkit-text-fill-color: #26343d;
+}
+body.cloud-chaser-site .popup-search-box form input::placeholder,
+body.cloud-chaser-site .widget_search .search-form input::placeholder {
+  color: #7b8790 !important;
+  opacity: 1;
+  -webkit-text-fill-color: #7b8790;
+}
+body.cloud-chaser-site .popup-search-box form input:focus {
+  border-color: #ff9d9d !important;
+  box-shadow: 0 0 0 4px rgba(255, 157, 157, .16);
+}
+
+/* Preloader: no secondary cloud/loader icon; the logo gently pumps. */
+body.cloud-chaser-site .preloader .loader {
+  display: none !important;
+}
+body.cloud-chaser-site .preloader-inner img {
+  margin-bottom: 0 !important;
+  animation: cc-preloader-logo-pump 1.5s cubic-bezier(.4, 0, .2, 1) infinite !important;
+  transform-origin: center center;
+  will-change: transform, filter;
+}
+@keyframes cc-preloader-logo-pump {
+  0%, 100% {
+    transform: scale(.96);
+    filter: drop-shadow(0 14px 28px rgba(39,49,58,.12));
+  }
+  50% {
+    transform: scale(1.055);
+    filter: drop-shadow(0 23px 38px rgba(255,157,157,.22));
+  }
+}
+
+/* Demo request confirmation popup. */
+body.cloud-chaser-site .cc-demo-modal[hidden] {
+  display: none !important;
+}
+body.cloud-chaser-site .cc-demo-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 999999;
+  display: grid;
+  place-items: center;
+  padding: 22px;
+  background: rgba(24, 34, 41, .58);
+  backdrop-filter: blur(9px);
+}
+body.cloud-chaser-site .cc-demo-modal__dialog {
+  position: relative;
+  width: min(100%, 460px);
+  padding: 34px 32px 30px;
+  border: 1px solid rgba(255,255,255,.7);
+  border-radius: 24px;
+  background: linear-gradient(145deg, #ffffff 0%, #fff8f5 58%, #f1fbe4 100%);
+  box-shadow: 0 30px 80px rgba(20, 34, 42, .28);
+  color: #26343d;
+  text-align: center;
+  animation: cc-demo-modal-in .34s cubic-bezier(.2,.75,.2,1) both;
+}
+body.cloud-chaser-site .cc-demo-modal__icon {
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 18px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #bbf1d2, #eef8cd);
+  color: #2e6d57;
+  font-size: 26px;
+  box-shadow: 0 12px 28px rgba(76, 151, 118, .18);
+}
+body.cloud-chaser-site .cc-demo-modal__eyebrow {
+  display: inline-block;
+  margin-bottom: 8px;
+  color: #c75d70;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+body.cloud-chaser-site .cc-demo-modal h2 {
+  margin: 0 0 10px;
+  color: #26343d;
+  font-family: "Poppins", sans-serif;
+  font-size: clamp(23px, 4vw, 30px);
+  font-weight: 700;
+  line-height: 1.2;
+}
+body.cloud-chaser-site .cc-demo-modal p {
+  margin: 0 auto 22px;
+  max-width: 350px;
+  color: #65737c;
+  font-size: 14px;
+  line-height: 1.7;
+}
+body.cloud-chaser-site .cc-demo-modal__close {
+  min-width: 130px;
+  min-height: 46px;
+  padding: 0 22px;
+  border: 0;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #ff9d9d, #ffc5aa);
+  color: #26343d;
+  font-family: "Poppins", sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  box-shadow: 0 12px 25px rgba(255,157,157,.24);
+}
+body.cloud-chaser-site .cc-demo-modal__close:hover {
+  transform: translateY(-2px);
+  filter: brightness(.97);
+}
+body.cc-modal-open {
+  overflow: hidden;
+}
+@keyframes cc-demo-modal-in {
+  from { opacity: 0; transform: translateY(18px) scale(.965); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@media (max-width: 767px) {
+  body.cloud-chaser-site .cc-footer-cta {
+    padding-top: 36px;
+  }
+  body.cloud-chaser-site .vs-destination-single .destination-single-info .trip-info {
+    gap: 16px;
+  }
+  body.cloud-chaser-site .vs-destination-single .trip-info-box {
+    min-height: 104px;
+  }
+  body.cloud-chaser-site .vs-destination-single .destination-ltinerary .accordion-button,
+  body.cloud-chaser-site .vs-destination-single .destination-faq .accordion-button,
+  body.cloud-chaser-site .accordion-style2 .accordion-button {
+    padding: 18px 48px 18px 18px !important;
+    font-size: 15px;
+  }
+  body.cloud-chaser-site .accordion-style2 .accordion-button::after {
+    right: 17px;
+  }
+  body.cloud-chaser-site .vs-destination-single .destination-ltinerary .accordion-body,
+  body.cloud-chaser-site .vs-destination-single .destination-faq .accordion-body,
+  body.cloud-chaser-site .accordion-style2 .accordion-body {
+    padding: 0 18px 20px !important;
+  }
+  body.cloud-chaser-site .cc-demo-modal__dialog {
+    padding: 30px 22px 25px;
+    border-radius: 20px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body.cloud-chaser-site .preloader-inner img,
+  body.cloud-chaser-site .cc-demo-modal__dialog {
+    animation: none !important;
+  }
+}

@@ -1,12 +1,12 @@
-CLOUD CHASER — MODERN FOOTER REDESIGN
+CLOUD CHASER — CURATED JOURNEYS & FAVICON UPDATE
 
-Replace the matching HTML pages and assets/css/style.css in your project.
-No new JavaScript file is required.
+Replace the matching files in your project with the files in this folder.
 
-What changed:
-- Removed the large template-style contact strip, Instagram thumbnail grid, and oversized empty footer area.
-- Added one compact gradient call-to-action panel.
-- Added a balanced four-column layout for brand, navigation, company links, and newsletter.
-- Reduced the footer logo to a modern compact size.
-- Added clear contrast, restrained hover states, and responsive mobile layouts.
-- Kept the existing Cloud Chaser logo and all travel images unchanged.
+CHANGES
+1. Curated Journeys cards on index.html and index-2.html now have six distinct trip names, destinations, durations, badges, and prices.
+2. Existing tour images were preserved.
+3. All HTML pages now use assets/img/logo.svg as the browser favicon and Apple touch icon.
+4. No new CSS or JavaScript file is required for this update.
+
+IMPORTANT
+Keep assets/img/logo.svg in the exact same location so the favicon and website logos continue to load.
