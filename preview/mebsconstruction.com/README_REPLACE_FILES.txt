@@ -8,3 +8,10 @@ REVISION 3
 - Changed Projects to a balanced two-column grid.
 - Rebuilt the lower Contact section and form.
 - Separated the back-to-top and Start Your Project buttons.
+
+REVISION 4
+- Added explicit line breaks to all three homepage hero titles.
+- Centered the Explore Our Work text inside its button.
+- Increased the desktop navigation pill size.
+- Balanced the navigation pill's top and bottom spacing.
+- Kept equal spacing between links and moved the active underline closer to the text.
