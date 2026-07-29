@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Lakbay Baguio creates a practical day itinerary with Google Maps navigation, jeepney boarding guidance, fare estimates, and activity ideas for major Baguio and nearby Benguet attractions." />
+  <meta name="description" content="Build a convenient Baguio itinerary with destination suggestions, commute guidance, fare estimates, and Google Maps directions." />
   <meta name="theme-color" content="#819A91" />
   <title>Lakbay Baguio — Smart Itinerary Planner</title>
 
@@ -47,18 +47,16 @@
       <div class="container hero-grid">
         <div class="hero-copy reveal">
           <div class="eyebrow"><span></span> Built for curious Baguio travelers</div>
-          <h1>Your Baguio day, arranged in the <em>right order.</em></h1>
-          <p class="hero-lead">Choose the places you want to see. Lakbay Baguio groups nearby stops, explains where to board common jeepney routes, suggests activities, and opens each leg in Google Maps so you can navigate from your real location.</p>
-
+          <h1>Your Baguio trip, arranged in the <em>right order.</em></h1>
+          <p class="hero-lead">Pick the places you want to visit. Lakbay Baguio groups nearby stops, respects opening times, estimates fares, and explains where to walk, ride a jeepney, or take a taxi.</p>
           <div class="hero-actions">
             <a class="button button-primary" href="#planner">Create my itinerary <span aria-hidden="true">↗</span></a>
             <a class="button button-ghost" href="#how-it-works">See how it works</a>
           </div>
-
           <div class="hero-proof" aria-label="Planner benefits">
-            <div><strong id="destinationTotal">40+</strong><span>major attractions</span></div>
+            <div><strong>48</strong><span>places listed</span></div>
+            <div><strong>1–5</strong><span>travel days</span></div>
             <div><strong>3</strong><span>travel modes</span></div>
-            <div><strong>1</strong><span>simple route</span></div>
           </div>
         </div>
 
@@ -67,25 +65,20 @@
           <div class="mist mist-two"></div>
           <div class="mountain mountain-back"></div>
           <div class="mountain mountain-front"></div>
-          <div class="pine pine-one">▲</div>
-          <div class="pine pine-two">▲</div>
-          <div class="pine pine-three">▲</div>
-
           <div class="route-card">
             <div class="route-card-head">
               <span class="status-dot"></span>
-              <div><small>Suggested morning route</small><strong>City Center → East Baguio</strong></div>
-              <span class="weather-chip">☁ 18°C</span>
+              <div><small>Suggested route</small><strong>City Center → East Baguio</strong></div>
+              <span class="weather-chip">Cool & easy</span>
             </div>
             <div class="mini-route">
-              <div class="mini-stop active"><span>1</span><div><strong>Burnham Park</strong><small>Start with a relaxing walk</small></div></div>
+              <div class="mini-stop active"><span>1</span><div><strong>Burnham Park</strong><small>Start with a relaxed walk</small></div></div>
               <div class="mini-line"><i></i><small>Walk · 8 min</small></div>
               <div class="mini-stop"><span>2</span><div><strong>Baguio Cathedral</strong><small>Quick city-center stop</small></div></div>
-              <div class="mini-line"><i></i><small>Jeepney · est. ₱13</small></div>
-              <div class="mini-stop"><span>3</span><div><strong>Botanical Garden</strong><small>Continue toward Leonard Wood Road</small></div></div>
+              <div class="mini-line"><i></i><small>Jeepney · estimated fare</small></div>
+              <div class="mini-stop"><span>3</span><div><strong>Botanical Garden</strong><small>Continue along Leonard Wood Road</small></div></div>
             </div>
           </div>
-
           <div class="floating-note note-one"><span>🚶</span><div><strong>Walkable pair</strong><small>Save a ride</small></div></div>
           <div class="floating-note note-two"><span>🧭</span><div><strong>Route optimized</strong><small>Less backtracking</small></div></div>
         </div>
@@ -96,33 +89,42 @@
       <div class="container">
         <div class="section-heading centered reveal">
           <div class="eyebrow"><span></span> Plan in a few taps</div>
-          <h2>Where would you like to go?</h2>
-          <p>Set your starting point, choose from major Baguio attractions and nearby Benguet side trips, then tell us what matters most.</p>
+          <h2>Build a route around your day</h2>
+          <p>Complete the three steps below. The navigation stays visible and follows your progress.</p>
         </div>
 
         <form class="planner-card reveal" id="plannerForm" novalidate>
-          <div class="planner-progress" aria-label="Planner progress">
-            <div class="progress-item active" data-progress="1"><span>1</span><div><strong>Trip details</strong><small>Start and schedule</small></div></div>
-            <i></i>
-            <div class="progress-item" data-progress="2"><span>2</span><div><strong>Destinations</strong><small>Pick your stops</small></div></div>
-            <i></i>
-            <div class="progress-item" data-progress="3"><span>3</span><div><strong>Preferences</strong><small>Choose your pace</small></div></div>
+          <div class="progress-sticky-wrap" id="progressStickyWrap">
+            <nav class="planner-progress" id="plannerProgress" aria-label="Planner steps">
+              <span class="progress-track" aria-hidden="true"><i id="progressTrackFill"></i></span>
+              <button class="progress-item active" type="button" data-progress="1" data-target="trip-details" aria-current="step">
+                <span class="progress-number">01</span>
+                <span class="progress-copy"><strong>Trip details</strong><small>Dates and schedule</small></span>
+              </button>
+              <button class="progress-item" type="button" data-progress="2" data-target="destinations">
+                <span class="progress-number">02</span>
+                <span class="progress-copy"><strong>Destinations</strong><small>Pick or auto-choose</small></span>
+              </button>
+              <button class="progress-item" type="button" data-progress="3" data-target="preferences">
+                <span class="progress-number">03</span>
+                <span class="progress-copy"><strong>Preferences</strong><small>Choose your pace</small></span>
+              </button>
+            </nav>
           </div>
 
-          <div class="form-section">
+          <section class="form-section planner-step" id="trip-details" data-step-section="1">
             <div class="form-section-title">
               <span>01</span>
-              <div><h3>Begin your trip</h3><p>Tell us where and when your Baguio day starts.</p></div>
+              <div><h3>Begin your trip</h3><p>Tell us where, when, and how long your Baguio trip will be.</p></div>
             </div>
 
-            <div class="form-grid form-grid-five">
+            <div class="form-grid form-grid-six">
               <label class="field field-wide">
                 <span>Starting point</span>
                 <div class="input-with-action">
                   <select id="startLocation" required aria-describedby="startHelp"></select>
                   <button id="useLocation" class="location-button" type="button" title="Use my current location" aria-label="Use my current location">⌖</button>
                 </div>
-                <small id="startHelp">Choose a common arrival point or use your current location.</small>
               </label>
 
               <label class="field">
@@ -131,12 +133,23 @@
               </label>
 
               <label class="field">
-                <span>Start time</span>
+                <span>Number of days</span>
+                <select id="tripDays">
+                  <option value="1" selected>1 day</option>
+                  <option value="2">2 days</option>
+                  <option value="3">3 days</option>
+                  <option value="4">4 days</option>
+                  <option value="5">5 days</option>
+                </select>
+              </label>
+
+              <label class="field">
+                <span>Daily start time</span>
                 <input id="startTime" type="time" value="08:00" required />
               </label>
 
               <label class="field">
-                <span>Available time</span>
+                <span>Time available each day</span>
                 <select id="tripHours">
                   <option value="4">4 hours</option>
                   <option value="6">6 hours</option>
@@ -151,32 +164,63 @@
                 <input id="travelers" type="number" min="1" max="12" value="2" required />
               </label>
             </div>
-          </div>
+
+            <aside class="arrival-tip" id="arrivalTip" hidden aria-live="polite"></aside>
+          </section>
 
           <div class="form-divider"></div>
 
-          <div class="form-section">
+          <section class="form-section planner-step" id="destinations" data-step-section="2">
             <div class="form-section-title destination-title-row">
               <span>02</span>
-              <div><h3>Choose your destinations</h3><p>Select at least two places. Search Baguio landmarks, cultural sites, hikes, and nearby Benguet side trips.</p></div>
+              <div><h3>Choose your destinations</h3><p>Swipe through compact cards, then manage your selected places from the list below.</p></div>
               <div class="selection-count"><strong id="selectionCount">0</strong><span>selected</span></div>
             </div>
 
-            <div class="destination-toolbar">
-              <label class="search-field">
-                <span aria-hidden="true">⌕</span>
-                <input id="destinationSearch" type="search" placeholder="Search a place or area…" autocomplete="off" />
-              </label>
-              <div class="area-filters" id="areaFilters" aria-label="Filter destinations by area"></div>
+            <div class="selected-drawer" id="selectedDrawer">
+              <div class="selected-drawer-head">
+                <div><strong>Your selected places</strong><small id="selectedHint">Choose at least two destinations.</small></div>
+                <button class="text-button danger" id="clearSelections" type="button">Clear all</button>
+              </div>
+              <div class="selected-chips" id="selectedChips" aria-live="polite">
+                <span class="empty-selection">No destinations selected yet.</span>
+              </div>
             </div>
 
-            <div class="destination-grid" id="destinationGrid"></div>
+            <div class="destination-actions">
+              <label class="search-field">
+                <span aria-hidden="true">⌕</span>
+                <input id="destinationSearch" type="search" placeholder="Search a place, activity, or area…" autocomplete="off" />
+              </label>
+              <label class="compact-field">
+                <span>Auto-pick theme</span>
+                <select id="autoPickTheme">
+                  <option value="balanced">Balanced Baguio highlights</option>
+                  <option value="popular">Most visited</option>
+                  <option value="nature">Nature and views</option>
+                  <option value="culture">Arts and culture</option>
+                  <option value="food">Food and shopping</option>
+                  <option value="family">Family-friendly</option>
+                  <option value="hidden">Less obvious places</option>
+                </select>
+              </label>
+              <button class="button button-accent" id="autoChoose" type="button"><span aria-hidden="true">✦</span> Let Lakbay choose</button>
+            </div>
+
+            <div class="area-filters" id="areaFilters" aria-label="Filter destinations by category"></div>
+
+            <div class="destination-rail-wrap">
+              <button class="rail-control rail-prev" id="railPrev" type="button" aria-label="Scroll destinations left">‹</button>
+              <div class="destination-rail" id="destinationGrid" tabindex="0" aria-label="Destination choices"></div>
+              <button class="rail-control rail-next" id="railNext" type="button" aria-label="Scroll destinations right">›</button>
+            </div>
+            <p class="swipe-hint">Swipe sideways to explore more places <span aria-hidden="true">↔</span></p>
             <p class="field-error" id="destinationError" role="alert"></p>
-          </div>
+          </section>
 
           <div class="form-divider"></div>
 
-          <div class="form-section">
+          <section class="form-section planner-step" id="preferences" data-step-section="3">
             <div class="form-section-title">
               <span>03</span>
               <div><h3>Pick your travel style</h3><p>We will balance time, cost, walking, and convenience around this preference.</p></div>
@@ -206,41 +250,39 @@
               </label>
               <label class="preference-card">
                 <input type="radio" name="preference" value="less-walking" />
-                <span class="preference-icon">♿</span>
+                <span class="preference-icon">🚕</span>
                 <strong>Less walking</strong>
-                <small>Choose vehicle options more often</small>
+                <small>Favor door-to-door convenience</small>
                 <i>✓</i>
               </label>
             </div>
 
-            <div class="transport-row">
-              <div>
-                <strong>Allowed travel modes</strong>
-                <small>Turn off any mode you do not want included.</small>
-              </div>
-              <div class="transport-toggles">
-                <label><input type="checkbox" name="mode" value="walk" checked /><span>🚶 Walking</span></label>
-                <label><input type="checkbox" name="mode" value="jeepney" checked /><span>🚌 Jeepney</span></label>
+            <div class="preference-lower-grid">
+              <fieldset class="mode-fieldset">
+                <legend>Allowed transportation</legend>
+                <label><input type="checkbox" name="mode" value="walk" checked /><span>🚶 Walk</span></label>
+                <label><input type="checkbox" name="mode" value="jeepney" checked /><span>🚐 Jeepney</span></label>
                 <label><input type="checkbox" name="mode" value="taxi" checked /><span>🚕 Taxi</span></label>
-              </div>
+              </fieldset>
+
+              <details class="fare-settings">
+                <summary>Adjust planning fare assumptions</summary>
+                <div class="fare-grid">
+                  <label><span>Jeepney minimum</span><input id="jeepMinimum" type="number" value="13" min="0" step="1" /></label>
+                  <label><span>Base distance (km)</span><input id="jeepBaseKm" type="number" value="4" min="0" step="0.5" /></label>
+                  <label><span>Added per km</span><input id="jeepPerKm" type="number" value="1.8" min="0" step="0.1" /></label>
+                  <label><span>Taxi flag-down</span><input id="taxiFlag" type="number" value="50" min="0" step="1" /></label>
+                  <label><span>Taxi per km</span><input id="taxiPerKm" type="number" value="15" min="0" step="1" /></label>
+                </div>
+                <p>These are editable estimates only. Verify current fares with the driver or dispatcher.</p>
+              </details>
             </div>
 
-            <details class="fare-settings">
-              <summary><span>Planning fare assumptions</span><small>Editable estimates—not an official fare quotation</small></summary>
-              <div class="fare-grid">
-                <label class="field"><span>Jeepney minimum (₱)</span><input id="jeepMinimum" type="number" min="0" step="0.50" value="13" /></label>
-                <label class="field"><span>Included distance (km)</span><input id="jeepBaseKm" type="number" min="0" step="0.5" value="4" /></label>
-                <label class="field"><span>Jeepney / succeeding km (₱)</span><input id="jeepPerKm" type="number" min="0" step="0.10" value="1.80" /></label>
-                <label class="field"><span>Taxi flag-down (₱)</span><input id="taxiFlag" type="number" min="0" step="1" value="50" /></label>
-                <label class="field"><span>Taxi / km estimate (₱)</span><input id="taxiPerKm" type="number" min="0" step="0.50" value="15" /></label>
-              </div>
-            </details>
-          </div>
-
-          <div class="planner-submit-row">
-            <div class="planner-disclaimer"><span>ⓘ</span><p>Google Maps provides road navigation, while jeepney instructions are curated local guidance. Confirm the loading bay, route, drop-off point, operating hours, and fare with a dispatcher before boarding.</p></div>
-            <button class="button button-primary button-large" type="submit">Generate my itinerary <span aria-hidden="true">→</span></button>
-          </div>
+            <button class="generate-button" type="submit">
+              <span><small>Ready when you are</small><strong>Generate my Baguio plan</strong></span>
+              <i aria-hidden="true">→</i>
+            </button>
+          </section>
         </form>
       </div>
     </section>
@@ -250,173 +292,82 @@
         <div class="results-topbar reveal">
           <div>
             <div class="eyebrow"><span></span> Your generated plan</div>
-            <h2 id="resultsTitle">A smoother day around Baguio</h2>
+            <h2 id="resultsTitle">A smoother trip around Baguio</h2>
             <p id="resultsSubtitle"></p>
           </div>
-          <div class="result-actions">
-            <button class="button button-ghost" id="editPlan" type="button">Edit plan</button>
-            <button class="button button-ghost" id="copyPlan" type="button">Copy</button>
-            <button class="button button-primary" id="printPlan" type="button">Print itinerary</button>
+          <div class="results-actions">
+            <button class="button button-ghost" id="editPlan" type="button">Edit choices</button>
+            <button class="button button-ghost" id="copyPlan" type="button">Copy plan</button>
+            <button class="button button-primary" id="printPlan" type="button">Print / Save PDF</button>
           </div>
         </div>
 
-        <div class="summary-grid" id="summaryGrid"></div>
+        <div class="trip-summary" id="tripSummary"></div>
+        <div class="day-tabs" id="dayTabs" aria-label="Select itinerary day"></div>
 
         <div class="results-layout">
-          <div class="itinerary-panel">
+          <article class="route-panel">
             <div class="panel-heading">
-              <div><span class="panel-kicker">STEP-BY-STEP ROUTE</span><h3>Your day at a glance</h3></div>
-              <span class="estimate-badge">Planning estimate</span>
+              <div><small>STEP-BY-STEP ROUTE</small><h3>Your day at a glance</h3></div>
+              <span class="estimate-chip">Planning estimate</span>
             </div>
-            <div class="timeline" id="timeline"></div>
-            <div class="excluded-stops" id="excludedStops" hidden></div>
-          </div>
+            <div class="route-timeline" id="routeTimeline"></div>
+          </article>
 
-          <aside class="map-panel google-map-panel">
+          <aside class="map-panel">
             <div class="panel-heading map-heading">
-              <div><span class="panel-kicker">GOOGLE MAPS</span><h3>Your location and next stop</h3></div>
-              <span class="google-badge">Google Maps</span>
+              <div><small>GOOGLE MAPS</small><h3>See the route</h3></div>
+              <button class="icon-button" id="fitMap" type="button" title="Show the day route" aria-label="Show the day route">↗</button>
             </div>
-
-            <div class="map-location-card">
-              <div>
-                <span class="location-pulse" aria-hidden="true"></span>
-                <div><strong id="mapLocationTitle">Map preview</strong><small id="mapLocationStatus">Choose a stop below or use your location.</small></div>
-              </div>
-              <button class="button button-ghost button-small" id="locateOnMap" type="button">Use my location</button>
+            <div class="google-map-shell">
+              <iframe id="googleMapFrame" title="Google Map for the selected route" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+              <div class="map-overlay-note" id="mapOverlayNote">Select a generated day to preview its first stop.</div>
             </div>
-
-            <iframe
-              id="googleMapFrame"
-              class="google-map-frame"
-              title="Google Maps preview of the selected Baguio destination"
-              src="https://maps.google.com/maps?q=Baguio%20City%2C%20Philippines&z=13&output=embed"
-              loading="lazy"
-              referrerpolicy="no-referrer-when-downgrade"
-              allowfullscreen></iframe>
-
-            <div class="map-route-actions">
-              <a class="button button-primary" id="nextStopNav" href="https://www.google.com/maps/search/?api=1&query=Baguio%20City" target="_blank" rel="noopener noreferrer">Navigate to next stop ↗</a>
-              <button class="button button-ghost" id="openRouteParts" type="button">Open full route</button>
-            </div>
-
-            <div class="route-parts" id="routeParts" hidden></div>
-            <div class="map-stop-list" id="mapStopList" aria-label="Preview itinerary stops in Google Maps"></div>
-            <p class="map-disclaimer">Google Maps can use your live device location when you open navigation. Jeepney routes are shown as local boarding guidance because Google transit coverage may not include every Baguio PUJ route.</p>
+            <div class="map-actions" id="mapActions"></div>
+            <p class="map-note">Google Maps may use your device location when the route opens. Confirm live traffic, jeepney loading points, and temporary road changes locally.</p>
           </aside>
         </div>
 
-        <div class="results-note">
-          <span>🌲</span>
-          <div><strong>Local travel reminder</strong><p>Baguio traffic and jeepney availability can change quickly. Leave extra time during weekends, holidays, rain, and major events.</p></div>
-          <a href="https://alternateroutes.baguio.gov.ph/" target="_blank" rel="noopener noreferrer">Check city traffic portal ↗</a>
-        </div>
-      </div>
-    </section>
-
-    <section class="destinations-section section-shell" id="destinations">
-      <div class="container">
-        <div class="section-heading split-heading reveal">
-          <div><div class="eyebrow"><span></span> Start with popular places</div><h2>Explore Baguio by neighborhood</h2></div>
-          <p>Nearby attractions naturally belong together. The planner uses these clusters to reduce backtracking and separates longer Benguet side trips from compact city stops.</p>
-        </div>
-
-        <div class="spotlight-grid">
-          <article class="spotlight-card city-card reveal">
-            <div class="spotlight-top"><span>01</span><small>CITY CENTER</small></div>
-            <div class="spotlight-art art-city"><span>⛲</span></div>
-            <h3>Classic Baguio</h3>
-            <p>Burnham Park, Session Road, Cathedral, and the public market are easy to combine.</p>
-            <button type="button" class="text-button cluster-button" data-cluster="City Center">Add this cluster <span>＋</span></button>
-          </article>
-
-          <article class="spotlight-card east-card reveal delay-1">
-            <div class="spotlight-top"><span>02</span><small>EAST BAGUIO</small></div>
-            <div class="spotlight-art art-east"><span>🌿</span></div>
-            <h3>Gardens & landmarks</h3>
-            <p>Botanical Garden, Wright Park, The Mansion, Mines View, and Good Shepherd.</p>
-            <button type="button" class="text-button cluster-button" data-cluster="East Baguio">Add this cluster <span>＋</span></button>
-          </article>
-
-          <article class="spotlight-card south-card reveal delay-2">
-            <div class="spotlight-top"><span>03</span><small>SOUTH BAGUIO</small></div>
-            <div class="spotlight-art art-south"><span>🌲</span></div>
-            <h3>Pines & open spaces</h3>
-            <p>Spend a slower part of the day around Camp John Hay and nearby scenic areas.</p>
-            <button type="button" class="text-button cluster-button" data-cluster="South Baguio">Add this cluster <span>＋</span></button>
-          </article>
-
-          <article class="spotlight-card west-card reveal delay-3">
-            <div class="spotlight-top"><span>04</span><small>WEST BAGUIO</small></div>
-            <div class="spotlight-art art-west"><span>🎨</span></div>
-            <h3>Culture & viewpoints</h3>
-            <p>Pair Mirador, Lourdes, Tam-awan, Igorot Stone Kingdom, BenCab, and western craft stops.</p>
-            <button type="button" class="text-button cluster-button" data-cluster="West Baguio">Add this cluster <span>＋</span></button>
-          </article>
-
-          <article class="spotlight-card benguet-card reveal">
-            <div class="spotlight-top"><span>05</span><small>NEARBY BENGUET</small></div>
-            <div class="spotlight-art art-benguet"><span>🍓</span></div>
-            <h3>Farms, murals & hikes</h3>
-            <p>Build a separate side trip for Strawberry Farm, Valley of Colors, Mount Costa, or nearby mountain trails.</p>
-            <button type="button" class="text-button cluster-button" data-cluster="Nearby Benguet">Add this cluster <span>＋</span></button>
-          </article>
-        </div>
+        <div class="results-note" id="resultsNote"></div>
       </div>
     </section>
 
     <section class="how-section" id="how-it-works">
-      <div class="container how-grid">
-        <div class="how-copy reveal">
-          <div class="eyebrow"><span></span> Less guessing, more exploring</div>
-          <h2>A simple plan built around the way Baguio actually feels.</h2>
-          <p>The goal is not to pack every attraction into one day. It is to show a practical sequence, make the travel tradeoffs visible, and help visitors move with more confidence.</p>
-          <a class="button button-primary" href="#planner">Start planning</a>
-        </div>
-
-        <div class="steps-list">
-          <article class="step-card reveal"><span>01</span><div><h3>Choose your stops</h3><p>Search and select the attractions that matter to you.</p></div><i>⌁</i></article>
-          <article class="step-card reveal delay-1"><span>02</span><div><h3>Set your priorities</h3><p>Choose a balanced, cheaper, faster, or low-walking route.</p></div><i>⚙</i></article>
-          <article class="step-card reveal delay-2"><span>03</span><div><h3>Follow the sequence</h3><p>See activity ideas, precise loading-area guidance, Google Maps links, visit durations, and estimated fares.</p></div><i>➜</i></article>
-        </div>
-      </div>
-    </section>
-
-    <section class="travel-notes-section section-shell" id="travel-notes">
       <div class="container">
-        <div class="section-heading centered reveal">
-          <div class="eyebrow"><span></span> Before you ride</div>
-          <h2>Small reminders for a smoother trip</h2>
+        <div class="section-heading reveal">
+          <div class="eyebrow"><span></span> How it works</div>
+          <h2>Local structure, not random suggestions</h2>
+          <p>The planner combines distance, opening windows, visit duration, and your preferred way to travel.</p>
         </div>
-
-        <div class="notes-grid">
-          <article class="note-card reveal"><span>01</span><div class="note-icon">🚌</div><h3>Confirm before boarding</h3><p>Ask the driver or dispatcher whether the jeepney passes your exact destination and where to get off.</p></article>
-          <article class="note-card reveal delay-1"><span>02</span><div class="note-icon">🌧</div><h3>Allow a weather buffer</h3><p>Rain, fog, and weekend crowds can add waiting and travel time. Keep your schedule flexible.</p></article>
-          <article class="note-card reveal delay-2"><span>03</span><div class="note-icon">💵</div><h3>Carry small bills</h3><p>Exact or smaller denominations make jeepney and taxi payments easier, especially during busy hours.</p></article>
-          <article class="note-card reveal delay-3"><span>04</span><div class="note-icon">🚶</div><h3>Use walkable clusters</h3><p>Several city-center landmarks are close enough to visit on foot, avoiding unnecessary rides.</p></article>
+        <div class="how-grid">
+          <article class="how-card reveal"><span>01</span><h3>Choose your day</h3><p>Set your arrival point, daily start time, and number of travel days.</p></article>
+          <article class="how-card reveal delay-1"><span>02</span><h3>Pick or auto-choose</h3><p>Select places yourself or let the planner create a balanced set of stops.</p></article>
+          <article class="how-card reveal delay-2"><span>03</span><h3>Follow the route</h3><p>See a timed sequence, activity suggestions, commute instructions, and Google Maps links.</p></article>
         </div>
       </div>
     </section>
 
-    <section class="cta-section">
-      <div class="container cta-card reveal">
-        <div><span class="cta-icon">⌖</span><div><small>YOUR BAGUIO DAY STARTS HERE</small><h2>Spend less time figuring out the route.</h2></div></div>
-        <a class="button button-light" href="#planner">Build my itinerary <span>→</span></a>
+    <section class="travel-notes" id="travel-notes">
+      <div class="container notes-grid">
+        <div class="section-heading reveal">
+          <div class="eyebrow"><span></span> Travel responsibly</div>
+          <h2>A smart route still needs local confirmation.</h2>
+        </div>
+        <div class="note-list reveal delay-1">
+          <div><span>01</span><p><strong>Ask the dispatcher.</strong> Jeepney loading areas and diversions can change.</p></div>
+          <div><span>02</span><p><strong>Keep buffer time.</strong> Fog, rain, weekends, and festivals affect travel.</p></div>
+          <div><span>03</span><p><strong>Verify hours and fees.</strong> Attractions and baggage counters may change policies without notice.</p></div>
+        </div>
       </div>
     </section>
   </main>
 
   <footer class="site-footer">
-    <div class="container footer-grid">
-      <div class="footer-brand">
-        <img src="assets/img/logo.svg" alt="Lakbay Baguio" />
-        <p>A single-page itinerary planner with Google Maps navigation, commute guidance, and activity ideas for Baguio and nearby Benguet.</p>
-      </div>
-      <div><strong>Explore</strong><a href="#planner">Trip planner</a><a href="#destinations">Destinations</a><a href="#how-it-works">How it works</a></div>
-      <div><strong>Official references</strong><a href="https://visita.baguio.gov.ph/" target="_blank" rel="noopener noreferrer">Baguio VISITA ↗</a><a href="https://alternateroutes.baguio.gov.ph/" target="_blank" rel="noopener noreferrer">Traffic & PUJ routes ↗</a></div>
-      <div><strong>Important</strong><p>Routes, terminal locations, hours, and fares are planning estimates. Verify locally before traveling.</p></div>
+    <div class="container footer-inner">
+      <img src="assets/img/logo.svg" alt="Lakbay Baguio" />
+      <p>A route-planning prototype for more convenient Baguio trips.</p>
+      <a href="#top">Back to top ↑</a>
     </div>
-    <div class="container footer-bottom"><span>© <span id="currentYear"></span> Lakbay Baguio</span><span>Plan gently. Travel responsibly. 🌲</span></div>
   </footer>
 
   <div class="toast" id="toast" role="status" aria-live="polite"></div>

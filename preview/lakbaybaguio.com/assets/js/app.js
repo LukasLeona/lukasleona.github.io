@@ -1,21 +1,22 @@
-(() => {
+(function () {
   "use strict";
 
   const data = window.LAKBAY_DATA;
-  if (!data) throw new Error("Lakbay Baguio data failed to load.");
+  if (!data) return;
+
+  const $ = (selector, scope = document) => scope.querySelector(selector);
+  const $$ = (selector, scope = document) => Array.from(scope.querySelectorAll(selector));
 
   const state = {
     selected: new Set(),
-    activeArea: "All",
+    activeCategory: "All",
+    activeStep: 1,
+    activeDay: 0,
     customStart: null,
-    liveLocation: null,
     itinerary: null,
-    activeMapStopId: null,
+    lastSelectedId: null,
     toastTimer: null
   };
-
-  const $ = (selector, root = document) => root.querySelector(selector);
-  const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
 
   const elements = {
     loader: $("#pageLoader"),
@@ -26,105 +27,71 @@
     startLocation: $("#startLocation"),
     useLocation: $("#useLocation"),
     tripDate: $("#tripDate"),
+    tripDays: $("#tripDays"),
     startTime: $("#startTime"),
     tripHours: $("#tripHours"),
     travelers: $("#travelers"),
+    arrivalTip: $("#arrivalTip"),
+    plannerProgress: $("#plannerProgress"),
+    progressTrackFill: $("#progressTrackFill"),
+    selectionCount: $("#selectionCount"),
+    selectedDrawer: $("#selectedDrawer"),
+    selectedChips: $("#selectedChips"),
+    selectedHint: $("#selectedHint"),
+    clearSelections: $("#clearSelections"),
     destinationSearch: $("#destinationSearch"),
+    autoPickTheme: $("#autoPickTheme"),
+    autoChoose: $("#autoChoose"),
     areaFilters: $("#areaFilters"),
     destinationGrid: $("#destinationGrid"),
-    selectionCount: $("#selectionCount"),
     destinationError: $("#destinationError"),
-    destinationTotal: $("#destinationTotal"),
+    railPrev: $("#railPrev"),
+    railNext: $("#railNext"),
+    preferenceGrid: $("#preferenceGrid"),
     results: $("#results"),
     resultsTitle: $("#resultsTitle"),
     resultsSubtitle: $("#resultsSubtitle"),
-    summaryGrid: $("#summaryGrid"),
-    timeline: $("#timeline"),
-    excludedStops: $("#excludedStops"),
+    tripSummary: $("#tripSummary"),
+    dayTabs: $("#dayTabs"),
+    routeTimeline: $("#routeTimeline"),
+    googleMapFrame: $("#googleMapFrame"),
+    mapOverlayNote: $("#mapOverlayNote"),
+    mapActions: $("#mapActions"),
+    resultsNote: $("#resultsNote"),
     editPlan: $("#editPlan"),
     copyPlan: $("#copyPlan"),
     printPlan: $("#printPlan"),
-    googleMapFrame: $("#googleMapFrame"),
-    locateOnMap: $("#locateOnMap"),
-    mapLocationTitle: $("#mapLocationTitle"),
-    mapLocationStatus: $("#mapLocationStatus"),
-    nextStopNav: $("#nextStopNav"),
-    openRouteParts: $("#openRouteParts"),
-    routeParts: $("#routeParts"),
-    mapStopList: $("#mapStopList"),
+    fitMap: $("#fitMap"),
     toast: $("#toast")
   };
 
   function init() {
     populateStartLocations();
     setMinimumDate();
-    renderAreaFilters();
     restoreSavedState();
+    renderCategoryFilters();
     renderDestinations();
-    updateProgress();
+    renderSelectedChips();
+    updateArrivalTip();
+    updateProgressState();
     bindEvents();
+    setupStepObserver();
     setupRevealObserver();
 
-    if (elements.destinationTotal) elements.destinationTotal.textContent = `${data.destinations.length}`;
-    $("#currentYear").textContent = new Date().getFullYear();
-
-    const hideLoader = () => elements.loader?.classList.add("is-hidden");
-    window.addEventListener("load", () => window.setTimeout(hideLoader, 250), { once: true });
-    window.setTimeout(hideLoader, 1200);
+    window.setTimeout(() => elements.loader.classList.add("loaded"), 550);
   }
 
   function populateStartLocations() {
     elements.startLocation.innerHTML = data.startLocations
-      .map((location) => `<option value="${escapeHTML(location.id)}">${escapeHTML(location.name)}</option>`)
+      .map((location) => `<option value="${escapeHtml(location.id)}">${escapeHtml(location.name)}</option>`)
       .join("");
   }
 
   function setMinimumDate() {
     const today = new Date();
-    const localDate = new Date(today.getTime() - today.getTimezoneOffset() * 60000).toISOString().slice(0, 10);
-    elements.tripDate.min = localDate;
-    if (!elements.tripDate.value) elements.tripDate.value = localDate;
-  }
-
-  function renderAreaFilters() {
-    elements.areaFilters.innerHTML = data.areaOrder
-      .map((area) => `<button class="area-filter ${state.activeArea === area ? "active" : ""}" type="button" data-area="${escapeHTML(area)}">${escapeHTML(area)}</button>`)
-      .join("");
-  }
-
-  function renderDestinations() {
-    const query = elements.destinationSearch.value.trim().toLowerCase();
-    const filtered = data.destinations.filter((destination) => {
-      const matchesArea = state.activeArea === "All" || destination.area === state.activeArea;
-      const haystack = [
-        destination.name,
-        destination.area,
-        destination.category,
-        destination.description,
-        ...(destination.tags || []),
-        ...(destination.thingsToDo || [])
-      ].join(" ").toLowerCase();
-      return matchesArea && haystack.includes(query);
-    });
-
-    if (!filtered.length) {
-      elements.destinationGrid.innerHTML = `<div class="destination-empty">No destinations match this search. Try another name, activity, or area.</div>`;
-      return;
-    }
-
-    elements.destinationGrid.innerHTML = filtered.map((destination) => {
-      const selected = state.selected.has(destination.id);
-      return `
-        <label class="destination-option ${selected ? "selected" : ""}" data-id="${escapeHTML(destination.id)}">
-          <input type="checkbox" value="${escapeHTML(destination.id)}" ${selected ? "checked" : ""} />
-          <span class="destination-icon">${destination.icon}</span>
-          <span class="destination-name">${escapeHTML(destination.name)}</span>
-          <span class="destination-meta">${escapeHTML(destination.area)} · ${formatDuration(destination.duration)}</span>
-          ${destination.outsideBaguio ? '<span class="destination-side-trip">Side trip</span>' : ""}
-          <span class="destination-check">✓</span>
-        </label>
-      `;
-    }).join("");
+    const value = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, "0")}-${String(today.getDate()).padStart(2, "0")}`;
+    elements.tripDate.min = value;
+    if (!elements.tripDate.value) elements.tripDate.value = value;
   }
 
   function bindEvents() {
@@ -136,63 +103,96 @@
       elements.menuToggle.setAttribute("aria-expanded", String(open));
       document.body.classList.toggle("menu-open", open);
     });
+
     $$("#mainNav a").forEach((link) => link.addEventListener("click", closeMenu));
 
-    elements.areaFilters.addEventListener("click", (event) => {
-      const button = event.target.closest("[data-area]");
+    elements.plannerProgress.addEventListener("click", (event) => {
+      const button = event.target.closest("[data-target]");
       if (!button) return;
-      state.activeArea = button.dataset.area;
-      renderAreaFilters();
+      const target = document.getElementById(button.dataset.target);
+      if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+
+    elements.startLocation.addEventListener("change", () => {
+      updateArrivalTip();
+      updateProgressState();
+      saveFormState();
+    });
+    elements.startTime.addEventListener("change", () => {
+      updateArrivalTip();
+      saveFormState();
+    });
+    [elements.tripDate, elements.tripDays, elements.tripHours, elements.travelers].forEach((input) => input.addEventListener("change", saveFormState));
+
+    elements.useLocation.addEventListener("click", useCurrentLocation);
+
+    elements.areaFilters.addEventListener("click", (event) => {
+      const button = event.target.closest("[data-category]");
+      if (!button) return;
+      state.activeCategory = button.dataset.category;
+      renderCategoryFilters();
       renderDestinations();
+      elements.destinationGrid.scrollTo({ left: 0, behavior: "smooth" });
     });
 
     elements.destinationSearch.addEventListener("input", renderDestinations);
+
     elements.destinationGrid.addEventListener("change", (event) => {
       const checkbox = event.target.closest("input[type='checkbox']");
       if (!checkbox) return;
       toggleDestination(checkbox.value, checkbox.checked);
     });
 
+    elements.destinationGrid.addEventListener("error", (event) => {
+      const image = event.target.closest("img.destination-image");
+      if (!image) return;
+      image.hidden = true;
+      const fallback = image.parentElement.querySelector(".destination-image-fallback");
+      if (fallback) fallback.hidden = false;
+    }, true);
+
+    elements.selectedChips.addEventListener("click", (event) => {
+      const button = event.target.closest("[data-remove-id]");
+      if (!button) return;
+      toggleDestination(button.dataset.removeId, false);
+    });
+
+    elements.clearSelections.addEventListener("click", clearSelections);
+    elements.autoChoose.addEventListener("click", autoChooseDestinations);
+    elements.railPrev.addEventListener("click", () => scrollDestinationRail(-1));
+    elements.railNext.addEventListener("click", () => scrollDestinationRail(1));
+
     $$("input[name='preference']").forEach((radio) => {
       radio.addEventListener("change", () => {
         $$(".preference-card").forEach((card) => card.classList.toggle("active", Boolean($("input:checked", card))));
-        updateProgress();
+        updateProgressState();
+        saveFormState();
       });
     });
 
-    elements.useLocation.addEventListener("click", () => requestLocation({ setAsStart: true, updateMap: true }));
-    elements.locateOnMap?.addEventListener("click", () => requestLocation({ setAsStart: false, updateMap: true }));
     elements.form.addEventListener("submit", generateItinerary);
-    elements.editPlan.addEventListener("click", () => $("#planner").scrollIntoView({ behavior: "smooth" }));
+    elements.editPlan.addEventListener("click", () => document.querySelector("#planner").scrollIntoView({ behavior: "smooth" }));
     elements.copyPlan.addEventListener("click", copyItinerary);
     elements.printPlan.addEventListener("click", () => window.print());
-    elements.openRouteParts?.addEventListener("click", toggleRouteParts);
+    elements.fitMap.addEventListener("click", openActiveDayRoute);
 
-    elements.mapStopList?.addEventListener("click", (event) => {
-      const button = event.target.closest("[data-map-stop]");
-      if (!button || !state.itinerary) return;
-      previewMapStop(button.dataset.mapStop);
+    elements.dayTabs.addEventListener("click", (event) => {
+      const button = event.target.closest("[data-day-index]");
+      if (!button) return;
+      state.activeDay = Number(button.dataset.dayIndex);
+      renderActiveDay();
     });
 
-    elements.timeline.addEventListener("click", (event) => {
-      const action = event.target.closest("[data-map-action]");
-      if (!action || !state.itinerary) return;
-      const item = state.itinerary.items.find((entry) => entry.destination.id === action.dataset.stopId);
-      if (!item) return;
-
-      const type = action.dataset.mapAction;
-      if (type === "preview") {
-        previewLeg(item);
-      } else if (type === "place") {
-        window.open(mapsSearchUrl(item.destination), "_blank", "noopener");
-      } else if (type === "terminal") {
-        window.open(mapsQueryUrl(item.destination.commute.terminalQuery), "_blank", "noopener");
+    elements.routeTimeline.addEventListener("click", (event) => {
+      const preview = event.target.closest("[data-preview-query]");
+      if (preview) {
+        updateMapPreview(preview.dataset.previewQuery, `Previewing ${preview.dataset.previewName || "this stop"}.`);
+        return;
       }
+      const open = event.target.closest("[data-open-url]");
+      if (open) window.open(open.dataset.openUrl, "_blank", "noopener,noreferrer");
     });
 
-    $$(".cluster-button").forEach((button) => button.addEventListener("click", () => addCluster(button.dataset.cluster)));
-    [elements.startLocation, elements.tripDate, elements.startTime, elements.tripHours, elements.travelers]
-      .forEach((control) => control.addEventListener("change", updateProgress));
     window.addEventListener("beforeunload", saveFormState);
   }
 
@@ -203,52 +203,253 @@
     document.body.classList.remove("menu-open");
   }
 
+  function renderCategoryFilters() {
+    elements.areaFilters.innerHTML = data.categoryOrder.map((category) => `
+      <button class="area-filter ${state.activeCategory === category ? "active" : ""}" type="button" data-category="${escapeHtml(category)}">${escapeHtml(category)}</button>
+    `).join("");
+  }
+
+  function getFilteredDestinations() {
+    const query = elements.destinationSearch.value.trim().toLowerCase();
+    return data.destinations.filter((destination) => {
+      const categoryMatch = matchesCategory(destination, state.activeCategory);
+      const haystack = [destination.name, destination.area, destination.category, destination.scope, destination.description, ...(destination.tags || [])].join(" ").toLowerCase();
+      return categoryMatch && (!query || haystack.includes(query));
+    });
+  }
+
+  function matchesCategory(destination, category) {
+    switch (category) {
+      case "Popular": return destination.popular;
+      case "City Center": return destination.area === "City Center";
+      case "Nature & Views": return ["Park", "Viewpoint"].includes(destination.category) || destination.tags.some((tag) => ["nature", "hike", "garden", "flowers", "view"].includes(tag));
+      case "Arts & Culture": return ["Culture", "Museum"].includes(destination.category) || destination.tags.some((tag) => ["art", "culture", "heritage", "history", "weaving", "craft"].includes(tag));
+      case "Food & Shopping": return destination.category === "Food & shopping" || destination.tags.some((tag) => ["food", "shopping", "pasalubong", "souvenirs"].includes(tag));
+      case "Family": return destination.tags.includes("family");
+      case "Nearby Side Trips": return destination.scope !== "Baguio City";
+      default: return true;
+    }
+  }
+
+  function renderDestinations() {
+    const filtered = getFilteredDestinations();
+    if (!filtered.length) {
+      elements.destinationGrid.innerHTML = `<div class="empty-rail">No places match that search or filter. Try another keyword.</div>`;
+      return;
+    }
+
+    elements.destinationGrid.innerHTML = filtered.map((destination) => {
+      const selected = state.selected.has(destination.id);
+      const justSelected = selected && state.lastSelectedId === destination.id;
+      return `
+        <label class="destination-option ${selected ? "selected" : ""} ${justSelected ? "just-selected" : ""}" data-id="${escapeHtml(destination.id)}">
+          <input type="checkbox" value="${escapeHtml(destination.id)}" ${selected ? "checked" : ""} />
+          <span class="destination-image-wrap">
+            <img class="destination-image" src="${escapeHtml(destination.image)}" alt="${escapeHtml(destination.name)}" loading="lazy" />
+            <span class="destination-image-fallback" hidden aria-hidden="true">${escapeHtml(destination.icon)}</span>
+            ${destination.popular ? `<span class="popular-badge"><span aria-hidden="true">★</span> Popular</span>` : ""}
+            <span class="destination-selected-mark" aria-hidden="true">✓</span>
+          </span>
+          <span class="destination-card-copy">
+            <strong>${escapeHtml(destination.name)}</strong>
+            <small>${escapeHtml(destination.area)} · ${escapeHtml(destination.scope)}</small>
+            <span class="destination-card-meta"><span>${escapeHtml(destination.category)}</span><span>${formatDuration(destination.duration)}</span></span>
+          </span>
+        </label>
+      `;
+    }).join("");
+
+    window.setTimeout(() => { state.lastSelectedId = null; }, 460);
+  }
+
+  function renderSelectedChips() {
+    const selected = data.destinations.filter((destination) => state.selected.has(destination.id));
+    elements.selectionCount.textContent = String(selected.length);
+    elements.selectedHint.textContent = selected.length < 2
+      ? `Choose ${2 - selected.length} more ${selected.length === 1 ? "place" : "places"} to generate a route.`
+      : `${selected.length} places ready to arrange.`;
+    elements.clearSelections.disabled = selected.length === 0;
+
+    if (!selected.length) {
+      elements.selectedChips.innerHTML = `<span class="empty-selection">No destinations selected yet.</span>`;
+      return;
+    }
+
+    elements.selectedChips.innerHTML = selected.map((destination) => `
+      <span class="selected-chip">
+        ${escapeHtml(destination.name)}
+        <button type="button" data-remove-id="${escapeHtml(destination.id)}" aria-label="Remove ${escapeHtml(destination.name)}">×</button>
+      </span>
+    `).join("");
+  }
+
   function toggleDestination(id, checked) {
-    if (checked) state.selected.add(id);
-    else state.selected.delete(id);
-    elements.selectionCount.textContent = state.selected.size;
+    if (checked) {
+      state.selected.add(id);
+      state.lastSelectedId = id;
+    } else {
+      state.selected.delete(id);
+    }
+
     elements.destinationError.textContent = "";
+    elements.selectionCount.parentElement.classList.remove("bump");
+    void elements.selectionCount.parentElement.offsetWidth;
+    elements.selectionCount.parentElement.classList.add("bump");
     renderDestinations();
-    updateProgress();
+    renderSelectedChips();
+    updateProgressState();
     saveFormState();
   }
 
-  function addCluster(area) {
-    data.destinations.filter((destination) => destination.area === area).forEach((destination) => state.selected.add(destination.id));
-    elements.selectionCount.textContent = state.selected.size;
-    state.activeArea = area;
-    renderAreaFilters();
+  function clearSelections() {
+    if (!state.selected.size) return;
+    state.selected.clear();
     renderDestinations();
-    updateProgress();
-    showToast(`${area} destinations added. The time limit may exclude longer stops.`);
-    $("#planner").scrollIntoView({ behavior: "smooth" });
+    renderSelectedChips();
+    updateProgressState();
+    saveFormState();
+    showToast("All destination choices were cleared.");
   }
 
-  function updateProgress() {
-    const statuses = [
-      Boolean(elements.startLocation.value && elements.startTime.value),
-      state.selected.size >= 2,
-      Boolean($("input[name='preference']:checked"))
-    ];
-    $$('[data-progress]').forEach((item, index) => item.classList.toggle("active", statuses[index]));
+  function autoChooseDestinations() {
+    const theme = elements.autoPickTheme.value;
+    const days = clamp(Number(elements.tripDays.value), 1, 5);
+    const hours = clamp(Number(elements.tripHours.value), 4, 12);
+    const target = clamp(days * (hours >= 10 ? 5 : hours >= 7 ? 4 : 3), 3, 18);
+
+    let candidates = data.destinations.filter((destination) => {
+      if (days < 3 && destination.area === "Atok Side Trip") return false;
+      if (days === 1 && destination.scope !== "Baguio City") return false;
+      switch (theme) {
+        case "popular": return destination.popular;
+        case "nature": return matchesCategory(destination, "Nature & Views");
+        case "culture": return matchesCategory(destination, "Arts & Culture");
+        case "food": return matchesCategory(destination, "Food & Shopping");
+        case "family": return matchesCategory(destination, "Family") || destination.popular;
+        case "hidden": return !destination.popular;
+        default: return true;
+      }
+    });
+
+    candidates = candidates.sort((a, b) => scoreAutoPick(b, theme) - scoreAutoPick(a, theme));
+    const chosen = [];
+    const areaCount = new Map();
+
+    for (const candidate of candidates) {
+      if (chosen.length >= target) break;
+      const currentAreaCount = areaCount.get(candidate.area) || 0;
+      const areaLimit = days === 1 ? 3 : 4;
+      if (theme === "balanced" && currentAreaCount >= areaLimit) continue;
+      chosen.push(candidate);
+      areaCount.set(candidate.area, currentAreaCount + 1);
+    }
+
+    state.selected = new Set(chosen.map((destination) => destination.id));
+    state.lastSelectedId = chosen[0]?.id || null;
+    renderDestinations();
+    renderSelectedChips();
+    updateProgressState();
+    saveFormState();
+    showToast(`Lakbay selected ${chosen.length} places for a ${days}-day ${theme === "balanced" ? "balanced" : theme} trip.`);
   }
 
-  function requestLocation({ setAsStart, updateMap }) {
+  function scoreAutoPick(destination, theme) {
+    let score = destination.popular ? 10 : 3;
+    if (destination.scope === "Baguio City") score += 2;
+    if (destination.duration <= 90) score += 1.5;
+    if (theme === "hidden" && !destination.popular) score += 8;
+    if (theme === "balanced") {
+      if (["burnham-park", "botanical-garden", "camp-john-hay", "mirador-heritage-eco-park", "baguio-night-market"].includes(destination.id)) score += 5;
+    }
+    return score;
+  }
+
+  function scrollDestinationRail(direction) {
+    elements.destinationGrid.scrollBy({ left: direction * Math.max(360, elements.destinationGrid.clientWidth * 0.75), behavior: "smooth" });
+  }
+
+  function setupStepObserver() {
+    const sections = $$("[data-step-section]");
+    if (!("IntersectionObserver" in window)) return;
+
+    const observer = new IntersectionObserver((entries) => {
+      const visible = entries
+        .filter((entry) => entry.isIntersecting)
+        .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+      if (!visible) return;
+      setActiveStep(Number(visible.target.dataset.stepSection));
+    }, { rootMargin: "-30% 0px -54% 0px", threshold: [0.05, 0.2, 0.5] });
+
+    sections.forEach((section) => observer.observe(section));
+  }
+
+  function setActiveStep(step) {
+    state.activeStep = clamp(step, 1, 3);
+    updateProgressState();
+  }
+
+  function updateProgressState() {
+    const detailsComplete = Boolean(elements.startLocation.value && elements.startTime.value && elements.tripDays.value);
+    const destinationsComplete = state.selected.size >= 2;
+    const preferenceComplete = Boolean($("input[name='preference']:checked"));
+    const statuses = [detailsComplete, destinationsComplete, preferenceComplete];
+
+    $$("[data-progress]").forEach((button, index) => {
+      const step = index + 1;
+      button.classList.toggle("active", step === state.activeStep);
+      button.classList.toggle("complete", statuses[index] && step < state.activeStep);
+      if (step === state.activeStep) button.setAttribute("aria-current", "step");
+      else button.removeAttribute("aria-current");
+    });
+
+    elements.progressTrackFill.style.width = state.activeStep === 1 ? "0%" : state.activeStep === 2 ? "50%" : "100%";
+  }
+
+  function updateArrivalTip() {
+    const start = data.startLocations.find((location) => location.id === elements.startLocation.value);
+    const options = data.baggageOptions[elements.startLocation.value] || [];
+    const startMinutes = timeToMinutes(elements.startTime.value || "08:00");
+    const isEarlyTerminalArrival = Boolean(start?.terminal && startMinutes <= 600);
+
+    if (!isEarlyTerminalArrival || !options.length) {
+      elements.arrivalTip.hidden = true;
+      elements.arrivalTip.innerHTML = "";
+      return;
+    }
+
+    elements.arrivalTip.hidden = false;
+    elements.arrivalTip.innerHTML = `
+      <div class="arrival-tip-head">
+        <span aria-hidden="true">🧳</span>
+        <div>
+          <h4>Arriving before hotel check-in?</h4>
+          <p>You may be able to leave your bags before starting the route. These services and rates can change, so verify at the counter and keep valuables with you.</p>
+        </div>
+      </div>
+      <div class="baggage-options">
+        ${options.map((option) => `
+          <div class="baggage-option">
+            <strong>${escapeHtml(option.name)}</strong>
+            <p>${escapeHtml(option.detail)}</p>
+            <a class="inline-link" href="${googleSearchUrl(option.query)}" target="_blank" rel="noopener noreferrer">View in Google Maps ↗</a>
+          </div>
+        `).join("")}
+      </div>
+    `;
+  }
+
+  function useCurrentLocation() {
     if (!navigator.geolocation) {
       showToast("Location access is not supported by this browser.");
       return;
     }
 
-    const button = setAsStart ? elements.useLocation : elements.locateOnMap;
-    const originalText = button?.textContent;
-    if (button) {
-      button.disabled = true;
-      button.textContent = "Locating…";
-    }
+    elements.useLocation.disabled = true;
+    elements.useLocation.textContent = "…";
 
     navigator.geolocation.getCurrentPosition(
       (position) => {
-        const location = {
+        state.customStart = {
           id: "current-location",
           name: "My current location",
           lat: position.coords.latitude,
@@ -256,44 +457,26 @@
           area: "Current location",
           googleQuery: `${position.coords.latitude},${position.coords.longitude}`
         };
-        state.liveLocation = location;
 
-        if (setAsStart) {
-          state.customStart = location;
-          let option = elements.startLocation.querySelector("option[value='current-location']");
-          if (!option) {
-            option = new Option("My current location", "current-location");
-            elements.startLocation.prepend(option);
-          }
-          elements.startLocation.value = "current-location";
-          updateProgress();
+        let option = elements.startLocation.querySelector("option[value='current-location']");
+        if (!option) {
+          option = new Option("My current location", "current-location");
+          elements.startLocation.prepend(option);
         }
-
-        if (updateMap && elements.googleMapFrame) {
-          elements.googleMapFrame.src = mapEmbedPlace(location);
-          elements.mapLocationTitle.textContent = "Your current location";
-          elements.mapLocationStatus.textContent = `Accuracy: about ${Math.round(position.coords.accuracy)} meters. Open Google Maps for live movement.`;
-          if (state.itinerary?.items.length) setNavigationTarget(state.itinerary.items[0].destination, "Navigate from my location");
-        }
-
-        if (button) {
-          button.disabled = false;
-          button.textContent = setAsStart ? "✓" : "Location found";
-          window.setTimeout(() => { button.textContent = originalText || (setAsStart ? "⌖" : "Use my location"); }, 1800);
-        }
-        showToast(setAsStart ? "Current location set as your starting point." : "Current location shown on the map.");
+        elements.startLocation.value = "current-location";
+        elements.useLocation.textContent = "✓";
+        elements.useLocation.disabled = false;
+        elements.arrivalTip.hidden = true;
+        updateProgressState();
+        saveFormState();
+        showToast("Current location added as your starting point.");
       },
-      (error) => {
-        if (button) {
-          button.disabled = false;
-          button.textContent = originalText || (setAsStart ? "⌖" : "Use my location");
-        }
-        const message = error.code === 1
-          ? "Location permission was denied. You can still open every stop in Google Maps."
-          : "We could not read your location. Try again on HTTPS or localhost.";
-        showToast(message);
+      () => {
+        elements.useLocation.textContent = "⌖";
+        elements.useLocation.disabled = false;
+        showToast("We could not access your location. Choose a starting point instead.");
       },
-      { enableHighAccuracy: true, timeout: 12000, maximumAge: 120000 }
+      { enableHighAccuracy: true, timeout: 10000, maximumAge: 300000 }
     );
   }
 
@@ -304,9 +487,10 @@
       elements.form.reportValidity();
       return;
     }
+
     if (state.selected.size < 2) {
       elements.destinationError.textContent = "Please select at least two destinations to build a useful route.";
-      $(".destination-toolbar").scrollIntoView({ behavior: "smooth", block: "center" });
+      document.querySelector("#destinations").scrollIntoView({ behavior: "smooth", block: "start" });
       return;
     }
 
@@ -319,29 +503,43 @@
     const start = getSelectedStart();
     const selectedDestinations = data.destinations.filter((destination) => state.selected.has(destination.id));
     const preference = $("input[name='preference']:checked").value;
-    const availableMinutes = Number(elements.tripHours.value) * 60;
+    const numberOfDays = clamp(Number(elements.tripDays.value), 1, 5);
+    const availableMinutes = clamp(Number(elements.tripHours.value), 4, 12) * 60;
     const travelers = clamp(Number(elements.travelers.value), 1, 12);
     const fareSettings = getFareSettings();
-    const optimized = optimizeRoute(start, selectedDestinations, preference);
-    const built = buildTimedItinerary(start, optimized, {
+    const startMinutes = timeToMinutes(elements.startTime.value);
+
+    const buckets = buildDayBuckets(start, selectedDestinations, numberOfDays, availableMinutes);
+    const days = buckets.map((bucket, index) => buildDayItinerary(start, bucket, {
+      dayIndex: index,
       preference,
       availableMinutes,
       travelers,
       modes,
       fareSettings,
-      startTime: elements.startTime.value
-    });
+      startMinutes
+    }));
 
-    state.itinerary = { start, ...built, preference, travelers, fareSettings, date: elements.tripDate.value };
-    renderResults(state.itinerary);
-    renderGoogleMap(state.itinerary);
+    state.itinerary = {
+      start,
+      days,
+      preference,
+      travelers,
+      fareSettings,
+      date: elements.tripDate.value,
+      numberOfDays,
+      availableMinutes,
+      selectedCount: selectedDestinations.length
+    };
+    state.activeDay = 0;
+
+    renderResults();
     saveFormState();
-
     elements.results.hidden = false;
     window.setTimeout(() => {
       elements.results.scrollIntoView({ behavior: "smooth", block: "start" });
       setupRevealObserver();
-    }, 50);
+    }, 40);
   }
 
   function getSelectedStart() {
@@ -359,443 +557,415 @@
     };
   }
 
-  function optimizeRoute(start, destinations, preference) {
+  function buildDayBuckets(start, destinations, numberOfDays, availableMinutes) {
+    const buckets = Array.from({ length: numberOfDays }, () => []);
+    const nightStops = destinations.filter((destination) => destination.timeSlot === "night");
+    const atokStops = destinations.filter((destination) => destination.area === "Atok Side Trip" && destination.timeSlot !== "night");
+    const regularStops = destinations.filter((destination) => destination.timeSlot !== "night" && destination.area !== "Atok Side Trip");
+
+    let dayOffset = 0;
+    if (atokStops.length && numberOfDays > 1) {
+      buckets[numberOfDays - 1].push(...atokStops);
+    } else if (atokStops.length) {
+      regularStops.push(...atokStops);
+    }
+
+    const route = optimizeRoute(start, regularStops, "balanced", timeToMinutes(elements.startTime.value));
+    const targetPerDay = Math.max(180, availableMinutes - 45);
+    let currentDay = dayOffset;
+    let load = 0;
+
+    route.forEach((destination) => {
+      const estimated = destination.duration + 28;
+      const maxRegularDay = atokStops.length && numberOfDays > 1 ? numberOfDays - 2 : numberOfDays - 1;
+      if (currentDay < maxRegularDay && load > 0 && load + estimated > targetPerDay) {
+        currentDay += 1;
+        load = 0;
+      }
+      buckets[currentDay].push(destination);
+      load += estimated;
+    });
+
+    nightStops.forEach((destination, index) => {
+      const targetDay = Math.min(index, Math.max(0, numberOfDays - 1));
+      buckets[targetDay].push(destination);
+    });
+
+    return buckets;
+  }
+
+  function optimizeRoute(start, destinations, preference, startMinutes) {
     const remaining = [...destinations];
     const route = [];
     let current = start;
+    let cursor = startMinutes || 480;
 
     while (remaining.length) {
       let bestIndex = 0;
       let bestScore = Infinity;
+
       remaining.forEach((candidate, index) => {
         const distance = haversine(current, candidate);
+        const estimatedArrival = cursor + estimateTravelMinutes(distance, "taxi");
+        const open = timeToMinutes(candidate.open);
+        const close = candidate.timeSlot === "night" ? 26 * 60 : timeToMinutes(candidate.close);
+        const waitPenalty = Math.max(0, open - estimatedArrival) * 0.012;
+        const closurePenalty = estimatedArrival + candidate.duration > close ? 100 : 0;
         const sameAreaBonus = current.area === candidate.area ? -0.45 : 0;
-        const nearbyPairBonus = candidate.tags?.includes("nearby pair") || candidate.tags?.includes("walkable pair") ? -0.12 : 0;
-        const sideTripPenalty = candidate.outsideBaguio && !current.outsideBaguio ? 1.1 : 0;
-        const longVisitPenalty = preference === "fastest" ? candidate.duration / 750 : 0;
-        const score = distance + sameAreaBonus + nearbyPairBonus + sideTripPenalty + longVisitPenalty;
+        const sideTripPenalty = candidate.scope !== "Baguio City" ? 0.8 : 0;
+        const preferencePenalty = preference === "fastest" ? candidate.duration / 600 : 0;
+        const score = distance + waitPenalty + closurePenalty + sameAreaBonus + sideTripPenalty + preferencePenalty;
         if (score < bestScore) {
           bestScore = score;
           bestIndex = index;
         }
       });
+
       const [next] = remaining.splice(bestIndex, 1);
       route.push(next);
+      cursor += estimateTravelMinutes(haversine(current, next), "taxi") + next.duration;
       current = next;
     }
-    return improveRouteWithTwoOpt(start, route);
+
+    return route;
   }
 
-  function improveRouteWithTwoOpt(start, route) {
-    if (route.length < 4) return route;
-    let improved = [...route];
-    let changed = true;
-    let passes = 0;
-    while (changed && passes < 4) {
-      changed = false;
-      passes += 1;
-      for (let i = 0; i < improved.length - 2; i += 1) {
-        for (let j = i + 1; j < improved.length - 1; j += 1) {
-          const candidate = [...improved.slice(0, i), ...improved.slice(i, j + 1).reverse(), ...improved.slice(j + 1)];
-          if (routeDistance(start, candidate) + 0.02 < routeDistance(start, improved)) {
-            improved = candidate;
-            changed = true;
-          }
-        }
-      }
-    }
-    return improved;
-  }
-
-  function routeDistance(start, route) {
-    let distance = 0;
-    let current = start;
-    route.forEach((stop) => {
-      distance += haversine(current, stop);
-      current = stop;
-    });
-    return distance;
-  }
-
-  function buildTimedItinerary(start, route, options) {
-    const startMinutes = timeToMinutes(options.startTime);
-    const endLimit = startMinutes + options.availableMinutes;
-    let cursor = startMinutes;
-    let current = start;
-    let totalDistance = 0;
-    let totalFare = 0;
-    let totalTravel = 0;
+  function buildDayItinerary(start, bucket, options) {
+    const nightStops = bucket.filter((destination) => destination.timeSlot === "night");
+    const daytime = bucket.filter((destination) => destination.timeSlot !== "night");
+    const ordered = optimizeRoute(start, daytime, options.preference, options.startMinutes);
     const items = [];
-    const excluded = [];
+    const unscheduled = [];
+    const notices = [];
+    let current = start;
+    let cursor = options.startMinutes;
+    const dayEnd = options.startMinutes + options.availableMinutes;
 
-    for (const destination of route) {
-      const straightDistance = haversine(current, destination);
-      const roadDistance = Math.max(straightDistance, straightDistance * (destination.outsideBaguio ? 1.34 : 1.22));
-      const transport = chooseTransport(current, destination, roadDistance, options);
-      const projectedArrival = cursor + transport.minutes;
-      const openMinutes = timeToMinutes(destination.open);
-      const closeMinutes = timeToMinutes(destination.close);
-      const waitMinutes = projectedArrival < openMinutes ? openMinutes - projectedArrival : 0;
-      const visitStart = projectedArrival + waitMinutes;
-      const visitEnd = visitStart + destination.duration;
+    ordered.forEach((destination) => {
+      const distance = haversine(current, destination);
+      const transport = chooseTransport(current, destination, distance, options);
+      const arrival = cursor + transport.minutes;
+      const open = timeToMinutes(destination.open);
+      const close = timeToMinutes(destination.close);
+      let scheduledArrival = Math.max(arrival, open);
+      const wait = Math.max(0, open - arrival);
 
-      if (visitEnd > endLimit && items.length >= 1) {
-        excluded.push(destination);
-        continue;
+      if (scheduledArrival + destination.duration > close || scheduledArrival > dayEnd + 90) {
+        unscheduled.push(destination);
+        return;
       }
 
-      const item = {
-        index: items.length + 1,
+      items.push({
+        number: items.length + 1,
         destination,
-        from: current,
-        distance: roadDistance,
+        arrivalMinutes: scheduledArrival,
+        departureMinutes: scheduledArrival + destination.duration,
+        waitMinutes: wait,
+        distance,
         transport,
-        depart: cursor,
-        arrival: projectedArrival,
-        waitMinutes,
-        visitStart,
-        visitEnd,
-        mayBeClosed: visitStart > closeMinutes
-      };
-      items.push(item);
-      cursor = visitEnd;
+        from: current
+      });
+      cursor = scheduledArrival + destination.duration;
       current = destination;
-      totalDistance += roadDistance;
-      totalFare += transport.fareTotal;
-      totalTravel += transport.minutes + waitMinutes;
+    });
+
+    nightStops.forEach((destination) => {
+      const distance = haversine(current, destination);
+      const transport = chooseTransport(current, destination, distance, options);
+      const afterTravel = cursor + transport.minutes;
+      const nightStart = timeToMinutes(destination.open);
+      const scheduledArrival = Math.max(afterTravel, nightStart);
+      const wait = Math.max(0, scheduledArrival - afterTravel);
+
+      if (scheduledArrival > dayEnd) {
+        notices.push(`${destination.name} is an evening add-on at ${minutesToTime(scheduledArrival)} because it does not operate in the morning.`);
+      }
+
+      items.push({
+        number: items.length + 1,
+        destination,
+        arrivalMinutes: scheduledArrival,
+        departureMinutes: scheduledArrival + destination.duration,
+        waitMinutes: wait,
+        distance,
+        transport,
+        from: current,
+        eveningAddOn: true
+      });
+      cursor = scheduledArrival + destination.duration;
+      current = destination;
+    });
+
+    if (unscheduled.length) {
+      notices.push(`${unscheduled.length} selected ${unscheduled.length === 1 ? "place does" : "places do"} not fit safely within this day's opening hours and time allowance.`);
     }
 
-    return { items, excluded, totalDistance, totalFare, totalTravel, startMinutes, endMinutes: cursor };
+    return {
+      index: options.dayIndex,
+      items,
+      unscheduled,
+      notices,
+      totalDistance: items.reduce((sum, item) => sum + item.distance, 0),
+      totalFare: items.reduce((sum, item) => sum + item.transport.totalFare, 0),
+      totalTravelMinutes: items.reduce((sum, item) => sum + item.transport.minutes, 0),
+      startMinutes: options.startMinutes,
+      endMinutes: cursor
+    };
   }
 
   function chooseTransport(from, to, distance, options) {
-    const candidates = [];
-    const allowed = options.modes;
-    const commute = to.commute || {};
+    const allowed = new Set(options.modes);
+    let mode;
 
-    if (allowed.includes("walk")) {
-      candidates.push({
-        mode: "walk",
-        label: "Walk",
-        icon: "🚶",
-        minutes: Math.max(4, Math.round(distance * 15 + 2)),
-        fareTotal: 0,
-        farePerPerson: 0,
-        score: 0
-      });
+    if (allowed.has("walk") && distance <= (options.preference === "less-walking" ? 0.45 : 0.85)) {
+      mode = "walk";
+    } else if (options.preference === "fastest" && allowed.has("taxi")) {
+      mode = "taxi";
+    } else if (options.preference === "less-walking" && allowed.has("taxi")) {
+      mode = "taxi";
+    } else if (allowed.has("jeepney") && distance <= 10 && to.area !== "Atok Side Trip" && to.area !== "Tuba / Asin") {
+      mode = "jeepney";
+    } else if (allowed.has("taxi")) {
+      mode = "taxi";
+    } else if (allowed.has("walk")) {
+      mode = "walk";
+    } else {
+      mode = "jeepney";
     }
 
-    if (allowed.includes("jeepney") && !commute.noJeep) {
-      const individualFare = distance <= options.fareSettings.jeepBaseKm
-        ? options.fareSettings.jeepMinimum
-        : options.fareSettings.jeepMinimum + ((distance - options.fareSettings.jeepBaseKm) * options.fareSettings.jeepPerKm);
-      candidates.push({
-        mode: "jeepney",
-        label: "Jeepney",
-        icon: "🚌",
-        minutes: Math.max(14, Math.round(distance * 7.3 + (to.outsideBaguio ? 17 : 10))),
-        fareTotal: roundMoney(individualFare * options.travelers),
-        farePerPerson: roundMoney(individualFare),
-        score: 0
-      });
+    const minutes = estimateTravelMinutes(distance, mode);
+    let farePerPerson = 0;
+    let vehicleFare = 0;
+
+    if (mode === "jeepney") {
+      farePerPerson = options.fareSettings.jeepMinimum + Math.max(0, distance - options.fareSettings.jeepBaseKm) * options.fareSettings.jeepPerKm;
+    } else if (mode === "taxi") {
+      vehicleFare = options.fareSettings.taxiFlag + distance * options.fareSettings.taxiPerKm;
     }
 
-    if (allowed.includes("taxi")) {
-      const taxiFare = options.fareSettings.taxiFlag + distance * options.fareSettings.taxiPerKm;
-      candidates.push({
-        mode: "taxi",
-        label: to.outsideBaguio ? "Taxi / hired car" : "Taxi",
-        icon: "🚕",
-        minutes: Math.max(7, Math.round(distance * 5.2 + (to.outsideBaguio ? 8 : 5))),
-        fareTotal: roundMoney(taxiFare),
-        farePerPerson: roundMoney(taxiFare / options.travelers),
-        score: 0
-      });
-    }
-
-    if (!candidates.length) {
-      const taxiFare = options.fareSettings.taxiFlag + distance * options.fareSettings.taxiPerKm;
-      candidates.push({
-        mode: "taxi",
-        label: "Taxi fallback",
-        icon: "🚕",
-        minutes: Math.max(7, Math.round(distance * 5.2 + 5)),
-        fareTotal: roundMoney(taxiFare),
-        farePerPerson: roundMoney(taxiFare / options.travelers),
-        forced: true,
-        score: 0
-      });
-    }
-
-    candidates.forEach((candidate) => {
-      const walkPenalty = candidate.mode === "walk" ? Math.max(0, distance - 0.7) * 25 : 0;
-      const jeepUncertainty = candidate.mode === "jeepney" && commute.confidence === "local-guide" ? 5 : 0;
-      const noJeepPreference = commute.confidence === "taxi-preferred" && candidate.mode !== "taxi" ? 85 : 0;
-      const costPerPerson = candidate.farePerPerson;
-
-      if (options.preference === "cheapest") {
-        candidate.score = costPerPerson * 2.8 + candidate.minutes * 0.22 + walkPenalty * 0.2 + noJeepPreference;
-      } else if (options.preference === "fastest") {
-        candidate.score = candidate.minutes * 2.6 + costPerPerson * 0.08 + jeepUncertainty + noJeepPreference;
-      } else if (options.preference === "less-walking") {
-        candidate.score = candidate.minutes + costPerPerson * 0.22 + (candidate.mode === "walk" ? 180 + distance * 30 : 0) + noJeepPreference;
-      } else {
-        candidate.score = candidate.minutes * 1.15 + costPerPerson * 0.55 + walkPenalty + jeepUncertainty + noJeepPreference;
-      }
-
-      if (candidate.mode === "walk" && distance <= 0.55) candidate.score -= 55;
-      if (candidate.mode === "walk" && distance > 3) candidate.score += 120;
-      if (candidate.mode === "jeepney" && distance < 0.75) candidate.score += 35;
-      if (candidate.mode === "taxi" && distance < 0.85 && options.preference !== "less-walking") candidate.score += 25;
-      if (candidate.mode === "jeepney" && from.area === to.area && distance < 1.25) candidate.score += 10;
-      if (to.outsideBaguio && candidate.mode === "taxi" && options.travelers >= 3) candidate.score -= 12;
-    });
-
-    const chosen = candidates.sort((a, b) => a.score - b.score)[0];
-    chosen.steps = buildDirectionSteps(from, to, chosen.mode, distance);
-    chosen.instruction = chosen.steps.join(" ");
-    return chosen;
+    const totalFare = mode === "jeepney" ? farePerPerson * options.travelers : vehicleFare;
+    return {
+      mode,
+      minutes,
+      farePerPerson: roundMoney(farePerPerson),
+      vehicleFare: roundMoney(vehicleFare),
+      totalFare: roundMoney(totalFare),
+      instructions: buildDirections(from, to, mode),
+      loadingMapUrl: mode === "jeepney" ? googleSearchUrl(to.routeGuide.loadingQuery) : null,
+      legMapUrl: googleDirectionsUrl(from, to, mode)
+    };
   }
 
-  function buildDirectionSteps(from, to, mode, distance) {
+  function estimateTravelMinutes(distance, mode) {
+    if (mode === "walk") return Math.max(4, Math.round((distance / 4.2) * 60));
+    if (mode === "jeepney") return Math.max(12, Math.round(9 + (distance / 14) * 60));
+    return Math.max(7, Math.round(5 + (distance / 18) * 60));
+  }
+
+  function buildDirections(from, to, mode) {
     if (mode === "walk") {
       return [
-        distance < 0.55
-          ? `${to.name} is close to ${from.name}; use the safest pedestrian route.`
-          : `Open the walking route in Google Maps and head toward ${to.name}.`,
-        "Use designated crossings and expect Baguio slopes, stairs, wet pavement, or fog."
+        `Start from ${from.name} and open the walking route in Google Maps.`,
+        "Use pedestrian crossings and avoid shortcuts through private property.",
+        `Continue to the official or safest public entrance of ${to.name}.`
       ];
     }
 
-    if (mode === "jeepney") {
-      const c = to.commute;
+    if (mode === "taxi") {
       return [
-        `From ${from.name}, go to: ${c.board}`,
-        `Route/signboard: ${c.signboard}`,
-        `Tell the dispatcher and driver: “${to.name}.” ${c.alight}`,
-        `For the return: ${c.return}`,
-        c.note
-      ].filter(Boolean);
+        `Find a metered taxi or verified hired vehicle near ${from.name}.`,
+        `Show the driver the Google Maps pin for ${to.name} and ask for the official entrance.`,
+        "Use the meter when applicable and confirm any waiting arrangement before leaving the vehicle."
+      ];
     }
 
+    const guide = to.routeGuide;
     return [
-      `Take a metered taxi or verified hired vehicle from ${from.name} to ${to.name}.`,
-      "Open the Google Maps pin and show it to the driver; ask for the official entrance or safe drop-off.",
-      to.commute?.note || "Confirm the meter and keep the route open on your phone."
+      `Go to: ${guide.loadingArea}.`,
+      `Look for a signboard marked ${guide.signboard}.`,
+      `Tell the dispatcher or driver that you are going to ${to.name}.`,
+      to.alight || `Ask the driver to announce the nearest safe drop-off for ${to.name}.`,
+      guide.returnHint
     ];
   }
 
-  function renderResults(itinerary) {
-    const completedStops = itinerary.items.length;
-    const preferenceLabels = { balanced: "Balanced", cheapest: "Cheapest", fastest: "Fastest", "less-walking": "Less walking" };
-    const dateLabel = itinerary.date ? formatDate(itinerary.date) : "your selected date";
+  function renderResults() {
+    const itinerary = state.itinerary;
+    const totalStops = itinerary.days.reduce((sum, day) => sum + day.items.length, 0);
+    const totalDistance = itinerary.days.reduce((sum, day) => sum + day.totalDistance, 0);
+    const totalFare = itinerary.days.reduce((sum, day) => sum + day.totalFare, 0);
+    const totalTravelMinutes = itinerary.days.reduce((sum, day) => sum + day.totalTravelMinutes, 0);
 
-    elements.resultsTitle.textContent = completedStops ? `${completedStops}-stop Baguio itinerary` : "Your Baguio itinerary";
-    elements.resultsSubtitle.textContent = `Starting at ${itinerary.start.name} on ${dateLabel} · ${preferenceLabels[itinerary.preference]} route`;
+    elements.resultsTitle.textContent = itinerary.numberOfDays > 1 ? `Your ${itinerary.numberOfDays}-day Baguio route` : "Your Baguio day, arranged";
+    elements.resultsSubtitle.textContent = `${totalStops} scheduled stops from ${itinerary.start.name}${itinerary.date ? ` beginning ${formatDate(itinerary.date)}` : ""}.`;
 
-    elements.summaryGrid.innerHTML = [
-      ["📍", "Included stops", String(completedStops)],
-      ["🕒", "Trip window", `${minutesToTime(itinerary.startMinutes)}–${minutesToTime(itinerary.endMinutes)}`],
-      ["🧭", "Approx. road distance", `${itinerary.totalDistance.toFixed(1)} km`],
-      ["💵", "Estimated transport", itinerary.totalFare === 0 ? "Free" : formatCurrency(itinerary.totalFare)]
-    ].map(([icon, label, value]) => `<div class="summary-card"><span>${icon}</span><div><small>${label}</small><strong>${value}</strong></div></div>`).join("");
+    elements.tripSummary.innerHTML = [
+      ["Travel days", `${itinerary.numberOfDays}`],
+      ["Scheduled stops", `${totalStops}`],
+      ["Estimated travel", formatDuration(totalTravelMinutes)],
+      ["Estimated transport", formatCurrency(totalFare)]
+    ].map(([label, value]) => `<div class="summary-card"><small>${label}</small><strong>${value}</strong></div>`).join("");
 
-    elements.timeline.innerHTML = itinerary.items.map(renderTimelineItem).join("");
-
-    if (itinerary.excluded.length) {
-      elements.excludedStops.hidden = false;
-      elements.excludedStops.innerHTML = `
-        <strong>${itinerary.excluded.length} selected ${itinerary.excluded.length === 1 ? "stop was" : "stops were"} left out of the time window.</strong>
-        <p>Extend your available time or make a second day for longer and out-of-city stops:</p>
-        <ul>${itinerary.excluded.map((stop) => `<li>${escapeHTML(stop.name)}</li>`).join("")}</ul>
-      `;
-    } else {
-      elements.excludedStops.hidden = true;
-      elements.excludedStops.innerHTML = "";
-    }
-  }
-
-  function renderTimelineItem(item) {
-    const fareText = item.transport.fareTotal === 0
-      ? "Free"
-      : item.transport.mode === "taxi"
-        ? `${formatCurrency(item.transport.fareTotal)} vehicle est.`
-        : `${formatCurrency(item.transport.farePerPerson)} / person`;
-    const confidenceLabel = item.transport.mode === "jeepney"
-      ? '<span class="route-confidence">Local route guide · verify with dispatcher</span>'
-      : "";
-
-    return `
-      <article class="timeline-item" id="itinerary-${escapeHTML(item.destination.id)}">
-        <div class="timeline-time">${minutesToTime(item.visitStart)}</div>
-        <div class="timeline-marker">${item.index}</div>
-        <div class="timeline-content">
-          <div class="timeline-stop-head">
-            <div>
-              <h4>${item.destination.icon} ${escapeHTML(item.destination.name)}</h4>
-              <small>${escapeHTML(item.destination.area)} · ${escapeHTML(item.destination.category)}</small>
-            </div>
-            <div class="stop-badges">
-              ${item.destination.outsideBaguio ? '<span class="outside-badge">Nearby Benguet side trip</span>' : ""}
-              <span class="visit-duration">Visit ${formatDuration(item.destination.duration)}</span>
-            </div>
-          </div>
-          <p>${escapeHTML(item.destination.description)}</p>
-
-          <div class="activity-box">
-            <strong>✨ Make the most of this stop</strong>
-            <ul>${item.destination.thingsToDo.map((activity) => `<li>${escapeHTML(activity)}</li>`).join("")}</ul>
-          </div>
-
-          <div class="travel-leg">
-            <div class="travel-leg-top">
-              <span class="travel-mode">${item.transport.icon} ${escapeHTML(item.transport.label)} from ${escapeHTML(item.from.name)}</span>
-              <div class="travel-metrics"><span>${item.distance.toFixed(1)} km est.</span><span>${item.transport.minutes} min est.</span><span>${fareText}</span></div>
-            </div>
-            ${confidenceLabel}
-            <ol class="commute-steps">${item.transport.steps.map((step) => `<li>${escapeHTML(step)}</li>`).join("")}</ol>
-            <div class="leg-actions">
-              <button type="button" data-map-action="preview" data-stop-id="${escapeHTML(item.destination.id)}">Preview this leg</button>
-              <a href="${mapsDirectionsUrl(item.from, item.destination, item.transport.mode, false)}" target="_blank" rel="noopener noreferrer">Open route ↗</a>
-              <a href="${mapsDirectionsUrl(null, item.destination, item.transport.mode, true)}" target="_blank" rel="noopener noreferrer">Navigate now ↗</a>
-              <button type="button" data-map-action="place" data-stop-id="${escapeHTML(item.destination.id)}">View place</button>
-              ${item.transport.mode === "jeepney" ? `<button type="button" data-map-action="terminal" data-stop-id="${escapeHTML(item.destination.id)}">View loading area</button>` : ""}
-            </div>
-            ${item.transport.forced ? '<span class="warning-chip">Taxi was used as a fallback because the selected travel modes did not provide a practical verified option.</span>' : ""}
-            ${item.waitMinutes ? `<span class="warning-chip">Arrive before opening · wait about ${item.waitMinutes} min</span>` : ""}
-            ${item.mayBeClosed ? '<span class="warning-chip">This arrival may be after the listed closing time. Verify hours before visiting.</span>' : ""}
-          </div>
-        </div>
-      </article>
-    `;
-  }
-
-  function renderGoogleMap(itinerary) {
-    const first = itinerary.items[0]?.destination;
-    state.activeMapStopId = first?.id || itinerary.start.id;
-    elements.mapStopList.innerHTML = [
-      { ...itinerary.start, mapLabel: "Start", order: "S" },
-      ...itinerary.items.map((item) => ({ ...item.destination, mapLabel: item.destination.name, order: item.index }))
-    ].map((point) => `
-      <button class="map-stop-button ${point.id === state.activeMapStopId ? "active" : ""}" type="button" data-map-stop="${escapeHTML(point.id)}">
-        <span>${point.order}</span><div><strong>${escapeHTML(point.mapLabel)}</strong><small>${escapeHTML(point.area || "Start point")}</small></div>
-      </button>
+    elements.dayTabs.innerHTML = itinerary.days.map((day) => `
+      <button class="day-tab ${day.index === state.activeDay ? "active" : ""}" type="button" data-day-index="${day.index}">Day ${day.index + 1}${itinerary.date ? ` · ${formatDayDate(itinerary.date, day.index)}` : ""} · ${day.items.length} stops</button>
     `).join("");
 
-    renderRouteParts(itinerary);
-    if (first) previewMapStop(first.id);
-    else previewMapStop(itinerary.start.id);
-  }
+    if (!totalStops) {
+      elements.routeTimeline.innerHTML = `<div class="timeline-notice">The selected places do not fit the current schedule. Increase the number of days or daily available time.</div>`;
+      return;
+    }
 
-  function previewMapStop(id) {
-    if (!state.itinerary) return;
-    const point = id === state.itinerary.start.id
-      ? state.itinerary.start
-      : state.itinerary.items.find((item) => item.destination.id === id)?.destination;
-    if (!point) return;
+    state.activeDay = Math.min(state.activeDay, itinerary.days.length - 1);
+    renderActiveDay();
 
-    state.activeMapStopId = id;
-    elements.googleMapFrame.src = mapEmbedPlace(point);
-    elements.mapLocationTitle.textContent = id === state.itinerary.start.id ? `Start: ${point.name}` : point.name;
-    elements.mapLocationStatus.textContent = id === state.itinerary.start.id
-      ? "Your selected starting point."
-      : `${point.area} · Open navigation to use your live device location.`;
-    setNavigationTarget(point, id === state.itinerary.start.id ? "Open start point" : "Navigate to this stop");
-    $$("[data-map-stop]", elements.mapStopList).forEach((button) => button.classList.toggle("active", button.dataset.mapStop === id));
-  }
-
-  function previewLeg(item) {
-    elements.googleMapFrame.src = mapEmbedDirections(item.from, item.destination, item.transport.mode);
-    elements.mapLocationTitle.textContent = `${item.from.name} → ${item.destination.name}`;
-    elements.mapLocationStatus.textContent = `${item.transport.label} road preview. Open Google Maps for live navigation and traffic.`;
-    setNavigationTarget(item.destination, "Navigate this leg");
-    state.activeMapStopId = item.destination.id;
-    $$("[data-map-stop]", elements.mapStopList).forEach((button) => button.classList.toggle("active", button.dataset.mapStop === item.destination.id));
-    elements.googleMapFrame.scrollIntoView({ behavior: "smooth", block: "center" });
-  }
-
-  function setNavigationTarget(point, label) {
-    elements.nextStopNav.href = mapsDirectionsUrl(null, point, "driving", true);
-    elements.nextStopNav.textContent = `${label} ↗`;
-  }
-
-  function renderRouteParts(itinerary) {
-    const links = buildRoutePartLinks(itinerary);
-    elements.routeParts.innerHTML = `
-      <strong>Full route in mobile-safe parts</strong>
-      <p>Google Maps limits the number of waypoints on some mobile browsers, so long itineraries are split into route parts.</p>
-      <div>${links.map((part, index) => `<a href="${part.url}" target="_blank" rel="noopener noreferrer">Part ${index + 1}: ${escapeHTML(part.label)} ↗</a>`).join("")}</div>
+    const unscheduled = itinerary.days.flatMap((day) => day.unscheduled);
+    elements.resultsNote.innerHTML = `
+      <strong>Planning note:</strong> Travel time, fares, attraction hours, and jeepney loading areas are estimates. Confirm current details locally.
+      ${unscheduled.length ? ` <strong>Not scheduled:</strong> ${unscheduled.map((destination) => escapeHtml(destination.name)).join(", ")}. Add a day or increase available time.` : ""}
     `;
   }
 
-  function toggleRouteParts() {
-    if (!state.itinerary) return;
-    elements.routeParts.hidden = !elements.routeParts.hidden;
-    elements.openRouteParts.textContent = elements.routeParts.hidden ? "Open full route" : "Hide route links";
-  }
+  function renderActiveDay() {
+    const day = state.itinerary.days[state.activeDay];
+    if (!day) return;
 
-  function buildRoutePartLinks(itinerary) {
-    const stops = itinerary.items.map((item) => item.destination);
-    const parts = [];
-    let origin = itinerary.start;
-    for (let index = 0; index < stops.length; index += 4) {
-      const chunk = stops.slice(index, index + 4);
-      const destination = chunk[chunk.length - 1];
-      const waypoints = chunk.slice(0, -1);
-      const params = new URLSearchParams({
-        api: "1",
-        origin: coordinate(origin),
-        destination: coordinate(destination),
-        travelmode: "driving"
-      });
-      if (waypoints.length) params.set("waypoints", waypoints.map(coordinate).join("|"));
-      parts.push({
-        url: `https://www.google.com/maps/dir/?${params.toString()}`,
-        label: `${origin.name} to ${destination.name}`
-      });
-      origin = destination;
+    $$(".day-tab", elements.dayTabs).forEach((button) => button.classList.toggle("active", Number(button.dataset.dayIndex) === state.activeDay));
+
+    const notices = [...day.notices];
+    if (day.items.some((item) => item.eveningAddOn)) {
+      notices.unshift("An evening-only stop is scheduled after 9:00 PM. Use the break for dinner, hotel check-in, or rest.");
     }
-    return parts;
+
+    elements.routeTimeline.innerHTML = `
+      ${notices.map((notice) => `<div class="timeline-notice">${escapeHtml(notice)}</div>`).join("")}
+      ${day.items.map((item, index) => renderTimelineItem(item, index)).join("")}
+      ${!day.items.length ? `<div class="timeline-notice">No stops fit this day yet. Add more available time or move selected destinations.</div>` : ""}
+    `;
+
+    renderMapForDay(day);
   }
 
-  function mapsSearchUrl(point) {
-    return mapsQueryUrl(point.googleQuery || `${point.name}, ${point.area || "Baguio"}`);
+  function renderTimelineItem(item, index) {
+    const destination = item.destination;
+    const transport = item.transport;
+    const fareLabel = transport.mode === "walk"
+      ? "Free"
+      : transport.mode === "jeepney"
+        ? `${formatCurrency(transport.farePerPerson)} each est.`
+        : `${formatCurrency(transport.vehicleFare)} vehicle est.`;
+
+    return `
+      <div class="timeline-entry">
+        <time class="timeline-time">${minutesToTime(item.arrivalMinutes)}</time>
+        <div class="timeline-marker"><span class="timeline-dot">${index + 1}</span></div>
+        <div class="timeline-content">
+          <article class="stop-card">
+            <div class="stop-card-head">
+              <div>
+                <div class="stop-card-title"><span aria-hidden="true">${escapeHtml(destination.icon)}</span><h4>${escapeHtml(destination.name)}</h4></div>
+                <div class="stop-meta">${escapeHtml(destination.area)} · ${escapeHtml(destination.category)}${destination.scope !== "Baguio City" ? ` · ${escapeHtml(destination.scope)}` : ""}</div>
+              </div>
+              <span class="visit-chip">Visit ${formatDuration(destination.duration)}</span>
+            </div>
+            <p class="stop-description">${escapeHtml(destination.description)}</p>
+
+            <div class="travel-leg">
+              <div class="travel-leg-head">
+                <span class="transport-icon" aria-hidden="true">${transportIcon(transport.mode)}</span>
+                <strong>${transportLabel(transport.mode)} from ${escapeHtml(item.from.name)}</strong>
+                <span class="leg-metric">${item.distance.toFixed(1)} km est.</span>
+                <span class="leg-metric">${formatDuration(transport.minutes)}</span>
+                <span class="leg-metric">${fareLabel}</span>
+              </div>
+              ${item.waitMinutes > 0 ? `<p class="stop-description">You may have about ${formatDuration(item.waitMinutes)} before this place opens or before the evening schedule begins.</p>` : ""}
+              <ol class="direction-list">
+                ${transport.instructions.map((instruction, directionIndex) => `<li><b>${directionIndex + 1}.</b><span>${escapeHtml(instruction)}</span></li>`).join("")}
+              </ol>
+              <div class="leg-actions">
+                ${transport.loadingMapUrl ? `<button class="mini-action" type="button" data-open-url="${escapeHtml(transport.loadingMapUrl)}">📍 Loading area ↗</button>` : ""}
+                <button class="mini-action" type="button" data-preview-query="${escapeHtml(destination.googleQuery)}" data-preview-name="${escapeHtml(destination.name)}">🗺 Preview stop</button>
+                <button class="mini-action" type="button" data-open-url="${escapeHtml(transport.legMapUrl)}">↗ Open this leg</button>
+                <button class="mini-action" type="button" data-open-url="${escapeHtml(googleSearchUrl(destination.googleQuery))}">📌 View place</button>
+              </div>
+            </div>
+
+            <div class="stop-activities">
+              <strong><span aria-hidden="true">✨</span> Make the most of this stop</strong>
+              <ul class="activity-list">
+                ${destination.activities.map((activity) => `<li>${escapeHtml(activity)}</li>`).join("")}
+              </ul>
+            </div>
+          </article>
+        </div>
+      </div>
+    `;
   }
 
-  function mapsQueryUrl(query) {
+  function renderMapForDay(day) {
+    const first = day.items[0]?.destination;
+    if (first) {
+      updateMapPreview(first.googleQuery, `Previewing Day ${day.index + 1}. Open the complete route below to see every stop from your selected starting point.`);
+    } else {
+      elements.googleMapFrame.removeAttribute("src");
+      elements.mapOverlayNote.textContent = "No mapped stop is available for this day.";
+    }
+
+    const routeUrl = buildDayRouteUrl(day);
+    const nextUrl = day.items[0]?.transport.legMapUrl || routeUrl;
+    elements.mapActions.innerHTML = `
+      <a class="button button-primary" href="${escapeHtml(routeUrl)}" target="_blank" rel="noopener noreferrer">Open complete Day ${day.index + 1} route ↗</a>
+      ${nextUrl ? `<a class="button button-ghost" href="${escapeHtml(nextUrl)}" target="_blank" rel="noopener noreferrer">Navigate to first stop</a>` : ""}
+    `;
+  }
+
+  function updateMapPreview(query, note) {
+    elements.googleMapFrame.src = `https://www.google.com/maps?q=${encodeURIComponent(query)}&output=embed`;
+    elements.mapOverlayNote.textContent = note;
+  }
+
+  function buildDayRouteUrl(day) {
+    if (!day.items.length) return googleSearchUrl(state.itinerary.start.googleQuery || state.itinerary.start.name);
+    const origin = locationForUrl(state.itinerary.start);
+    const destinations = day.items.map((item) => locationForUrl(item.destination));
+    const destination = destinations[destinations.length - 1];
+    const waypoints = destinations.slice(0, -1).slice(0, 8);
+    const params = new URLSearchParams({ api: "1", origin, destination, travelmode: "driving" });
+    if (waypoints.length) params.set("waypoints", waypoints.join("|"));
+    return `https://www.google.com/maps/dir/?${params.toString()}`;
+  }
+
+  function openActiveDayRoute() {
+    if (!state.itinerary) return;
+    const day = state.itinerary.days[state.activeDay];
+    window.open(buildDayRouteUrl(day), "_blank", "noopener,noreferrer");
+  }
+
+  function googleDirectionsUrl(from, to, mode) {
+    const params = new URLSearchParams({
+      api: "1",
+      origin: locationForUrl(from),
+      destination: locationForUrl(to),
+      travelmode: mode === "walk" ? "walking" : "driving"
+    });
+    return `https://www.google.com/maps/dir/?${params.toString()}`;
+  }
+
+  function googleSearchUrl(query) {
     const params = new URLSearchParams({ api: "1", query });
     return `https://www.google.com/maps/search/?${params.toString()}`;
   }
 
-  function mapsDirectionsUrl(from, to, mode, navigate) {
-    const params = new URLSearchParams({
-      api: "1",
-      destination: mapsLocationValue(to),
-      travelmode: mode === "walk" ? "walking" : "driving"
-    });
-    if (from) params.set("origin", mapsLocationValue(from));
-    if (navigate) params.set("dir_action", "navigate");
-    return `https://www.google.com/maps/dir/?${params.toString()}`;
+  function locationForUrl(location) {
+    if (Number.isFinite(location.lat) && Number.isFinite(location.lng)) return `${location.lat},${location.lng}`;
+    return location.googleQuery || location.name;
   }
 
-  function mapsLocationValue(point) {
-    if (!point) return "Baguio City, Philippines";
-    if (point.id === "current-location") return coordinate(point);
-    return point.googleQuery || `${point.name}, ${point.area || "Baguio City"}, Philippines`;
+  function transportIcon(mode) {
+    return mode === "walk" ? "🚶" : mode === "jeepney" ? "🚐" : "🚕";
   }
 
-  function mapEmbedPlace(point) {
-    const query = point.googleQuery || `${point.name}, ${point.area || "Baguio"}` || coordinate(point);
-    return `https://maps.google.com/maps?q=${encodeURIComponent(query)}&z=15&output=embed`;
-  }
-
-  function mapEmbedDirections(from, to, mode) {
-    const dirFlag = mode === "walk" ? "w" : "d";
-    return `https://maps.google.com/maps?saddr=${encodeURIComponent(coordinate(from))}&daddr=${encodeURIComponent(coordinate(to))}&dirflg=${dirFlag}&output=embed`;
-  }
-
-  function coordinate(point) {
-    return `${Number(point.lat).toFixed(6)},${Number(point.lng).toFixed(6)}`;
+  function transportLabel(mode) {
+    return mode === "walk" ? "Walk" : mode === "jeepney" ? "Jeepney" : "Taxi";
   }
 
   async function copyItinerary() {
@@ -807,137 +977,158 @@
     } catch {
       const textarea = document.createElement("textarea");
       textarea.value = text;
-      textarea.style.position = "fixed";
-      textarea.style.opacity = "0";
       document.body.appendChild(textarea);
       textarea.select();
       document.execCommand("copy");
       textarea.remove();
-      showToast("Itinerary copied to your clipboard.");
+      showToast("Itinerary copied.");
     }
   }
 
   function itineraryToText(itinerary) {
     const lines = [
-      "LAKBAY BAGUIO — GENERATED ITINERARY",
-      `Start: ${itinerary.start.name}`,
+      "LAKBAY BAGUIO ITINERARY",
+      `Starting point: ${itinerary.start.name}`,
       `Date: ${itinerary.date ? formatDate(itinerary.date) : "Not specified"}`,
-      `Estimated transport: ${formatCurrency(itinerary.totalFare)}`,
-      "",
-      ...itinerary.items.flatMap((item) => [
-        `${item.index}. ${minutesToTime(item.visitStart)} — ${item.destination.name} (${formatDuration(item.destination.duration)})`,
-        `   ${item.transport.label} from ${item.from.name} · ${item.distance.toFixed(1)} km est. · ${item.transport.minutes} min · ${item.transport.fareTotal ? formatCurrency(item.transport.fareTotal) : "Free"}`,
-        ...item.transport.steps.map((step, index) => `   ${index + 1}) ${step}`),
-        "   Suggested activities:",
-        ...item.destination.thingsToDo.map((activity) => `   • ${activity}`),
-        `   Navigate: ${mapsDirectionsUrl(null, item.destination, item.transport.mode, true)}`,
-        ""
-      ]),
-      "Planning estimates only. Verify route loading bays, drop-off points, operating hours, trail access, and current fares locally."
+      `Days: ${itinerary.numberOfDays}`,
+      ""
     ];
+
+    itinerary.days.forEach((day) => {
+      lines.push(`DAY ${day.index + 1}`);
+      day.notices.forEach((notice) => lines.push(`Note: ${notice}`));
+      day.items.forEach((item, index) => {
+        lines.push(`${index + 1}. ${minutesToTime(item.arrivalMinutes)} — ${item.destination.name}`);
+        lines.push(`   ${transportLabel(item.transport.mode)} from ${item.from.name}, about ${formatDuration(item.transport.minutes)}.`);
+        item.transport.instructions.forEach((instruction) => lines.push(`   - ${instruction}`));
+        lines.push(`   Try: ${item.destination.activities.join("; ")}`);
+      });
+      lines.push("");
+    });
+
+    lines.push("All routes, fares, hours, and loading points are planning estimates. Verify locally.");
     return lines.join("\n");
   }
 
   function saveFormState() {
-    const payload = {
-      selected: [...state.selected],
-      startLocation: elements.startLocation.value,
-      tripDate: elements.tripDate.value,
-      startTime: elements.startTime.value,
-      tripHours: elements.tripHours.value,
-      travelers: elements.travelers.value,
-      preference: $("input[name='preference']:checked")?.value || "balanced",
-      modes: $$("input[name='mode']:checked").map((input) => input.value),
-      fares: getFareSettings()
-    };
-    try { localStorage.setItem("lakbayBaguioPlanner", JSON.stringify(payload)); } catch { /* private browsing */ }
+    try {
+      const saved = {
+        startLocation: elements.startLocation.value,
+        tripDate: elements.tripDate.value,
+        tripDays: elements.tripDays.value,
+        startTime: elements.startTime.value,
+        tripHours: elements.tripHours.value,
+        travelers: elements.travelers.value,
+        selected: [...state.selected],
+        preference: $("input[name='preference']:checked")?.value || "balanced",
+        modes: $$("input[name='mode']:checked").map((input) => input.value),
+        autoPickTheme: elements.autoPickTheme.value
+      };
+      localStorage.setItem("lakbay-baguio-planner", JSON.stringify(saved));
+    } catch {
+      // Storage is optional.
+    }
   }
 
   function restoreSavedState() {
-    let saved;
-    try { saved = JSON.parse(localStorage.getItem("lakbayBaguioPlanner")); } catch { saved = null; }
-    if (!saved) return;
-
-    if (Array.isArray(saved.selected)) {
-      const validIds = new Set(data.destinations.map((destination) => destination.id));
-      saved.selected.filter((id) => validIds.has(id)).forEach((id) => state.selected.add(id));
+    try {
+      const saved = JSON.parse(localStorage.getItem("lakbay-baguio-planner") || "null");
+      if (!saved) return;
+      if (saved.startLocation && elements.startLocation.querySelector(`option[value='${cssEscape(saved.startLocation)}']`)) elements.startLocation.value = saved.startLocation;
+      if (saved.tripDate) elements.tripDate.value = saved.tripDate;
+      if (saved.tripDays) elements.tripDays.value = saved.tripDays;
+      if (saved.startTime) elements.startTime.value = saved.startTime;
+      if (saved.tripHours) elements.tripHours.value = saved.tripHours;
+      if (saved.travelers) elements.travelers.value = saved.travelers;
+      if (Array.isArray(saved.selected)) state.selected = new Set(saved.selected.filter((id) => data.destinations.some((destination) => destination.id === id)));
+      if (saved.preference) {
+        const preference = $(`input[name='preference'][value='${cssEscape(saved.preference)}']`);
+        if (preference) preference.checked = true;
+      }
+      $$(".preference-card").forEach((card) => card.classList.toggle("active", Boolean($("input:checked", card))));
+      if (Array.isArray(saved.modes)) {
+        $$("input[name='mode']").forEach((input) => { input.checked = saved.modes.includes(input.value); });
+      }
+      if (saved.autoPickTheme) elements.autoPickTheme.value = saved.autoPickTheme;
+    } catch {
+      // Ignore invalid storage.
     }
-    if (saved.startLocation && elements.startLocation.querySelector(`option[value="${cssEscape(saved.startLocation)}"]`)) elements.startLocation.value = saved.startLocation;
-    if (saved.tripDate && saved.tripDate >= elements.tripDate.min) elements.tripDate.value = saved.tripDate;
-    if (saved.startTime) elements.startTime.value = saved.startTime;
-    if (saved.tripHours) elements.tripHours.value = saved.tripHours;
-    if (saved.travelers) elements.travelers.value = saved.travelers;
-
-    if (saved.preference) {
-      const preferenceInput = $(`input[name='preference'][value="${cssEscape(saved.preference)}"]`);
-      if (preferenceInput) preferenceInput.checked = true;
-    }
-    $$(".preference-card").forEach((card) => card.classList.toggle("active", Boolean($("input:checked", card))));
-
-    if (Array.isArray(saved.modes)) {
-      $$("input[name='mode']").forEach((input) => { input.checked = saved.modes.includes(input.value); });
-    }
-
-    const fareMap = { jeepMinimum: "#jeepMinimum", jeepBaseKm: "#jeepBaseKm", jeepPerKm: "#jeepPerKm", taxiFlag: "#taxiFlag", taxiPerKm: "#taxiPerKm" };
-    Object.entries(fareMap).forEach(([key, selector]) => {
-      if (saved.fares && Number.isFinite(Number(saved.fares[key]))) $(selector).value = saved.fares[key];
-    });
-    elements.selectionCount.textContent = state.selected.size;
   }
 
   function setupRevealObserver() {
-    const targets = $$(".reveal:not(.visible)");
+    const reveals = $$(".reveal:not(.visible)");
     if (!("IntersectionObserver" in window)) {
-      targets.forEach((element) => element.classList.add("visible"));
+      reveals.forEach((element) => element.classList.add("visible"));
       return;
     }
-    const observer = new IntersectionObserver((entries, instance) => {
+    const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("visible");
-          instance.unobserve(entry.target);
-        }
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add("visible");
+        observer.unobserve(entry.target);
       });
     }, { threshold: 0.12 });
-    targets.forEach((element) => observer.observe(element));
+    reveals.forEach((element) => observer.observe(element));
   }
 
   function showToast(message) {
-    clearTimeout(state.toastTimer);
+    window.clearTimeout(state.toastTimer);
     elements.toast.textContent = message;
     elements.toast.classList.add("show");
-    state.toastTimer = window.setTimeout(() => elements.toast.classList.remove("show"), 3400);
+    state.toastTimer = window.setTimeout(() => elements.toast.classList.remove("show"), 2800);
   }
 
   function haversine(a, b) {
-    const radius = 6371;
-    const dLat = degreesToRadians(b.lat - a.lat);
-    const dLng = degreesToRadians(b.lng - a.lng);
-    const lat1 = degreesToRadians(a.lat);
-    const lat2 = degreesToRadians(b.lat);
-    const value = Math.sin(dLat / 2) ** 2 + Math.cos(lat1) * Math.cos(lat2) * Math.sin(dLng / 2) ** 2;
-    return radius * 2 * Math.atan2(Math.sqrt(value), Math.sqrt(1 - value));
+    const earthRadius = 6371;
+    const latitudeDifference = degreesToRadians(b.lat - a.lat);
+    const longitudeDifference = degreesToRadians(b.lng - a.lng);
+    const latitude1 = degreesToRadians(a.lat);
+    const latitude2 = degreesToRadians(b.lat);
+    const value = Math.sin(latitudeDifference / 2) ** 2
+      + Math.cos(latitude1) * Math.cos(latitude2) * Math.sin(longitudeDifference / 2) ** 2;
+    return earthRadius * 2 * Math.atan2(Math.sqrt(value), Math.sqrt(1 - value));
   }
 
   function degreesToRadians(value) { return value * Math.PI / 180; }
-  function timeToMinutes(time) { const [hours, minutes] = time.split(":").map(Number); return hours * 60 + minutes; }
+  function timeToMinutes(time) {
+    const [hours, minutes] = String(time || "00:00").split(":").map(Number);
+    return hours * 60 + minutes;
+  }
   function minutesToTime(total) {
     const normalized = ((Math.round(total) % 1440) + 1440) % 1440;
-    const date = new Date(2000, 0, 1, Math.floor(normalized / 60), normalized % 60);
-    return new Intl.DateTimeFormat("en-US", { hour: "numeric", minute: "2-digit" }).format(date);
+    const hours = Math.floor(normalized / 60);
+    const minutes = normalized % 60;
+    const suffix = hours >= 12 ? "PM" : "AM";
+    const displayHour = hours % 12 || 12;
+    return `${displayHour}:${String(minutes).padStart(2, "0")} ${suffix}`;
   }
-  function formatDuration(minutes) { return minutes >= 60 ? `${Math.floor(minutes / 60)}h${minutes % 60 ? ` ${minutes % 60}m` : ""}` : `${minutes}m`; }
-  function formatCurrency(value) { return new Intl.NumberFormat("en-US", { style: "currency", currency: "PHP", minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(value); }
-  function formatDate(value) { return new Intl.DateTimeFormat("en-US", { month: "short", day: "numeric", year: "numeric" }).format(new Date(`${value}T12:00:00`)); }
+  function formatDuration(minutes) {
+    const rounded = Math.max(0, Math.round(minutes));
+    return rounded >= 60 ? `${Math.floor(rounded / 60)}h${rounded % 60 ? ` ${rounded % 60}m` : ""}` : `${rounded} min`;
+  }
+  function formatCurrency(value) {
+    return new Intl.NumberFormat("en-US", { style: "currency", currency: "PHP", minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(value || 0);
+  }
+  function formatDate(value) {
+    return new Intl.DateTimeFormat("en-US", { month: "short", day: "numeric", year: "numeric" }).format(new Date(`${value}T12:00:00`));
+  }
+  function formatDayDate(value, offset) {
+    const date = new Date(`${value}T12:00:00`);
+    date.setDate(date.getDate() + offset);
+    return new Intl.DateTimeFormat("en-US", { month: "short", day: "numeric" }).format(date);
+  }
   function roundMoney(value) { return Math.round(value * 100) / 100; }
   function clamp(value, min, max) { return Math.min(max, Math.max(min, value)); }
-  function nonNegativeNumber(value, fallback) { const number = Number(value); return Number.isFinite(number) && number >= 0 ? number : fallback; }
-  function escapeHTML(value) {
+  function nonNegativeNumber(value, fallback) {
+    const number = Number(value);
+    return Number.isFinite(number) && number >= 0 ? number : fallback;
+  }
+  function escapeHtml(value) {
     return String(value ?? "").replace(/[&<>'"]/g, (character) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "'": "&#39;", '"': "&quot;" }[character]));
   }
   function cssEscape(value) {
-    return window.CSS?.escape ? CSS.escape(String(value)) : String(value).replace(/[^a-zA-Z0-9_-]/g, "\\$&");
+    return window.CSS?.escape ? window.CSS.escape(value) : String(value).replace(/['"\\]/g, "\\$&");
   }
 
-  init();
-})();
+  document.addEventListener("DOMContentLoaded", init);
+}());

@@ -1,88 +1,94 @@
 # Lakbay Baguio
 
-Lakbay Baguio is a responsive, single-page itinerary planner for tourists visiting Baguio City and selected nearby Benguet destinations.
+A responsive, single-page Baguio itinerary planner built with HTML, CSS, and vanilla JavaScript.
 
-## What is included
+## Open the project
 
-- 44 major attractions and popular nearby side trips
-- Search and area filters
-- Automatic stop ordering to reduce backtracking
-- Time-window handling and estimated visit durations
-- Walking, jeepney, and taxi/hired-car suggestions
-- Editable planning fare assumptions
-- Detailed jeepney guidance with:
-  - suggested loading area
-  - route or signboard to look for
-  - where to ask to alight
-  - return-trip reminder
-  - Google Maps link to the loading area
-- Suggested activities for every destination
-- Google Maps destination preview
-- Google Maps leg preview
-- “Navigate now” links that can use the tourist’s current device location
-- Mobile-safe full-route links split into parts for long itineraries
-- Browser geolocation for the starting point and map preview
-- Copy and print itinerary controls
-- Saved planner choices through `localStorage`
+1. Extract the project folder.
+2. Open it in VS Code.
+3. Run `index.html` with the Live Server extension.
 
-## Google Maps implementation
+Opening `index.html` directly also works for most features, but Live Server is recommended for Google Maps previews, browser location access, and local testing.
 
-This static project uses Google Maps URLs and a Google Maps preview iframe. It does **not** require an API key for the included features.
+## Main features
 
-- Place links open a destination in Google Maps.
-- Leg links open directions from one itinerary stop to the next.
-- “Navigate now” omits the origin so Google Maps can use the device’s current location when available.
-- Long routes are divided into mobile-safe parts because waypoint limits differ across devices.
+- Sticky three-step navigation that follows the active planner section
+- Trip planning for 1 to 5 days
+- Victory Liner, Gov. Pack, Genesis Transport, and JoyBus starting points
+- Early-arrival baggage-storage suggestions for supported terminals
+- 48 destination cards with compact horizontal scrolling on mobile
+- Visible destination names, popular badges, and strong selected states
+- Selected-place chips with individual remove buttons and Clear all
+- Automatic destination selection by travel theme
+- Route ordering based on distance, time windows, and visit duration
+- Night-only scheduling for Baguio Night Market
+- Walk, jeepney, and taxi icons, fare estimates, and step-by-step directions
+- Google Maps destination previews and external multi-stop route links
+- Local browser saving, itinerary copying, printing, and mobile responsiveness
 
-A future production version can use the Google Maps JavaScript API and Routes API for richer in-page traffic-aware routing. That upgrade requires a Google Cloud project, billing, an API key, and proper key restrictions.
+## Color palette
 
-## Important transport limitation
-
-Google Maps road directions and Baguio jeepney guidance solve different parts of the trip:
-
-- Google Maps handles road, walking, and live navigation.
-- The project’s jeepney instructions provide curated loading-area and signboard guidance.
-- Google transit coverage may not represent every Baguio PUJ route.
-- Loading bays, route operations, fares, drop-off points, attraction hours, trail access, and road controls can change.
-
-Tourists should always verify the exact route with a driver or dispatcher before boarding.
-
-## Destination coverage
-
-The dataset includes major stops across:
-
-- City Center
-- East Baguio
-- South Baguio
-- West Baguio
-- Nearby Benguet
-
-Requested additions include Igorot Stone Kingdom, Ili-Likha Artists Village, La Trinidad Strawberry Farm, Dragon Treasure Castle, Mt. Camisong Forest Park, and Valley of Colors. Other additions include BenCab Museum, Mount Costa, Mt. Kalugong, Mt. Yangbew, Bell Church, PMA, Lion’s Head, Easter Weaving Room, Camp John Hay’s historical core, and more.
-
-“Nearby Benguet” destinations are clearly labeled because they are not within Baguio proper and usually need more travel time.
-
-## Run locally
-
-### VS Code Live Server
-
-1. Open the `lakbay-baguio` folder in VS Code.
-2. Install the **Live Server** extension if needed.
-3. Right-click `index.html`.
-4. Choose **Open with Live Server**.
-
-### Python local server
-
-From the project folder:
-
-```bash
-python -m http.server 8000
+```text
+#819A91  Primary sage
+#A7C1A8  Secondary sage
+#D1D8BE  Soft sage
+#EEEFE0  Cream background
+#FFA02E  Orange highlight
+#FFEF91  Yellow highlight
 ```
 
-Then open `http://localhost:8000`.
+## Destination image size
 
-Geolocation generally works on HTTPS websites and on `localhost`. It may be blocked when `index.html` is opened directly as a `file://` page.
+Replace destination images inside:
 
-## Project structure
+```text
+assets/img/destinations/
+```
+
+Recommended dimensions:
+
+```text
+800 × 500 pixels
+```
+
+A larger `1200 × 750` image also works. Keep the same filename and use an 8:5 landscape ratio. CSS uses `object-fit: cover`, so images crop neatly without changing card dimensions.
+
+Examples:
+
+```text
+assets/img/destinations/burnham-park.jpg
+assets/img/destinations/camp-john-hay.jpg
+assets/img/destinations/igorot-stone-kingdom.jpg
+```
+
+Destination labels are HTML text, not part of the photos, so names remain visible after images are replaced.
+
+## Google Maps
+
+The project uses:
+
+- Standard Google Maps search URLs
+- Google Maps directions URLs for each route leg
+- Multi-stop Google Maps URLs for each itinerary day
+- A no-key Google Maps place preview iframe
+
+A paid Google Maps API key is not required for the current implementation. The embedded preview shows a selected place, while the route buttons open full directions in Google Maps.
+
+## Data and fare notes
+
+`assets/js/data.js` contains:
+
+- Attractions and side trips
+- Approximate coordinates
+- Planning hours
+- Suggested visit durations
+- Activity suggestions
+- General jeepney-loading guidance
+- Terminal baggage suggestions
+
+Transport instructions, attraction hours, storage availability, and fares can change. The interface deliberately labels them as estimates and tells tourists to verify details locally.
+
+## Files
 
 ```text
 lakbay-baguio/
@@ -92,38 +98,10 @@ lakbay-baguio/
     ├── css/
     │   └── style.css
     ├── img/
+    │   ├── logo.svg
     │   ├── favicon.svg
-    │   └── logo.svg
+    │   └── destinations/
     └── js/
-        ├── app.js
-        └── data.js
+        ├── data.js
+        └── app.js
 ```
-
-## Editing destination information
-
-Destination content is stored in `assets/js/data.js`.
-
-Each destination can include:
-
-- name and coordinates
-- area and category
-- estimated duration and hours
-- description
-- `thingsToDo`
-- `commute` guidance
-- Google Maps search query
-- side-trip label
-
-Keep transport guidance conservative. When a direct jeepney connection is uncertain, recommend confirming with a dispatcher or using a taxi for the last mile.
-
-## Production checklist
-
-Before publishing publicly:
-
-- Field-check every listed jeepney loading bay and drop-off point.
-- Confirm attraction operating hours and admission requirements.
-- Add a visible “last verified” date to each route.
-- Add an admin editor or database for route updates.
-- Review accessibility with keyboard and screen-reader testing.
-- Add analytics and privacy information if collecting usage data.
-- Restrict any future Google Maps API key by domain and API.

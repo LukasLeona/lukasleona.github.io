@@ -1,171 +1,179 @@
 /*
  * Lakbay Baguio planning dataset.
- * Coordinates, hours, fares, and public-transport notes are planning aids only.
- * Jeepney loading bays and route operations can change; verify with a dispatcher.
+ * Coordinates, schedules, fares, and public-transport guidance are planning aids.
+ * Travelers should confirm current hours, admission rules, and loading areas locally.
  */
-
-(() => {
+(function () {
   "use strict";
 
-  const cityWalk = (note) => ({
-    route: "City-center walk",
-    board: "No jeepney terminal is normally needed for this stop.",
-    signboard: "Walk from the nearest city-center landmark.",
-    alight: "Use the nearest safe pedestrian entrance.",
-    return: "Continue on foot to the next nearby city-center stop.",
-    terminalQuery: "Burnham Park Baguio",
-    confidence: "walkable",
-    note
-  });
+  const routeGuides = {
+    "City Center": {
+      modeLabel: "City-center jeepney or walk",
+      loadingArea: "Lower Session Road, Harrison Road, or the public-market transport area",
+      loadingQuery: "Lower Session Road jeepney terminal Baguio",
+      signboard: "Ask for the CBD route closest to your destination",
+      returnHint: "Most city-center stops are walkable; otherwise ask for a jeepney returning to Plaza, Burnham, or the public market."
+    },
+    "East Baguio": {
+      modeLabel: "Mines View / Pacdal jeepney",
+      loadingArea: "City-center Mines View or Pacdal loading area; ask a dispatcher near the Plaza or lower Mabini area",
+      loadingQuery: "Mines View jeepney terminal Baguio city center",
+      signboard: "Mines View, Pacdal, or a route serving Leonard Wood Road",
+      returnHint: "Use the designated city-bound loading area and confirm that the jeepney returns to Plaza or Burnham."
+    },
+    "South Baguio": {
+      modeLabel: "Scout Barrio / Loakan / Kias jeepney",
+      loadingArea: "A city-center terminal serving Scout Barrio, Loakan, Kias, or PMA",
+      loadingQuery: "Scout Barrio jeepney terminal Baguio",
+      signboard: "Scout Barrio, Loakan, Kias, Camp John Hay, or PMA as appropriate",
+      returnHint: "Ask staff where the city-bound jeepney waits; Camp John Hay entrances can require additional walking."
+    },
+    "West Baguio": {
+      modeLabel: "Quezon Hill / Tam-awan / Lourdes jeepney",
+      loadingArea: "City-center or market-side terminal serving Quezon Hill, Tam-awan, Lourdes, or Dominican Hill",
+      loadingQuery: "Quezon Hill jeepney terminal Baguio",
+      signboard: "Confirm Tam-awan, Lourdes, Dominican Hill, or Quezon Hill before boarding",
+      returnHint: "Return from the marked roadside loading point and ask for Plaza, Burnham, or the public market."
+    },
+    "North Baguio": {
+      modeLabel: "La Trinidad / Bokawkan jeepney",
+      loadingArea: "Magsaysay Avenue or the Baguio Center Mall transport area",
+      loadingQuery: "La Trinidad jeepney terminal Baguio Center Mall",
+      signboard: "La Trinidad, Bokawkan, or Bell Church",
+      returnHint: "Use a Baguio-bound jeepney and confirm the Plaza or city-center drop-off."
+    },
+    "La Trinidad": {
+      modeLabel: "La Trinidad jeepney",
+      loadingArea: "Magsaysay Avenue or Baguio Center Mall area",
+      loadingQuery: "La Trinidad jeepney terminal Baguio Center Mall",
+      signboard: "La Trinidad; tell the dispatcher the exact attraction",
+      returnHint: "Board a Baguio-bound jeepney from an official loading area and confirm the city-center stop."
+    },
+    "Tuba / Asin": {
+      modeLabel: "Asin / Tuba jeepney or hired vehicle",
+      loadingArea: "Confirm the current Asin or Tuba loading area with the Baguio public-market dispatcher",
+      loadingQuery: "Asin Road jeepney terminal Baguio",
+      signboard: "Asin, Nangalisan, or the exact barangay of the attraction",
+      returnHint: "Return trips can be less frequent. Ask the driver about the final city-bound trip before alighting."
+    },
+    "Atok Side Trip": {
+      modeLabel: "Atok-bound bus or hired vehicle",
+      loadingArea: "Dangwa or Slaughterhouse-area terminals serving northern Benguet; verify the current operator",
+      loadingQuery: "Atok bus terminal Baguio",
+      signboard: "Atok or Sayangan; confirm the attraction and return schedule",
+      returnHint: "This is a long side trip. Reserve transport and confirm the last Baguio-bound departure in advance."
+    }
+  };
 
-  const eastJeep = (alight, note = "Mines View and Pacdal loading arrangements can change. Ask the dispatcher before boarding.") => ({
-    route: "Mines View / Pacdal corridor",
-    board: "Go to the Lower Mabini Street jeepney loading area near Session Road. Ask for the bay serving Mines View, Pacdal, or your exact landmark.",
-    signboard: "Look for MINES VIEW, PACDAL, TIPTOP, or a dispatcher-confirmed jeep that passes the destination.",
-    alight,
-    return: "Ask where the city-bound jeep loads before entering the attraction.",
-    terminalQuery: "Lower Mabini Street jeepney terminal Baguio",
-    confidence: "local-guide",
-    note
-  });
+  function place(id, name, area, lat, lng, duration, open, close, category, popular, description, activities, tags, extra) {
+    return Object.assign({
+      id,
+      name,
+      area,
+      lat,
+      lng,
+      duration,
+      open,
+      close,
+      category,
+      popular,
+      description,
+      activities,
+      tags,
+      icon: category === "Park" ? "🌿" : category === "Viewpoint" ? "⛰️" : category === "Museum" ? "🏛️" : category === "Food & shopping" ? "🛍️" : category === "Culture" ? "🎨" : "📍",
+      image: `assets/img/destinations/${id}.jpg`,
+      googleQuery: `${name}, Baguio Philippines`,
+      routeGuide: routeGuides[area] || routeGuides["City Center"],
+      scope: ["La Trinidad", "Tuba / Asin", "Atok Side Trip"].includes(area) ? "Nearby Benguet side trip" : "Baguio City"
+    }, extra || {});
+  }
 
-  const southJeep = (alight, note = "Camp John Hay has several entrances, so confirm the best drop-off for the activity you chose.") => ({
-    route: "Scout Barrio / Kias / Loakan / PMA corridor",
-    board: "Go to the Perfecto Street–Lake Drive loading area beside the Burnham Park/Ganza side and ask for the correct southbound bay.",
-    signboard: "Look for SCOUT BARRIO, KIAS, LOAKAN, or PMA, then show the driver the destination pin.",
-    alight,
-    return: "Ask the driver where to wait for a jeep returning to the central business district.",
-    terminalQuery: "Perfecto Street jeepney terminal Baguio",
-    confidence: "local-guide",
-    note
-  });
+  const destinations = [
+    place("burnham-park", "Burnham Park", "City Center", 16.41107, 120.59334, 75, "05:00", "22:00", "Park", true, "Baguio's central lake park and one of the easiest places to begin a relaxed city route.", ["Rent a paddle boat on Burnham Lake", "Try strawberry taho and local street snacks", "Bike or skate around the park", "Walk through the Rose Garden and Orchidarium"], ["family", "nature", "walkable", "popular"], { alight: "Ask to alight near Harrison Road, Lake Drive, or your preferred Burnham entrance." }),
+    place("session-road", "Session Road", "City Center", 16.41356, 120.59774, 60, "06:00", "23:00", "Food & shopping", true, "The city's best-known commercial street, lined with cafés, restaurants, shops, and landmarks.", ["Try a local café or bakery", "Walk from lower to upper Session Road", "Browse local shops and pasalubong stores", "Visit the cathedral from the upper section"], ["food", "shopping", "walkable", "popular"]),
+    place("baguio-cathedral", "Baguio Cathedral", "City Center", 16.41466, 120.59885, 35, "06:00", "19:00", "Culture", true, "A rose-colored hilltop landmark overlooking Session Road and the city center.", ["Take in the city view from the courtyard", "Use the historic cathedral stairs", "Keep voices low during services", "Pair the stop with Session Road"], ["heritage", "view", "walkable", "popular"]),
+    place("baguio-city-market", "Baguio City Market", "City Center", 16.41574, 120.59406, 75, "05:00", "19:00", "Food & shopping", true, "A lively market for vegetables, strawberries, delicacies, woven goods, flowers, and souvenirs.", ["Buy fresh strawberries when in season", "Compare pasalubong prices", "Look for woven Cordilleran products", "Try local delicacies in the food sections"], ["food", "shopping", "souvenirs", "popular"]),
+    place("baguio-night-market", "Baguio Night Market", "City Center", 16.4122, 120.5960, 90, "21:00", "02:00", "Food & shopping", true, "A late-night Harrison Road market known for ukay-ukay, affordable finds, and street food.", ["Browse ukay-ukay stalls", "Try warm street food in the cold evening", "Bring small bills and keep valuables secure", "Arrive after the road is officially closed for the market"], ["shopping", "food", "night", "popular"], { timeSlot: "night", googleQuery: "Baguio Night Market Harrison Road" }),
+    place("ili-likha", "Ili-Likha Artists Village", "City Center", 16.41375, 120.59645, 75, "10:00", "20:00", "Culture", true, "A creative multi-level space combining local food, art, woodwork, and imaginative architecture.", ["Try food from the independent stalls", "Explore the layered art-filled interiors", "Check for workshops or performances", "Take photos without blocking narrow paths"], ["art", "culture", "food", "popular"], { alight: "Walk from Session Road or ask to alight near Assumption Road." }),
+    place("baguio-museum", "Baguio Museum", "City Center", 16.40785, 120.59925, 60, "09:00", "17:00", "Museum", false, "A compact introduction to Cordilleran history, textiles, material culture, and traditional life.", ["Read the regional history displays", "Study Cordilleran textiles and objects", "Pair it with SM Baguio or Sunshine Park", "Check current gallery hours before visiting"], ["culture", "indoors", "history"]),
+    place("museo-kordilyera", "Museo Kordilyera", "City Center", 16.4028, 120.5918, 75, "09:00", "17:00", "Museum", false, "A university museum focused on the peoples, arts, histories, and material culture of the Cordillera.", ["Explore rotating exhibitions", "Read the cultural context carefully", "Visit the UP Baguio campus grounds", "Check academic-calendar closures"], ["culture", "museum", "history"]),
+    place("sunshine-park", "Sunshine Park", "City Center", 16.4086, 120.5980, 35, "06:00", "18:00", "Park", false, "A small green public space near Baguio Museum, the Convention Center, and SM Baguio.", ["Take a short rest between city stops", "Pair it with Baguio Museum", "Enjoy a quiet morning walk", "Use it as a meeting point near the terminal area"], ["park", "walkable", "quiet"]),
+    place("baguio-orchidarium", "Baguio Orchidarium", "City Center", 16.4107, 120.5905, 45, "08:00", "17:00", "Park", false, "A plant and flower area beside Burnham Park with orchids, ornamentals, and garden stalls.", ["Browse orchids and potted plants", "Ask before photographing vendor displays", "Pair it with Burnham Park", "Visit in the morning for softer light"], ["plants", "garden", "walkable"]),
+    place("laperal-white-house", "Laperal White House", "City Center", 16.4172, 120.6043, 50, "09:00", "17:00", "Culture", false, "A historic American-era house along Leonard Wood Road, known for its architecture and exhibitions.", ["Appreciate the exterior details", "Check whether the interior exhibit is open", "Pair it with Teachers Camp", "Respect restricted areas"], ["heritage", "architecture", "culture"]),
+    place("teachers-camp", "Teachers Camp", "East Baguio", 16.4190, 120.6082, 50, "06:00", "18:00", "Culture", false, "A historic pine-filled institutional compound with heritage buildings and a quiet Baguio atmosphere.", ["Walk around publicly accessible areas", "Observe heritage architecture", "Pair it with Laperal White House", "Respect events and restricted facilities"], ["heritage", "pine", "quiet"]),
+    place("botanical-garden", "Baguio Botanical Garden", "East Baguio", 16.42194, 120.61335, 90, "06:00", "18:00", "Park", true, "A landscaped cultural garden with greenery, art, Cordilleran features, and photo areas.", ["Explore the cultural installations", "Walk the garden paths slowly", "Look for seasonal floral displays", "Visit early to avoid large crowds"], ["nature", "culture", "photos", "popular"], { alight: "Ask the driver to drop you at the Botanical Garden main entrance on Leonard Wood Road." }),
+    place("wright-park", "Wright Park", "East Baguio", 16.42011, 120.61917, 75, "06:00", "18:00", "Park", true, "A pine-lined promenade beside The Mansion, known for the Pool of Pines and horseback-riding area.", ["Walk the Pool of Pines promenade", "Ride a horse through an accredited handler", "Rent Cordilleran-inspired attire respectfully", "Walk to The Mansion gate"], ["nature", "family", "horse", "popular"], { alight: "Ask to alight near Wright Park or The Mansion. The two attractions are walkable from each other." }),
+    place("the-mansion", "The Mansion", "East Baguio", 16.42068, 120.62001, 35, "06:00", "18:00", "Culture", true, "The official presidential summer residence, viewed from its iconic gate and landscaped approach.", ["Take a photo from the public gate area", "Read the historical marker", "Pair it with Wright Park", "Avoid blocking traffic at the entrance"], ["landmark", "photos", "popular"]),
+    place("mines-view-park", "Mines View Park", "East Baguio", 16.42492, 120.62771, 75, "05:00", "20:00", "Viewpoint", true, "A classic viewpoint with souvenir stalls and mountain scenery toward the Cordillera ranges.", ["Visit the viewing deck", "Browse souvenir stalls", "Try local snacks and strawberry products", "Go early for lighter crowds and clearer views"], ["view", "souvenirs", "popular"], { alight: "Ride to the Mines View terminal and follow the pedestrian signs to the park entrance." }),
+    place("good-shepherd", "Good Shepherd Convent", "East Baguio", 16.42529, 120.62924, 45, "08:00", "17:00", "Food & shopping", true, "A popular pasalubong stop near Mines View Park, known for ube jam and other local products.", ["Check product availability before lining up", "Buy only what you can safely carry", "Enjoy the view from the grounds", "Walk from Mines View when weather allows"], ["food", "pasalubong", "popular"]),
+    place("arcas-yard", "Arca's Yard", "East Baguio", 16.4350, 120.6250, 90, "09:00", "19:00", "Food & shopping", false, "A cozy café and cultural space in the hills, known for views, books, local design, and relaxed meals.", ["Reserve a table on busy dates", "Try a warm drink with a mountain view", "Browse books and local displays", "Use a taxi for easier access"], ["food", "view", "quiet"], { routeGuide: routeGuides["East Baguio"], alight: "Ask for Tiptop or Ambuklao Road and confirm the safest drop-off for Arca's Yard." }),
+    place("bamboo-eco-park", "Bamboo Eco Park", "East Baguio", 16.4315, 120.6168, 60, "07:00", "17:00", "Park", false, "A quieter bamboo-filled green space suited to gentle walks and nature photography.", ["Walk through the bamboo paths", "Use insect protection", "Visit in daylight", "Confirm current admission and access"], ["nature", "quiet", "hidden"]),
+    place("camp-john-hay", "Camp John Hay", "South Baguio", 16.39784, 120.61137, 150, "06:00", "20:00", "Park", true, "A broad pine-covered estate with trails, heritage sites, cafés, and recreational areas.", ["Walk the Yellow Trail or an easier forest path", "Visit Bell House and the historical core", "Try a picnic or café stop", "Allow extra travel time between areas inside the estate"], ["nature", "food", "long visit", "popular"], { alight: "Tell the driver which Camp John Hay entrance you need. A taxi is often simpler for specific sites inside the estate." }),
+    place("bell-house", "Bell House", "South Baguio", 16.4002, 120.6115, 45, "08:00", "17:00", "Culture", false, "A preserved American-era residence within Camp John Hay's historical core.", ["Tour the period rooms when open", "Walk around the landscaped grounds", "Pair it with the Cemetery of Negativism", "Check the historical-core entrance fee"], ["heritage", "history", "camp john hay"]),
+    place("cemetery-of-negativism", "Cemetery of Negativism", "South Baguio", 16.3994, 120.6120, 25, "08:00", "17:00", "Culture", false, "A playful symbolic site inside Camp John Hay encouraging visitors to leave negative habits behind.", ["Read the humorous markers", "Pair it with Bell House", "Keep the visit short and reflective", "Stay on designated paths"], ["quirky", "heritage", "camp john hay"]),
+    place("john-hay-historical-core", "John Hay Historical Core", "South Baguio", 16.4004, 120.6112, 90, "08:00", "17:00", "Culture", false, "A cluster of heritage attractions inside Camp John Hay, including Bell House and historical markers.", ["Buy the appropriate entrance ticket", "Follow the heritage walk", "Combine nearby sites in one visit", "Allow time for uphill paths"], ["heritage", "history", "camp john hay"]),
+    place("philippine-military-academy", "Philippine Military Academy", "South Baguio", 16.3604, 120.6164, 120, "08:00", "17:00", "Culture", true, "A historic military academy with manicured grounds, monuments, and mountain scenery, subject to visitor rules.", ["Bring valid identification", "Follow current security and dress rules", "Visit approved public areas only", "Check access before traveling"], ["history", "landmark", "popular"], { alight: "Use a PMA or Kias route only after confirming visitor access and the correct gate." }),
+    place("lions-head", "Lion's Head", "South Baguio", 16.3629, 120.6057, 30, "06:00", "18:00", "Viewpoint", true, "The iconic roadside lion sculpture along Kennon Road, best treated as a quick photo stop.", ["Take a quick roadside photo safely", "Stay within designated areas", "Avoid stepping into traffic", "Combine with a hired-vehicle route along Kennon Road"], ["landmark", "photos", "popular"], { routeGuide: routeGuides["South Baguio"], alight: "Public transport may not stop conveniently. A hired vehicle is safer for a controlled photo stop." }),
+    place("maryknoll-ecological-sanctuary", "Maryknoll Ecological Sanctuary", "South Baguio", 16.3997, 120.5862, 75, "08:00", "17:00", "Park", false, "A peaceful ecological space with reflective paths, gardens, and environmental learning areas.", ["Follow the earth-themed trail", "Keep noise low", "Ask about guided activities", "Wear shoes suitable for damp paths"], ["nature", "quiet", "education"]),
+    place("mirador-heritage-eco-park", "Mirador Heritage and Eco Park", "West Baguio", 16.40945, 120.57863, 105, "06:00", "18:00", "Park", true, "A hillside heritage park known for gardens, contemplative spaces, art, and sunset views.", ["Walk to the torii-inspired viewpoint", "Explore the gardens and heritage areas", "Time the visit for late afternoon", "Wear shoes suitable for slopes"], ["view", "nature", "photos", "popular"], { alight: "Ask for the closest Mirador or Lourdes drop-off and expect an uphill walk." }),
+    place("lourdes-grotto", "Lourdes Grotto", "West Baguio", 16.40905, 120.57978, 50, "06:00", "18:00", "Culture", true, "A hillside pilgrimage site reached by a long stairway, with views over western Baguio.", ["Climb at a comfortable pace", "Use the roadway alternative when appropriate", "Keep the prayer area quiet", "Pair it with Mirador"], ["heritage", "stairs", "view", "popular"]),
+    place("diplomat-hotel", "Old Diplomat Hotel", "West Baguio", 16.4038, 120.5787, 60, "07:00", "18:00", "Culture", true, "Ruins of a historic hilltop structure on Dominican Hill, known for architecture and city views.", ["Explore only open public areas", "Read about the building's history", "Enjoy the panoramic viewpoint", "Avoid unsafe or restricted sections"], ["heritage", "view", "popular"], { alight: "Ask for Dominican Hill and confirm the uphill access point." }),
+    place("tam-awan-village", "Tam-awan Village", "West Baguio", 16.4290, 120.57785, 105, "08:00", "17:00", "Culture", true, "An artists' village with Cordilleran-inspired houses, galleries, workshops, and hillside paths.", ["Visit the galleries and traditional structures", "Check for portrait sketches or workshops", "Wear shoes for steep paths", "Respect cultural displays and artists"], ["art", "culture", "hillside", "popular"], { alight: "Confirm the Tam-awan route and ask to alight at the main entrance." }),
+    place("igorot-stone-kingdom", "Igorot Stone Kingdom", "West Baguio", 16.4238, 120.5727, 105, "06:00", "18:00", "Culture", true, "A large stone-terrace attraction inspired by Cordilleran themes and mountain architecture.", ["Explore the stone terraces slowly", "Read the site's cultural explanations", "Watch for scheduled performances", "Use the designated photo areas"], ["culture", "architecture", "family", "popular"], { alight: "Ask for the Stone Kingdom route or a Tam-awan/Longlong-area jeepney and confirm the entrance drop-off." }),
+    place("easter-weaving-room", "Easter Weaving Room", "West Baguio", 16.4192, 120.5849, 60, "08:00", "17:00", "Culture", false, "A long-running weaving center where visitors can see and buy Cordilleran-inspired textiles.", ["Observe weaving when demonstrations are available", "Ask before taking close-up photos", "Shop for locally made textiles", "Learn about patterns and materials"], ["weaving", "culture", "shopping"]),
+    place("ifugao-woodcarvers-village", "Ifugao Woodcarvers Village", "West Baguio", 16.3892, 120.5616, 60, "08:00", "17:00", "Culture", false, "A stretch along Asin Road associated with woodcarving workshops and artisan products.", ["Browse handmade woodcraft", "Ask artisans about their process", "Buy directly when possible", "Arrange transport because shops are spread out"], ["craft", "shopping", "culture"], { routeGuide: routeGuides["Tuba / Asin"] }),
+    place("bencab-museum", "BenCab Museum", "Tuba / Asin", 16.3814, 120.5503, 150, "09:00", "18:00", "Museum", true, "A major contemporary-art museum with Cordilleran collections, gardens, and views along Asin Road.", ["Allow time for all galleries", "Explore the garden and farm area", "Check the museum café schedule", "Arrange a taxi or hired vehicle for easier return"], ["art", "museum", "culture", "popular"], { googleQuery: "BenCab Museum Tuba Benguet", alight: "Public jeepneys may require walking and uncertain return waits. A taxi or hired vehicle is usually more convenient." }),
+    place("asin-hot-springs", "Asin Hot Springs", "Tuba / Asin", 16.3650, 120.5355, 180, "07:00", "18:00", "Park", false, "A group of warm-spring resorts in the Asin area, suitable for a slower half-day side trip.", ["Choose a resort before departing", "Bring swimwear and a change of clothes", "Confirm entrance fees and pool rules", "Arrange return transport in advance"], ["water", "relax", "side trip"], { googleQuery: "Asin Hot Springs Tuba Benguet" }),
+    place("hydro-falls", "Hydro Falls", "Tuba / Asin", 16.3540, 120.5430, 150, "07:00", "17:00", "Viewpoint", false, "A nature side trip in the Tuba area that may require local guidance and careful access planning.", ["Confirm current trail access", "Use a local guide when required", "Avoid visiting after heavy rain", "Carry water and proper footwear"], ["nature", "adventure", "side trip"], { googleQuery: "Hydro Falls Tuba Benguet" }),
+    place("mt-camisong-forest-park", "Mt. Camisong Forest Park", "Tuba / Asin", 16.3480, 120.5720, 180, "06:00", "17:00", "Park", false, "A forested mountain attraction outside central Baguio, best planned as a dedicated side trip.", ["Confirm the current entrance and road conditions", "Wear trail-ready footwear", "Bring rain protection", "Arrange a hired vehicle or local guide"], ["nature", "forest", "side trip"], { googleQuery: "Mt Camisong Forest Park Benguet" }),
+    place("dragon-treasure-castle", "Dragon Treasure Castle", "Tuba / Asin", 16.3440, 120.5730, 90, "08:00", "17:00", "Culture", false, "A castle-themed roadside attraction in the wider Baguio–Tuba area, suited to a planned photo stop.", ["Confirm opening status before leaving", "Explore designated photo areas", "Pair with another Tuba-side attraction", "Use hired transport for convenience"], ["photos", "family", "side trip"], { googleQuery: "Dragon Treasure Castle Benguet" }),
+    place("bell-church", "Bell Church", "North Baguio", 16.43198, 120.59412, 50, "06:00", "17:00", "Culture", true, "A tranquil Chinese-Filipino temple complex near the Baguio–La Trinidad boundary.", ["Observe the temple architecture", "Keep voices low", "Follow photography rules", "Pair it with Valley of Colors"], ["culture", "architecture", "popular"], { alight: "Ride a La Trinidad jeepney and ask to alight at Bell Church." }),
+    place("valley-of-colors", "Valley of Colors", "La Trinidad", 16.4466, 120.5899, 35, "06:00", "18:00", "Viewpoint", true, "A colorful hillside community visible along the road between Baguio and La Trinidad.", ["View the mural from a safe public area", "Avoid entering private residential spaces", "Pair it with Bell Church or Strawberry Farm", "Use daylight for better photos"], ["photos", "view", "popular"], { googleQuery: "Valley of Colors La Trinidad Benguet", alight: "Ask the driver for Valley of Colors or StoBoSa and alight only at a safe designated point." }),
+    place("strawberry-farm", "La Trinidad Strawberry Farm", "La Trinidad", 16.4549, 120.5897, 105, "06:00", "18:00", "Park", true, "A well-known farm area for seasonal strawberry picking, produce, food products, and local stalls.", ["Pick strawberries when farms permit and fruit is in season", "Try strawberry ice cream or taho", "Shop for vegetables and local products", "Wear shoes that can handle soil or mud"], ["food", "farm", "family", "popular"], { googleQuery: "La Trinidad Strawberry Farm Benguet", alight: "Tell the La Trinidad dispatcher you are going to Strawberry Farm and ask for the nearest safe drop-off." }),
+    place("mount-costa", "Mount Costa", "La Trinidad", 16.4850, 120.5800, 150, "08:00", "17:00", "Park", true, "A large garden attraction with themed landscapes and leisurely walking routes in La Trinidad.", ["Explore the themed gardens", "Bring sun and rain protection", "Allow at least two hours", "Arrange return transport before closing"], ["garden", "photos", "family", "popular"], { googleQuery: "Mount Costa La Trinidad Benguet" }),
+    place("mt-kalugong", "Mt. Kalugong Cultural Village", "La Trinidad", 16.4705, 120.6075, 180, "06:00", "18:00", "Viewpoint", true, "A rocky cultural and nature destination with elevated views over La Trinidad.", ["Wear sturdy shoes for rock sections", "Enjoy the valley viewpoint", "Visit the café when open", "Check weather before climbing"], ["hike", "view", "culture", "popular"], { googleQuery: "Mt Kalugong Cultural Village La Trinidad" }),
+    place("mt-yangbew", "Mt. Yangbew", "La Trinidad", 16.4975, 120.6065, 180, "05:00", "17:00", "Viewpoint", false, "An open grassland summit known for sunrise, mountain scenery, and a short but exposed hike.", ["Start early for sunrise", "Bring wind protection", "Stay on established paths", "Arrange transport to and from the jump-off"], ["hike", "sunrise", "nature"], { googleQuery: "Mt Yangbew La Trinidad Benguet" }),
+    place("bahong-flower-farm", "Bahong Flower Farm", "La Trinidad", 16.4900, 120.6230, 120, "07:00", "17:00", "Park", false, "A flower-growing community in La Trinidad where access and viewing opportunities depend on current farm arrangements.", ["Confirm whether farms accept visitors", "Ask permission before entering fields", "Buy flowers from authorized sellers", "Use a local guide or arranged vehicle"], ["flowers", "farm", "hidden"], { googleQuery: "Bahong Flower Farm La Trinidad" }),
+    place("haights-place", "Haight's Place", "La Trinidad", 16.4855, 120.6040, 90, "08:00", "17:00", "Park", false, "A lesser-known upland stop in the Benguet area; current access and exact visitor arrangements should be checked before travel.", ["Confirm the correct map pin", "Contact the venue before departure", "Pair with a nearby La Trinidad stop", "Use arranged transport"], ["hidden", "nature", "side trip"], { googleQuery: "Haight's Place Benguet" }),
+    place("northern-blossom-flower-farm", "Northern Blossom Flower Farm", "Atok Side Trip", 16.7365, 120.8390, 180, "06:00", "16:30", "Park", true, "A famous Atok flower farm with mountain views, requiring a very early start and a long journey from Baguio.", ["Reserve or confirm entry before the trip", "Dress for colder Atok weather", "Start before dawn for better timing", "Plan transport as a dedicated day trip"], ["flowers", "view", "day trip", "popular"], { googleQuery: "Northern Blossom Flower Farm Atok Benguet" }),
+    place("highest-point-halsema", "Halsema Highway Highest Point", "Atok Side Trip", 16.7070, 120.8380, 35, "06:00", "17:00", "Viewpoint", true, "A high-elevation roadside viewpoint along Halsema Highway, normally paired with an Atok itinerary.", ["Stop only at a safe designated area", "Wear warm clothing", "Check fog and rain conditions", "Pair it with Northern Blossom"], ["view", "road trip", "popular"], { googleQuery: "Highest Point Halsema Highway Atok Benguet" }),
+    place("baguio-orchidarium", "Baguio Orchidarium", "City Center", 16.4107, 120.5905, 45, "08:00", "17:00", "Park", false, "A compact plant area beside Burnham Park with orchids and garden stalls.", ["Browse plants", "Pair with Burnham", "Visit in the morning", "Ask before photographing stalls"], ["plants", "walkable"])
+  ];
 
-  const lourdesJeep = (alight, note = "Expect uphill walking in the Dominican–Lourdes area.") => ({
-    route: "Dominican / Lourdes corridor",
-    board: "Go to the Kayang–Abanao loading area behind or near the public market and ask for the Dominican/Lourdes bay.",
-    signboard: "Look for BAGUIO PLAZA–DOMINICAN–LOURDES or ask the dispatcher for the closest route.",
-    alight,
-    return: "Return to the same road and ask for the Plaza/city-bound jeep.",
-    terminalQuery: "Kayang Street jeepney terminal Baguio",
-    confidence: "local-guide",
-    note
-  });
-
-  const tamawanJeep = (alight, note = "The exact loading bay can move within the Abanao–Kayang area; verify with a dispatcher.") => ({
-    route: "Quezon Hill–Tam-awan–Longlong / Tacay–Longlong corridor",
-    board: "Go to the Abanao–Kayang loading area near A Hotel/Security Bank and ask for the Tam-awan or Longlong bay.",
-    signboard: "Look for QUEZON HILL–TAM-AWAN–LONGLONG or TACAY–LONGLONG.",
-    alight,
-    return: "Ask the driver for the nearest city-bound loading point before getting off.",
-    terminalQuery: "Abanao Street A Hotel Baguio",
-    confidence: "local-guide",
-    note
-  });
-
-  const laTrinidadJeep = (alight, note = "These stops are outside Baguio proper. Traffic along Magsaysay/Halsema can add significant time.") => ({
-    route: "Baguio–La Trinidad corridor",
-    board: "Go to a La Trinidad loading area around Magsaysay Avenue, Center Mall, or the Baguio City Hall/Travelite side and confirm the correct bay.",
-    signboard: "Look for LA TRINIDAD and tell the driver your exact landmark before boarding.",
-    alight,
-    return: "Use a Baguio-bound jeep along the main road; confirm the safe loading point locally.",
-    terminalQuery: "La Trinidad jeepney terminal Baguio City Hall",
-    confidence: "local-guide",
-    note
-  });
-
-  const asinJeep = (alight, note = "Service frequency and the closest drop-off can vary; a taxi is easier for groups or late-afternoon travel.") => ({
-    route: "Asin Road corridor",
-    board: "Go to the Upper Kayang/public-market loading area and ask for the Asin Road jeepney bay.",
-    signboard: "Look for ASIN ROAD and show the destination pin to the dispatcher.",
-    alight,
-    return: "Ask the attraction staff for the nearest Baguio-bound waiting point.",
-    terminalQuery: "Upper Kayang Street jeepney terminal Baguio",
-    confidence: "local-guide",
-    note
-  });
-
-  const taxiPreferred = (route, note) => ({
-    route,
-    board: "Use a metered taxi, booked car, or verified local tour from your current stop.",
-    signboard: "Show the exact Google Maps place pin to the driver.",
-    alight: "Ask to be dropped at the official entrance or registered trailhead.",
-    return: "Arrange the return ride before starting, especially where taxis are uncommon.",
-    terminalQuery: "Baguio City",
-    confidence: "taxi-preferred",
-    noJeep: true,
-    note
-  });
-
-  const d = (entry) => ({
-    open: "06:00",
-    close: "18:00",
-    outsideBaguio: false,
-    googleQuery: `${entry.name}, Baguio City, Philippines`,
-    thingsToDo: [],
-    tags: [],
-    ...entry
-  });
+  // Remove accidental duplicate IDs while preserving the first, richer entry.
+  const uniqueDestinations = destinations.filter((item, index, array) => array.findIndex((candidate) => candidate.id === item.id) === index);
 
   window.LAKBAY_DATA = {
     startLocations: [
-      { id: "victory-liner", name: "Victory Liner Baguio Terminal", lat: 16.40179, lng: 120.59903, area: "City Center", googleQuery: "Victory Liner Baguio Terminal" },
-      { id: "gov-pack", name: "Gov. Pack Road Bus Terminal", lat: 16.40946, lng: 120.59978, area: "City Center", googleQuery: "Gov Pack Road Baguio bus terminal" },
+      { id: "victory-liner", name: "Victory Liner Baguio Terminal", lat: 16.40179, lng: 120.59903, area: "City Center", terminal: true, googleQuery: "Victory Liner Baguio Terminal" },
+      { id: "gov-pack", name: "Gov. Pack Road Bus Terminal", lat: 16.40946, lng: 120.59978, area: "City Center", terminal: true, googleQuery: "Gov Pack Road Baguio bus terminal" },
+      { id: "genesis-baguio", name: "Genesis Transport — Baguio Terminal", lat: 16.40905, lng: 120.60010, area: "City Center", terminal: true, googleQuery: "Genesis Transport Baguio Terminal Gov Pack Road" },
+      { id: "joybus-baguio", name: "JoyBus — Baguio Terminal", lat: 16.40905, lng: 120.60010, area: "City Center", terminal: true, googleQuery: "JoyBus Baguio Terminal Gov Pack Road" },
+      { id: "sm-baguio", name: "SM City Baguio", lat: 16.40817, lng: 120.59997, area: "City Center", googleQuery: "SM City Baguio" },
       { id: "burnham-start", name: "Burnham Park", lat: 16.41107, lng: 120.59334, area: "City Center", googleQuery: "Burnham Park Baguio" },
-      { id: "session-start", name: "Session Road", lat: 16.41356, lng: 120.59774, area: "City Center", googleQuery: "Session Road Baguio" },
-      { id: "sm-baguio", name: "SM City Baguio", lat: 16.40817, lng: 120.59997, area: "City Center", googleQuery: "SM City Baguio" }
+      { id: "session-start", name: "Session Road", lat: 16.41273, lng: 120.59864, area: "City Center", googleQuery: "Session Road Baguio" },
+      { id: "hotel-custom", name: "My hotel / accommodation", lat: 16.4117, lng: 120.5980, area: "City Center", customName: true, googleQuery: "Baguio City" }
     ],
-
-    destinations: [
-      d({ id: "burnham", name: "Burnham Park", area: "City Center", lat: 16.41107, lng: 120.59334, duration: 75, open: "05:00", close: "22:00", icon: "⛲", category: "Park", description: "Baguio’s central lake park and one of the easiest places to begin a relaxed city route.", thingsToDo: ["Rent a paddle boat on Burnham Lake", "Bike or skate around the park", "Try strawberry taho and local street snacks", "Walk through the Rose Garden and nearby Orchidarium"], commute: cityWalk("Burnham is walkable from Gov. Pack, Session Road, SM Baguio, and the public market."), tags: ["walkable", "family", "food", "classic"] }),
-      d({ id: "rose-garden", name: "Rose Garden", area: "City Center", lat: 16.41229, lng: 120.59154, duration: 30, open: "05:00", close: "20:00", icon: "🌹", category: "Garden", description: "A landscaped section of Burnham Park with flower beds and open lawns.", thingsToDo: ["Take garden and fountain photos", "Relax on the lawn", "Pair it with Burnham Lake and the Orchidarium"], commute: cityWalk("The Rose Garden is inside the broader Burnham Park area."), tags: ["walkable", "flowers", "photos"] }),
-      d({ id: "orchidarium", name: "Baguio Orchidarium", area: "City Center", lat: 16.41202, lng: 120.59059, duration: 35, open: "08:00", close: "17:00", icon: "🌸", category: "Garden", description: "A small plant and flower area beside Burnham Park, useful as a calm add-on to a city-center walk.", thingsToDo: ["Browse ornamental plants and flowers", "Ask vendors about locally grown varieties", "Continue to the Rose Garden"], commute: cityWalk("Use the Burnham Park side facing Harrison Road and follow local signs."), tags: ["walkable", "plants", "shopping"] }),
-      d({ id: "session-road", name: "Session Road", area: "City Center", lat: 16.41356, lng: 120.59774, duration: 60, open: "06:00", close: "23:00", icon: "☕", category: "City walk", description: "Baguio’s best-known commercial street, lined with cafés, restaurants, shops, and heritage façades.", thingsToDo: ["Go café-hopping", "Browse local shops and bookstores", "Walk up to the Cathedral", "Visit during a pedestrian Sunday when scheduled"], commute: cityWalk("Session Road is best explored on foot from lower Session, SM Baguio, or the Cathedral."), tags: ["food", "shopping", "walkable", "night"] }),
-      d({ id: "cathedral", name: "Baguio Cathedral", area: "City Center", lat: 16.41466, lng: 120.59885, duration: 35, open: "06:00", close: "19:00", icon: "⛪", category: "Landmark", description: "A rose-colored hilltop church overlooking Session Road and the central business district.", thingsToDo: ["See the twin-spire façade", "Enjoy the city-center viewpoint", "Walk down to Session Road", "Observe church etiquette during services"], commute: cityWalk("Use the Cathedral stairs from Session Road or the vehicle access road if stairs are difficult."), tags: ["heritage", "view", "walkable"] }),
-      d({ id: "public-market", name: "Baguio Public Market", area: "City Center", lat: 16.41574, lng: 120.59406, duration: 75, open: "05:00", close: "19:00", icon: "🧺", category: "Market", description: "A lively market for vegetables, coffee, delicacies, flowers, woven goods, and pasalubong.", thingsToDo: ["Shop for Benguet produce", "Buy local coffee and strawberry products", "Compare woven crafts before purchasing", "Eat at a trusted local stall"], commute: cityWalk("Walk from Burnham or lower Session and use designated crossings around Magsaysay Avenue."), tags: ["shopping", "food", "souvenirs"] }),
-      d({ id: "night-market", name: "Baguio Night Market", area: "City Center", lat: 16.41411, lng: 120.59356, duration: 90, open: "21:00", close: "23:59", icon: "🌙", category: "Night market", description: "A late-evening Harrison Road market known for bargain clothing, accessories, and street food.", thingsToDo: ["Browse ukay-ukay stalls", "Try hot snacks suited to the cool weather", "Keep valuables secure in dense crowds", "Check the operating schedule before going"], commute: cityWalk("The market operates along Harrison Road near Burnham Park when authorized."), tags: ["night", "shopping", "food"] }),
-      d({ id: "ili-likha", name: "Ili-Likha Artists Village", area: "City Center", lat: 16.41420, lng: 120.60072, duration: 75, open: "10:00", close: "21:00", icon: "🎭", category: "Arts & food", description: "A layered artist-built space on Assumption Road with creative architecture, independent food stalls, and community art.", thingsToDo: ["Explore the recycled-material architecture", "Try food from independent concessionaires", "Browse art and crafts", "Watch for small performances or workshops"], commute: cityWalk("Walk from Session Road toward Assumption Road; the entrance can be easy to miss, so use the place pin."), tags: ["art", "food", "walkable", "indoor"] }),
-      d({ id: "baguio-museum", name: "Baguio Museum", area: "City Center", lat: 16.40785, lng: 120.59925, duration: 60, open: "09:00", close: "17:00", icon: "🧵", category: "Museum", description: "A compact museum presenting Cordilleran history, textiles, material culture, and traditional lifeways.", thingsToDo: ["Study Cordilleran textiles and artifacts", "Read the regional-history exhibits", "Pair with SM Baguio or Museo Kordilyera"], commute: cityWalk("It is walkable from SM Baguio, the Convention Center, and Victory Liner."), tags: ["culture", "history", "indoors"] }),
-      d({ id: "museo-kordilyera", name: "Museo Kordilyera", area: "City Center", lat: 16.41263, lng: 120.59983, duration: 75, open: "09:00", close: "17:00", icon: "🏺", category: "Museum", description: "The University of the Philippines Baguio ethnographic museum focused on the peoples and cultures of the Cordillera.", thingsToDo: ["See rotating ethnographic exhibitions", "Learn about Cordilleran identity and material culture", "Walk through the UP Baguio campus"], commute: cityWalk("Enter through the UP Baguio campus near Governor Pack Road; verify visitor hours."), tags: ["culture", "history", "indoors"] }),
-      d({ id: "pink-sisters", name: "Pink Sisters’ Convent", area: "City Center", lat: 16.41632, lng: 120.60848, duration: 35, open: "06:00", close: "18:00", icon: "🕊", category: "Quiet landmark", description: "A peaceful convent and chapel known for its contemplative atmosphere and pink-clad nuns.", thingsToDo: ["Spend a quiet moment in the chapel", "Admire the garden and architecture", "Maintain silence and respectful dress"], commute: eastJeep("Ask to get off at the Pink Sisters/Brent Road area, then follow the short access road.", "For a simple city-center connection, a taxi or walk from Upper Session may be more convenient."), tags: ["quiet", "heritage", "spiritual"] }),
-      d({ id: "laperal", name: "Laperal White House", area: "City Center", lat: 16.41636, lng: 120.60520, duration: 45, open: "09:00", close: "17:00", icon: "🏠", category: "Heritage house", description: "A prominent white heritage house on Leonard Wood Road, sometimes hosting art or cultural exhibits.", thingsToDo: ["Photograph the exterior responsibly", "Check whether an exhibit is open", "Pair with Pink Sisters or Botanical Garden"], commute: eastJeep("Ask to alight at Laperal White House on Leonard Wood Road.", "Access and exhibition schedules can change; verify before visiting."), tags: ["heritage", "architecture", "photos"] }),
-
-      d({ id: "botanical", name: "Baguio Botanical Garden", area: "East Baguio", lat: 16.42194, lng: 120.61335, duration: 90, open: "06:00", close: "18:00", icon: "🌿", category: "Garden", description: "A landscaped cultural garden along Leonard Wood Road with Cordilleran features, sister-city gardens, and pine-shaded paths.", thingsToDo: ["Explore the sister-city gardens", "See Cordilleran sculptures and cultural displays", "Walk through the Japanese tunnel area when open", "Buy plants or crafts from authorized vendors"], commute: eastJeep("Ask to alight directly at the Botanical Garden main entrance on Leonard Wood Road."), tags: ["nature", "culture", "photos"] }),
-      d({ id: "wright-park", name: "Wright Park", area: "East Baguio", lat: 16.42011, lng: 120.61917, duration: 75, open: "06:00", close: "18:00", icon: "🐴", category: "Park", description: "A pine-lined promenade beside The Mansion, known for the Pool of Pines and its horseback-riding area.", thingsToDo: ["Walk the Pool of Pines promenade", "Ride a horse with an accredited handler", "Rent Cordilleran-inspired attire where responsibly offered", "Pair the stop with The Mansion"], commute: eastJeep("Ask to get off at Wright Park/Mansion House. Confirm whether the jeep passes the riding circle or the Mansion gate."), tags: ["horses", "nature", "nearby pair", "family"] }),
-      d({ id: "the-mansion", name: "The Mansion", area: "East Baguio", lat: 16.42068, lng: 120.62001, duration: 30, open: "06:00", close: "18:00", icon: "🏛", category: "Landmark", description: "The official presidential summer residence, usually viewed from its iconic gate and landscaped approach.", thingsToDo: ["Take a photo from the public viewing area", "Read about the site’s history", "Cross to Wright Park for a longer visit"], commute: eastJeep("Ask to alight at the Mansion House gate or Wright Park."), tags: ["landmark", "photos", "nearby pair"] }),
-      d({ id: "mines-view", name: "Mines View Park", area: "East Baguio", lat: 16.42492, lng: 120.62771, duration: 75, open: "05:00", close: "20:00", icon: "⛰", category: "Viewpoint", description: "A classic mountain viewpoint with souvenir stalls and views toward the old mining towns and Cordillera ranges.", thingsToDo: ["Visit the observation deck early for clearer views", "Browse local souvenirs", "Try nearby snacks", "Walk to Good Shepherd for pasalubong"], commute: eastJeep("Stay on the jeep until the Mines View terminal/end area, then follow signs to the park entrance."), tags: ["view", "souvenirs", "popular"] }),
-      d({ id: "good-shepherd", name: "Good Shepherd Convent", area: "East Baguio", lat: 16.42529, lng: 120.62924, duration: 45, open: "08:00", close: "17:00", icon: "🍓", category: "Local treats", description: "A popular pasalubong stop near Mines View, known for ube jam and other local products.", thingsToDo: ["Buy ube jam and seasonal products", "Enjoy the garden/viewing area when accessible", "Support the convent’s livelihood programs", "Walk from Mines View in good weather"], commute: eastJeep("Alight at Mines View, then walk carefully toward the Good Shepherd entrance."), tags: ["food", "pasalubong", "nearby pair"] }),
-      d({ id: "bamboo-sanctuary", name: "St. Francis Xavier Bamboo Sanctuary", area: "East Baguio", lat: 16.43063, lng: 120.61554, duration: 60, open: "08:00", close: "17:00", icon: "🎍", category: "Nature", description: "A quiet bamboo-lined sanctuary in the Pacdal/Liteng side of the city.", thingsToDo: ["Walk the bamboo path", "Take quiet nature photos", "Visit during less-crowded hours", "Respect church and community rules"], commute: eastJeep("Ask the Pacdal/Liteng dispatcher for the closest stop to St. Francis Xavier Bamboo Sanctuary, then expect a short walk.", "The final approach may be less straightforward than major tourist corridors; use the place pin."), tags: ["nature", "quiet", "photos"] }),
-      d({ id: "pine-trees-world", name: "Pine Trees of the World", area: "East Baguio", lat: 16.42482, lng: 120.60958, duration: 45, open: "06:00", close: "18:00", icon: "🌲", category: "Nature park", description: "A lesser-known green space featuring pine species and forested walking areas near the Pacdal side.", thingsToDo: ["Identify different pine species", "Take a short forest walk", "Pair with Botanical Garden or Pacdal attractions"], commute: eastJeep("Ask for a Pacdal-bound jeep and show the Pine Trees of the World pin; confirm the nearest safe drop-off."), tags: ["nature", "quiet", "less crowded"] }),
-
-      d({ id: "camp-john-hay", name: "Camp John Hay", area: "South Baguio", lat: 16.39784, lng: 120.61137, duration: 150, open: "06:00", close: "20:00", icon: "🌲", category: "Nature estate", description: "A large pine-covered estate with trails, heritage sites, cafés, picnic areas, and several entrances.", thingsToDo: ["Walk the Yellow Trail or an easier forest path", "Visit Bell House and the Amphitheater", "Stop at the Cemetery of Negativism", "Have a picnic or warm drink at a nearby café"], commute: southJeep("Tell the driver whether you need the main gate, Technohub, Scout Hill, or another Camp John Hay entrance."), tags: ["nature", "long visit", "food", "trails"] }),
-      d({ id: "bell-house", name: "Bell House & Amphitheater", area: "South Baguio", lat: 16.40155, lng: 120.61853, duration: 60, open: "09:00", close: "17:00", icon: "🔔", category: "Heritage", description: "A preserved American-era residence and garden amphitheater inside Camp John Hay’s historical core.", thingsToDo: ["Tour the restored rooms", "Walk through the garden amphitheater", "Learn about Camp John Hay history", "Combine with the Cemetery of Negativism"], commute: southJeep("Enter Camp John Hay at the most convenient gate, then follow internal signs or take a short taxi to Bell House."), tags: ["history", "architecture", "camp john hay"] }),
-      d({ id: "cemetery-negativism", name: "Cemetery of Negativism", area: "South Baguio", lat: 16.40103, lng: 120.61780, duration: 30, open: "09:00", close: "17:00", icon: "🪦", category: "Quirky landmark", description: "A small, humorous symbolic cemetery inside Camp John Hay encouraging visitors to bury negative habits and thoughts.", thingsToDo: ["Read the witty tombstones", "Reflect on a habit you want to leave behind", "Walk to Bell House nearby"], commute: southJeep("Enter Camp John Hay and follow signs toward the Historical Core/Bell House area."), tags: ["quirky", "camp john hay", "walkable pair"] }),
-      d({ id: "forest-bathing", name: "Camp John Hay Forest Bathing Trail", area: "South Baguio", lat: 16.39703, lng: 120.61645, duration: 90, open: "06:00", close: "17:00", icon: "🥾", category: "Trail", description: "A pine-forest walking experience inside Camp John Hay, suited to visitors who want a quieter nature break.", thingsToDo: ["Walk slowly and enjoy the pine forest", "Bring water and rain protection", "Choose a trail suited to your fitness", "Avoid the trail late in the day or in severe weather"], commute: southJeep("Ask for the Camp John Hay entrance closest to your chosen trail access, then use internal signs."), tags: ["hiking", "nature", "camp john hay"] }),
-      d({ id: "pma", name: "Philippine Military Academy", area: "South Baguio", lat: 16.35990, lng: 120.61887, duration: 120, open: "08:00", close: "17:00", icon: "🎖", category: "Institutional landmark", description: "The national military academy at Fort del Pilar, with landscaped grounds and selected visitor areas when access is permitted.", thingsToDo: ["Check visitor access requirements in advance", "See permitted grounds and displays", "Bring valid identification", "Follow all security and photography rules"], commute: southJeep("Take a PMA/Kias/Loakan jeep and tell the driver you are going to the PMA visitor entrance. Verify admission before leaving the city center.", "Visitor access can be restricted without notice; confirm before planning the trip."), tags: ["history", "security rules", "long trip"] }),
-      d({ id: "maryknoll", name: "Maryknoll Ecological Sanctuary", area: "South Baguio", lat: 16.39938, lng: 120.59807, duration: 90, open: "08:00", close: "17:00", icon: "🌎", category: "Eco sanctuary", description: "An ecological learning space with a contemplative trail explaining the story of creation and environmental stewardship.", thingsToDo: ["Walk the Cosmic Journey trail", "Join an environmental-learning activity when available", "Observe quiet-zone rules", "Wear shoes suitable for damp paths"], commute: southJeep("Ask for a Campo Sioco/Marcos Highway-side route or take a short taxi to the sanctuary entrance.", "A taxi is usually simpler than transferring between jeepney routes."), tags: ["nature", "education", "quiet"] }),
-      d({ id: "lions-head", name: "Lion’s Head", area: "South Baguio", lat: 16.37293, lng: 120.60935, duration: 30, open: "06:00", close: "18:00", icon: "🦁", category: "Roadside landmark", description: "The famous carved lion along Kennon Road, commonly visited as an arrival or departure photo stop.", thingsToDo: ["Take a quick roadside photo", "Buy from authorized local vendors", "Keep away from moving traffic", "Combine with Kennon Road View Deck"], commute: taxiPreferred("Kennon Road roadside stop", "Use a private vehicle or taxi. The roadside setting is not ideal for casual jeepney transfers, and stopping rules may change."), tags: ["photo stop", "roadside", "landmark"] }),
-      d({ id: "kennon-view", name: "Kennon Road View Deck", area: "South Baguio", lat: 16.36588, lng: 120.61053, duration: 30, open: "06:00", close: "18:00", icon: "🛣", category: "Viewpoint", description: "A roadside viewpoint along the historic Kennon Road corridor, best included during an arrival or private-car loop.", thingsToDo: ["View the winding mountain road", "Take landscape photos only from safe areas", "Check road conditions before traveling"], commute: taxiPreferred("Kennon Road private-vehicle route", "Road closures and one-way controls can occur. Check current traffic advisories."), tags: ["view", "roadside", "private vehicle"] }),
-
-      d({ id: "mirador", name: "Mirador Heritage and Eco Park", area: "West Baguio", lat: 16.40945, lng: 120.57863, duration: 120, open: "06:00", close: "18:00", icon: "🎋", category: "Eco park", description: "A hillside heritage and eco park known for gardens, reflective spaces, art installations, and sunset views.", thingsToDo: ["Walk through the bamboo grove", "See the Torii-style gate and gardens", "Visit the weather station/view deck area", "Time the visit for golden hour when conditions are clear"], commute: lourdesJeep("Ask to alight at the Mirador/Lourdes access road, then follow the uphill route to the entrance."), tags: ["view", "nature", "uphill", "sunset"] }),
-      d({ id: "lourdes-grotto", name: "Lourdes Grotto", area: "West Baguio", lat: 16.40905, lng: 120.57978, duration: 50, open: "06:00", close: "18:00", icon: "🕯", category: "Heritage", description: "A hillside pilgrimage site reached by a long stairway, with views over western Baguio.", thingsToDo: ["Climb the grotto steps at a comfortable pace", "Light a candle where permitted", "Enjoy the city view", "Pair with Mirador if your schedule allows"], commute: lourdesJeep("Ask to alight at the Lourdes Grotto entrance at the base of the stairs."), tags: ["heritage", "stairs", "view"] }),
-      d({ id: "diplomat", name: "Diplomat Hotel / Heritage Hill", area: "West Baguio", lat: 16.40089, lng: 120.58407, duration: 75, open: "08:00", close: "17:00", icon: "🏚", category: "Historic ruin", description: "A hilltop heritage ruin on Dominican Hill with panoramic views and a dramatic, weathered structure.", thingsToDo: ["Explore only the publicly permitted areas", "Read the historical markers", "Take architectural photos", "Enjoy the hilltop view"], commute: lourdesJeep("Ask for the Dominican Hill/Heritage Hill turnoff. Expect a steep final walk or take a taxi to the entrance.", "The final uphill section is easier by taxi, especially for visitors with limited mobility."), tags: ["history", "architecture", "view"] }),
-      d({ id: "tam-awan", name: "Tam-awan Village", area: "West Baguio", lat: 16.42900, lng: 120.57785, duration: 120, open: "08:00", close: "17:00", icon: "🎨", category: "Arts & culture", description: "An artists’ village featuring Cordilleran-inspired structures, galleries, workshops, and hillside paths.", thingsToDo: ["Visit the galleries and artist spaces", "Join a workshop when scheduled", "See reconstructed Cordilleran-style houses", "Walk the hillside trail in suitable footwear"], commute: tamawanJeep("Ask to alight directly at Tam-awan Village."), tags: ["art", "culture", "hillside"] }),
-      d({ id: "igorot-stone-kingdom", name: "Igorot Stone Kingdom", area: "West Baguio", lat: 16.43198, lng: 120.57506, duration: 90, open: "07:00", close: "18:00", icon: "🪨", category: "Cultural attraction", description: "A large stone-built cultural attraction in Pinsao Proper inspired by Cordilleran themes and legends.", thingsToDo: ["Explore the terraced stone structures", "Read the on-site cultural explanations", "Watch for scheduled performances", "Wear comfortable shoes for stairs and uneven paths"], commute: tamawanJeep("Ask to alight at Igorot Stone Kingdom on Longlong Road/Pinsao Proper. Show the pin because it is beyond central Tam-awan.", "Treat the attraction as a contemporary interpretation; engage with Cordilleran culture respectfully."), tags: ["culture", "stairs", "photos", "requested"] }),
-      d({ id: "easter-weaving", name: "Easter Weaving Room", area: "West Baguio", lat: 16.42031, lng: 120.58624, duration: 60, open: "08:30", close: "17:00", icon: "🧶", category: "Craft heritage", description: "A long-running weaving center where visitors may observe traditional loom work and shop for woven products.", thingsToDo: ["Watch skilled weavers at work when allowed", "Learn how patterns are produced", "Buy authentic woven products", "Ask permission before photographing workers"], commute: tamawanJeep("Ask for the nearest Easter School/Easter Weaving drop-off along Guisad Road, then walk to the compound."), tags: ["weaving", "culture", "shopping"] }),
-      d({ id: "woodcarvers", name: "Ifugao Woodcarvers’ Village", area: "West Baguio", lat: 16.40542, lng: 120.56942, duration: 60, open: "08:00", close: "17:00", icon: "🪵", category: "Craft village", description: "A stretch along Asin Road associated with woodcarving workshops and stores selling carved furniture and décor.", thingsToDo: ["Browse carved crafts and furniture", "Talk with artisans when invited", "Check wood sourcing and shipping before buying", "Photograph only with permission"], commute: asinJeep("Tell the driver you are going to the Ifugao Woodcarvers’ Village/woodcarving shops along Asin Road."), tags: ["craft", "shopping", "culture"] }),
-      d({ id: "dragon-treasure", name: "Dragon Treasure Castle", area: "West Baguio", lat: 16.42193, lng: 120.56640, duration: 75, open: "08:00", close: "17:00", icon: "🐉", category: "Themed attraction", description: "A castle-like themed destination in Irisan/San Carlos Heights known for elaborate architecture and photo spots.", thingsToDo: ["Explore the themed interiors and façades", "Use the designated photo areas", "Ask about current entrance rules", "Pair with western Baguio attractions if using a taxi"], commute: taxiPreferred("Irisan / San Carlos Heights", "The last-mile route is residential and less convenient for first-time jeepney users. A taxi or hired vehicle is recommended."), tags: ["architecture", "photos", "requested"] }),
-      d({ id: "sams-agritourism", name: "Sam’s Agritourism Park", area: "West Baguio", lat: 16.43670, lng: 120.56631, duration: 120, open: "08:00", close: "17:00", icon: "🌾", category: "Agritourism", description: "A hillside agritourism destination in the Longlong area with gardens, scenic spaces, and family-oriented attractions.", thingsToDo: ["Explore the landscaped grounds", "Take mountain and garden photos", "Try available farm or family activities", "Confirm reservations and operating days"], commute: tamawanJeep("Ask whether the Longlong route reaches the park access road; otherwise arrange a taxi for the final section.", "Confirm exact access and opening before travel because service can be limited."), tags: ["family", "garden", "view"] }),
-      d({ id: "bencab", name: "BenCab Museum", area: "West Baguio", lat: 16.38939, lng: 120.55039, duration: 150, open: "09:00", close: "18:00", icon: "🖼", category: "Art museum", description: "A major contemporary art museum on Asin Road with galleries, Cordilleran collections, gardens, and mountain views.", thingsToDo: ["See BenCab and contemporary Philippine art", "Explore the Cordillera Gallery", "Walk through the farm and garden area", "Eat at the museum café when open"], commute: asinJeep("Ask to alight at BenCab Museum on Asin Road. Confirm the last city-bound trip before entering."), tags: ["art", "museum", "long visit", "food"] }),
-
-      d({ id: "bell-church", name: "Bell Church", area: "Nearby Benguet", lat: 16.43198, lng: 120.59412, duration: 50, open: "06:00", close: "17:00", icon: "🏮", category: "Cultural site", outsideBaguio: true, googleQuery: "Bell Church La Trinidad Benguet", description: "A Chinese-Filipino temple complex near the Baguio–La Trinidad boundary with gardens, arches, and ornate structures.", thingsToDo: ["Walk through the landscaped temple grounds", "Observe the architecture and symbols", "Maintain respectful behavior and dress", "Pair with Valley of Colors"], commute: laTrinidadJeep("Ask to get off at Bell Church near the Baguio–La Trinidad boundary."), tags: ["culture", "architecture", "nearby benguet"] }),
-      d({ id: "valley-colors", name: "Valley of Colors (StoBoSa)", area: "Nearby Benguet", lat: 16.43379, lng: 120.59707, duration: 35, open: "06:00", close: "18:00", icon: "🎨", category: "Community mural", outsideBaguio: true, googleQuery: "Valley of Colors StoBoSa La Trinidad", description: "A large community mural across hillside homes in Balili, La Trinidad, visible from the Halsema Highway corridor.", thingsToDo: ["View the mural from a safe roadside area", "Take a wide-angle photo", "Learn about the StoBoSa communities", "Combine with Bell Church or Strawberry Farm"], commute: laTrinidadJeep("Ask to alight at StoBoSa/Valley of Colors in Balili. Avoid standing in the roadway for photos."), tags: ["photos", "mural", "requested", "nearby benguet"] }),
-      d({ id: "strawberry-farm", name: "La Trinidad Strawberry Farm", area: "Nearby Benguet", lat: 16.45194, lng: 120.58222, duration: 120, open: "06:00", close: "17:00", icon: "🍓", category: "Farm", outsideBaguio: true, googleQuery: "La Trinidad Strawberry Farm Benguet", description: "A well-known Benguet farm area where strawberry picking may be available seasonally, alongside produce and souvenir stalls.", thingsToDo: ["Pick strawberries when the season and farm rules allow", "Try strawberry ice cream, taho, or preserves", "Buy Benguet vegetables and local products", "Wear shoes suitable for farm paths"], commute: laTrinidadJeep("Tell the driver you are going to Strawberry Farm and ask for the closest main-road drop-off, then walk to the farm entrance."), tags: ["farm", "food", "requested", "nearby benguet"] }),
-      d({ id: "mount-costa", name: "Mount Costa", area: "Nearby Benguet", lat: 16.45555, lng: 120.55765, duration: 150, open: "09:00", close: "17:00", icon: "🌼", category: "Garden", outsideBaguio: true, googleQuery: "Mount Costa La Trinidad Benguet", description: "A large garden attraction in La Trinidad with themed landscapes and colorful installations.", thingsToDo: ["Explore the themed gardens", "Take seasonal flower photos", "Plan enough time for the large grounds", "Bring rain and sun protection"], commute: taxiPreferred("Lamtang / La Trinidad garden route", "Public transport usually requires transfers and a last-mile ride. A taxi or hired car is simpler for tourists."), tags: ["garden", "photos", "long visit", "nearby benguet"] }),
-      d({ id: "mt-kalugong", name: "Mt. Kalugong Cultural Village", area: "Nearby Benguet", lat: 16.45635, lng: 120.60515, duration: 180, open: "06:00", close: "18:00", icon: "🧗", category: "Hike & culture", outsideBaguio: true, googleQuery: "Mount Kalugong Cultural Village La Trinidad", description: "A rocky hill and cultural village in La Trinidad with trails, limestone formations, views, and a café area.", thingsToDo: ["Hike to the rock formations and viewpoints", "Visit the cultural village", "Stop at the café when open", "Wear proper hiking footwear"], commute: taxiPreferred("La Trinidad trailhead", "Take a La Trinidad jeep to the municipality, then use a local taxi/jeep or hired ride to the registered access. Confirm trail conditions."), tags: ["hiking", "view", "culture", "nearby benguet"] }),
-      d({ id: "mt-yangbew", name: "Mt. Yangbew", area: "Nearby Benguet", lat: 16.47049, lng: 120.60834, duration: 180, open: "05:00", close: "17:00", icon: "⛰", category: "Hike", outsideBaguio: true, googleQuery: "Mount Yangbew La Trinidad Benguet", description: "A relatively accessible Benguet hiking destination with grassland ridges and broad views over La Trinidad and nearby mountains.", thingsToDo: ["Hike for sunrise in safe weather", "Enjoy ridge and valley views", "Bring water and sun protection", "Hire a local guide if unfamiliar with the trail"], commute: taxiPreferred("Tawang / La Trinidad trailhead", "Take a La Trinidad jeep first, then arrange a local ride to the correct trailhead. Do not rely on an unverified pin alone."), tags: ["hiking", "sunrise", "view", "nearby benguet"] }),
-      d({ id: "mt-camisong", name: "Mt. Camisong Forest Park", area: "Nearby Benguet", lat: 16.41479, lng: 120.68594, duration: 240, open: "06:00", close: "17:00", icon: "🏕", category: "Mountain nature trip", outsideBaguio: true, googleQuery: "Mt Camisong Forest Park Itogon Benguet", description: "A forest and mountain destination in the Itogon side of Benguet, better treated as a dedicated half-day trip than a quick Baguio stop.", thingsToDo: ["Enjoy the forest and mountain scenery", "Confirm available activities and entrance rules", "Bring weather-appropriate clothing and water", "Arrange a guide or verified local transport"], commute: taxiPreferred("Loacan, Itogon mountain route", "This is outside Baguio and not suitable for an improvised jeepney transfer. Use a booked vehicle or organized tour and confirm road conditions."), tags: ["nature", "long trip", "requested", "nearby benguet"] })
-    ],
-
-    areaOrder: ["All", "City Center", "East Baguio", "South Baguio", "West Baguio", "Nearby Benguet"]
+    baggageOptions: {
+      "victory-liner": [
+        { name: "Victory Liner terminal baggage counter", detail: "Traveler reports indicate a paid counter may be available and same-day ticket conditions can apply. Verify eligibility, hours, and fees directly at the terminal.", query: "Victory Liner Baguio Terminal" },
+        { name: "SM City Baguio Tourist Lounge", detail: "A reported alternative near the city center. Availability, level, size limits, and rates can change, so confirm with the mall concierge.", query: "SM City Baguio Tourist Lounge" }
+      ],
+      "gov-pack": [
+        { name: "Genesis / JoyBus terminal counter", detail: "Travelers have reported short-term baggage acceptance near Gov. Pack. Confirm the current policy and claim-ticket procedure at the counter.", query: "Genesis Transport Baguio Terminal Gov Pack Road" },
+        { name: "SM City Baguio Tourist Lounge", detail: "A nearby reported luggage option. Confirm current operating hours and rates before relying on it.", query: "SM City Baguio Tourist Lounge" }
+      ],
+      "genesis-baguio": [
+        { name: "Genesis terminal counter", detail: "Ask the terminal counter whether short-term luggage storage is currently available. Fees and operating rules are not guaranteed.", query: "Genesis Transport Baguio Terminal Gov Pack Road" },
+        { name: "SM City Baguio Tourist Lounge", detail: "A nearby reported alternative. Confirm current availability and rates with the mall concierge.", query: "SM City Baguio Tourist Lounge" }
+      ],
+      "joybus-baguio": [
+        { name: "JoyBus / Genesis terminal counter", detail: "Ask the counter about current baggage-hold rules before leaving the terminal. Keep valuables with you.", query: "JoyBus Baguio Terminal Gov Pack Road" },
+        { name: "SM City Baguio Tourist Lounge", detail: "A nearby reported alternative. Verify the exact level, opening time, and rates on arrival.", query: "SM City Baguio Tourist Lounge" }
+      ]
+    },
+    destinations: uniqueDestinations,
+    categoryOrder: ["All", "Popular", "City Center", "Nature & Views", "Arts & Culture", "Food & Shopping", "Family", "Nearby Side Trips"],
+    routeGuides
   };
-})();
+}());
