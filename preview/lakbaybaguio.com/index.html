@@ -125,6 +125,7 @@
                   <select id="startLocation" required aria-describedby="startHelp"></select>
                   <button id="useLocation" class="location-button" type="button" title="Use my current location" aria-label="Use my current location">⌖</button>
                 </div>
+                <small id="startHelp">Includes Victory Liner, Gov. Pack, Genesis Transport, and JoyBus.</small>
               </label>
 
               <label class="field">
@@ -333,40 +334,108 @@
     </section>
 
     <section class="how-section" id="how-it-works">
-      <div class="container">
-        <div class="section-heading reveal">
-          <div class="eyebrow"><span></span> How it works</div>
-          <h2>Local structure, not random suggestions</h2>
-          <p>The planner combines distance, opening windows, visit duration, and your preferred way to travel.</p>
+      <div class="container how-layout">
+        <div class="how-copy reveal">
+          <div class="eyebrow light"><span></span> Less guessing, more exploring</div>
+          <h2>A simple plan built around the way Baguio actually feels.</h2>
+          <p>The goal is not to pack every attraction into one day. It is to show a practical sequence, make the travel tradeoffs visible, and help visitors move with more confidence.</p>
+          <a class="button button-muted" href="#planner">Start planning</a>
         </div>
-        <div class="how-grid">
-          <article class="how-card reveal"><span>01</span><h3>Choose your day</h3><p>Set your arrival point, daily start time, and number of travel days.</p></article>
-          <article class="how-card reveal delay-1"><span>02</span><h3>Pick or auto-choose</h3><p>Select places yourself or let the planner create a balanced set of stops.</p></article>
-          <article class="how-card reveal delay-2"><span>03</span><h3>Follow the route</h3><p>See a timed sequence, activity suggestions, commute instructions, and Google Maps links.</p></article>
+
+        <div class="how-steps reveal delay-1">
+          <a class="how-step" href="#destinations">
+            <span class="how-step-number">01</span>
+            <span><strong>Choose your stops</strong><small>Search and select the attractions that matter to you.</small></span>
+            <i aria-hidden="true">→</i>
+          </a>
+          <a class="how-step" href="#preferences">
+            <span class="how-step-number">02</span>
+            <span><strong>Set your priorities</strong><small>Choose a balanced, cheaper, faster, or low-walking route.</small></span>
+            <i aria-hidden="true">⚙</i>
+          </a>
+          <a class="how-step" href="#results">
+            <span class="how-step-number">03</span>
+            <span><strong>Follow the sequence</strong><small>See activity ideas, loading-area guidance, Google Maps links, visit durations, and estimated fares.</small></span>
+            <i aria-hidden="true">→</i>
+          </a>
         </div>
       </div>
     </section>
 
     <section class="travel-notes" id="travel-notes">
-      <div class="container notes-grid">
-        <div class="section-heading reveal">
-          <div class="eyebrow"><span></span> Travel responsibly</div>
-          <h2>A smart route still needs local confirmation.</h2>
+      <div class="container">
+        <div class="section-heading centered reveal">
+          <div class="eyebrow"><span></span> Before you ride</div>
+          <h2>Small reminders for a smoother trip</h2>
         </div>
-        <div class="note-list reveal delay-1">
-          <div><span>01</span><p><strong>Ask the dispatcher.</strong> Jeepney loading areas and diversions can change.</p></div>
-          <div><span>02</span><p><strong>Keep buffer time.</strong> Fog, rain, weekends, and festivals affect travel.</p></div>
-          <div><span>03</span><p><strong>Verify hours and fees.</strong> Attractions and baggage counters may change policies without notice.</p></div>
+
+        <div class="reminder-grid">
+          <article class="reminder-card reveal">
+            <span class="reminder-number">01</span>
+            <span class="reminder-icon" aria-hidden="true">🚌</span>
+            <h3>Confirm before boarding</h3>
+            <p>Ask the driver or dispatcher whether the jeepney passes your exact destination and where to get off.</p>
+          </article>
+          <article class="reminder-card reveal delay-1">
+            <span class="reminder-number">02</span>
+            <span class="reminder-icon" aria-hidden="true">☁</span>
+            <h3>Allow a weather buffer</h3>
+            <p>Rain, fog, and weekend crowds can add waiting and travel time. Keep your schedule flexible.</p>
+          </article>
+          <article class="reminder-card reveal delay-2">
+            <span class="reminder-number">03</span>
+            <span class="reminder-icon" aria-hidden="true">💵</span>
+            <h3>Carry small bills</h3>
+            <p>Exact or smaller denominations make jeepney and taxi payments easier, especially during busy hours.</p>
+          </article>
+          <article class="reminder-card reveal delay-2">
+            <span class="reminder-number">04</span>
+            <span class="reminder-icon" aria-hidden="true">🚶</span>
+            <h3>Use walkable clusters</h3>
+            <p>Several city-center landmarks are close enough to visit on foot, avoiding unnecessary rides.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta-section">
+      <div class="container">
+        <div class="cta-card reveal">
+          <div class="cta-copy">
+            <span class="cta-icon" aria-hidden="true">⌖</span>
+            <span><small>Your Baguio day starts here</small><h2>Spend less time figuring out the route.</h2></span>
+          </div>
+          <a class="button button-light" href="#planner">Build my itinerary <span aria-hidden="true">→</span></a>
         </div>
       </div>
     </section>
   </main>
 
   <footer class="site-footer">
-    <div class="container footer-inner">
-      <img src="assets/img/logo.svg" alt="Lakbay Baguio" />
-      <p>A route-planning prototype for more convenient Baguio trips.</p>
-      <a href="#top">Back to top ↑</a>
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <img src="assets/img/logo.svg" alt="Lakbay Baguio" />
+        <p>A single-page itinerary planner with Google Maps navigation, commute guidance, and activity ideas for Baguio and nearby Benguet.</p>
+      </div>
+      <div>
+        <strong>Explore</strong>
+        <a href="#planner">Trip planner</a>
+        <a href="#destinations">Destinations</a>
+        <a href="#how-it-works">How it works</a>
+      </div>
+      <div>
+        <strong>Official references</strong>
+        <a href="https://visita.baguio.gov.ph/" target="_blank" rel="noopener noreferrer">Baguio VISITA ↗</a>
+        <a href="https://alternateroutes.baguio.gov.ph/" target="_blank" rel="noopener noreferrer">Traffic &amp; PUJ routes ↗</a>
+      </div>
+      <div>
+        <strong>Important</strong>
+        <p>Routes, terminal locations, hours, and fares are planning estimates. Verify locally before traveling.</p>
+      </div>
+    </div>
+    <div class="container footer-bottom">
+      <span>© <span id="currentYear"></span> Lakbay Baguio</span>
+      <span>Plan gently. Travel responsibly. <span aria-hidden="true">♻</span></span>
     </div>
   </footer>
 

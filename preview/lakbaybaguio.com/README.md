@@ -16,15 +16,19 @@ Opening `index.html` directly also works for most features, but Live Server is r
 - Trip planning for 1 to 5 days
 - Victory Liner, Gov. Pack, Genesis Transport, and JoyBus starting points
 - Early-arrival baggage-storage suggestions for supported terminals
-- 48 destination cards with compact horizontal scrolling on mobile
-- Visible destination names, popular badges, and strong selected states
-- Selected-place chips with individual remove buttons and Clear all
+- 48 destination cards with a working horizontal carousel and touch swiping
+- Destination-name overlays that remain visible after photos are replaced
+- Improved Must visit badges and highly visible selected states
+- Selected-place chips that wrap, scroll vertically, and never require sideways scrolling
+- Individual remove buttons and Clear all
 - Automatic destination selection by travel theme
 - Route ordering based on distance, time windows, and visit duration
 - Night-only scheduling for Baguio Night Market
 - Walk, jeepney, and taxi icons, fare estimates, and step-by-step directions
 - Google Maps destination previews and external multi-stop route links
-- Local browser saving, itinerary copying, printing, and mobile responsiveness
+- Local browser saving, itinerary copying, desktop printing / PDF saving, and mobile responsiveness
+- Mobile step navigation that highlights the current section while scrolling
+- Restored information, travel-reminder, call-to-action, and full footer sections
 
 ## Color palette
 
@@ -105,3 +109,7 @@ lakbay-baguio/
         ├── data.js
         └── app.js
 ```
+
+## Mobile printing
+
+The Print / Save PDF control is hidden on narrow mobile screens because browser printing support is inconsistent across mobile devices. Tourists can still copy the complete itinerary on mobile. On desktop and supported tablets, the print button opens the system print dialog, where the plan can be saved as a PDF.

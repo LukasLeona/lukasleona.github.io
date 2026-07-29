@@ -15,7 +15,8 @@
     customStart: null,
     itinerary: null,
     lastSelectedId: null,
-    toastTimer: null
+    toastTimer: null,
+    stepScrollFrame: null
   };
 
   const elements = {
@@ -62,7 +63,8 @@
     copyPlan: $("#copyPlan"),
     printPlan: $("#printPlan"),
     fitMap: $("#fitMap"),
-    toast: $("#toast")
+    toast: $("#toast"),
+    currentYear: $("#currentYear")
   };
 
   function init() {
@@ -77,6 +79,9 @@
     bindEvents();
     setupStepObserver();
     setupRevealObserver();
+    updateRailControls();
+    updateActiveStepFromScroll();
+    if (elements.currentYear) elements.currentYear.textContent = String(new Date().getFullYear());
 
     window.setTimeout(() => elements.loader.classList.add("loaded"), 550);
   }
@@ -95,7 +100,15 @@
   }
 
   function bindEvents() {
-    window.addEventListener("scroll", () => elements.header.classList.toggle("scrolled", window.scrollY > 10), { passive: true });
+    window.addEventListener("scroll", () => {
+      elements.header.classList.toggle("scrolled", window.scrollY > 10);
+      if (!state.stepScrollFrame) {
+        state.stepScrollFrame = window.requestAnimationFrame(() => {
+          updateActiveStepFromScroll();
+          state.stepScrollFrame = null;
+        });
+      }
+    }, { passive: true });
 
     elements.menuToggle.addEventListener("click", () => {
       const open = elements.mainNav.classList.toggle("open");
@@ -110,7 +123,10 @@
       const button = event.target.closest("[data-target]");
       if (!button) return;
       const target = document.getElementById(button.dataset.target);
-      if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
+      if (target) {
+        setActiveStep(Number(button.dataset.progress));
+        target.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
     });
 
     elements.startLocation.addEventListener("change", () => {
@@ -133,6 +149,7 @@
       renderCategoryFilters();
       renderDestinations();
       elements.destinationGrid.scrollTo({ left: 0, behavior: "smooth" });
+      window.setTimeout(updateRailControls, 380);
     });
 
     elements.destinationSearch.addEventListener("input", renderDestinations);
@@ -161,6 +178,8 @@
     elements.autoChoose.addEventListener("click", autoChooseDestinations);
     elements.railPrev.addEventListener("click", () => scrollDestinationRail(-1));
     elements.railNext.addEventListener("click", () => scrollDestinationRail(1));
+    elements.destinationGrid.addEventListener("scroll", updateRailControls, { passive: true });
+    window.addEventListener("resize", updateRailControls, { passive: true });
 
     $$("input[name='preference']").forEach((radio) => {
       radio.addEventListener("change", () => {
@@ -243,23 +262,29 @@
       const justSelected = selected && state.lastSelectedId === destination.id;
       return `
         <label class="destination-option ${selected ? "selected" : ""} ${justSelected ? "just-selected" : ""}" data-id="${escapeHtml(destination.id)}">
-          <input type="checkbox" value="${escapeHtml(destination.id)}" ${selected ? "checked" : ""} />
+          <input type="checkbox" value="${escapeHtml(destination.id)}" ${selected ? "checked" : ""} aria-label="${selected ? "Remove" : "Add"} ${escapeHtml(destination.name)}" />
           <span class="destination-image-wrap">
             <img class="destination-image" src="${escapeHtml(destination.image)}" alt="${escapeHtml(destination.name)}" loading="lazy" />
             <span class="destination-image-fallback" hidden aria-hidden="true">${escapeHtml(destination.icon)}</span>
-            ${destination.popular ? `<span class="popular-badge"><span aria-hidden="true">★</span> Popular</span>` : ""}
-            <span class="destination-selected-mark" aria-hidden="true">✓</span>
+            <span class="destination-image-shade" aria-hidden="true"></span>
+            ${destination.popular ? `<span class="popular-badge"><span aria-hidden="true">★</span> Must visit</span>` : ""}
+            <span class="destination-overlay">
+              <strong>${escapeHtml(destination.name)}</strong>
+              <small>${escapeHtml(destination.area)}</small>
+            </span>
+            <span class="destination-selected-mark" aria-hidden="true"><b>✓</b><small>Selected</small></span>
           </span>
           <span class="destination-card-copy">
-            <strong>${escapeHtml(destination.name)}</strong>
-            <small>${escapeHtml(destination.area)} · ${escapeHtml(destination.scope)}</small>
             <span class="destination-card-meta"><span>${escapeHtml(destination.category)}</span><span>${formatDuration(destination.duration)}</span></span>
           </span>
         </label>
       `;
     }).join("");
 
-    window.setTimeout(() => { state.lastSelectedId = null; }, 460);
+    window.setTimeout(() => {
+      state.lastSelectedId = null;
+      updateRailControls();
+    }, 60);
   }
 
   function renderSelectedChips() {
@@ -365,7 +390,33 @@
   }
 
   function scrollDestinationRail(direction) {
-    elements.destinationGrid.scrollBy({ left: direction * Math.max(360, elements.destinationGrid.clientWidth * 0.75), behavior: "smooth" });
+    const card = elements.destinationGrid.querySelector(".destination-option");
+    const gap = 12;
+    const cardWidth = card ? card.getBoundingClientRect().width + gap : Math.max(260, elements.destinationGrid.clientWidth * 0.72);
+    const visibleCards = Math.max(1, Math.floor(elements.destinationGrid.clientWidth / cardWidth));
+    elements.destinationGrid.scrollBy({ left: direction * cardWidth * Math.max(1, visibleCards - 1), behavior: "smooth" });
+    window.setTimeout(updateRailControls, 420);
+  }
+
+  function updateRailControls() {
+    if (!elements.destinationGrid || !elements.railPrev || !elements.railNext) return;
+    const maxScroll = Math.max(0, elements.destinationGrid.scrollWidth - elements.destinationGrid.clientWidth);
+    const hasOverflow = maxScroll > 4;
+    elements.railPrev.hidden = !hasOverflow;
+    elements.railNext.hidden = !hasOverflow;
+    elements.railPrev.disabled = !hasOverflow || elements.destinationGrid.scrollLeft <= 4;
+    elements.railNext.disabled = !hasOverflow || elements.destinationGrid.scrollLeft >= maxScroll - 4;
+  }
+
+  function updateActiveStepFromScroll() {
+    const sections = $$("[data-step-section]");
+    if (!sections.length) return;
+    const stickyOffset = (elements.header?.offsetHeight || 0) + (elements.plannerProgress?.offsetHeight || 0) + 28;
+    let active = 1;
+    sections.forEach((section) => {
+      if (section.getBoundingClientRect().top <= stickyOffset) active = Number(section.dataset.stepSection);
+    });
+    setActiveStep(active);
   }
 
   function setupStepObserver() {
