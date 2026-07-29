@@ -83,7 +83,8 @@ A paid Google Maps API key is not required for the current implementation. The e
 
 Kabsat is a fully local, scripted bot. It does not require an API key, internet connection, or paid AI service. It includes:
 
-- A gentle one-time pop-up greeting per browser session
+- A floating avatar with short speech-bubble messages that pop out beside it
+- Several rotating Taglish prompts per visit, with click-to-open chat behavior
 - Taglish comfort, solo-trip, couple-trip, barkada, food, weather, and itinerary messages
 - An interactive Baguio-curse conversation
 - Context messages when destinations are selected or an itinerary is generated

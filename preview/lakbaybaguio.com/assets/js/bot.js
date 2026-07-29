@@ -14,7 +14,6 @@
     unread: $("#kabsatUnread"),
     teaser: $("#kabsatTeaser"),
     teaserText: $("#kabsatTeaserText"),
-    teaserClose: $("#kabsatTeaserClose"),
     messages: $("#kabsatMessages"),
     replies: $("#kabsatReplies"),
     typing: $("#kabsatTyping"),
@@ -28,16 +27,22 @@
     muted: safeGet("lakbay-kabsat-muted") === "true",
     selectedCount: Number($("#selectionCount")?.textContent || 0),
     lastContextAt: 0,
-    breathingTimer: null
+    breathingTimer: null,
+    teaserTimer: null,
+    teaserHideTimer: null,
+    teaserIndex: 0,
+    teaserCycles: 0
   };
 
   const banks = {
     teasers: [
       "Naniniwala ka ba sa Baguio curse? 👀",
-      "Pagod ka ba, o gusto mo lang talagang mag-Baguio? 🌲",
+      "Pagod ka ba? Pahinga muna tayo. 🌲",
+      "Baguio muna bago breakdown. 😭",
+      "Tara, tulungan kitang gumawa ng itinerary.",
       "Strawberry taho muna bago life decisions?",
-      "Hindi kailangang gawing Amazing Race ang Baguio trip mo.",
-      "Malamig ang hangin. Dahan-dahan lang tayo today."
+      "Malamig sa Baguio, pero warm ang advice ko. ☕",
+      "Hindi kailangang gawing Amazing Race ang Baguio trip mo."
     ],
     comfort: [
       "Pag pagod ka sa mundo, pahinga muna. Hindi mo kailangang ayusin lahat today.",
@@ -122,10 +127,7 @@
   function bindEvents() {
     ui.launcher.addEventListener("click", () => state.open ? closePanel() : openPanel());
     ui.close.addEventListener("click", closePanel);
-    ui.teaserClose.addEventListener("click", dismissTeaser);
-    ui.teaser.addEventListener("click", (event) => {
-      if (!event.target.closest("button")) openPanel();
-    });
+    ui.teaser.addEventListener("click", openPanel);
     ui.mute.addEventListener("click", toggleMute);
     ui.form.addEventListener("submit", handleTextInput);
     ui.replies.addEventListener("click", (event) => {
@@ -177,22 +179,51 @@
     }
   }
 
-  function scheduleTeaser() {
-    if (state.muted || safeSessionGet("lakbay-kabsat-auto-shown") === "true") return;
-    window.setTimeout(() => {
-      if (state.open || document.hidden) return;
-      safeSessionSet("lakbay-kabsat-auto-shown", "true");
-      ui.teaserText.textContent = pick(banks.teasers);
-      ui.teaser.hidden = false;
-      ui.unread.hidden = false;
+  function scheduleTeaser(delay = 4200) {
+    clearTeaserTimers();
+    if (state.muted || state.open || state.teaserCycles >= 4) return;
+
+    state.teaserTimer = window.setTimeout(() => {
+      if (state.muted || state.open) return;
+      if (document.hidden) {
+        scheduleTeaser(5000);
+        return;
+      }
+      showNextTeaser();
+    }, delay);
+  }
+
+  function showNextTeaser() {
+    const message = banks.teasers[state.teaserIndex % banks.teasers.length];
+    state.teaserIndex += 1;
+    state.teaserCycles += 1;
+
+    ui.teaserText.textContent = message;
+    ui.teaser.setAttribute("aria-label", `${message} Open Kabsat chat.`);
+    ui.teaser.hidden = false;
+    ui.unread.hidden = false;
+    ui.teaser.classList.remove("show");
+
+    requestAnimationFrame(() => {
       requestAnimationFrame(() => ui.teaser.classList.add("show"));
-      window.setTimeout(() => {
-        if (!state.open) dismissTeaser();
-      }, 10000);
-    }, 7000);
+    });
+
+    state.teaserHideTimer = window.setTimeout(() => {
+      if (state.open) return;
+      dismissTeaser();
+      scheduleTeaser(5600);
+    }, 8200);
+  }
+
+  function clearTeaserTimers() {
+    if (state.teaserTimer) window.clearTimeout(state.teaserTimer);
+    if (state.teaserHideTimer) window.clearTimeout(state.teaserHideTimer);
+    state.teaserTimer = null;
+    state.teaserHideTimer = null;
   }
 
   function openPanel() {
+    clearTeaserTimers();
     state.open = true;
     ui.panel.hidden = false;
     ui.launcher.setAttribute("aria-expanded", "true");
@@ -220,27 +251,32 @@
       if (!state.open) ui.panel.hidden = true;
     }, 220);
     ui.launcher.focus();
+    scheduleTeaser(18000);
   }
 
   function dismissTeaser() {
+    if (state.teaserHideTimer) window.clearTimeout(state.teaserHideTimer);
+    state.teaserHideTimer = null;
     ui.teaser.classList.remove("show");
     window.setTimeout(() => {
       if (!ui.teaser.classList.contains("show")) ui.teaser.hidden = true;
-    }, 220);
+    }, 260);
   }
 
   function toggleMute() {
     state.muted = !state.muted;
     safeSet("lakbay-kabsat-muted", String(state.muted));
+    clearTeaserTimers();
     updateMuteButton();
     dismissTeaser();
     queueBotMessage(
       state.muted
-        ? "Automatic pop-ups muted. Nandito pa rin ako kapag ikaw ang nag-open. 🤍"
-        : "Automatic greetings are back—but one gentle hello per visit lang, promise.",
+        ? "Automatic message bubbles muted. Nandito pa rin ako kapag ikaw ang nag-open. 🤍"
+        : "Message bubbles are back—gentle hellos lang, promise.",
       180,
       menuReplies
     );
+    if (!state.muted) scheduleTeaser(12000);
   }
 
   function updateMuteButton() {

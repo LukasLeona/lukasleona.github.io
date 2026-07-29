@@ -3361,25 +3361,39 @@ img {
   right: 22px;
   bottom: 22px;
   z-index: 4200;
-  display: grid;
-  justify-items: end;
-  gap: 12px;
+  width: 66px;
+  height: 66px;
   font-family: "Poppins", sans-serif;
+  overflow: visible;
 }
 
 .kabsat-launcher {
-  min-height: 64px;
-  display: inline-flex;
-  align-items: center;
-  gap: 11px;
-  padding: 8px 16px 8px 8px;
-  border: 1px solid rgba(255, 255, 255, .62);
-  border-radius: 999px;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 66px;
+  height: 66px;
+  display: grid;
+  place-items: center;
+  padding: 6px;
+  border: 1px solid rgba(255, 255, 255, .68);
+  border-radius: 22px;
   background: var(--ink);
   color: var(--white);
   box-shadow: 0 18px 44px rgba(23, 53, 47, .28);
   cursor: pointer;
   transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
+}
+.kabsat-launcher::before {
+  content: "";
+  position: absolute;
+  inset: -5px;
+  border: 1px solid rgba(255, 160, 46, .32);
+  border-radius: 26px;
+  opacity: 0;
+  transform: scale(.92);
+  animation: kabsatLauncherHalo 3.2s ease-in-out infinite;
+  pointer-events: none;
 }
 .kabsat-launcher:hover,
 .kabsat-launcher:focus-visible {
@@ -3389,19 +3403,20 @@ img {
 }
 .kabsat-launcher-avatar {
   position: relative;
-  width: 48px;
-  height: 48px;
+  width: 52px;
+  height: 52px;
   flex: 0 0 auto;
 }
 .kabsat-launcher-avatar img {
-  width: 48px;
-  height: 48px;
-  border-radius: 16px;
+  width: 52px;
+  height: 52px;
+  display: block;
+  border-radius: 17px;
 }
 .kabsat-launcher-avatar i {
   position: absolute;
-  top: -4px;
-  right: -4px;
+  top: -5px;
+  right: -5px;
   min-width: 19px;
   height: 19px;
   display: grid;
@@ -3415,47 +3430,87 @@ img {
   font-style: normal;
   font-weight: 800;
 }
-.kabsat-launcher-copy {
-  display: grid;
-  text-align: left;
-  line-height: 1.25;
-}
-.kabsat-launcher-copy strong { font-size: .78rem; }
-.kabsat-launcher-copy small { margin-top: 3px; color: rgba(255,255,255,.62); font-size: .57rem; }
 
 .kabsat-teaser {
-  position: relative;
-  width: min(315px, calc(100vw - 34px));
-  padding: 15px 40px 15px 17px;
-  border: 1px solid rgba(129, 154, 145, .28);
-  border-radius: 18px 18px 6px 18px;
-  background: rgba(255, 255, 255, .97);
-  box-shadow: 0 18px 45px rgba(23, 53, 47, .17);
+  position: absolute;
+  right: 76px;
+  bottom: 7px;
+  width: max-content;
+  max-width: min(300px, calc(100vw - 116px));
+  min-height: 51px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 15px 11px 16px;
+  border: 1px solid rgba(255, 160, 46, .88);
+  border-radius: 17px 17px 5px 17px;
+  outline: 0;
+  background: rgba(22, 38, 34, .97);
+  color: #fff;
+  box-shadow: 0 18px 45px rgba(23, 53, 47, .24);
   cursor: pointer;
   opacity: 0;
-  transform: translateY(10px) scale(.97);
-  transition: opacity .22s ease, transform .22s ease;
+  transform: translateX(14px) scale(.96);
+  transform-origin: right center;
+  transition: opacity .26s ease, transform .26s cubic-bezier(.2,.8,.2,1), border-color .2s ease;
+  text-align: left;
 }
-.kabsat-teaser.show { opacity: 1; transform: translateY(0) scale(1); }
-.kabsat-teaser strong { display: block; color: var(--sage-deep); font-size: .65rem; letter-spacing: .04em; text-transform: uppercase; }
-.kabsat-teaser p { margin: 5px 0 0; color: var(--ink); font-size: .75rem; line-height: 1.5; }
-.kabsat-teaser-close {
+.kabsat-teaser::after {
+  content: "";
   position: absolute;
-  top: 8px;
-  right: 8px;
-  width: 28px;
-  height: 28px;
-  display: grid;
-  place-items: center;
-  border: 0;
-  border-radius: 9px;
-  background: transparent;
-  color: var(--ink-soft);
-  cursor: pointer;
+  right: -8px;
+  bottom: 12px;
+  width: 15px;
+  height: 15px;
+  border-right: 1px solid rgba(255, 160, 46, .88);
+  border-bottom: 1px solid rgba(255, 160, 46, .88);
+  background: rgba(22, 38, 34, .97);
+  transform: rotate(-45deg);
+  border-radius: 0 0 3px 0;
 }
-.kabsat-teaser-close:hover { background: var(--cream); }
+.kabsat-teaser[hidden] { display: none !important; }
+.kabsat-teaser.show {
+  opacity: 1;
+  transform: translateX(0) scale(1);
+  animation: kabsatTeaserPop .42s cubic-bezier(.2,.9,.25,1.15) both;
+}
+.kabsat-teaser:hover,
+.kabsat-teaser:focus-visible {
+  border-color: var(--yellow);
+  transform: translateX(-3px) scale(1.01);
+}
+.kabsat-teaser > span:last-child {
+  position: relative;
+  z-index: 1;
+  font-size: .73rem;
+  line-height: 1.45;
+  font-weight: 500;
+}
+.kabsat-teaser-sparkle {
+  position: relative;
+  z-index: 1;
+  color: var(--yellow);
+  font-size: .88rem;
+  line-height: 1;
+  animation: kabsatSparkle 1.8s ease-in-out infinite;
+}
+@keyframes kabsatTeaserPop {
+  0% { opacity: 0; transform: translateX(16px) scale(.92); }
+  65% { opacity: 1; transform: translateX(-3px) scale(1.02); }
+  100% { opacity: 1; transform: translateX(0) scale(1); }
+}
+@keyframes kabsatSparkle {
+  50% { transform: rotate(14deg) scale(1.22); opacity: .72; }
+}
+@keyframes kabsatLauncherHalo {
+  45% { opacity: .58; transform: scale(1.04); }
+  75%, 100% { opacity: 0; transform: scale(1.12); }
+}
 
 .kabsat-panel {
+  position: absolute;
+  right: 0;
+  bottom: 78px;
   width: min(390px, calc(100vw - 32px));
   max-height: min(680px, calc(100vh - 116px));
   display: grid;
@@ -3721,18 +3776,41 @@ img {
 }
 
 @media (max-width: 680px) {
-  .kabsat-bot { right: 12px; bottom: 12px; }
-  .kabsat-launcher { width: 58px; min-height: 58px; padding: 5px; justify-content: center; }
+  .kabsat-bot {
+    right: 12px;
+    bottom: 12px;
+    width: 60px;
+    height: 60px;
+  }
+  .kabsat-launcher {
+    width: 60px;
+    height: 60px;
+    padding: 5px;
+    border-radius: 20px;
+  }
   .kabsat-launcher-avatar,
   .kabsat-launcher-avatar img { width: 48px; height: 48px; }
-  .kabsat-launcher-copy { display: none; }
   .kabsat-panel {
+    right: 0;
+    bottom: 70px;
     width: calc(100vw - 24px);
     max-height: min(660px, calc(100dvh - 88px));
     border-radius: 23px;
   }
   .kabsat-bot.is-open .kabsat-launcher { display: none; }
-  .kabsat-teaser { width: min(292px, calc(100vw - 24px)); }
+  .kabsat-teaser {
+    right: 69px;
+    bottom: 5px;
+    max-width: calc(100vw - 96px);
+    min-height: 48px;
+    padding: 10px 13px;
+    border-radius: 16px 16px 5px 16px;
+  }
+  .kabsat-teaser > span:last-child {
+    font-size: .66rem;
+    line-height: 1.42;
+  }
+  .kabsat-teaser-sparkle { font-size: .76rem; }
   .kabsat-messages { padding-inline: 12px; }
   .kabsat-bubble { max-width: 86%; font-size: .67rem; }
   .kabsat-replies { padding-inline: 12px; }
@@ -3749,7 +3827,9 @@ img {
   .kabsat-launcher,
   .kabsat-message,
   .kabsat-typing i,
-  .kabsat-breathe-circle { animation: none !important; transition: none !important; }
+  .kabsat-breathe-circle,
+  .kabsat-launcher::before,
+  .kabsat-teaser-sparkle { animation: none !important; transition: none !important; }
 }
 
 @media print {
