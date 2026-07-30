@@ -148,6 +148,7 @@ $window.on("popstate", function(){
             $value = $("#main > section:first-child").attr('id');
         }
         if ($('.left-side').hasClass("nav-open")) {
+            $("body").removeClass("mobile-menu-open");
             $(".menu-toggle").removeClass("menu-open");
             $(".menu-overlay").addClass("d-none");
             $('.left-side').animate({
@@ -334,6 +335,7 @@ function menuAnimation() {
 
     var $leftSide = $('.left-side');
     if ($leftSide.hasClass("nav-open")) {
+        $("body").removeClass("mobile-menu-open");
         $(".menu-toggle").removeClass("menu-open");
         $(".menu-overlay").addClass("d-none");
         if ($window.width() < 992) {
@@ -343,6 +345,7 @@ function menuAnimation() {
             left: "200%"
         }, 300).removeClass("nav-open").addClass("nav-close");
     } else if ($leftSide.hasClass("nav-close")) {
+        $("body").addClass("mobile-menu-open");
         $(".menu-toggle").addClass("menu-open");
         $(".menu-overlay").removeClass("d-none");
         if ($window.width() < 992) {
@@ -1221,288 +1224,84 @@ function portfolioIsotop() {
 
   "use strict";
 
+  var $portfolio = $("#portfolio");
+  var $grid = $(".portfolio-items");
+  var $filter = $("#portfolio-filter");
 
-  var $portfolio =
-    $("#portfolio");
-
-
-  var $grid =
-    $(".portfolio-items");
-
-
-  var $filter =
-    $("#portfolio-filter");
-
-
-  var $modeButtons =
-    $(".portfolio-mode-btn");
-
-
-  if (
-    !$portfolio.length ||
-    !$grid.length
-  ) {
-
+  if (!$portfolio.length || !$grid.length) {
     return;
-
   }
-
-
-
-  /* -----------------------------------------
-     Current state
-  ----------------------------------------- */
 
   var currentFilter =
-    $portfolio.attr(
-      "data-current-filter"
-    ) || "*";
+    $portfolio.attr("data-current-filter") || "*";
 
-
-  var currentMode =
-    $portfolio.attr(
-      "data-portfolio-mode"
-    ) || "selected";
-
-
-
-  /* -----------------------------------------
-     Initialize / refresh Isotope
-  ----------------------------------------- */
-
-  if (
-    !$grid.data(
-      "isotope"
-    )
-  ) {
-
+  if (!$grid.data("isotope")) {
     $grid.isotope({
-
-      itemSelector:
-        ".portfolio-item",
-
-      layoutMode:
-        "masonry",
-
-      transitionDuration:
-        "0.45s"
-
+      itemSelector: ".portfolio-item",
+      layoutMode: "masonry",
+      transitionDuration: "0.45s"
     });
-
   }
 
-
-
-  /* -----------------------------------------
-     Combined filtering
-  ----------------------------------------- */
-
-  function applyPortfolioFilter() {
-
-    $portfolio.attr(
-      "data-current-filter",
-      currentFilter
-    );
-
-
-    $portfolio.attr(
-      "data-portfolio-mode",
-      currentMode
-    );
-
-
-    $grid.isotope({
-
-      filter: function () {
-
-        var $item =
-          $(this);
-
-
-        var categoryMatches =
-          currentFilter === "*" ||
-          $item.is(
-            currentFilter
-          );
-
-
-        var modeMatches =
-          currentMode === "all" ||
-          $item.hasClass(
-            "selected-work"
-          );
-
-
-        return (
-          categoryMatches &&
-          modeMatches
-        );
-
-      }
-
-    });
-
-
-
-    /* ---------------------------------------
-       Featured project visibility
-    --------------------------------------- */
-
-    var showFeatured =
-      (
-        currentFilter === "*" ||
-        currentFilter === ".web"
-      );
-
-
-    $(".portfolio-featured")
-      .toggleClass(
-        "is-filtered-out",
-        !showFeatured
-      );
-
-
-
-    /* ---------------------------------------
-       Result label
-    --------------------------------------- */
-
-    var label =
-      document.getElementById(
-        "portfolioResultLabel"
-      );
-
-
-    if (label) {
-
-      if (
-        currentMode === "selected"
-      ) {
-
-        label.textContent =
-          currentFilter === "*"
-            ? "Showing selected work"
-            : "Showing selected " +
-              currentFilter
-                .replace(".", "") +
-              " projects";
-
-      } else {
-
-        label.textContent =
-          currentFilter === "*"
-            ? "Showing all projects"
-            : "Showing all " +
-              currentFilter
-                .replace(".", "") +
-              " projects";
-
-      }
-
+  function categoryName(filterValue) {
+    if (filterValue === "*") {
+      return "all";
     }
 
-
-
-    /* ---------------------------------------
-       Recalculate after animation
-    --------------------------------------- */
-
-    window.setTimeout(
-      function () {
-
-        $grid.isotope(
-          "layout"
-        );
-
-      },
-      480
-    );
-
+    return filterValue.replace(".", "");
   }
 
+  function visibleCount() {
+    if (currentFilter === "*") {
+      return $grid.find(".portfolio-item").length;
+    }
 
+    return $grid.find(currentFilter).length;
+  }
 
-  /* -----------------------------------------
-     Category filter
-  ----------------------------------------- */
+  function applyPortfolioFilter() {
+    $portfolio.attr("data-current-filter", currentFilter);
+
+    $grid.isotope({
+      filter: currentFilter
+    });
+
+    var label = document.getElementById("portfolioResultLabel");
+
+    if (label) {
+      var count = visibleCount();
+      var category = categoryName(currentFilter);
+
+      label.textContent =
+        currentFilter === "*"
+          ? "Showing all " + count + " projects"
+          : "Showing " + count + " " + category +
+            (count === 1 ? " project" : " projects");
+    }
+
+    window.setTimeout(function () {
+      $grid.isotope("layout");
+    }, 420);
+  }
 
   $filter
     .find("a")
-    .off(
-      "click.portfolioV2"
-    )
-    .on(
-      "click.portfolioV2",
-      function (event) {
+    .off("click.portfolioV2")
+    .on("click.portfolioV2", function (event) {
+      event.preventDefault();
 
-        event.preventDefault();
+      currentFilter = $(this).attr("data-filter") || "*";
 
+      $filter.find("a").removeClass("active");
+      $(this).addClass("active");
 
-        currentFilter =
-          $(this).attr(
-            "data-filter"
-          );
-
-
-        $filter
-          .find("a")
-          .removeClass(
-            "active"
-          );
-
-
-        $(this)
-          .addClass(
-            "active"
-          );
-
-
-        applyPortfolioFilter();
-
-      }
-    );
-
-
-
-  /* -----------------------------------------
-     Selected / All mode
-  ----------------------------------------- */
-
-  $modeButtons
-    .off(
-      "click.portfolioMode"
-    )
-    .on(
-      "click.portfolioMode",
-      function () {
-
-        currentMode =
-          $(this).attr(
-            "data-portfolio-mode"
-          );
-
-
-        $modeButtons
-          .removeClass(
-            "active"
-          );
-
-
-        $(this)
-          .addClass(
-            "active"
-          );
-
-
-        applyPortfolioFilter();
-
-      }
-    );
-
+      applyPortfolioFilter();
+    });
 
   applyPortfolioFilter();
 
 }
+
 /*-------------------------  MAGNIFIC POPUP JS  -------------------------*/
 function portfolioPopup() {
 
@@ -1928,481 +1727,375 @@ function portfolioChatbot() {
 
   "use strict";
 
+  const toggle = document.getElementById("chatbotToggle");
+  const panel = document.getElementById("chatbotPanel");
+  const closeButton = document.getElementById("chatbotClose");
+  const form = document.getElementById("chatbotForm");
+  const input = document.getElementById("chatbotInput");
+  const messages = document.getElementById("chatbotMessages");
+  const teaser = document.getElementById("chatbotTeaser");
+  const teaserText = document.getElementById("chatbotTeaserText");
 
-  const toggle =
-    document.getElementById(
-      "chatbotToggle"
-    );
-
-  const panel =
-    document.getElementById(
-      "chatbotPanel"
-    );
-
-  const closeButton =
-    document.getElementById(
-      "chatbotClose"
-    );
-
-  const form =
-    document.getElementById(
-      "chatbotForm"
-    );
-
-  const input =
-    document.getElementById(
-      "chatbotInput"
-    );
-
-  const messages =
-    document.getElementById(
-      "chatbotMessages"
-    );
-
-
-  /*
-   * Stop if chatbot HTML
-   * does not exist.
-   */
-  if (
-    !toggle ||
-    !panel ||
-    !form ||
-    !input ||
-    !messages
-  ) {
-
-    return;
-
-  }
-
-  /*---------------------------------------------------------
-              ROBOT CUTE POP-UP MESSAGES
----------------------------------------------------------*/
-
-function robotTeaserMessages() {
-
-  "use strict";
-
-  const teaser =
-    document.getElementById("chatbotTeaser");
-
-  const teaserText =
-    document.getElementById("chatbotTeaserText");
-
-  const chatbotPanel =
-    document.getElementById("chatbotPanel");
-
-  const chatbotToggle =
-    document.getElementById("chatbotToggle");
-
-
-  if (!teaser || !teaserText) {
+  if (!toggle || !panel || !form || !input || !messages) {
     return;
   }
 
+  let teaserIndex = 0;
+  let teaserShowTimer = null;
+  let teaserHideTimer = null;
+  let teaserLoopTimer = null;
+  let isReplying = false;
 
-  const messages = [
-
-    "Hi! 👋",
-
-    "Psst... hello! 🤖",
-
-    "Need a hand? ✨",
-
-    "Ask me about Luke 👀",
-
-    "I know his projects! 😎",
-
-    "Looking to hire? 👀",
-
-    "Let's build something cool! 🚀",
-
-    "Don't be shy! 🥺",
-
-    "I'm friendly, promise! 🤖",
-
-    "Got questions? I'm here! 💬"
-
+  const teaserMessages = [
+    "Need help exploring?",
+    "I can recommend a project.",
+    "Ask what Luke can build.",
+    "Looking for web or data work?",
+    "Let’s find the right section.",
+    "Ready to start a project?"
   ];
 
-
-  let messageIndex = 0;
-  let hideTimer;
-
-
-  function showTeaser() {
-
-    if (
-      chatbotPanel &&
-      chatbotPanel.classList.contains("show")
-    ) {
-
-      teaser.classList.remove("show");
-
+  function hideTeaser() {
+    if (!teaser) {
       return;
-
     }
 
-
-    teaserText.textContent =
-      messages[messageIndex];
-
-
-    messageIndex =
-      (messageIndex + 1) %
-      messages.length;
-
-
-    teaser.classList.add("show");
-
-
-    clearTimeout(hideTimer);
-
-
-    hideTimer =
-      setTimeout(function() {
-
-        teaser.classList.remove("show");
-
-      }, 2700);
-
+    teaser.classList.remove("show");
+    window.clearTimeout(teaserHideTimer);
   }
 
+  function showNextTeaser() {
+    if (
+      !teaser ||
+      !teaserText ||
+      panel.classList.contains("show") ||
+      document.hidden ||
+      document.body.classList.contains("mobile-menu-open")
+    ) {
+      hideTeaser();
+      return;
+    }
 
-  /* First message */
-  setTimeout(
-    showTeaser,
-    1800
-  );
+    teaserText.textContent = teaserMessages[teaserIndex];
+    teaserIndex = (teaserIndex + 1) % teaserMessages.length;
 
+    teaser.classList.remove("show");
 
-  /* Repeat */
-  setInterval(
-    showTeaser,
-    7000
-  );
+    window.requestAnimationFrame(function () {
+      teaser.classList.add("show");
+    });
 
-
-  /* Hide when robot is clicked */
-  if (chatbotToggle) {
-
-    chatbotToggle.addEventListener(
-      "click",
-      function() {
-
-        teaser.classList.remove("show");
-
-      }
-    );
-
+    window.clearTimeout(teaserHideTimer);
+    teaserHideTimer = window.setTimeout(hideTeaser, 3600);
   }
 
-}
+  function startTeaserLoop() {
+    window.clearTimeout(teaserShowTimer);
+    window.clearInterval(teaserLoopTimer);
 
-
-/* IMPORTANT: actually start the pop-up messages */
-robotTeaserMessages();
-
-
-  /* =====================================
-     OPEN / CLOSE CHAT
-  ===================================== */
+    teaserShowTimer = window.setTimeout(showNextTeaser, 2400);
+    teaserLoopTimer = window.setInterval(showNextTeaser, 11000);
+  }
 
   function setChatOpen(isOpen) {
+    panel.classList.toggle("show", isOpen);
+    panel.setAttribute("aria-hidden", isOpen ? "false" : "true");
+    toggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
+    document.body.classList.toggle("chatbot-open", isOpen);
 
-    panel.classList.toggle(
-      "show",
-      isOpen
-    );
-
-    panel.setAttribute(
-      "aria-hidden",
-      isOpen
-        ? "false"
-        : "true"
-    );
-
-    toggle.setAttribute(
-      "aria-expanded",
-      isOpen
-        ? "true"
-        : "false"
-    );
-
+    hideTeaser();
 
     if (isOpen) {
-
-      setTimeout(function() {
-
+      window.setTimeout(function () {
         input.focus();
-
-      }, 250);
-
+        messages.scrollTop = messages.scrollHeight;
+      }, 220);
     }
-
   }
 
+  function scrollMessages() {
+    messages.scrollTop = messages.scrollHeight;
+  }
 
-  toggle.addEventListener(
-    "click",
-    function(event) {
-
-      event.stopPropagation();
-
-      const isOpen =
-        panel.classList.contains(
-          "show"
-        );
-
-      setChatOpen(!isOpen);
-
-    }
-  );
-
-
-  closeButton?.addEventListener(
-    "click",
-    function() {
-
-      setChatOpen(false);
-
-    }
-  );
-
-
-  /*
-   * Do not close when clicking
-   * inside the chatbot.
-   */
-  panel.addEventListener(
-    "click",
-    function(event) {
-
-      event.stopPropagation();
-
-    }
-  );
-
-
-  /*
-   * Click outside to close.
-   */
-  document.addEventListener(
-    "click",
-    function() {
-
-      if (
-        panel.classList.contains(
-          "show"
-        )
-      ) {
-
-        setChatOpen(false);
-
-      }
-
-    }
-  );
-
-
-  /* =====================================
-     ADD MESSAGE
-  ===================================== */
-
-  function addMessage(
-    text,
-    type
-  ) {
-
-    const message =
-      document.createElement(
-        "div"
-      );
-
+  function addMessage(text, type, extraClass) {
+    const message = document.createElement("div");
     message.className =
       "chat-message " +
-      (
-        type === "user"
-          ? "user-message"
-          : "bot-message"
-      );
-
+      (type === "user" ? "user-message" : "bot-message") +
+      (extraClass ? " " + extraClass : "");
 
     if (type !== "user") {
-
-      const avatar =
-        document.createElement(
-          "div"
-        );
-
-      avatar.className =
-        "chat-message-avatar";
-
-      avatar.textContent =
-        "🤖";
-
-      message.appendChild(
-        avatar
-      );
-
+      const avatar = document.createElement("div");
+      avatar.className = "chat-message-avatar";
+      avatar.textContent = "🤖";
+      avatar.setAttribute("aria-hidden", "true");
+      message.appendChild(avatar);
     }
 
+    const bubble = document.createElement("div");
+    bubble.className = "chat-message-bubble";
+    bubble.textContent = text;
+    message.appendChild(bubble);
 
-    const bubble =
-      document.createElement(
-        "div"
-      );
+    messages.appendChild(message);
+    scrollMessages();
 
-    bubble.className =
-      "chat-message-bubble";
-
-    /*
-     * textContent prevents
-     * HTML injection.
-     */
-    bubble.textContent =
-      text;
-
-
-    message.appendChild(
-      bubble
-    );
-
-    messages.appendChild(
-      message
-    );
-
-
-    /*
-     * Always scroll to
-     * newest message.
-     */
-    messages.scrollTop =
-      messages.scrollHeight;
-
+    return message;
   }
 
+  function addTypingIndicator() {
+    const typing = document.createElement("div");
+    typing.className = "chat-message bot-message chatbot-typing-message";
+    typing.innerHTML =
+      '<div class="chat-message-avatar" aria-hidden="true">🤖</div>' +
+      '<div class="chat-message-bubble chatbot-typing" aria-label="Luke\'s assistant is typing">' +
+      '<span></span><span></span><span></span></div>';
 
-  /* =====================================
-     BOT KNOWLEDGE
-  ===================================== */
+    messages.appendChild(typing);
+    scrollMessages();
+
+    return typing;
+  }
+
+  function addAction(action) {
+    if (!action || !action.label || !action.href) {
+      return;
+    }
+
+    const wrapper = document.createElement("div");
+    wrapper.className = "chatbot-inline-action";
+
+    const link = document.createElement("a");
+    link.href = action.href;
+    link.className = "chatbot-action-link";
+    link.innerHTML =
+      '<span>' + action.label + '</span><i class="bi bi-arrow-right"></i>';
+
+    if (action.external) {
+      link.target = "_blank";
+      link.rel = "noopener noreferrer";
+    } else {
+      link.addEventListener("click", function () {
+        setChatOpen(false);
+      });
+    }
+
+    wrapper.appendChild(link);
+    messages.appendChild(wrapper);
+    scrollMessages();
+  }
 
   function getBotReply(question) {
-
-    const text =
-      question
-        .toLowerCase()
-        .trim();
-
-
-    /* Greetings */
+    const text = question.toLowerCase().trim();
 
     if (
       text.includes("hello") ||
-      text.includes("hi ") ||
+      text.includes("hey") ||
       text === "hi" ||
-      text.includes("hey")
+      text.startsWith("hi ")
     ) {
-
-      return (
-        "Hi! 👋 I'm Luke's virtual assistant. " +
-        "You can ask me about his skills, " +
-        "work, services, projects, or how to contact him."
-      );
-
+      return {
+        messages: [
+          "Hi! Great to meet you. 👋",
+          "I can help you explore Luke’s projects, capabilities, experience, or contact options."
+        ]
+      };
     }
 
+    if (
+      text.includes("which project") ||
+      text.includes("project should") ||
+      text.includes("recommend") ||
+      text.includes("view first")
+    ) {
+      return {
+        messages: [
+          "For web work, start with Lakbay Baguio, MeBS Construction, Cloud Chaser, or Fire & Rescue Academy.",
+          "For analytics, the LET and Spending Behavior case studies show Luke’s data workflow and interpretation."
+        ],
+        action: {
+          label: "Explore all projects",
+          href: "#portfolio"
+        }
+      };
+    }
 
-    /* Skills */
+    if (
+      text.includes("lakbay") ||
+      text.includes("baguio")
+    ) {
+      return {
+        messages: [
+          "Lakbay Baguio is a travel-planning web experience for discovering local places and creating a Baguio itinerary.",
+          "It also includes a friendly emotional-support style guide that adds personality to the trip-planning experience."
+        ],
+        action: {
+          label: "Open Lakbay Baguio",
+          href: "preview/lakbaybaguio.com/index.html",
+          external: true
+        }
+      };
+    }
+
+    if (text.includes("mebs") || text.includes("construction")) {
+      return {
+        messages: [
+          "MeBS Construction is a modern company website built around engineering credibility, completed work, and clear client actions."
+        ],
+        action: {
+          label: "Open MeBS Construction",
+          href: "preview/mebsconstruction.com/index.html",
+          external: true
+        }
+      };
+    }
+
+    if (text.includes("cloud") || text.includes("travel agency")) {
+      return {
+        messages: [
+          "Cloud Chaser is a travel-agency website for browsing curated Philippine and Asian trips, itineraries, and trip requests."
+        ],
+        action: {
+          label: "Open Cloud Chaser",
+          href: "preview/cloudchaser.com/trips.html",
+          external: true
+        }
+      };
+    }
+
+    if (text.includes("iskolar") || text.includes("student platform")) {
+      return {
+        messages: [
+          "IskolarLink is a student information and coordination platform designed to simplify academic communication and digital workflows."
+        ],
+        action: {
+          label: "Open IskolarLink",
+          href: "preview/IskolarLink.com/IskolarLink-main/#/",
+          external: true
+        }
+      };
+    }
+
+    if (
+      text.includes("build") ||
+      text.includes("capabilit") ||
+      text.includes("service") ||
+      text.includes("offer") ||
+      text.includes("help me")
+    ) {
+      return {
+        messages: [
+          "Luke can help with web development, UI implementation, SEO, data analytics, automation, and ongoing technical support.",
+          "The Resume section is interactive—tap Web, Design, SEO, Data, Automation, or Support to see a live example of each capability."
+        ],
+        action: {
+          label: "Explore capabilities",
+          href: "#resume"
+        }
+      };
+    }
 
     if (
       text.includes("skill") ||
       text.includes("technology") ||
       text.includes("tech stack") ||
-      text.includes("tools")
+      text.includes("tool")
     ) {
-
-      return (
-        "Luke works across software engineering, " +
-        "web development, WordPress, data analytics, " +
-        "automation and integrations, SEO, digital marketing, " +
-        "and technical virtual assistance."
-      );
-
+      return {
+        messages: [
+          "Luke works with HTML, CSS, JavaScript, React, PHP, WordPress, Python, SQL, PL/SQL, Power BI, Tableau, SEO tools, and automation platforms.",
+          "His strength is connecting those tools around one practical problem rather than treating them as separate skills."
+        ],
+        action: {
+          label: "See the interactive resume",
+          href: "#resume"
+        }
+      };
     }
-
-
-    /* Software */
-
-    if (
-      text.includes("software") ||
-      text.includes("developer") ||
-      text.includes("coding") ||
-      text.includes("programming")
-    ) {
-
-      return (
-        "Luke has software and web development experience " +
-        "using technologies such as HTML, CSS, JavaScript, " +
-        "React, PHP, Python, SQL, PL/SQL, and database technologies."
-      );
-
-    }
-
-
-    /* Data */
 
     if (
       text.includes("data") ||
       text.includes("analytics") ||
-      text.includes("dashboard")
+      text.includes("dashboard") ||
+      text.includes("report")
     ) {
-
-      return (
-        "Luke works with data analysis, SQL, Python, Excel, " +
-        "Tableau, Power BI, reporting, dashboards, " +
-        "and turning raw data into useful insights."
-      );
-
+      return {
+        messages: [
+          "Luke works with SQL, Python, Excel, Tableau, Power BI, reporting, dashboards, segmentation, forecasting, and practical business analysis.",
+          "The LET and Spending Behavior projects are the best places to see that work."
+        ],
+        action: {
+          label: "View data projects",
+          href: "#portfolio"
+        }
+      };
     }
-
-
-    /* Automation */
 
     if (
       text.includes("automation") ||
-      text.includes("integration")
+      text.includes("integration") ||
+      text.includes("workflow")
     ) {
-
-      return (
-        "Luke builds and supports digital workflows, " +
-        "automations, integrations, and systems that connect " +
-        "websites, data, marketing, and business processes."
-      );
-
+      return {
+        messages: [
+          "Luke builds and supports workflows that connect websites, data, marketing tools, and recurring business processes.",
+          "Open the Automation capability in the Resume section to see the interactive demo."
+        ],
+        action: {
+          label: "Open automation demo",
+          href: "#resume"
+        }
+      };
     }
-
-
-    /* Services */
 
     if (
-      text.includes("service") ||
-      text.includes("offer") ||
-      text.includes("help with")
+      text.includes("experience") ||
+      text.includes("background") ||
+      text.includes("career")
     ) {
-
-      return (
-        "Luke can help with web development, WordPress, " +
-        "technical virtual assistance, automation, " +
-        "data analytics, SEO, website optimization, " +
-        "and digital marketing support."
-      );
-
+      return {
+        messages: [
+          "Luke combines software-engineering work in warehouse systems with freelance web development, data analytics, technical VA work, and community leadership.",
+          "That mix helps him understand both technical details and the real business goal behind a task."
+        ],
+        action: {
+          label: "See experience",
+          href: "#resume"
+        }
+      };
     }
 
+    if (
+      text.includes("hire") ||
+      text.includes("start a project") ||
+      text.includes("available") ||
+      text.includes("freelance") ||
+      text.includes("contact") ||
+      text.includes("email")
+    ) {
+      return {
+        messages: [
+          "Luke is open to discussing freelance web, data, software, automation, and technical-support work.",
+          "Share the goal, timeline, and current problem in the Contact section so he can respond with the right next step."
+        ],
+        action: {
+          label: "Contact Luke",
+          href: "#contact"
+        }
+      };
+    }
 
-    /* Portfolio / Work */
+    if (text.includes("resume") || text.includes("cv")) {
+      return {
+        messages: [
+          "Luke’s downloadable CV is available from the main navigation and the mobile homepage."
+        ],
+        action: {
+          label: "Open resume section",
+          href: "#resume"
+        }
+      };
+    }
 
     if (
       text.includes("work") ||
@@ -2410,187 +2103,115 @@ robotTeaserMessages();
       text.includes("project") ||
       text.includes("sample")
     ) {
-
-      return (
-        "You can explore Luke's projects in the Works section. " +
-        "His portfolio includes web development, design, " +
-        "data, automation, and digital projects."
-      );
-
+      return {
+        messages: [
+          "Luke’s portfolio includes six web projects, two data case studies, two content experiences, and a creative collection.",
+          "All projects are visible by default, and you can still filter them by category."
+        ],
+        action: {
+          label: "Explore the portfolio",
+          href: "#portfolio"
+        }
+      };
     }
 
-
-    /* Experience */
-
-    if (
-      text.includes("experience") ||
-      text.includes("background")
-    ) {
-
-      return (
-        "Luke combines professional software engineering " +
-        "experience with freelance technical work, " +
-        "web development, data analytics, and community leadership."
-      );
-
-    }
-
-
-    /* Hire / Availability */
-
-    if (
-      text.includes("hire") ||
-      text.includes("available") ||
-      text.includes("freelance") ||
-      text.includes("job")
-    ) {
-
-      return (
-        "Yes — Luke is open to discussing freelance, " +
-        "technical, web, data, and software opportunities. " +
-        "You can contact him through the Contact section, " +
-        "Telegram, LinkedIn, or Viber."
-      );
-
-    }
-
-
-    /* Contact */
-
-    if (
-      text.includes("contact") ||
-      text.includes("email") ||
-      text.includes("message")
-    ) {
-
-      return (
-        "You can reach Luke using the Contact section " +
-        "or through the Telegram, LinkedIn, and Viber icons " +
-        "in this sidebar."
-      );
-
-    }
-
-
-    /* Resume */
-
-    if (
-      text.includes("resume") ||
-      text.includes("cv")
-    ) {
-
-      return (
-        "Luke's CV is available through the Download CV " +
-        "button in the left sidebar."
-      );
-
-    }
-
-
-    /* Default */
-
-    return (
-      "I'm still learning about Luke! 🤖 " +
-      "Try asking me about his skills, work, " +
-      "services, experience, data expertise, " +
-      "automation, or how to hire him."
-    );
-
+    return {
+      messages: [
+        "I’m not fully sure about that one yet. 🤖",
+        "Try asking about Luke’s projects, web work, data experience, capabilities, availability, or how to contact him."
+      ]
+    };
   }
 
+  function deliverReply(reply) {
+    const responseMessages = reply.messages || [];
+    let delay = 0;
 
-  /* =====================================
-     SEND QUESTION
-  ===================================== */
+    responseMessages.forEach(function (messageText, index) {
+      window.setTimeout(function () {
+        addMessage(messageText, "bot", index > 0 ? "bot-follow-up" : "");
+      }, delay);
+
+      delay += 420;
+    });
+
+    if (reply.action) {
+      window.setTimeout(function () {
+        addAction(reply.action);
+        isReplying = false;
+      }, delay + 80);
+    } else {
+      window.setTimeout(function () {
+        isReplying = false;
+      }, delay);
+    }
+  }
 
   function submitQuestion(question) {
+    const cleanQuestion = question.trim();
 
-    const cleanQuestion =
-      question.trim();
-
-
-    if (!cleanQuestion) {
-
+    if (!cleanQuestion || isReplying) {
       return;
-
     }
 
-
-    addMessage(
-      cleanQuestion,
-      "user"
-    );
-
-
+    isReplying = true;
+    addMessage(cleanQuestion, "user");
     input.value = "";
 
+    const typing = addTypingIndicator();
 
-    /*
-     * Small delay makes the bot
-     * feel more natural.
-     */
-    setTimeout(function() {
-
-      const reply =
-        getBotReply(
-          cleanQuestion
-        );
-
-      addMessage(
-        reply,
-        "bot"
-      );
-
-    }, 500);
-
+    window.setTimeout(function () {
+      typing.remove();
+      deliverReply(getBotReply(cleanQuestion));
+    }, 650);
   }
 
+  toggle.addEventListener("click", function (event) {
+    event.stopPropagation();
+    setChatOpen(!panel.classList.contains("show"));
+  });
 
-  /* Form submit */
+  if (closeButton) {
+    closeButton.addEventListener("click", function () {
+      setChatOpen(false);
+    });
+  }
 
-  form.addEventListener(
-    "submit",
-    function(event) {
+  panel.addEventListener("click", function (event) {
+    event.stopPropagation();
+  });
 
-      event.preventDefault();
-
-      submitQuestion(
-        input.value
-      );
-
+  document.addEventListener("click", function () {
+    if (panel.classList.contains("show")) {
+      setChatOpen(false);
     }
-  );
+  });
 
+  document.addEventListener("keydown", function (event) {
+    if (event.key === "Escape" && panel.classList.contains("show")) {
+      setChatOpen(false);
+      toggle.focus();
+    }
+  });
 
-  /* =====================================
-     QUICK ACTION BUTTONS
-  ===================================== */
+  document.addEventListener("visibilitychange", function () {
+    if (document.hidden) {
+      hideTeaser();
+    }
+  });
 
-  document
-    .querySelectorAll(
-      ".chatbot-quick-btn"
-    )
-    .forEach(
-      function(button) {
+  form.addEventListener("submit", function (event) {
+    event.preventDefault();
+    submitQuestion(input.value);
+  });
 
-        button.addEventListener(
-          "click",
-          function() {
+  document.querySelectorAll(".chatbot-quick-btn").forEach(function (button) {
+    button.addEventListener("click", function () {
+      submitQuestion(this.getAttribute("data-question") || "");
+    });
+  });
 
-            const question =
-              this.getAttribute(
-                "data-question"
-              );
-
-            submitQuestion(
-              question
-            );
-
-          }
-        );
-
-      }
-    );
+  startTeaserLoop();
 
 }
 
@@ -2632,21 +2253,104 @@ function ColorPallet() {
 }
 
 /*-------------------------  Theme Option  -------------------------*/
-function themeOption(){
+function themeOption() {
 
     "use strict";
 
-    $('.color-scheme li .dark-scheme').click(function() {
-        $("body").addClass('dark-arshia');
-        $('.color-scheme li a').removeClass('active');
-        $(this).addClass('active');
-    });
+    var storageKey = "lukas-theme";
+    var root = document.documentElement;
+    var body = document.body;
+    var lightButton = document.querySelector(".light-scheme");
+    var darkButton = document.querySelector(".dark-scheme");
+    var panel = document.querySelector("#color-switcher .color-pallet");
+    var toggleButton = document.querySelector("#color-switcher .cp-toggle");
+    var systemPreference = window.matchMedia
+      ? window.matchMedia("(prefers-color-scheme: dark)")
+      : null;
 
-    $('.color-scheme li .light-scheme').click(function() {
-        $("body").removeClass('dark-arshia');
-        $('.color-scheme li a').removeClass('active');
-        $(this).addClass('active');
-    });
+    function storedTheme() {
+      try {
+        return window.localStorage.getItem(storageKey);
+      } catch (error) {
+        return null;
+      }
+    }
+
+    function saveTheme(theme) {
+      try {
+        window.localStorage.setItem(storageKey, theme);
+      } catch (error) {
+        // The portfolio still works when storage is unavailable.
+      }
+    }
+
+    function updateControls(theme) {
+      var isLight = theme === "light";
+
+      if (lightButton) {
+        lightButton.classList.toggle("active", isLight);
+        lightButton.setAttribute("aria-pressed", isLight ? "true" : "false");
+      }
+
+      if (darkButton) {
+        darkButton.classList.toggle("active", !isLight);
+        darkButton.setAttribute("aria-pressed", !isLight ? "true" : "false");
+      }
+    }
+
+    function applyTheme(theme, persist) {
+      var nextTheme = theme === "light" ? "light" : "dark";
+
+      root.setAttribute("data-theme", nextTheme);
+      body.setAttribute("data-theme", nextTheme);
+      body.classList.toggle("dark-arshia", nextTheme === "dark");
+      body.classList.toggle("light-arshia", nextTheme === "light");
+
+      updateControls(nextTheme);
+
+      if (persist) {
+        saveTheme(nextTheme);
+      }
+    }
+
+    var initialTheme = storedTheme();
+
+    if (initialTheme !== "light" && initialTheme !== "dark") {
+      initialTheme = systemPreference && systemPreference.matches
+        ? "dark"
+        : "light";
+    }
+
+    applyTheme(initialTheme, false);
+
+    if (darkButton) {
+      darkButton.addEventListener("click", function (event) {
+        event.preventDefault();
+        applyTheme("dark", true);
+      });
+    }
+
+    if (lightButton) {
+      lightButton.addEventListener("click", function (event) {
+        event.preventDefault();
+        applyTheme("light", true);
+      });
+    }
+
+    if (toggleButton && panel) {
+      toggleButton.addEventListener("click", function () {
+        var isOpen = panel.classList.contains("show");
+        toggleButton.setAttribute("aria-expanded", isOpen ? "true" : "false");
+      });
+    }
+
+    if (systemPreference && systemPreference.addEventListener) {
+      systemPreference.addEventListener("change", function (event) {
+        if (!storedTheme()) {
+          applyTheme(event.matches ? "dark" : "light", false);
+        }
+      });
+    }
 
     $('.theme-skin li .flat-skin').click(function() {
         $("body").removeClass('neo-arshia');
@@ -2984,24 +2688,78 @@ function interactiveResume() {
             ".resume-service-panel"
         );
 
+    var interactionGuide =
+        resumeSection.querySelector(
+            "#resumeInteractionGuide"
+        );
 
-    function activateService(serviceName) {
+    var hasInteracted = false;
+
+    function markResumeInteraction() {
+
+        if (hasInteracted) {
+            return;
+        }
+
+        hasInteracted = true;
+        resumeSection.classList.add("resume-has-interacted");
+
+        if (interactionGuide) {
+            interactionGuide.classList.add("is-complete");
+
+            window.setTimeout(function() {
+                interactionGuide.setAttribute(
+                    "aria-label",
+                    "Capability selected. Choose another capability at any time."
+                );
+            }, 350);
+        }
+
+    }
+
+
+    function activateService(serviceName, focusActiveTab) {
 
         serviceButtons.forEach(function(button) {
 
+            var isActive =
+                button.dataset.service === serviceName;
+
             button.classList.toggle(
                 "active",
-                button.dataset.service === serviceName
+                isActive
             );
+
+            button.setAttribute(
+                "aria-selected",
+                isActive ? "true" : "false"
+            );
+
+            button.setAttribute(
+                "tabindex",
+                isActive ? "0" : "-1"
+            );
+
+            if (isActive && focusActiveTab) {
+                button.focus();
+            }
 
         });
 
 
         servicePanels.forEach(function(panel) {
 
+            var isActive =
+                panel.dataset.servicePanel === serviceName;
+
             panel.classList.toggle(
                 "active",
-                panel.dataset.servicePanel === serviceName
+                isActive
+            );
+
+            panel.setAttribute(
+                "aria-hidden",
+                isActive ? "false" : "true"
             );
 
         });
@@ -3015,8 +2773,54 @@ function interactiveResume() {
             "click",
             function() {
 
+                markResumeInteraction();
+
                 activateService(
-                    button.dataset.service
+                    button.dataset.service,
+                    false
+                );
+
+            }
+        );
+
+    });
+
+
+
+    serviceButtons.forEach(function(button, buttonIndex) {
+
+        button.addEventListener(
+            "keydown",
+            function(event) {
+
+                var targetIndex = null;
+
+                if (event.key === "ArrowRight" || event.key === "ArrowDown") {
+                    targetIndex = (buttonIndex + 1) % serviceButtons.length;
+                }
+
+                if (event.key === "ArrowLeft" || event.key === "ArrowUp") {
+                    targetIndex = (buttonIndex - 1 + serviceButtons.length) % serviceButtons.length;
+                }
+
+                if (event.key === "Home") {
+                    targetIndex = 0;
+                }
+
+                if (event.key === "End") {
+                    targetIndex = serviceButtons.length - 1;
+                }
+
+                if (targetIndex === null) {
+                    return;
+                }
+
+                event.preventDefault();
+                markResumeInteraction();
+
+                activateService(
+                    serviceButtons[targetIndex].dataset.service,
+                    true
                 );
 
             }
@@ -3873,361 +3677,148 @@ function interactivePortfolio() {
 
   var projects = {
 
-
     fire: {
-
-      category:
-        "WEB • LMS • SEO",
-
-      title:
-        "Fire & Rescue Academy",
-
-      summary:
-        "A professional digital training platform built to support emergency-services education, course delivery, content management, and online discoverability.",
-
+      category: "WEB • LMS • SEO",
+      title: "Fire & Rescue Academy",
+      summary: "A professional digital training platform built to support emergency-services education, course delivery, content management, and online discoverability.",
       contribution: [
-
         "Website development and responsive implementation",
-
         "Learning management system setup and course structure",
-
         "SEO and content optimization",
-
         "Technical troubleshooting and performance improvements"
-
       ],
-
-      stack: [
-
-        "WordPress",
-        "Elementor",
-        "Tutor LMS",
-        "CSS",
-        "SEO"
-
-      ],
-
-      links: [
-
-        {
-          label:
-            "Visit Live",
-
-          url:
-            "https://fireandrescueacademy.com/",
-
-          external:
-            true
-        }
-
-      ]
-
+      stack: ["WordPress", "Elementor", "Tutor LMS", "CSS", "SEO"],
+      links: [{ label: "Visit Live", url: "https://fireandrescueacademy.com/", external: true }]
     },
-
-
 
     iskolar: {
-
-      category:
-        "WEB • PLATFORM",
-
-      title:
-        "IskolarLink",
-
-      summary:
-        "A student information and coordination platform designed to improve academic communication and organize digital workflows in one environment.",
-
+      category: "WEB • PLATFORM",
+      title: "IskolarLink",
+      summary: "A student information and coordination platform designed to improve academic communication and organize digital workflows in one environment.",
       contribution: [
-
-        "Website and platform development",
-
+        "Platform and front-end development",
         "Information architecture and content organization",
-
         "Responsive interface implementation",
-
-        "Digital workflow planning"
-
+        "Academic workflow presentation"
       ],
-
-      stack: [
-
-        "WordPress",
-        "Web Development",
-        "UI Structure",
-        "Workflow"
-
-      ],
-
-      links: [
-
-        {
-          label:
-            "Visit Live",
-
-          url:
-            "https://dev-iskolarlink.pantheonsite.io/",
-
-          external:
-            true
-        }
-
-      ]
-
+      stack: ["React", "JavaScript", "Web Development", "UI Structure"],
+      links: [{ label: "Open Project", url: "preview/IskolarLink.com/IskolarLink-main/#/", external: true }]
     },
-
-
 
     corporate: {
-
-      category:
-        "WEB • CORPORATE",
-
-      title:
-        "Corporate Disaster Response & Training",
-
-      summary:
-        "A professional corporate website created for a disaster-response and training organization, focused on presenting services clearly and strengthening its digital presence.",
-
+      category: "WEB • CORPORATE",
+      title: "Corporate Disaster Response & Training",
+      summary: "A professional corporate website created for a disaster-response and training organization, focused on presenting services clearly and strengthening its digital presence.",
       contribution: [
-
         "Website design and development",
-
         "Responsive implementation",
-
         "Content presentation and structure",
-
         "Digital presence improvements"
-
       ],
-
-      stack: [
-
-        "WordPress",
-        "Web Design",
-        "Responsive",
-        "Content"
-
-      ],
-
-      links: [
-
-        {
-          label:
-            "Visit Live",
-
-          url:
-            "https://conquerorscc.com/",
-
-          external:
-            true
-        }
-
-      ]
-
+      stack: ["WordPress", "Web Design", "Responsive", "Content"],
+      links: [{ label: "Visit Live", url: "https://conquerorscc.com/", external: true }]
     },
 
+    lakbay: {
+      category: "WEB • TRAVEL APP",
+      title: "Lakbay Baguio",
+      summary: "A Baguio itinerary experience that helps visitors discover local places, shape a trip, and enjoy a calmer, more personal travel-planning flow.",
+      contribution: [
+        "Travel-focused UI and content structure",
+        "Interactive itinerary experience",
+        "Responsive front-end implementation",
+        "Conversational emotional-support concept"
+      ],
+      stack: ["HTML", "CSS", "JavaScript", "Responsive UI"],
+      links: [{ label: "Open Project", url: "preview/lakbaybaguio.com/index.html", external: true }]
+    },
 
+    mebs: {
+      category: "WEB • CONSTRUCTION",
+      title: "MeBS Construction",
+      summary: "A modern construction-company website focused on engineering credibility, project presentation, and clear client pathways.",
+      contribution: [
+        "Website repurposing and front-end development",
+        "Construction-focused content adaptation",
+        "Responsive interface refinement",
+        "Brand and interaction improvements"
+      ],
+      stack: ["HTML", "CSS", "JavaScript", "UI/UX"],
+      links: [{ label: "Open Project", url: "preview/mebsconstruction.com/index.html", external: true }]
+    },
+
+    cloudchaser: {
+      category: "WEB • TRAVEL",
+      title: "Cloud Chaser",
+      summary: "A polished travel-agency experience for browsing curated Philippine and Asian trips, understanding itineraries, and requesting a journey.",
+      contribution: [
+        "Travel website repurposing",
+        "Destination and itinerary content structure",
+        "Responsive UI improvements",
+        "Interaction and conversion refinements"
+      ],
+      stack: ["HTML", "CSS", "JavaScript", "Travel UX"],
+      links: [{ label: "Open Trips", url: "preview/cloudchaser.com/trips.html", external: true }]
+    },
 
     let: {
-
-      category:
-        "DATA • EDUCATION ANALYTICS",
-
-      title:
-        "LET Performance Trends",
-
-      summary:
-        "A data-analysis project exploring licensure examination performance, regional patterns, and educational outcomes across multiple years.",
-
+      category: "DATA • EDUCATION ANALYTICS",
+      title: "LET Performance Trends",
+      summary: "A data-analysis project exploring licensure examination performance, regional patterns, and educational outcomes across multiple years.",
       contribution: [
-
         "Data preparation and exploratory analysis",
-
         "Trend and geographic analysis",
-
         "Visualization and interpretation",
-
         "Interactive case-study presentation"
-
       ],
-
-      stack: [
-
-        "Python",
-        "Data Analysis",
-        "Visualization",
-        "Statistics"
-
-      ],
-
-      links: [
-
-        {
-          label:
-            "Explore Analysis",
-
-          url:
-            "let-performance-analysis.html",
-
-          external:
-            false
-        }
-
-      ]
-
+      stack: ["Python", "Data Analysis", "Visualization", "Statistics"],
+      links: [{ label: "Explore Analysis", url: "let-performance-analysis.html", external: false }]
     },
-
-
 
     spending: {
-
-      category:
-        "DATA • CUSTOMER BEHAVIOR",
-
-      title:
-        "Spending Behavior Analysis",
-
-      summary:
-        "An analytical project examining customer spending behavior, meaningful market segments, purchasing relationships, and future transaction patterns.",
-
+      category: "DATA • CUSTOMER BEHAVIOR",
+      title: "Spending Behavior Analysis",
+      summary: "An analytical project examining customer spending behavior, meaningful market segments, purchasing relationships, and future transaction patterns.",
       contribution: [
-
         "Exploratory Data Analysis",
-
         "Customer segmentation using K-Means",
-
         "Association-rule analysis",
-
         "Time-series forecasting"
-
       ],
-
-      stack: [
-
-        "Python",
-        "Pandas",
-        "K-Means",
-        "Apriori",
-        "ARIMA"
-
-      ],
-
-      links: [
-
-        {
-          label:
-            "Explore Analysis",
-
-          url:
-            "customer-spending-analysis.html",
-
-          external:
-            false
-        }
-
-      ]
-
+      stack: ["Python", "Pandas", "K-Means", "Apriori", "ARIMA"],
+      links: [{ label: "Explore Analysis", url: "customer-spending-analysis.html", external: false }]
     },
-
-
 
     campaign1: {
-
-      category:
-        "CONTENT • CAMPAIGN",
-
-      title:
-        "Campaign Landing Experience",
-
-      summary:
-        "A campaign-oriented digital experience combining front-end implementation, content presentation, and visual hierarchy for promotional engagement.",
-
+      category: "CONTENT • CAMPAIGN",
+      title: "Campaign Landing Experience",
+      summary: "A campaign-oriented digital experience combining front-end implementation, content presentation, and visual hierarchy for promotional engagement.",
       contribution: [
-
         "Front-end implementation",
-
         "Campaign page layout",
-
         "Responsive styling",
-
         "Interactive content presentation"
-
       ],
-
-      stack: [
-
-        "HTML",
-        "CSS",
-        "JavaScript",
-        "PHP"
-
-      ],
-
-      links: [
-
-        {
-          label:
-            "View Campaign",
-
-          url:
-            "http://paidmediasandbox.3jzvudtzb5-dv13xg0776gq.p.temp-site.link/luke/mood/v2-20off/v2startup.html",
-
-          external:
-            true
-        }
-
-      ]
-
+      stack: ["HTML", "CSS", "JavaScript", "PHP"],
+      links: [{
+        label: "View Campaign",
+        url: "http://paidmediasandbox.3jzvudtzb5-dv13xg0776gq.p.temp-site.link/luke/mood/v2-20off/v2startup.html",
+        external: true
+      }]
     },
 
-
-
     campaign2: {
-
-      category:
-        "CONTENT • INTERACTIVE",
-
-      title:
-        "Interactive Campaign Blog",
-
-      summary:
-        "A front-end campaign experience focused on visual storytelling, interactive presentation, and engaging content delivery.",
-
+      category: "CONTENT • INTERACTIVE",
+      title: "Interactive Campaign Blog",
+      summary: "A front-end campaign experience focused on visual storytelling, interactive presentation, and engaging content delivery.",
       contribution: [
-
         "Page development",
-
         "Interactive front-end behavior",
-
         "Responsive styling",
-
         "Campaign presentation"
-
       ],
-
-      stack: [
-
-        "HTML",
-        "CSS",
-        "JavaScript"
-
-      ],
-
-      links: [
-
-        {
-          label:
-            "View Campaign",
-
-          url:
-            "https://va-0097.github.io/Mood/",
-
-          external:
-            true
-        }
-
-      ]
-
+      stack: ["HTML", "CSS", "JavaScript"],
+      links: [{ label: "View Campaign", url: "https://va-0097.github.io/Mood/", external: true }]
     }
 
   };

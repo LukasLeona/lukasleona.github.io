@@ -7,7 +7,23 @@
   name="viewport"
   content="width=device-width, initial-scale=1.0"
 >
+  <meta name="color-scheme" content="dark light">
   <title>Lukas - Portfolio</title>
+
+  <script>
+    (function () {
+      try {
+        var savedTheme = localStorage.getItem("lukas-theme");
+        var preferredTheme = savedTheme ||
+          (window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches
+            ? "light"
+            : "dark");
+        document.documentElement.setAttribute("data-theme", preferredTheme);
+      } catch (error) {
+        document.documentElement.setAttribute("data-theme", "dark");
+      }
+    }());
+  </script>
   <meta name="description" content="" />
   <meta name="keywords" content="" />
   <meta name="author" content="Luke Mark P. Leona" />
@@ -46,6 +62,9 @@
 <!-- Contact UI Styles -->
 <link rel="stylesheet" href="assets/css/contact-v2.css">
 
+<!-- Persistent Light / Dark Theme -->
+<link rel="stylesheet" href="assets/css/theme-mode.css">
+
   <!-- Iconify - coded technology/tool logos -->
 <script
   src="https://code.iconify.design/iconify-icon/3.0.0/iconify-icon.min.js">
@@ -70,176 +89,38 @@
     <!-- Date -->
     <div id="date"></div>
 
-    <!-- Yellow line between date and socials -->
-    <div class="sidebar-line sidebar-line-top"></div>
+    <!-- Balanced social rail -->
+    <div class="sidebar-social-stack" aria-label="Social links">
 
-    <!-- Social Icons -->
-    <div class="social-box">
+      <div class="sidebar-line sidebar-line-top" aria-hidden="true"></div>
 
-      <div class="social d-none d-lg-block">
+      <div class="social-box">
+        <div class="social d-none d-lg-flex">
 
-        <a href="https://t.me/pyrexu" target="_blank" rel="noopener noreferrer" class="d-inline-block"
-          aria-label="Telegram">
-          <i class="bi bi-telegram"></i>
-        </a>
+          <a href="https://t.me/pyrexu" target="_blank" rel="noopener noreferrer"
+            aria-label="Telegram">
+            <i class="bi bi-telegram"></i>
+          </a>
 
-        <a href="https://www.linkedin.com/in/luke-mark-leona/" target="_blank" rel="noopener noreferrer"
-          class="d-inline-block" aria-label="LinkedIn">
-          <i class="bi bi-linkedin"></i>
-        </a>
+          <a href="https://www.linkedin.com/in/luke-mark-leona/" target="_blank"
+            rel="noopener noreferrer" aria-label="LinkedIn">
+            <i class="bi bi-linkedin"></i>
+          </a>
 
-        <a href="https://invite.viber.com/?number=639934996221" target="_blank" rel="noopener noreferrer"
-          class="d-inline-block" aria-label="Viber">
-          <i class="bi bi-chat-dots"></i>
-        </a>
+          <a href="https://invite.viber.com/?number=639934996221" target="_blank"
+            rel="noopener noreferrer" aria-label="Viber">
+            <i class="bi bi-chat-dots"></i>
+          </a>
 
+        </div>
       </div>
+
+      <div class="sidebar-line sidebar-line-bottom" aria-hidden="true"></div>
 
     </div>
 
-    <!-- Yellow line -->
-    <div class="sidebar-line sidebar-line-bottom"></div>
 
 
-    <!-- ========================================
-       ROBOT CHATBOT
-  ========================================= -->
-    <div class="portfolio-chatbot">
-
-      <!-- Robot Button -->
-      <button type="button" class="chatbot-robot-button" id="chatbotToggle"
-        aria-label="Chat with Luke's virtual assistant" aria-expanded="false">
-
-        <span class="robot-icon">
-
-          <!-- Antenna -->
-          <span class="robot-antenna">
-            <span class="robot-antenna-dot"></span>
-          </span>
-
-          <!-- Head -->
-          <span class="robot-head">
-
-            <span class="robot-eye robot-eye-left"></span>
-
-            <span class="robot-eye robot-eye-right"></span>
-
-            <span class="robot-mouth"></span>
-
-          </span>
-
-          <!-- Body -->
-          <span class="robot-body">
-            <span class="robot-body-light"></span>
-          </span>
-
-        </span>
-
-        <!-- Online status -->
-        <span class="chatbot-online-dot"></span>
-
-      </button>
-
-      <!-- ========================================
-       CUTE ROBOT POP-UP MESSAGE
-  ========================================= -->
-      <div class="chatbot-teaser" id="chatbotTeaser" aria-live="polite">
-        <span id="chatbotTeaserText">
-          Hi! 👋
-        </span>
-      </div>
-
-      <!-- ========================================
-         CHAT WINDOW
-    ========================================= -->
-      <div class="chatbot-panel" id="chatbotPanel" aria-hidden="true">
-
-        <!-- Header -->
-        <div class="chatbot-header">
-
-          <div class="chatbot-header-profile">
-
-            <div class="chatbot-mini-robot">
-              🤖
-            </div>
-
-            <div>
-              <strong>Luke's Assistant</strong>
-
-              <span>
-                <span class="chat-online-indicator"></span>
-                Online
-              </span>
-            </div>
-
-          </div>
-
-
-          <button type="button" class="chatbot-close" id="chatbotClose" aria-label="Close chatbot">
-
-          </button>
-
-
-
-        </div>
-
-
-        <!-- Messages -->
-        <div class="chatbot-messages" id="chatbotMessages">
-
-          <!-- Initial bot message -->
-          <div class="chat-message bot-message">
-
-            <div class="chat-message-avatar">
-              🤖
-            </div>
-
-            <div class="chat-message-bubble">
-              Hi! I'm Luke's virtual assistant. 👋
-              <br><br>
-              Ask me about his skills, projects,
-              services, experience, or how to hire him.
-            </div>
-
-          </div>
-
-
-          <!-- Quick Questions -->
-          <div class="chatbot-quick-actions">
-
-            <button type="button" class="chatbot-quick-btn" data-question="What are Luke's skills?">
-              Skills
-            </button>
-
-            <button type="button" class="chatbot-quick-btn" data-question="Show me Luke's work">
-              His Work
-            </button>
-
-            <button type="button" class="chatbot-quick-btn" data-question="How can I hire Luke?">
-              Hire Luke
-            </button>
-
-          </div>
-
-        </div>
-
-
-        <!-- Input -->
-        <form class="chatbot-input-area" id="chatbotForm">
-
-          <input type="text" id="chatbotInput" placeholder="Ask me something..." autocomplete="off"
-            aria-label="Chat message">
-
-          <button type="submit" class="chatbot-send" aria-label="Send message">
-            <i class="bi bi-send-fill"></i>
-          </button>
-
-        </form>
-
-      </div>
-
-    </div>
-    <!-- END ROBOT CHATBOT -->
 
 
     <!-- Previous / Next Navigation -->
@@ -259,6 +140,99 @@
   <!-- ========================================
      RIGHT SIDE END
 ========================================= -->
+
+  <!-- ========================================
+       GLOBAL PORTFOLIO CHATBOT
+       Available on desktop and mobile
+  ========================================= -->
+  <div class="portfolio-chatbot global-chatbot">
+
+    <button type="button" class="chatbot-robot-button" id="chatbotToggle"
+      aria-label="Chat with Luke's virtual assistant" aria-expanded="false">
+
+      <span class="robot-icon" aria-hidden="true">
+        <span class="robot-antenna">
+          <span class="robot-antenna-dot"></span>
+        </span>
+        <span class="robot-head">
+          <span class="robot-eye robot-eye-left"></span>
+          <span class="robot-eye robot-eye-right"></span>
+          <span class="robot-mouth"></span>
+        </span>
+        <span class="robot-body">
+          <span class="robot-body-light"></span>
+        </span>
+      </span>
+
+      <span class="chatbot-online-dot" aria-hidden="true"></span>
+    </button>
+
+    <div class="chatbot-teaser" id="chatbotTeaser" aria-live="polite" aria-atomic="true">
+      <span class="chatbot-teaser-avatar" aria-hidden="true">🤖</span>
+      <span id="chatbotTeaserText">Need help exploring?</span>
+    </div>
+
+    <div class="chatbot-panel" id="chatbotPanel" aria-hidden="true">
+
+      <div class="chatbot-header">
+        <div class="chatbot-header-profile">
+          <div class="chatbot-mini-robot" aria-hidden="true">🤖</div>
+          <div>
+            <strong>Luke's Portfolio Guide</strong>
+            <span><span class="chat-online-indicator"></span> Ready to help</span>
+          </div>
+        </div>
+
+        <button type="button" class="chatbot-close" id="chatbotClose" aria-label="Close chatbot"></button>
+      </div>
+
+      <div class="chatbot-messages" id="chatbotMessages" aria-live="polite">
+
+        <div class="chat-message bot-message">
+          <div class="chat-message-avatar" aria-hidden="true">🤖</div>
+          <div class="chat-message-bubble">
+            Hi! I’m Luke’s portfolio guide. 👋
+          </div>
+        </div>
+
+        <div class="chat-message bot-message">
+          <div class="chat-message-avatar chat-message-avatar-spacer" aria-hidden="true"></div>
+          <div class="chat-message-bubble">
+            Tell me what you are looking for, and I’ll point you to the right work, skill, or contact option.
+          </div>
+        </div>
+
+        <div class="chatbot-quick-actions" aria-label="Suggested questions">
+          <span>TRY ASKING</span>
+
+          <button type="button" class="chatbot-quick-btn" data-question="Which project should I view first?">
+            Find a project
+          </button>
+
+          <button type="button" class="chatbot-quick-btn" data-question="What can Luke help me build?">
+            Explore capabilities
+          </button>
+
+          <button type="button" class="chatbot-quick-btn" data-question="How can I start a project with Luke?">
+            Start a project
+          </button>
+        </div>
+
+      </div>
+
+      <form class="chatbot-input-area" id="chatbotForm">
+        <input type="text" id="chatbotInput" placeholder="Ask about Luke's work..." autocomplete="off"
+          aria-label="Chat message">
+        <button type="submit" class="chatbot-send" aria-label="Send message">
+          <i class="bi bi-send-fill"></i>
+        </button>
+      </form>
+
+    </div>
+
+  </div>
+  <!-- END GLOBAL PORTFOLIO CHATBOT -->
+
 
   <!--  Left Side Start  -->
   <div class="left-side  nav-close">
@@ -2105,6 +2079,18 @@
 
     <section class="resume-capabilities resume-v2-reveal">
 
+
+      <div class="resume-interaction-guide" id="resumeInteractionGuide" aria-live="polite">
+        <span class="resume-guide-icon" aria-hidden="true">
+          <i class="bi bi-hand-index-thumb"></i>
+        </span>
+        <span>
+          <strong>Interactive demo:</strong>
+          choose a capability below to change the live preview.
+        </span>
+        <i class="bi bi-arrow-down-short resume-guide-arrow" aria-hidden="true"></i>
+      </div>
+
       <div class="resume-capability-tabs"
            role="tablist"
            aria-label="Capabilities">
@@ -2114,6 +2100,11 @@
           type="button"
           class="resume-capability-tab active"
           data-service="web"
+          id="resume-tab-web"
+          role="tab"
+          aria-selected="true"
+          aria-controls="resume-panel-web"
+          tabindex="0"
         >
 
           <i class="bi bi-code-slash"></i>
@@ -2127,6 +2118,11 @@
           type="button"
           class="resume-capability-tab"
           data-service="design"
+          id="resume-tab-design"
+          role="tab"
+          aria-selected="false"
+          aria-controls="resume-panel-design"
+          tabindex="-1"
         >
 
           <i class="bi bi-palette"></i>
@@ -2140,6 +2136,11 @@
           type="button"
           class="resume-capability-tab"
           data-service="seo"
+          id="resume-tab-seo"
+          role="tab"
+          aria-selected="false"
+          aria-controls="resume-panel-seo"
+          tabindex="-1"
         >
 
           <i class="bi bi-search"></i>
@@ -2153,6 +2154,11 @@
           type="button"
           class="resume-capability-tab"
           data-service="data"
+          id="resume-tab-data"
+          role="tab"
+          aria-selected="false"
+          aria-controls="resume-panel-data"
+          tabindex="-1"
         >
 
           <i class="bi bi-bar-chart-line"></i>
@@ -2166,6 +2172,11 @@
           type="button"
           class="resume-capability-tab"
           data-service="automation"
+          id="resume-tab-automation"
+          role="tab"
+          aria-selected="false"
+          aria-controls="resume-panel-automation"
+          tabindex="-1"
         >
 
           <i class="bi bi-diagram-3"></i>
@@ -2179,6 +2190,11 @@
           type="button"
           class="resume-capability-tab"
           data-service="support"
+          id="resume-tab-support"
+          role="tab"
+          aria-selected="false"
+          aria-controls="resume-panel-support"
+          tabindex="-1"
         >
 
           <i class="bi bi-person-workspace"></i>
@@ -2206,6 +2222,10 @@
         <article
           class="resume-service-panel active"
           data-service-panel="web"
+          id="resume-panel-web"
+          role="tabpanel"
+          aria-labelledby="resume-tab-web"
+          aria-hidden="false"
         >
 
           <div class="resume-service-copy">
@@ -2416,6 +2436,10 @@
         <article
           class="resume-service-panel"
           data-service-panel="design"
+          id="resume-panel-design"
+          role="tabpanel"
+          aria-labelledby="resume-tab-design"
+          aria-hidden="true"
         >
 
           <div class="resume-service-copy">
@@ -2584,6 +2608,10 @@
         <article
           class="resume-service-panel"
           data-service-panel="seo"
+          id="resume-panel-seo"
+          role="tabpanel"
+          aria-labelledby="resume-tab-seo"
+          aria-hidden="true"
         >
 
           <div class="resume-service-copy">
@@ -2740,6 +2768,10 @@
         <article
           class="resume-service-panel"
           data-service-panel="data"
+          id="resume-panel-data"
+          role="tabpanel"
+          aria-labelledby="resume-tab-data"
+          aria-hidden="true"
         >
 
           <div class="resume-service-copy">
@@ -2898,6 +2930,10 @@
         <article
           class="resume-service-panel"
           data-service-panel="automation"
+          id="resume-panel-automation"
+          role="tabpanel"
+          aria-labelledby="resume-tab-automation"
+          aria-hidden="true"
         >
 
           <div class="resume-service-copy">
@@ -3066,6 +3102,10 @@
         <article
           class="resume-service-panel"
           data-service-panel="support"
+          id="resume-panel-support"
+          role="tabpanel"
+          aria-labelledby="resume-tab-support"
+          aria-hidden="true"
         >
 
           <div class="resume-service-copy">
@@ -4069,1447 +4109,466 @@
 <section
   id="portfolio"
   class="section portfolio portfolio-v2"
-  data-portfolio-mode="selected"
   data-current-filter="*"
 >
 
   <div class="container">
 
-
-    <!-- ========================================
-         PORTFOLIO INTRO
-    ========================================= -->
-
     <div class="portfolio-v2-intro">
-
       <div>
-
-        <span class="portfolio-v2-eyebrow">
-          SELECTED WORK / PORTFOLIO
-        </span>
-
+        <span class="portfolio-v2-eyebrow">WORK / PORTFOLIO</span>
         <h2>
           Work that moved from
           <span>idea to execution.</span>
         </h2>
-
       </div>
-
 
       <p>
-        A collection of websites, data projects,
-        campaigns, and creative work built around
-        real goals—not just aesthetics.
+        Websites, data projects, campaigns, and creative work built around real goals—not just aesthetics.
+        Everything is available below, so visitors can explore without switching views first.
       </p>
-
     </div>
 
-
-
-    <!-- ========================================
-         VIEW MODE + FILTERS
-    ========================================= -->
-
-    <div class="portfolio-toolbar">
-
-
-      <!-- SELECTED / ALL -->
-
-      <div class="portfolio-mode-switch">
-
-        <button
-          type="button"
-          class="portfolio-mode-btn active"
-          data-portfolio-mode="selected"
-        >
-          <i class="bi bi-stars"></i>
-          Selected Work
-        </button>
-
-
-        <button
-          type="button"
-          class="portfolio-mode-btn"
-          data-portfolio-mode="all"
-        >
-          <i class="bi bi-grid"></i>
-          All Projects
-        </button>
-
+    <div class="portfolio-toolbar portfolio-filter-toolbar">
+      <div class="portfolio-toolbar-label">
+        <i class="bi bi-grid-3x3-gap"></i>
+        <span>Explore all work</span>
       </div>
 
-
-
-      <!-- FILTERS -->
-
-      <ul
-        id="portfolio-filter"
-        class="portfolio-v2-filter"
-      >
-
+      <ul id="portfolio-filter" class="portfolio-v2-filter">
         <li>
-
-          <a
-            href="javascript:void(0)"
-            data-filter="*"
-            class="active"
-          >
-            <span>All</span>
-            <small>08</small>
+          <a href="javascript:void(0)" data-filter="*" class="active">
+            <span>All</span><small>11</small>
           </a>
-
         </li>
-
-
         <li>
-
-          <a
-            href="javascript:void(0)"
-            data-filter=".web"
-          >
-            <span>Web</span>
-            <small>03</small>
+          <a href="javascript:void(0)" data-filter=".web">
+            <span>Web</span><small>06</small>
           </a>
-
         </li>
-
-
         <li>
-
-          <a
-            href="javascript:void(0)"
-            data-filter=".data"
-          >
-            <span>Data</span>
-            <small>02</small>
+          <a href="javascript:void(0)" data-filter=".data">
+            <span>Data</span><small>02</small>
           </a>
-
         </li>
-
-
         <li>
-
-          <a
-            href="javascript:void(0)"
-            data-filter=".creative"
-          >
-            <span>Creative</span>
-            <small>01</small>
+          <a href="javascript:void(0)" data-filter=".creative">
+            <span>Creative</span><small>01</small>
           </a>
-
         </li>
-
-
         <li>
-
-          <a
-            href="javascript:void(0)"
-            data-filter=".content"
-          >
-            <span>Content</span>
-            <small>02</small>
+          <a href="javascript:void(0)" data-filter=".content">
+            <span>Content</span><small>02</small>
           </a>
-
         </li>
-
       </ul>
-
-
     </div>
-
-
-
-    <!-- ========================================
-         FEATURED PROJECT
-    ========================================= -->
-
-    <article
-      class="portfolio-featured"
-      data-featured-category="web"
-    >
-
-
-      <!-- VISUAL -->
-
-      <div
-        class="portfolio-featured-visual portfolio-v2-media"
-        data-hover-label="VISIT LIVE ↗"
-      >
-
-        <div class="portfolio-browser-shell">
-
-          <div class="portfolio-browser-top">
-
-            <div class="portfolio-browser-dots">
-
-              <span></span>
-              <span></span>
-              <span></span>
-
-            </div>
-
-
-            <div class="portfolio-browser-url">
-              fireandrescueacademy.com
-            </div>
-
-
-            <a
-              href="https://fireandrescueacademy.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="portfolio-browser-live"
-              aria-label="Visit Fire and Rescue Academy website"
-            >
-              <i class="bi bi-box-arrow-up-right"></i>
-            </a>
-
-          </div>
-
-
-          <div class="portfolio-featured-image">
-
-            <img
-              src="assets/img/webdesigner/portfolio-item4.png"
-              alt="Fire and Rescue Academy website"
-            >
-
-            <div class="portfolio-media-shade"></div>
-
-          </div>
-
-        </div>
-
-
-        <span class="portfolio-hover-label">
-          VISIT LIVE ↗
-        </span>
-
-      </div>
-
-
-
-      <!-- CONTENT -->
-
-      <div class="portfolio-featured-copy">
-
-        <div class="portfolio-project-index">
-
-          <span>
-            01 / FEATURED
-          </span>
-
-          <small>
-            WEB • LMS • SEO
-          </small>
-
-        </div>
-
-
-        <h3>
-          Fire &amp; Rescue
-          <span>Academy</span>
-        </h3>
-
-
-        <p class="portfolio-project-lead">
-          A professional digital training platform
-          combining website development, course delivery,
-          content structure, and search optimization.
-        </p>
-
-
-        <div class="portfolio-featured-details">
-
-
-          <div>
-
-            <span>
-              MY ROLE
-            </span>
-
-            <strong>
-              Web Development
-            </strong>
-
-            <strong>
-              LMS Implementation
-            </strong>
-
-            <strong>
-              SEO &amp; Optimization
-            </strong>
-
-          </div>
-
-
-          <div>
-
-            <span>
-              BUILT WITH
-            </span>
-
-            <strong>
-              WordPress
-            </strong>
-
-            <strong>
-              Tutor LMS
-            </strong>
-
-            <strong>
-              Elementor / CSS
-            </strong>
-
-          </div>
-
-
-        </div>
-
-
-
-        <div class="portfolio-project-tags">
-
-          <span>Responsive</span>
-          <span>LMS</span>
-          <span>SEO</span>
-          <span>Content</span>
-
-        </div>
-
-
-
-        <div class="portfolio-featured-actions">
-
-          <button
-            type="button"
-            class="portfolio-quick-view-btn"
-            data-project="fire"
-          >
-            Project Details
-
-            <i class="bi bi-arrow-right"></i>
-          </button>
-
-
-          <a
-            href="https://fireandrescueacademy.com/"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="portfolio-live-btn"
-          >
-            Visit Live
-
-            <i class="bi bi-arrow-up-right"></i>
-          </a>
-
-        </div>
-
-      </div>
-
-
-    </article>
-
-
-
-    <!-- ========================================
-         PROJECT GRID HEADING
-    ========================================= -->
 
     <div class="portfolio-grid-heading">
-
       <div>
-
-        <span class="portfolio-v2-eyebrow">
-          PROJECT EXPLORER
-        </span>
-
-        <h3>
-          Selected projects
-        </h3>
-
+        <span class="portfolio-v2-eyebrow">PROJECT EXPLORER</span>
+        <h3>All projects</h3>
       </div>
-
-
-      <p id="portfolioResultLabel">
-        Showing selected work
-      </p>
-
+      <p id="portfolioResultLabel">Showing all 11 projects</p>
     </div>
-
-
-
-    <!-- ========================================
-         PROJECT GRID
-    ========================================= -->
 
     <div class="portfolio-items row">
 
-
-      <!-- ========================================
-           02 - ISKOLARLINK
-      ========================================= -->
-
-      <div
-        class="col-md-6 portfolio-item web selected-work"
-      >
-
+      <!-- 01 - FIRE & RESCUE ACADEMY -->
+      <div class="col-md-6 portfolio-item web">
         <article class="portfolio-v2-card">
-
-
-          <div
-            class="portfolio-v2-media portfolio-web-media"
-            data-hover-label="VISIT LIVE ↗"
-          >
-
+          <div class="portfolio-v2-media portfolio-web-media" data-hover-label="VISIT LIVE ↗">
             <div class="project-browser-mini">
-
               <div class="project-browser-header">
-
-                <span></span>
-                <span></span>
-                <span></span>
-
-                <small>
-                  iskolarlink
-                </small>
-
+                <span></span><span></span><span></span>
+                <small>fireandrescueacademy.com</small>
               </div>
-
-
-              <img
-                src="assets/img/webdesigner/iskolarlink.png"
-                alt="IskolarLink student information platform"
-              >
-
+              <img src="assets/img/webdesigner/portfolio-item4.png" alt="Fire and Rescue Academy website">
             </div>
-
-
-            <span class="portfolio-hover-label">
-              VISIT LIVE ↗
-            </span>
-
+            <span class="portfolio-hover-label">VISIT LIVE ↗</span>
           </div>
-
-
-
           <div class="portfolio-v2-card-content">
-
-            <div class="portfolio-project-index">
-
-              <span>
-                02 / WEB
-              </span>
-
-              <small>
-                PLATFORM
-              </small>
-
-            </div>
-
-
-            <h3>
-              IskolarLink
-            </h3>
-
-
-            <p>
-              Student information and coordination platform
-              designed to simplify academic communication
-              and digital workflows.
-            </p>
-
-
-            <div class="portfolio-project-tags">
-
-              <span>WordPress</span>
-              <span>Web</span>
-              <span>Workflow</span>
-
-            </div>
-
-
+            <div class="portfolio-project-index"><span>01 / WEB</span><small>LMS • SEO</small></div>
+            <h3>Fire &amp; Rescue Academy</h3>
+            <p>A digital training platform combining website development, online course delivery, content structure, and search optimization.</p>
+            <div class="portfolio-project-tags"><span>WordPress</span><span>Tutor LMS</span><span>SEO</span></div>
             <div class="portfolio-card-actions">
-
-              <button
-                type="button"
-                class="portfolio-text-action portfolio-quick-view-btn"
-                data-project="iskolar"
-              >
-               Project Details 
-
-                <i class="bi bi-arrow-right"></i>
+              <button type="button" class="portfolio-text-action portfolio-quick-view-btn" data-project="fire">
+                Project Details <i class="bi bi-arrow-right"></i>
               </button>
-
-
-              <a
-                href="https://dev-iskolarlink.pantheonsite.io/"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="portfolio-card-icon-link"
-                aria-label="Visit IskolarLink"
-              >
+              <a href="https://fireandrescueacademy.com/" target="_blank" rel="noopener noreferrer"
+                class="portfolio-card-icon-link" aria-label="Visit Fire and Rescue Academy">
                 <i class="bi bi-arrow-up-right"></i>
               </a>
-
             </div>
-
           </div>
-
         </article>
-
       </div>
 
-
-
-      <!-- ========================================
-           03 - CORPORATE DISASTER RESPONSE
-           ALL PROJECTS ONLY
-      ========================================= -->
-
-      <div
-        class="col-md-6 portfolio-item web all-only"
-      >
-
+      <!-- 02 - ISKOLARLINK -->
+      <div class="col-md-6 portfolio-item web">
         <article class="portfolio-v2-card">
-
-
-          <div
-            class="portfolio-v2-media portfolio-web-media"
-            data-hover-label="VISIT LIVE ↗"
-          >
-
+          <div class="portfolio-v2-media portfolio-web-media" data-hover-label="OPEN PROJECT ↗">
             <div class="project-browser-mini">
-
               <div class="project-browser-header">
-
-                <span></span>
-                <span></span>
-                <span></span>
-
-                <small>
-                  conquerorscc
-                </small>
-
+                <span></span><span></span><span></span>
+                <small>iskolarlink</small>
               </div>
-
-
-              <img
-                src="assets/img/webdesigner/companysite.png"
-                alt="Corporate Disaster Response and Training website"
-              >
-
+              <img src="assets/img/webdesigner/iskolarlink.png" alt="IskolarLink student information platform">
             </div>
-
-
-            <span class="portfolio-hover-label">
-              VISIT LIVE ↗
-            </span>
-
+            <span class="portfolio-hover-label">OPEN PROJECT ↗</span>
           </div>
-
-
-
           <div class="portfolio-v2-card-content">
-
-            <div class="portfolio-project-index">
-
-              <span>
-                03 / WEB
-              </span>
-
-              <small>
-                CORPORATE
-              </small>
-
-            </div>
-
-
-            <h3>
-              Corporate Disaster Response
-            </h3>
-
-
-            <p>
-              Corporate website for a disaster response
-              and professional training organization.
-            </p>
-
-
-            <div class="portfolio-project-tags">
-
-              <span>Web Development</span>
-              <span>Responsive</span>
-              <span>Content</span>
-
-            </div>
-
-
+            <div class="portfolio-project-index"><span>02 / WEB</span><small>PLATFORM</small></div>
+            <h3>IskolarLink</h3>
+            <p>A student information and coordination platform designed to simplify academic communication and digital workflows.</p>
+            <div class="portfolio-project-tags"><span>React</span><span>Platform</span><span>Workflow</span></div>
             <div class="portfolio-card-actions">
-
-              <button
-                type="button"
-                class="portfolio-text-action portfolio-quick-view-btn"
-                data-project="corporate"
-              >
-                Project Details
-
-                <i class="bi bi-arrow-right"></i>
+              <button type="button" class="portfolio-text-action portfolio-quick-view-btn" data-project="iskolar">
+                Project Details <i class="bi bi-arrow-right"></i>
               </button>
-
-
-              <a
-                href="https://conquerorscc.com/"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="portfolio-card-icon-link"
-                aria-label="Visit Corporate Disaster Response website"
-              >
+              <a href="preview/IskolarLink.com/IskolarLink-main/#/" target="_blank" rel="noopener noreferrer"
+                class="portfolio-card-icon-link" aria-label="Open IskolarLink">
                 <i class="bi bi-arrow-up-right"></i>
               </a>
-
             </div>
-
           </div>
-
         </article>
-
       </div>
 
+      <!-- 03 - CORPORATE DISASTER RESPONSE -->
+      <div class="col-md-6 portfolio-item web">
+        <article class="portfolio-v2-card">
+          <div class="portfolio-v2-media portfolio-web-media" data-hover-label="VISIT LIVE ↗">
+            <div class="project-browser-mini">
+              <div class="project-browser-header">
+                <span></span><span></span><span></span>
+                <small>conquerorscc.com</small>
+              </div>
+              <img src="assets/img/webdesigner/companysite.png" alt="Corporate Disaster Response and Training website">
+            </div>
+            <span class="portfolio-hover-label">VISIT LIVE ↗</span>
+          </div>
+          <div class="portfolio-v2-card-content">
+            <div class="portfolio-project-index"><span>03 / WEB</span><small>CORPORATE</small></div>
+            <h3>Corporate Disaster Response</h3>
+            <p>A corporate website for a disaster-response and professional-training organization, structured around credibility and clear services.</p>
+            <div class="portfolio-project-tags"><span>WordPress</span><span>Responsive</span><span>Content</span></div>
+            <div class="portfolio-card-actions">
+              <button type="button" class="portfolio-text-action portfolio-quick-view-btn" data-project="corporate">
+                Project Details <i class="bi bi-arrow-right"></i>
+              </button>
+              <a href="https://conquerorscc.com/" target="_blank" rel="noopener noreferrer"
+                class="portfolio-card-icon-link" aria-label="Visit Corporate Disaster Response website">
+                <i class="bi bi-arrow-up-right"></i>
+              </a>
+            </div>
+          </div>
+        </article>
+      </div>
 
+      <!-- 04 - LAKBAY BAGUIO -->
+      <div class="col-md-6 portfolio-item web">
+        <article class="portfolio-v2-card">
+          <div class="portfolio-v2-media portfolio-web-media portfolio-site-mockup preview-lakbay" data-hover-label="OPEN PROJECT ↗">
+            <div class="portfolio-site-preview">
+              <div class="site-preview-bar"><span></span><span></span><span></span><small>lakbaybaguio.com</small></div>
+              <div class="site-preview-body">
+                <div class="site-preview-kicker">BAGUIO, PLANNED YOUR WAY</div>
+                <strong>Lakbay Baguio</strong>
+                <p>Itinerary ideas, local stops, and a little room to breathe.</p>
+                <div class="site-preview-pills"><span>Explore</span><span>Build a trip</span></div>
+              </div>
+            </div>
+            <span class="portfolio-hover-label">OPEN PROJECT ↗</span>
+          </div>
+          <div class="portfolio-v2-card-content">
+            <div class="portfolio-project-index"><span>04 / WEB</span><small>TRAVEL APP</small></div>
+            <h3>Lakbay Baguio</h3>
+            <p>A Baguio itinerary experience that helps visitors discover places, shape a trip, and enjoy a calmer travel-planning flow.</p>
+            <div class="portfolio-project-tags"><span>HTML</span><span>CSS</span><span>JavaScript</span></div>
+            <div class="portfolio-card-actions">
+              <button type="button" class="portfolio-text-action portfolio-quick-view-btn" data-project="lakbay">
+                Project Details <i class="bi bi-arrow-right"></i>
+              </button>
+              <a href="preview/lakbaybaguio.com/index.html" target="_blank" rel="noopener noreferrer"
+                class="portfolio-card-icon-link" aria-label="Open Lakbay Baguio">
+                <i class="bi bi-arrow-up-right"></i>
+              </a>
+            </div>
+          </div>
+        </article>
+      </div>
 
-      <!-- ========================================
-           04 - LET PERFORMANCE
-      ========================================= -->
+      <!-- 05 - MEBS CONSTRUCTION -->
+      <div class="col-md-6 portfolio-item web">
+        <article class="portfolio-v2-card">
+          <div class="portfolio-v2-media portfolio-web-media portfolio-site-mockup preview-mebs" data-hover-label="OPEN PROJECT ↗">
+            <div class="portfolio-site-preview">
+              <div class="site-preview-bar"><span></span><span></span><span></span><small>mebsconstruction.com</small></div>
+              <div class="site-preview-body">
+                <div class="site-preview-kicker">ENGINEERED TO LAST</div>
+                <strong>MeBS Construction</strong>
+                <p>Modern homes backed by proven engineering.</p>
+                <div class="site-preview-pills"><span>Projects</span><span>Engineering</span></div>
+              </div>
+            </div>
+            <span class="portfolio-hover-label">OPEN PROJECT ↗</span>
+          </div>
+          <div class="portfolio-v2-card-content">
+            <div class="portfolio-project-index"><span>05 / WEB</span><small>CONSTRUCTION</small></div>
+            <h3>MeBS Construction</h3>
+            <p>A modern construction-company website focused on engineering credibility, project presentation, and clear client pathways.</p>
+            <div class="portfolio-project-tags"><span>HTML</span><span>CSS</span><span>UI/UX</span></div>
+            <div class="portfolio-card-actions">
+              <button type="button" class="portfolio-text-action portfolio-quick-view-btn" data-project="mebs">
+                Project Details <i class="bi bi-arrow-right"></i>
+              </button>
+              <a href="preview/mebsconstruction.com/index.html" target="_blank" rel="noopener noreferrer"
+                class="portfolio-card-icon-link" aria-label="Open MeBS Construction">
+                <i class="bi bi-arrow-up-right"></i>
+              </a>
+            </div>
+          </div>
+        </article>
+      </div>
 
-      <div
-        class="col-md-6 portfolio-item data selected-work"
-      >
+      <!-- 06 - CLOUD CHASER -->
+      <div class="col-md-6 portfolio-item web">
+        <article class="portfolio-v2-card">
+          <div class="portfolio-v2-media portfolio-web-media portfolio-site-mockup preview-cloudchaser" data-hover-label="OPEN PROJECT ↗">
+            <div class="portfolio-site-preview">
+              <div class="site-preview-bar"><span></span><span></span><span></span><small>cloudchaser.com</small></div>
+              <div class="site-preview-body">
+                <div class="site-preview-kicker">DREAM • DISCOVER • DEPART</div>
+                <strong>Cloud Chaser</strong>
+                <p>Curated Philippine and Asian journeys, planned around your pace.</p>
+                <div class="site-preview-pills"><span>Trips</span><span>Request</span></div>
+              </div>
+            </div>
+            <span class="portfolio-hover-label">OPEN PROJECT ↗</span>
+          </div>
+          <div class="portfolio-v2-card-content">
+            <div class="portfolio-project-index"><span>06 / WEB</span><small>TRAVEL</small></div>
+            <h3>Cloud Chaser</h3>
+            <p>A polished travel-agency experience for browsing curated trips, understanding itineraries, and requesting a journey.</p>
+            <div class="portfolio-project-tags"><span>HTML</span><span>CSS</span><span>JavaScript</span></div>
+            <div class="portfolio-card-actions">
+              <button type="button" class="portfolio-text-action portfolio-quick-view-btn" data-project="cloudchaser">
+                Project Details <i class="bi bi-arrow-right"></i>
+              </button>
+              <a href="preview/cloudchaser.com/trips.html" target="_blank" rel="noopener noreferrer"
+                class="portfolio-card-icon-link" aria-label="Open Cloud Chaser trips">
+                <i class="bi bi-arrow-up-right"></i>
+              </a>
+            </div>
+          </div>
+        </article>
+      </div>
 
+      <!-- 07 - LET PERFORMANCE -->
+      <div class="col-md-6 portfolio-item data">
         <article class="portfolio-v2-card portfolio-data-card">
-
-
-          <div
-            class="portfolio-v2-media portfolio-data-media"
-            data-hover-label="VIEW ANALYSIS →"
-          >
-
-            <img
-              src="assets/img/webdesigner/portfolio-item7.png"
-              alt="LET Performance Trends data analysis"
-            >
-
-
+          <div class="portfolio-v2-media portfolio-data-media" data-hover-label="VIEW ANALYSIS →">
+            <img src="assets/img/webdesigner/portfolio-item7.png" alt="LET Performance Trends data analysis">
             <div class="portfolio-data-overlay">
-
-
               <div class="portfolio-mini-chart">
-
-                <span style="--data-height:32%;"></span>
-                <span style="--data-height:47%;"></span>
-                <span style="--data-height:42%;"></span>
-                <span style="--data-height:68%;"></span>
-                <span style="--data-height:58%;"></span>
-                <span style="--data-height:83%;"></span>
-
+                <span style="--data-height:32%;"></span><span style="--data-height:47%;"></span>
+                <span style="--data-height:42%;"></span><span style="--data-height:68%;"></span>
+                <span style="--data-height:58%;"></span><span style="--data-height:83%;"></span>
               </div>
-
-
-              <small>
-                2018 → 2023
-              </small>
-
+              <small>2018 → 2023</small>
             </div>
-
-
-            <span class="portfolio-hover-label">
-              VIEW ANALYSIS →
-            </span>
-
+            <span class="portfolio-hover-label">VIEW ANALYSIS →</span>
           </div>
-
-
-
           <div class="portfolio-v2-card-content">
-
-            <div class="portfolio-project-index">
-
-              <span>
-                04 / DATA
-              </span>
-
-              <small>
-                EDUCATION ANALYTICS
-              </small>
-
-            </div>
-
-
-            <h3>
-              LET Performance Trends
-            </h3>
-
-
-            <p>
-              Exploring licensure examination performance,
-              geographic patterns, and educational trends
-              through structured data analysis.
-            </p>
-
-
-            <div class="portfolio-project-tags">
-
-              <span>Python</span>
-              <span>Analytics</span>
-              <span>Visualization</span>
-
-            </div>
-
-
+            <div class="portfolio-project-index"><span>07 / DATA</span><small>EDUCATION ANALYTICS</small></div>
+            <h3>LET Performance Trends</h3>
+            <p>Exploring licensure-examination performance, geographic patterns, and educational trends through structured data analysis.</p>
+            <div class="portfolio-project-tags"><span>Python</span><span>Analytics</span><span>Visualization</span></div>
             <div class="portfolio-card-actions">
-
-              <button
-                type="button"
-                class="portfolio-text-action portfolio-quick-view-btn"
-                data-project="let"
-              >
-                Project Details
-
-                <i class="bi bi-arrow-right"></i>
+              <button type="button" class="portfolio-text-action portfolio-quick-view-btn" data-project="let">
+                Project Details <i class="bi bi-arrow-right"></i>
               </button>
-
-
-              <a
-                href="let-performance-analysis.html"
-                class="portfolio-card-icon-link"
-                aria-label="View LET Performance Analysis"
-              >
+              <a href="let-performance-analysis.html" class="portfolio-card-icon-link" aria-label="View LET Performance Analysis">
                 <i class="bi bi-arrow-up-right"></i>
               </a>
-
             </div>
-
           </div>
-
         </article>
-
       </div>
 
-
-
-      <!-- ========================================
-           05 - SPENDING BEHAVIOR
-      ========================================= -->
-
-      <div
-        class="col-md-6 portfolio-item data selected-work"
-      >
-
+      <!-- 08 - SPENDING BEHAVIOR -->
+      <div class="col-md-6 portfolio-item data">
         <article class="portfolio-v2-card portfolio-data-card">
-
-
-          <div
-            class="portfolio-v2-media portfolio-data-media"
-            data-hover-label="VIEW ANALYSIS →"
-          >
-
-            <img
-              src="assets/img/webdesigner/portfolio-item6.png"
-              alt="Customer spending behavior analysis"
-            >
-
-
+          <div class="portfolio-v2-media portfolio-data-media" data-hover-label="VIEW ANALYSIS →">
+            <img src="assets/img/webdesigner/portfolio-item6.png" alt="Customer spending behavior analysis">
             <div class="portfolio-data-overlay">
-
-              <div class="portfolio-data-points">
-
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-
-              </div>
-
-
-              <small>
-                BEHAVIOR → SEGMENTS → FORECAST
-              </small>
-
+              <div class="portfolio-data-points"><span></span><span></span><span></span><span></span><span></span></div>
+              <small>BEHAVIOR → SEGMENTS → FORECAST</small>
             </div>
-
-
-            <span class="portfolio-hover-label">
-              VIEW ANALYSIS →
-            </span>
-
+            <span class="portfolio-hover-label">VIEW ANALYSIS →</span>
           </div>
-
-
-
           <div class="portfolio-v2-card-content">
-
-            <div class="portfolio-project-index">
-
-              <span>
-                05 / DATA
-              </span>
-
-              <small>
-                CUSTOMER BEHAVIOR
-              </small>
-
-            </div>
-
-
-            <h3>
-              Spending Behavior Analysis
-            </h3>
-
-
-            <p>
-              Customer spending exploration using segmentation,
-              association analysis, and forecasting techniques
-              to identify behavioral patterns.
-            </p>
-
-
-            <div class="portfolio-project-tags">
-
-              <span>Python</span>
-              <span>K-Means</span>
-              <span>ARIMA</span>
-
-            </div>
-
-
+            <div class="portfolio-project-index"><span>08 / DATA</span><small>CUSTOMER BEHAVIOR</small></div>
+            <h3>Spending Behavior Analysis</h3>
+            <p>Customer-spending exploration using segmentation, association analysis, and forecasting to identify useful behavioral patterns.</p>
+            <div class="portfolio-project-tags"><span>Python</span><span>K-Means</span><span>ARIMA</span></div>
             <div class="portfolio-card-actions">
-
-              <button
-                type="button"
-                class="portfolio-text-action portfolio-quick-view-btn"
-                data-project="spending"
-              >
-                Project Details
-
-                <i class="bi bi-arrow-right"></i>
+              <button type="button" class="portfolio-text-action portfolio-quick-view-btn" data-project="spending">
+                Project Details <i class="bi bi-arrow-right"></i>
               </button>
-
-
-              <a
-                href="customer-spending-analysis.html"
-                class="portfolio-card-icon-link"
-                aria-label="View Spending Behavior Analysis"
-              >
+              <a href="customer-spending-analysis.html" class="portfolio-card-icon-link" aria-label="View Spending Behavior Analysis">
                 <i class="bi bi-arrow-up-right"></i>
               </a>
-
             </div>
-
           </div>
-
         </article>
-
       </div>
 
-
-
-      <!-- ========================================
-           06 - CAMPAIGN BLOG 1
-      ========================================= -->
-
-      <div
-        class="col-md-6 portfolio-item content selected-work"
-      >
-
+      <!-- 09 - CAMPAIGN LANDING EXPERIENCE -->
+      <div class="col-md-6 portfolio-item content">
         <article class="portfolio-v2-card">
-
-
-          <div
-            class="portfolio-v2-media portfolio-content-media"
-            data-hover-label="VIEW CAMPAIGN ↗"
-          >
-
-            <img
-              src="assets/img/webdesigner/campaign-blog1.png"
-              alt="Campaign landing page project"
-            >
-
-
-            <div class="portfolio-content-overlay">
-
-              <span>
-                CAMPAIGN
-              </span>
-
-              <strong>
-                Digital Landing Experience
-              </strong>
-
-            </div>
-
-
-            <span class="portfolio-hover-label">
-              VIEW CAMPAIGN ↗
-            </span>
-
+          <div class="portfolio-v2-media portfolio-content-media" data-hover-label="VIEW CAMPAIGN ↗">
+            <img src="assets/img/webdesigner/campaign-blog1.png" alt="Campaign landing page project">
+            <div class="portfolio-content-overlay"><span>CAMPAIGN</span><strong>Digital Landing Experience</strong></div>
+            <span class="portfolio-hover-label">VIEW CAMPAIGN ↗</span>
           </div>
-
-
-
           <div class="portfolio-v2-card-content">
-
-            <div class="portfolio-project-index">
-
-              <span>
-                06 / CONTENT
-              </span>
-
-              <small>
-                CAMPAIGN
-              </small>
-
-            </div>
-
-
-            <h3>
-              Campaign Landing Experience
-            </h3>
-
-
-            <p>
-              Campaign-oriented web experience combining
-              content, layout, front-end development,
-              and conversion-focused presentation.
-            </p>
-
-
-            <div class="portfolio-project-tags">
-
-              <span>HTML</span>
-              <span>CSS</span>
-              <span>JavaScript</span>
-
-            </div>
-
-
+            <div class="portfolio-project-index"><span>09 / CONTENT</span><small>CAMPAIGN</small></div>
+            <h3>Campaign Landing Experience</h3>
+            <p>A campaign-oriented web experience combining content, front-end development, and conversion-focused presentation.</p>
+            <div class="portfolio-project-tags"><span>HTML</span><span>CSS</span><span>JavaScript</span></div>
             <div class="portfolio-card-actions">
-
-              <button
-                type="button"
-                class="portfolio-text-action portfolio-quick-view-btn"
-                data-project="campaign1"
-              >
-                Project Details
-
-                <i class="bi bi-arrow-right"></i>
+              <button type="button" class="portfolio-text-action portfolio-quick-view-btn" data-project="campaign1">
+                Project Details <i class="bi bi-arrow-right"></i>
               </button>
-
-
-              <a
-                href="http://paidmediasandbox.3jzvudtzb5-dv13xg0776gq.p.temp-site.link/luke/mood/v2-20off/v2startup.html"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="portfolio-card-icon-link"
-                aria-label="View campaign project"
-              >
+              <a href="http://paidmediasandbox.3jzvudtzb5-dv13xg0776gq.p.temp-site.link/luke/mood/v2-20off/v2startup.html"
+                target="_blank" rel="noopener noreferrer" class="portfolio-card-icon-link" aria-label="View campaign project">
                 <i class="bi bi-arrow-up-right"></i>
               </a>
-
             </div>
-
           </div>
-
         </article>
-
       </div>
 
-
-
-      <!-- ========================================
-           07 - CAMPAIGN BLOG 2
-           ALL PROJECTS ONLY
-      ========================================= -->
-
-      <div
-        class="col-md-6 portfolio-item content all-only"
-      >
-
+      <!-- 10 - INTERACTIVE CAMPAIGN BLOG -->
+      <div class="col-md-6 portfolio-item content">
         <article class="portfolio-v2-card">
-
-
-          <div
-            class="portfolio-v2-media portfolio-content-media"
-            data-hover-label="VIEW CAMPAIGN ↗"
-          >
-
-            <img
-              src="assets/img/webdesigner/campaign-blog2.png"
-              alt="Interactive campaign blog project"
-            >
-
-
-            <div class="portfolio-content-overlay">
-
-              <span>
-                CONTENT
-              </span>
-
-              <strong>
-                Interactive Campaign
-              </strong>
-
-            </div>
-
-
-            <span class="portfolio-hover-label">
-              VIEW CAMPAIGN ↗
-            </span>
-
+          <div class="portfolio-v2-media portfolio-content-media" data-hover-label="VIEW CAMPAIGN ↗">
+            <img src="assets/img/webdesigner/campaign-blog2.png" alt="Interactive campaign blog project">
+            <div class="portfolio-content-overlay"><span>CONTENT</span><strong>Interactive Campaign</strong></div>
+            <span class="portfolio-hover-label">VIEW CAMPAIGN ↗</span>
           </div>
-
-
-
           <div class="portfolio-v2-card-content">
-
-            <div class="portfolio-project-index">
-
-              <span>
-                07 / CONTENT
-              </span>
-
-              <small>
-                INTERACTIVE
-              </small>
-
-            </div>
-
-
-            <h3>
-              Interactive Campaign Blog
-            </h3>
-
-
-            <p>
-              Front-end campaign experience built
-              around interactive presentation,
-              visual storytelling, and digital engagement.
-            </p>
-
-
-            <div class="portfolio-project-tags">
-
-              <span>HTML</span>
-              <span>CSS</span>
-              <span>JavaScript</span>
-
-            </div>
-
-
+            <div class="portfolio-project-index"><span>10 / CONTENT</span><small>INTERACTIVE</small></div>
+            <h3>Interactive Campaign Blog</h3>
+            <p>A front-end campaign experience built around visual storytelling, interactive presentation, and digital engagement.</p>
+            <div class="portfolio-project-tags"><span>HTML</span><span>CSS</span><span>JavaScript</span></div>
             <div class="portfolio-card-actions">
-
-              <button
-                type="button"
-                class="portfolio-text-action portfolio-quick-view-btn"
-                data-project="campaign2"
-              >
-                Project Details
-
-                <i class="bi bi-arrow-right"></i>
+              <button type="button" class="portfolio-text-action portfolio-quick-view-btn" data-project="campaign2">
+                Project Details <i class="bi bi-arrow-right"></i>
               </button>
-
-
-              <a
-                href="https://va-0097.github.io/Mood/"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="portfolio-card-icon-link"
-                aria-label="View interactive campaign"
-              >
+              <a href="https://va-0097.github.io/Mood/" target="_blank" rel="noopener noreferrer"
+                class="portfolio-card-icon-link" aria-label="View interactive campaign">
                 <i class="bi bi-arrow-up-right"></i>
               </a>
-
             </div>
-
           </div>
-
         </article>
-
       </div>
 
-
-
-      <!-- ========================================
-           08 - CREATIVE COLLECTION
-      ========================================= -->
-
-      <div
-        class="col-12 portfolio-item creative selected-work"
-      >
-
+      <!-- 11 - CREATIVE COLLECTION -->
+      <div class="col-12 portfolio-item creative">
         <article class="portfolio-creative-collection">
-
-
           <div class="portfolio-creative-copy">
-
-            <div class="portfolio-project-index">
-
-              <span>
-                08 / CREATIVE
-              </span>
-
-              <small>
-                SELECTED VISUAL WORK
-              </small>
-
-            </div>
-
-
-            <h3>
-              Creative
-              <span>Collection</span>
-            </h3>
-
-
-            <p>
-              Selected campaign graphics, social assets,
-              promotional visuals, motion pieces,
-              and brand-aligned creative work.
-            </p>
-
-
-            <div class="portfolio-project-tags">
-
-              <span>Graphic Design</span>
-              <span>Campaigns</span>
-              <span>Social</span>
-              <span>Motion</span>
-
-            </div>
-
-
-           <button
-  type="button"
-  class="portfolio-creative-open"
-  id="openCreativeGallery"
->
-  View All Works
-
-  <i class="bi bi-images"></i>
-</button>
-
-
-
+            <div class="portfolio-project-index"><span>11 / CREATIVE</span><small>SELECTED VISUAL WORK</small></div>
+            <h3>Creative <span>Collection</span></h3>
+            <p>Selected campaign graphics, social assets, promotional visuals, motion pieces, and brand-aligned creative work.</p>
+            <div class="portfolio-project-tags"><span>Graphic Design</span><span>Campaigns</span><span>Social</span><span>Motion</span></div>
+            <button type="button" class="portfolio-creative-open" id="openCreativeGallery">
+              View All Works <i class="bi bi-images"></i>
+            </button>
           </div>
 
+          <div class="portfolio-creative-mosaic">
+            <button type="button" class="creative-mosaic-item creative-large creative-gallery-trigger"
+              data-gallery-index="0" aria-label="View Creative Work 01">
+              <img src="assets/img/webdesigner/graphic1.gif" alt="Creative Work 01"><span>VIEW</span>
+            </button>
+            <button type="button" class="creative-mosaic-item creative-gallery-trigger"
+              data-gallery-index="1" aria-label="View Creative Motion Work 02">
+              <video autoplay loop muted playsinline>
+                <source src="assets/img/webdesigner/graphic2.mp4" type="video/mp4">
+              </video><span>VIEW MOTION</span>
+            </button>
+            <button type="button" class="creative-mosaic-item creative-gallery-trigger"
+              data-gallery-index="2" aria-label="View Creative Work 03">
+              <img src="assets/img/webdesigner/graphic3.png" alt="Creative Work 03"><span>VIEW</span>
+            </button>
+            <button type="button" class="creative-mosaic-item creative-gallery-trigger"
+              data-gallery-index="3" aria-label="View Creative Work 04">
+              <img src="assets/img/webdesigner/graphic4.png" alt="Creative Work 04"><span>VIEW</span>
+            </button>
+            <button type="button" class="creative-mosaic-item creative-gallery-trigger"
+              data-gallery-index="4" aria-label="View Creative Work 05">
+              <img src="assets/img/webdesigner/graphic5.png" alt="Creative Work 05"><span>VIEW</span>
+            </button>
+          </div>
 
-
-     <!-- ========================================
-     CREATIVE MOSAIC PREVIEW
-========================================= -->
-
-<div class="portfolio-creative-mosaic">
-
-
-  <!-- WORK 01 - LARGE FEATURED -->
-
-  <button
-    type="button"
-    class="creative-mosaic-item creative-large creative-gallery-trigger"
-    data-gallery-index="0"
-    aria-label="View Creative Work 01"
-  >
-
-    <img
-      src="assets/img/webdesigner/graphic1.gif"
-      alt="Creative Work 01"
-    >
-
-    <span>
-      VIEW
-    </span>
-
-  </button>
-
-
-
-  <!-- WORK 02 - MOTION -->
-
-  <button
-    type="button"
-    class="creative-mosaic-item creative-gallery-trigger"
-    data-gallery-index="1"
-    aria-label="View Creative Motion Work 02"
-  >
-
-    <video
-      autoplay
-      loop
-      muted
-      playsinline
-    >
-
-      <source
-        src="assets/img/webdesigner/graphic2.mp4"
-        type="video/mp4"
-      >
-
-    </video>
-
-    <span>
-      VIEW MOTION
-    </span>
-
-  </button>
-
-
-
-  <!-- WORK 03 -->
-
-  <button
-    type="button"
-    class="creative-mosaic-item creative-gallery-trigger"
-    data-gallery-index="2"
-    aria-label="View Creative Work 03"
-  >
-
-    <img
-      src="assets/img/webdesigner/graphic3.png"
-      alt="Creative Work 03"
-    >
-
-    <span>
-      VIEW
-    </span>
-
-  </button>
-
-
-
-  <!-- WORK 04 -->
-
-  <button
-    type="button"
-    class="creative-mosaic-item creative-gallery-trigger"
-    data-gallery-index="3"
-    aria-label="View Creative Work 04"
-  >
-
-    <img
-      src="assets/img/webdesigner/graphic4.png"
-      alt="Creative Work 04"
-    >
-
-    <span>
-      VIEW
-    </span>
-
-  </button>
-
-
-
-  <!-- WORK 05 -->
-
-  <button
-    type="button"
-    class="creative-mosaic-item creative-gallery-trigger"
-    data-gallery-index="4"
-    aria-label="View Creative Work 05"
-  >
-
-    <img
-      src="assets/img/webdesigner/graphic5.png"
-      alt="Creative Work 05"
-    >
-
-    <span>
-      VIEW
-    </span>
-
-  </button>
-
-
-</div>
-
-<!-- ========================================
-     CREATIVE MOTION POPUP
-========================================= -->
-
-<div
-  id="creativeVideo02"
-  class="mfp-hide creative-video-popup"
->
-
-  <div class="creative-video-popup-inner">
-
-    <span>
-      02 / MOTION
-    </span>
-
-    <h3>
-      Creative Motion Work
-    </h3>
-
-    <video
-      controls
-      loop
-      playsinline
-      preload="metadata"
-    >
-
-      <source
-        src="assets/img/webdesigner/graphic2.mp4"
-        type="video/mp4"
-      >
-
-      Your browser does not support video playback.
-
-    </video>
-
-  </div>
-
-</div>
+          <div id="creativeVideo02" class="mfp-hide creative-video-popup">
+            <div class="creative-video-popup-inner">
+              <span>02 / MOTION</span>
+              <h3>Creative Motion Work</h3>
+              <video controls loop playsinline preload="metadata">
+                <source src="assets/img/webdesigner/graphic2.mp4" type="video/mp4">
+                Your browser does not support video playback.
+              </video>
+            </div>
+          </div>
         </article>
-
       </div>
-
 
     </div>
 
-
-
-    <!-- ========================================
-         FINAL PORTFOLIO CTA
-    ========================================= -->
-
     <section class="portfolio-final-cta">
-
       <div>
-
-        <span class="portfolio-v2-eyebrow">
-          HAVE SOMETHING IN MIND?
-        </span>
-
-        <h3>
-          Let's turn the idea into
-          <span>something worth showing here.</span>
-        </h3>
-
-        <p>
-          Websites, analytics, optimization,
-          creative work, or connected digital support—
-          every project starts with a problem worth solving.
-        </p>
-
+        <span class="portfolio-v2-eyebrow">HAVE SOMETHING IN MIND?</span>
+        <h3>Let's turn the idea into <span>something worth showing here.</span></h3>
+        <p>Websites, analytics, optimization, creative work, or connected digital support—every project starts with a problem worth solving.</p>
       </div>
-
-
-      <a
-        href="#contact"
-        class="portfolio-start-btn to-contact"
-      >
-        Start a Project
-
-        <i class="bi bi-arrow-right"></i>
+      <a href="#contact" class="portfolio-start-btn to-contact">
+        Start a Project <i class="bi bi-arrow-right"></i>
       </a>
-
     </section>
-
 
   </div>
 
+  <div class="portfolio-drawer-backdrop" id="portfolioDrawerBackdrop"></div>
 
-
-  <!-- ========================================
-       PROJECT DETAILS DRAWER
-  ========================================= -->
-
-  <div
-    class="portfolio-drawer-backdrop"
-    id="portfolioDrawerBackdrop"
-  ></div>
-
-
-  <aside
-  class="portfolio-project-drawer"
-  id="portfolioProjectDrawer"
-  aria-hidden="true"
-  aria-label="Project details"
->
-
-    <button
-      type="button"
-      class="portfolio-drawer-close"
-      id="portfolioDrawerClose"
-      aria-label="Close project preview"
-    >
+  <aside class="portfolio-project-drawer" id="portfolioProjectDrawer" aria-hidden="true" aria-label="Project details">
+    <button type="button" class="portfolio-drawer-close" id="portfolioDrawerClose" aria-label="Close project preview">
       <i class="bi bi-x-lg"></i>
     </button>
 
-
     <div class="portfolio-drawer-inner">
-
-
-      <span
-        class="portfolio-drawer-category"
-        id="portfolioDrawerCategory"
-      >
-        PROJECT
-      </span>
-
-
-      <h2 id="portfolioDrawerTitle">
-        Project Title
-      </h2>
-
-
-      <p
-        class="portfolio-drawer-summary"
-        id="portfolioDrawerSummary"
-      ></p>
-
-
+      <span class="portfolio-drawer-category" id="portfolioDrawerCategory">PROJECT</span>
+      <h2 id="portfolioDrawerTitle">Project Title</h2>
+      <p class="portfolio-drawer-summary" id="portfolioDrawerSummary"></p>
 
       <div class="portfolio-drawer-section">
-
-        <span>
-          MY CONTRIBUTION
-        </span>
-
-        <div
-          class="portfolio-drawer-list"
-          id="portfolioDrawerContribution"
-        ></div>
-
+        <span>MY CONTRIBUTION</span>
+        <div class="portfolio-drawer-list" id="portfolioDrawerContribution"></div>
       </div>
-
-
 
       <div class="portfolio-drawer-section">
-
-        <span>
-          TOOLS / STACK
-        </span>
-
-        <div
-          class="portfolio-drawer-tags"
-          id="portfolioDrawerStack"
-        ></div>
-
+        <span>TOOLS / STACK</span>
+        <div class="portfolio-drawer-tags" id="portfolioDrawerStack"></div>
       </div>
 
-
-
-      <div
-        class="portfolio-drawer-actions"
-        id="portfolioDrawerActions"
-      ></div>
-
-
+      <div class="portfolio-drawer-actions" id="portfolioDrawerActions"></div>
     </div>
-
   </aside>
-
 
 </section>
 
@@ -6907,16 +5966,16 @@
       <h6 class="theme-skin-title">Light &amp; Dark</h6>
       <ul class="color-scheme list-inline">
         <li class="list-inline-item">
-          <a href="javascript:void(0)" class="light-scheme"><i class="bi bi-brightness-high"></i> Light</a>
+          <a href="javascript:void(0)" class="light-scheme" role="button" aria-pressed="false"><i class="bi bi-brightness-high"></i> Light</a>
         </li>
         <li class="list-inline-item">
-          <a href="javascript:void(0)" class="dark-scheme active"><i class="bi bi-moon"></i> Dark</a>
+          <a href="javascript:void(0)" class="dark-scheme" role="button" aria-pressed="false"><i class="bi bi-moon"></i> Dark</a>
         </li>
       </ul>
 
     </div>
     <div class="pallet-button hide">
-      <a href="javascript:void(0)" class="cp-toggle"><i class="bi bi-gear"></i></a>
+      <a href="javascript:void(0)" class="cp-toggle" aria-label="Open light and dark mode settings" aria-expanded="false"><i class="bi bi-gear"></i></a>
     </div>
   </div>
 

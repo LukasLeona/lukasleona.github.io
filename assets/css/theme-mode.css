@@ -1,0 +1,556 @@
+/* =========================================================
+   PERSISTENT LIGHT / DARK THEME
+   Loaded after every section-specific stylesheet.
+========================================================= */
+
+:root,
+html[data-theme="dark"] {
+  color-scheme: dark;
+}
+
+html[data-theme="light"] {
+  color-scheme: light;
+}
+
+/* =========================================================
+   THEME SWITCHER
+========================================================= */
+
+#color-switcher .color-pallet,
+#color-switcher .pallet-button {
+  border: 1px solid rgba(255, 255, 255, .08);
+  background: rgba(42, 43, 47, .96);
+  box-shadow: 0 14px 36px rgba(0, 0, 0, .24);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+#color-switcher .theme-skin-title,
+#color-switcher .color-scheme {
+  background: transparent;
+}
+
+#color-switcher .theme-skin-title {
+  color: #a2a3a7;
+}
+
+#color-switcher .color-scheme li a {
+  color: #d7d8da;
+  background: rgba(255, 255, 255, .045);
+  font-size: 13px;
+}
+
+#color-switcher .pallet-button i {
+  color: #d5d6d8;
+}
+
+/* =========================================================
+   LIGHT THEME: GLOBAL SHELL
+========================================================= */
+
+html[data-theme="light"] body,
+html[data-theme="light"] .ajax-page-content {
+  background: #e9ebf0 !important;
+  color: #24262b !important;
+}
+
+html[data-theme="light"] .left-side,
+html[data-theme="light"] .right-side,
+html[data-theme="light"] #main > section {
+  background: #ffffff !important;
+  color: #24262b !important;
+  box-shadow: 0 18px 55px rgba(36, 39, 48, .07);
+}
+
+html[data-theme="light"] .menu li a,
+html[data-theme="light"] .menu li a span,
+html[data-theme="light"] .social a {
+  color: #777b84 !important;
+}
+
+html[data-theme="light"] .menu li a:hover,
+html[data-theme="light"] .menu li a.active,
+html[data-theme="light"] .menu li a:hover span,
+html[data-theme="light"] .menu li a.active span,
+html[data-theme="light"] .menu li a:hover i,
+html[data-theme="light"] .menu li a.active i,
+html[data-theme="light"] #date b {
+  color: #d99d09 !important;
+}
+
+html[data-theme="light"] .menu-toggle,
+html[data-theme="light"] .next-prev-page button,
+html[data-theme="light"] .mobile-blog-nav.blog-next-prev-page a {
+  background: rgba(255, 255, 255, .94) !important;
+  color: #bd8705 !important;
+  border: 1px solid rgba(204, 146, 7, .3) !important;
+  box-shadow: 0 9px 25px rgba(36, 39, 48, .1);
+}
+
+html[data-theme="light"] .menu-toggle span {
+  background: #bd8705 !important;
+}
+
+html[data-theme="light"] .area .circles li,
+html[data-theme="light"] .circles li {
+  border-color: rgba(213, 157, 20, .18) !important;
+  background: rgba(213, 157, 20, .025) !important;
+  box-shadow: 0 0 18px rgba(213, 157, 20, .05);
+}
+
+html[data-theme="light"] .mCSB_scrollTools .mCSB_draggerRail {
+  background: rgba(31, 34, 41, .16) !important;
+}
+
+html[data-theme="light"] .mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar {
+  background: rgba(213, 157, 20, .82) !important;
+}
+
+/* =========================================================
+   LIGHT THEME: HERO
+========================================================= */
+
+html[data-theme="light"] #hero .hero-main-title,
+html[data-theme="light"] #hero .hero-title-line {
+  color: #1f2228 !important;
+}
+
+html[data-theme="light"] #hero .hero-name,
+html[data-theme="light"] #hero .hero-role-line,
+html[data-theme="light"] #hero .hero-work-btn,
+html[data-theme="light"] #hero .hero-work-arrow {
+  color: #cc9307 !important;
+}
+
+html[data-theme="light"] #hero .hero-work-btn {
+  border-color: #cc9307 !important;
+  background: rgba(204, 147, 7, .035) !important;
+}
+
+html[data-theme="light"] #hero .hero-work-btn:hover {
+  background: rgba(204, 147, 7, .1) !important;
+  box-shadow: 0 12px 28px rgba(183, 128, 0, .13);
+}
+
+html[data-theme="light"] #hero .hero-image img {
+  border-color: #fff;
+  box-shadow: 0 15px 34px rgba(39, 42, 49, .15);
+}
+
+/* =========================================================
+   LIGHT THEME: ABOUT
+========================================================= */
+
+html[data-theme="light"] #about.about-v2 {
+  --about-bg: #ffffff;
+  --about-card: #f5f6f8;
+  --about-card-soft: #f0f2f5;
+  --about-border: rgba(31, 35, 43, .09);
+  --about-muted: #686d76;
+  --about-text: #424750;
+}
+
+html[data-theme="light"] #about h1,
+html[data-theme="light"] #about h2,
+html[data-theme="light"] #about h3,
+html[data-theme="light"] #about h4,
+html[data-theme="light"] #about h5,
+html[data-theme="light"] #about h6 {
+  color: #22252b;
+}
+
+html[data-theme="light"] #about .about-v2-description,
+html[data-theme="light"] #about .about-v2-lead,
+html[data-theme="light"] #about .about-v2-section-heading p,
+html[data-theme="light"] #about .about-v2-why-intro p,
+html[data-theme="light"] #about .about-tool-category-label p,
+html[data-theme="light"] #about .about-process-step p,
+html[data-theme="light"] #about .about-v2-capability-card p,
+html[data-theme="light"] #about .about-v2-final p {
+  color: #626771 !important;
+}
+
+html[data-theme="light"] #about .about-v2-floating-card,
+html[data-theme="light"] #about .about-v2-metric,
+html[data-theme="light"] #about .about-tool-card,
+html[data-theme="light"] #about .about-process-step,
+html[data-theme="light"] #about .about-v2-capability-card,
+html[data-theme="light"] #about .about-v2-why,
+html[data-theme="light"] #about .about-v2-final {
+  background: #f5f6f8 !important;
+  border-color: rgba(31, 35, 43, .09) !important;
+  box-shadow: 0 12px 28px rgba(39, 42, 49, .05);
+}
+
+html[data-theme="light"] #about .about-v2-image-overlay {
+  background: linear-gradient(to top, rgba(25, 28, 33, .52), transparent 65%);
+}
+
+/* =========================================================
+   LIGHT THEME: RESUME
+========================================================= */
+
+html[data-theme="light"] #resume.resume-v2 {
+  --resume-card: #f5f6f8;
+  --resume-card-soft: #f0f2f5;
+  --resume-border: rgba(31, 35, 43, .09);
+  --resume-muted: #686d76;
+  --resume-text: #424750;
+}
+
+html[data-theme="light"] #resume h1,
+html[data-theme="light"] #resume h2,
+html[data-theme="light"] #resume h3,
+html[data-theme="light"] #resume h4,
+html[data-theme="light"] #resume h5,
+html[data-theme="light"] #resume h6 {
+  color: #22252b;
+}
+
+html[data-theme="light"] #resume .resume-v2-intro > p,
+html[data-theme="light"] #resume .resume-section-heading > p,
+html[data-theme="light"] #resume .resume-service-copy > p,
+html[data-theme="light"] #resume .career-learning li,
+html[data-theme="light"] #resume .experience-card p,
+html[data-theme="light"] #resume .education-main p {
+  color: #626771 !important;
+}
+
+html[data-theme="light"] #resume .resume-capability-tab,
+html[data-theme="light"] #resume .resume-service-lab,
+html[data-theme="light"] #resume .resume-final-cta,
+html[data-theme="light"] #resume .experience-card,
+html[data-theme="light"] #resume .education-card,
+html[data-theme="light"] #resume .career-learning,
+html[data-theme="light"] #resume .resume-interaction-guide {
+  background: #f5f6f8 !important;
+  border-color: rgba(31, 35, 43, .1) !important;
+  color: #5e646e;
+}
+
+html[data-theme="light"] #resume .resume-capability-tab:hover,
+html[data-theme="light"] #resume .resume-capability-tab:focus-visible,
+html[data-theme="light"] #resume .resume-capability-tab.active {
+  background: rgba(213, 157, 20, .095) !important;
+  border-color: rgba(193, 137, 3, .45) !important;
+  color: #b77f00;
+  box-shadow: 0 12px 25px rgba(39, 42, 49, .08);
+}
+
+html[data-theme="light"] #resume .resume-browser,
+html[data-theme="light"] #resume .resume-design-compare,
+html[data-theme="light"] #resume .resume-seo-demo,
+html[data-theme="light"] #resume .resume-data-demo,
+html[data-theme="light"] #resume .resume-automation-demo,
+html[data-theme="light"] #resume .resume-support-demo {
+  border-color: rgba(31, 35, 43, .12) !important;
+  box-shadow: 0 18px 38px rgba(39, 42, 49, .09);
+}
+
+/* =========================================================
+   LIGHT THEME: PORTFOLIO
+========================================================= */
+
+html[data-theme="light"] #portfolio.portfolio-v2 {
+  --portfolio-card: #f5f6f8;
+  --portfolio-card-soft: #f0f2f5;
+  --portfolio-dark: #e9ebef;
+  --portfolio-border: rgba(31, 35, 43, .09);
+  --portfolio-muted: #666b74;
+}
+
+html[data-theme="light"] #portfolio h1,
+html[data-theme="light"] #portfolio h2,
+html[data-theme="light"] #portfolio h3,
+html[data-theme="light"] #portfolio h4,
+html[data-theme="light"] #portfolio h5,
+html[data-theme="light"] #portfolio h6 {
+  color: #22252b;
+}
+
+html[data-theme="light"] #portfolio .portfolio-toolbar,
+html[data-theme="light"] #portfolio .portfolio-v2-card,
+html[data-theme="light"] #portfolio .portfolio-creative-collection,
+html[data-theme="light"] #portfolio .portfolio-final-cta {
+  background-color: #f5f6f8 !important;
+  border-color: rgba(31, 35, 43, .09) !important;
+  box-shadow: 0 13px 29px rgba(39, 42, 49, .045);
+}
+
+html[data-theme="light"] #portfolio .portfolio-v2-card:hover {
+  border-color: rgba(193, 137, 3, .3) !important;
+  box-shadow: 0 19px 39px rgba(39, 42, 49, .09);
+}
+
+html[data-theme="light"] #portfolio .portfolio-v2-intro > p,
+html[data-theme="light"] #portfolio .portfolio-v2-card-content > p,
+html[data-theme="light"] #portfolio .portfolio-creative-copy > p,
+html[data-theme="light"] #portfolio .portfolio-final-cta p {
+  color: #666b74 !important;
+}
+
+html[data-theme="light"] #portfolio .portfolio-project-tags span,
+html[data-theme="light"] #portfolio .portfolio-v2-filter a,
+html[data-theme="light"] #portfolio .portfolio-toolbar-label {
+  color: #676c75;
+}
+
+html[data-theme="light"] #portfolio .portfolio-v2-filter a:hover,
+html[data-theme="light"] #portfolio .portfolio-v2-filter a.active {
+  color: #b77f00;
+  background: rgba(213, 157, 20, .09);
+  border-color: rgba(193, 137, 3, .34);
+}
+
+/* The browser/card previews intentionally remain dark for contrast. */
+
+/* =========================================================
+   LIGHT THEME: BLOG
+========================================================= */
+
+html[data-theme="light"] #blog.blog-v2 {
+  --blog-card: #f5f6f8;
+  --blog-card-soft: #f0f2f5;
+  --blog-dark: #e9ebef;
+  --blog-border: rgba(31, 35, 43, .09);
+  --blog-muted: #686d76;
+}
+
+html[data-theme="light"] #blog h1,
+html[data-theme="light"] #blog h2,
+html[data-theme="light"] #blog h3,
+html[data-theme="light"] #blog h4,
+html[data-theme="light"] #blog h5,
+html[data-theme="light"] #blog h6 {
+  color: #22252b;
+}
+
+html[data-theme="light"] #blog .blog-v2-filter-wrap,
+html[data-theme="light"] #blog .blog-featured-article,
+html[data-theme="light"] #blog .blog-v2-card,
+html[data-theme="light"] #blog .blog-thinking-section,
+html[data-theme="light"] #blog .blog-interest-section,
+html[data-theme="light"] #blog .blog-v2-final {
+  background: #f5f6f8 !important;
+  border-color: rgba(31, 35, 43, .09) !important;
+  box-shadow: 0 13px 29px rgba(39, 42, 49, .045);
+}
+
+html[data-theme="light"] #blog .blog-v2-intro-side > p,
+html[data-theme="light"] #blog .blog-featured-content > p,
+html[data-theme="light"] #blog .blog-v2-card-content > p,
+html[data-theme="light"] #blog .blog-thinking-intro p,
+html[data-theme="light"] #blog .blog-v2-final p {
+  color: #666b74 !important;
+}
+
+html[data-theme="light"] #blog .blog-filter-btn {
+  color: #696e77;
+}
+
+html[data-theme="light"] #blog .blog-filter-btn:hover,
+html[data-theme="light"] #blog .blog-filter-btn.active {
+  color: #b77f00;
+  background: rgba(213, 157, 20, .09);
+  border-color: rgba(193, 137, 3, .34);
+}
+
+/* =========================================================
+   LIGHT THEME: CONTACT
+========================================================= */
+
+html[data-theme="light"] #contact.contact-v2 {
+  --contact-card: #f5f6f8;
+  --contact-card-soft: #f0f2f5;
+  --contact-border: rgba(31, 35, 43, .09);
+  --contact-border-gold: rgba(193, 137, 3, .35);
+  --contact-muted: #686d76;
+  --contact-text: #424750;
+}
+
+html[data-theme="light"] #contact h1,
+html[data-theme="light"] #contact h2,
+html[data-theme="light"] #contact h3,
+html[data-theme="light"] #contact h4,
+html[data-theme="light"] #contact h5,
+html[data-theme="light"] #contact h6,
+html[data-theme="light"] #contact .info-text h5 {
+  color: #22252b !important;
+}
+
+html[data-theme="light"] #contact .contact-v2-info-card,
+html[data-theme="light"] #contact .contact-v2-form-card {
+  background: #f5f6f8 !important;
+  border-color: rgba(31, 35, 43, .09) !important;
+  box-shadow: 0 13px 29px rgba(39, 42, 49, .045);
+}
+
+html[data-theme="light"] #contact .info-text small,
+html[data-theme="light"] #contact .contact-v2-form-card p {
+  color: #666b74 !important;
+}
+
+html[data-theme="light"] #contact .form-control,
+html[data-theme="light"] #contact input,
+html[data-theme="light"] #contact textarea {
+  background: #ffffff !important;
+  border-color: rgba(31, 35, 43, .14) !important;
+  color: #272a30 !important;
+}
+
+html[data-theme="light"] #contact .form-control::placeholder,
+html[data-theme="light"] #contact input::placeholder,
+html[data-theme="light"] #contact textarea::placeholder {
+  color: #8a8f98 !important;
+}
+
+/* =========================================================
+   LIGHT THEME: CHATBOT
+========================================================= */
+
+html[data-theme="light"] .robot-head {
+  background: #f7f8fa;
+}
+
+html[data-theme="light"] .robot-mouth {
+  background: #656a73;
+}
+
+html[data-theme="light"] .chatbot-online-dot {
+  border-color: #ffffff;
+}
+
+html[data-theme="light"] .chatbot-teaser,
+html[data-theme="light"] .chatbot-panel {
+  background: rgba(255, 255, 255, .98);
+  color: #282b31;
+  box-shadow: 0 22px 58px rgba(39, 42, 49, .18);
+}
+
+html[data-theme="light"] .chatbot-teaser::after {
+  background: #ffffff;
+}
+
+html[data-theme="light"] .chatbot-header,
+html[data-theme="light"] .chatbot-input-area {
+  background: #f4f5f7;
+  border-color: rgba(31, 35, 43, .09);
+}
+
+html[data-theme="light"] .chatbot-header-profile strong {
+  color: #24272d;
+}
+
+html[data-theme="light"] .chatbot-header-profile span,
+html[data-theme="light"] .chatbot-quick-actions > span {
+  color: #747983;
+}
+
+html[data-theme="light"] .chat-message-bubble {
+  background: #f0f2f5;
+  color: #343840;
+}
+
+html[data-theme="light"] .user-message .chat-message-bubble {
+  background: rgba(213, 157, 20, .12);
+  color: #2d3036;
+  border-color: rgba(193, 137, 3, .28);
+}
+
+html[data-theme="light"] .chat-message-avatar {
+  background: rgba(213, 157, 20, .08);
+}
+
+html[data-theme="light"] .chatbot-input-area input {
+  background: #ffffff !important;
+  color: #282b31 !important;
+  border-color: rgba(31, 35, 43, .13) !important;
+}
+
+html[data-theme="light"] .chatbot-input-area input::placeholder {
+  color: #8a8f98;
+}
+
+/* =========================================================
+   LIGHT THEME: PROJECT DRAWER
+========================================================= */
+
+html[data-theme="light"] .portfolio-project-drawer {
+  background: #ffffff;
+  color: #2a2d33;
+  border-left-color: rgba(31, 35, 43, .11);
+}
+
+html[data-theme="light"] .portfolio-project-drawer h2 {
+  color: #22252b;
+}
+
+html[data-theme="light"] .portfolio-drawer-summary,
+html[data-theme="light"] .portfolio-drawer-list div {
+  color: #646a74;
+}
+
+html[data-theme="light"] .portfolio-drawer-tags span {
+  color: #4d525b;
+  background: rgba(213, 157, 20, .075);
+}
+
+/* =========================================================
+   LIGHT THEME: THEME CONTROL ITSELF
+========================================================= */
+
+html[data-theme="light"] #color-switcher .color-pallet,
+html[data-theme="light"] #color-switcher .pallet-button {
+  background: rgba(255, 255, 255, .97);
+  border-color: rgba(31, 35, 43, .09);
+  box-shadow: 0 14px 36px rgba(39, 42, 49, .13);
+}
+
+html[data-theme="light"] #color-switcher .theme-skin-title {
+  color: #717680;
+}
+
+html[data-theme="light"] #color-switcher .color-scheme li a {
+  background: #f0f2f5;
+  color: #30343b;
+}
+
+html[data-theme="light"] #color-switcher .pallet-button i {
+  color: #525761;
+}
+
+/* =========================================================
+   TRANSITION AND REDUCED MOTION
+========================================================= */
+
+body,
+.left-side,
+.right-side,
+#main > section,
+.portfolio-v2-card,
+.resume-capability-tab,
+.contact-v2-info-card,
+.contact-v2-form-card,
+.blog-v2-card,
+.chatbot-panel,
+.chatbot-teaser {
+  transition-property: background-color, color, border-color, box-shadow, opacity, transform;
+  transition-duration: .25s;
+  transition-timing-function: ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body,
+  .left-side,
+  .right-side,
+  #main > section,
+  .portfolio-v2-card,
+  .resume-capability-tab,
+  .contact-v2-info-card,
+  .contact-v2-form-card,
+  .blog-v2-card,
+  .chatbot-panel,
+  .chatbot-teaser {
+    transition-duration: .01ms !important;
+  }
+}
