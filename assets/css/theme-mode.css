@@ -554,3 +554,344 @@ body,
     transition-duration: .01ms !important;
   }
 }
+
+
+/* =========================================================
+   2026 THEME CONTROL MOTION + AUTO-CLOSE STATES
+========================================================= */
+#color-switcher .color-pallet {
+  transform-origin: top right;
+  transition: opacity .28s ease, transform .32s cubic-bezier(.2,.8,.2,1), visibility .28s ease !important;
+}
+
+#color-switcher .color-pallet:not(.show) {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+  transform: translateY(-8px) scale(.94) !important;
+}
+
+#color-switcher .color-pallet.show {
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
+  transform: translateY(0) scale(1) !important;
+  animation: themePanelPop .38s cubic-bezier(.2,.8,.2,1) both;
+}
+
+#color-switcher .color-pallet.theme-panel-closing {
+  animation: themePanelFade .3s ease both !important;
+}
+
+@keyframes themePanelPop { from{opacity:0;transform:translateY(-10px) scale(.9)} to{opacity:1;transform:none} }
+@keyframes themePanelFade { from{opacity:1;transform:none} to{opacity:0;transform:translateY(-7px) scale(.94)} }
+
+#color-switcher .cp-toggle {
+  position:relative;
+  overflow:hidden;
+  transition:transform .3s ease, border-color .3s ease, box-shadow .3s ease !important;
+}
+
+#color-switcher .cp-toggle::after {
+  content:"";
+  position:absolute;
+  inset:-45%;
+  background:conic-gradient(from 90deg,transparent,rgba(235,176,32,.28),transparent 45%);
+  animation:themeGearGlow 4s linear infinite;
+}
+
+#color-switcher .cp-toggle i { position:relative;z-index:1;transition:transform .45s cubic-bezier(.2,.8,.2,1); }
+#color-switcher .cp-toggle:hover { transform:translateY(-2px);border-color:rgba(235,176,32,.55)!important;box-shadow:0 10px 24px rgba(0,0,0,.16); }
+#color-switcher .cp-toggle:hover i { transform:rotate(90deg); }
+@keyframes themeGearGlow{to{transform:rotate(360deg)}}
+
+#color-switcher .color-scheme a {
+  position:relative;
+  overflow:hidden;
+  transition:transform .24s ease, background .24s ease, color .24s ease, border-color .24s ease, opacity .24s ease !important;
+}
+#color-switcher .color-scheme a::before { content:"";position:absolute;inset:0;background:linear-gradient(120deg,transparent,rgba(255,255,255,.12),transparent);transform:translateX(-120%);transition:transform .45s ease; }
+#color-switcher .color-scheme a:hover::before { transform:translateX(120%); }
+#color-switcher .color-scheme a:hover { transform:translateY(-2px) scale(1.02); }
+#color-switcher .color-scheme a.active { box-shadow:0 0 0 3px rgba(235,176,32,.08); }
+#color-switcher .color-scheme a.active i { animation:themeChoicePulse 1.8s ease-in-out infinite; }
+@keyframes themeChoicePulse{0%,100%{transform:scale(1)}50%{transform:scale(1.16)}}
+
+html.theme-is-changing body::after {
+  content:"";
+  position:fixed;
+  inset:0;
+  z-index:9999;
+  pointer-events:none;
+  background:rgba(235,176,32,.035);
+  animation:themeWash .5s ease both;
+}
+@keyframes themeWash{0%{opacity:0}35%{opacity:1}100%{opacity:0}}
+
+html[data-theme="light"] .mobile-menu-drawer-header strong,
+html[data-theme="light"] .left-side h1 { color:#22242a!important; }
+html[data-theme="light"] .left-side .menu .list-group-item a span { color:#575a62!important; }
+html[data-theme="light"] .left-side .mobile-menu-drawer-header,
+html[data-theme="light"] .left-side .menu-content-align,
+html[data-theme="light"] .left-side .menu-footer { border-color:rgba(0,0,0,.08)!important; }
+
+/* Light-theme support for the live resume dashboard */
+html[data-theme="light"] #resume .resume-live-dashboard,
+html[data-theme="light"] #resume .resume-dashboard-metric,
+html[data-theme="light"] #resume .resume-dashboard-chart-card,
+html[data-theme="light"] #resume .resume-dashboard-bars-card {
+  background-color: #f5f6f8 !important;
+  border-color: rgba(31, 35, 43, .1) !important;
+  box-shadow: 0 12px 28px rgba(39, 42, 49, .045);
+}
+
+html[data-theme="light"] #resume .resume-dashboard-metric strong,
+html[data-theme="light"] #resume .resume-chart-heading strong,
+html[data-theme="light"] #resume .resume-dashboard-bar b {
+  color: #2b2e34 !important;
+}
+
+html[data-theme="light"] #resume .resume-dashboard-topbar p,
+html[data-theme="light"] #resume .resume-dashboard-metric small,
+html[data-theme="light"] #resume .resume-chart-heading small {
+  color: #676c75 !important;
+}
+
+html[data-theme="light"] #resume .resume-dashboard-view-switch {
+  background: rgba(31, 35, 43, .035);
+  border-color: rgba(31, 35, 43, .09);
+}
+
+html[data-theme="light"] #resume .resume-chart-grid-lines line {
+  stroke: rgba(31, 35, 43, .08);
+}
+
+
+/* =========================================================
+   2026 ANIMATED SUN / MOON SWITCH
+========================================================= */
+
+#color-switcher .color-pallet {
+  min-width: 148px;
+  padding: 13px 14px 14px;
+}
+
+#color-switcher .theme-skin-title {
+  margin: 0 0 10px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+}
+
+#color-switcher .theme-mode-control {
+  display: flex;
+  justify-content: center;
+}
+
+#color-switcher .theme-mode-switch {
+  width: 116px;
+  height: 50px;
+  display: block;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+#color-switcher .theme-mode-track {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: block;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: inherit;
+  background:
+    radial-gradient(circle at 78% 24%, rgba(255,255,255,.13) 0 1px, transparent 2px),
+    radial-gradient(circle at 67% 66%, rgba(255,255,255,.1) 0 1px, transparent 2px),
+    linear-gradient(135deg, #15161a, #24262b);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.05),
+    0 10px 24px rgba(0,0,0,.2);
+  transition: background .45s ease, border-color .45s ease, box-shadow .45s ease;
+}
+
+#color-switcher .theme-mode-thumb {
+  position: absolute;
+  left: 5px;
+  top: 5px;
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: #f8f8fa;
+  color: #18191d;
+  box-shadow: 0 7px 17px rgba(0,0,0,.28);
+  transform: translateX(66px);
+  transition:
+    transform .52s cubic-bezier(.2,.9,.2,1.12),
+    background .35s ease,
+    color .35s ease,
+    box-shadow .35s ease;
+  z-index: 3;
+}
+
+#color-switcher .theme-mode-thumb i {
+  position: absolute;
+  font-size: 18px;
+  transition: opacity .28s ease, transform .5s ease;
+}
+
+#color-switcher .theme-thumb-sun {
+  opacity: 0;
+  transform: rotate(-90deg) scale(.55);
+}
+
+#color-switcher .theme-thumb-moon {
+  opacity: 1;
+  transform: rotate(0) scale(1);
+}
+
+#color-switcher .theme-mode-ambient {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  display: grid;
+  place-items: center;
+  font-size: 14px;
+  opacity: .42;
+  transition: opacity .35s ease, transform .45s ease;
+}
+
+#color-switcher .theme-mode-ambient-sun { left: 17px; color: #f3bb2d; }
+#color-switcher .theme-mode-ambient-moon { right: 17px; color: #b8c9ff; }
+
+#color-switcher .theme-mode-switch.is-light .theme-mode-track {
+  border-color: rgba(218,164,29,.28);
+  background:
+    radial-gradient(circle at 74% 22%, rgba(255,255,255,.9) 0 2px, transparent 3px),
+    linear-gradient(135deg, #dce9ff, #fff2bc);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.8),
+    0 10px 25px rgba(176,130,15,.14);
+}
+
+#color-switcher .theme-mode-switch.is-light .theme-mode-thumb {
+  transform: translateX(0);
+  background: #fff;
+  color: #d59500;
+  box-shadow: 0 7px 18px rgba(158,113,0,.18);
+}
+
+#color-switcher .theme-mode-switch.is-light .theme-thumb-sun {
+  opacity: 1;
+  transform: rotate(0) scale(1);
+  animation: themeSunBreathe 2.8s ease-in-out infinite;
+}
+
+#color-switcher .theme-mode-switch.is-light .theme-thumb-moon {
+  opacity: 0;
+  transform: rotate(90deg) scale(.55);
+}
+
+#color-switcher .theme-mode-switch.is-dark .theme-mode-ambient-moon,
+#color-switcher .theme-mode-switch.is-light .theme-mode-ambient-sun {
+  opacity: .18;
+}
+
+#color-switcher .theme-mode-switch:hover .theme-mode-thumb {
+  box-shadow: 0 9px 22px rgba(0,0,0,.34);
+}
+
+#color-switcher .theme-mode-switch:focus-visible {
+  outline: 2px solid #ebb020 !important;
+  outline-offset: 4px;
+}
+
+#color-switcher .color-pallet.theme-panel-closing {
+  animation: themePanelClose .36s ease both;
+}
+
+@keyframes themeSunBreathe {
+  0%,100% { transform: rotate(0) scale(1); }
+  50% { transform: rotate(18deg) scale(1.08); }
+}
+
+@keyframes themePanelClose {
+  from { opacity: 1; transform: translateY(0) scale(1); }
+  to { opacity: 0; transform: translateY(-8px) scale(.96); }
+}
+
+html[data-theme="light"] #color-switcher .color-pallet,
+html[data-theme="light"] #color-switcher .pallet-button {
+  border-color: rgba(31,35,43,.1);
+  background: rgba(255,255,255,.96);
+  box-shadow: 0 14px 36px rgba(42,45,53,.14);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #color-switcher .theme-mode-switch *,
+  #color-switcher .color-pallet.theme-panel-closing {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* =========================================================
+   LIGHT THEME SUPPORT — DATA-ONLY DASHBOARD
+========================================================= */
+html[data-theme="light"] #resume .resume-data-dashboard {
+  background:
+    radial-gradient(circle at 85% 0%, rgba(79,112,230,.1), transparent 30%),
+    #f4f6f9 !important;
+  border-color: rgba(59,154,196,.2) !important;
+}
+
+html[data-theme="light"] #resume .resume-data-dashboard-heading > div > strong,
+html[data-theme="light"] #resume .data-dashboard-card-heading small,
+html[data-theme="light"] #resume .data-dashboard-insight-copy > p,
+html[data-theme="light"] #resume .scatter-legend,
+html[data-theme="light"] #resume .data-dashboard-axis {
+  color: #69717d !important;
+}
+
+html[data-theme="light"] #resume .resume-data-dashboard .data-demo-metrics article,
+html[data-theme="light"] #resume .data-dashboard-card {
+  border-color: rgba(31,35,43,.09) !important;
+  background: rgba(255,255,255,.78) !important;
+  box-shadow: 0 10px 26px rgba(39,42,49,.045);
+}
+
+html[data-theme="light"] #resume .resume-data-dashboard .data-demo-metrics strong,
+html[data-theme="light"] #resume .data-dashboard-card-heading strong,
+html[data-theme="light"] #resume .data-percentage-ring strong,
+html[data-theme="light"] #resume .data-dashboard-insight-copy > strong {
+  color: #262a31 !important;
+}
+
+html[data-theme="light"] #resume .data-scatter-plot {
+  background:
+    linear-gradient(rgba(31,35,43,.055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(31,35,43,.055) 1px, transparent 1px),
+    #f8fafc !important;
+  background-size: 25% 25% !important;
+}
+
+html[data-theme="light"] #resume .data-dashboard-grid-lines line {
+  stroke: rgba(31,35,43,.09) !important;
+}
+
+html[data-theme="light"] #resume .data-percentage-ring::before {
+  background: #ffffff !important;
+}
+
+html[data-theme="light"] #resume .resume-data-dashboard .data-chart-bars {
+  background:
+    linear-gradient(rgba(31,35,43,.055) 1px, transparent 1px),
+    #f8fafc !important;
+  background-size: 100% 25% !important;
+}

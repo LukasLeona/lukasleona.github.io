@@ -235,7 +235,15 @@
 
 
   <!--  Left Side Start  -->
-  <div class="left-side  nav-close">
+  <div class="left-side nav-close" id="mobileMenuDrawer" aria-hidden="true">
+    <div class="mobile-menu-drawer-header d-lg-none">
+      <div>
+        <span>PORTFOLIO MENU</span>
+      </div>
+      <button type="button" class="mobile-menu-close" id="mobileMenuClose" aria-label="Close mobile navigation">
+        <i class="bi bi-x-lg"></i>
+      </button>
+    </div>
     <div class="menu-content-align">
       <div class="left-side-image">
         <img src="assets/img/webdesigner/profile-img.png" alt="/">
@@ -294,7 +302,7 @@
         </li>
       </ul>
       <div class="menu-footer">
-        <a class="download-cv primary-button mt-3 mb-4 d-lg-none" href="javascript:void(0);">Download CV</a>
+        <a class="download-cv primary-button mt-3 mb-4 d-lg-none" href="https://drive.google.com/file/d/1S9-G_qkcsKzORcCjKaqnArnIk833Lfn7/view?usp=sharing" target="_blank" rel="noopener noreferrer">Download CV</a>
         <div class="social d-lg-none d-block">
           <a href="https://t.me/pyrexu" target="_blank" rel="noopener noreferrer" class="d-inline-block">
             <i class="bi bi-telegram"></i>
@@ -1543,17 +1551,23 @@
 
 
           <div class="about-tool-card">
+            <iconify-icon icon="simple-icons:anthropic" class="about-tool-logo"></iconify-icon>
+            <span>Claude AI</span>
+          </div>
 
-            <div class="about-tool-custom">
+          <div class="about-tool-card">
+            <div class="about-tool-custom about-tool-custom-heart">♥</div>
+            <span>Lovable.dev</span>
+          </div>
 
-              AI
+          <div class="about-tool-card">
+            <div class="about-tool-custom about-tool-custom-video">V3</div>
+            <span>Veo 3</span>
+          </div>
 
-            </div>
-
-            <span>
-              AI Tools
-            </span>
-
+          <div class="about-tool-card">
+            <div class="about-tool-custom">AI</div>
+            <span>AI Workflow</span>
           </div>
 
 
@@ -2206,8 +2220,6 @@
 
       </div>
 
-
-
       <!-- ========================================
            INTERACTIVE SERVICE LAB
       ========================================= -->
@@ -2820,100 +2832,144 @@
 
 
 
-          <div class="resume-data-demo">
+          <div class="resume-data-demo resume-data-dashboard" id="resumeDataDashboard" aria-live="polite">
 
-            <div class="resume-demo-label">
-
-              <span>INTERACTIVE DASHBOARD</span>
-
-              <strong>
-                Change the view
-              </strong>
-
+            <div class="resume-demo-label resume-data-dashboard-heading">
+              <div>
+                <span>INTERACTIVE DATA DASHBOARD</span>
+                <strong id="dataDashboardContext">Sales performance • monthly signal</strong>
+              </div>
+              <small>Choose a view to change every visual</small>
             </div>
 
-
-            <div class="data-demo-tabs">
-
-              <button
-                type="button"
-                class="data-demo-btn active"
-                data-chart-view="sales"
-              >
-                Sales
+            <div class="data-demo-tabs" role="group" aria-label="Choose dashboard dataset">
+              <button type="button" class="data-demo-btn active" data-chart-view="sales" aria-pressed="true">
+                <i class="bi bi-graph-up-arrow"></i> Sales
               </button>
-
-              <button
-                type="button"
-                class="data-demo-btn"
-                data-chart-view="customers"
-              >
-                Customers
+              <button type="button" class="data-demo-btn" data-chart-view="customers" aria-pressed="false">
+                <i class="bi bi-people"></i> Customers
               </button>
-
-              <button
-                type="button"
-                class="data-demo-btn"
-                data-chart-view="regions"
-              >
-                Regions
+              <button type="button" class="data-demo-btn" data-chart-view="regions" aria-pressed="false">
+                <i class="bi bi-geo-alt"></i> Regions
               </button>
-
             </div>
 
+            <div class="data-dashboard-shell">
 
-            <div class="data-demo-metrics">
-
-              <div>
-                <span id="demoMetricOneLabel">
-                  Revenue
-                </span>
-
-                <strong id="demoMetricOne">
-                  ₱482K
-                </strong>
+              <div class="data-demo-metrics">
+                <article>
+                  <span id="demoMetricOneLabel">Revenue</span>
+                  <strong id="demoMetricOne">₱482K</strong>
+                  <small id="demoMetricOneTrend" class="metric-trend is-positive">+18.4%</small>
+                </article>
+                <article>
+                  <span id="demoMetricTwoLabel">Orders</span>
+                  <strong id="demoMetricTwo">1,284</strong>
+                  <small id="demoMetricTwoTrend" class="metric-trend is-positive">+12.1%</small>
+                </article>
+                <article>
+                  <span id="demoMetricThreeLabel">Growth</span>
+                  <strong id="demoMetricThree">18%</strong>
+                  <small id="demoMetricThreeTrend" class="metric-trend">vs. previous period</small>
+                </article>
               </div>
 
+              <article class="data-dashboard-card data-dashboard-line-card">
+                <div class="data-dashboard-card-heading">
+                  <div>
+                    <span id="dataLineLabel">REVENUE TREND</span>
+                    <strong id="dataLineValue">₱482K</strong>
+                  </div>
+                  <small id="dataLinePeriod">Jan — Jul</small>
+                </div>
+                <svg class="data-dashboard-line" viewBox="0 0 420 190" role="img" aria-label="Animated trend line">
+                  <defs>
+                    <linearGradient id="dataDashboardAreaFill" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stop-color="#6ed6ff" stop-opacity=".34"></stop>
+                      <stop offset="100%" stop-color="#6ed6ff" stop-opacity="0"></stop>
+                    </linearGradient>
+                  </defs>
+                  <g class="data-dashboard-grid-lines" aria-hidden="true">
+                    <line x1="18" y1="36" x2="402" y2="36"></line>
+                    <line x1="18" y1="91" x2="402" y2="91"></line>
+                    <line x1="18" y1="146" x2="402" y2="146"></line>
+                  </g>
+                  <polygon id="dataDemoArea" points="18,164 18,132 82,116 146,126 210,82 274,94 338,50 402,62 402,164"></polygon>
+                  <polyline id="dataDemoLine" points="18,132 82,116 146,126 210,82 274,94 338,50 402,62"></polyline>
+                  <g id="dataDemoDots" class="data-dashboard-dots">
+                    <circle cx="18" cy="132" r="5"></circle>
+                    <circle cx="82" cy="116" r="5"></circle>
+                    <circle cx="146" cy="126" r="5"></circle>
+                    <circle cx="210" cy="82" r="5"></circle>
+                    <circle cx="274" cy="94" r="5"></circle>
+                    <circle cx="338" cy="50" r="5"></circle>
+                    <circle cx="402" cy="62" r="5"></circle>
+                  </g>
+                </svg>
+                <div class="data-dashboard-axis" aria-hidden="true"><span>JAN</span><span>FEB</span><span>MAR</span><span>APR</span><span>MAY</span><span>JUN</span><span>JUL</span></div>
+              </article>
 
-              <div>
-                <span id="demoMetricTwoLabel">
-                  Orders
-                </span>
+              <article class="data-dashboard-card data-dashboard-bars-card">
+                <div class="data-dashboard-card-heading">
+                  <div>
+                    <span id="dataBarsLabel">CHANNEL MIX</span>
+                    <strong id="dataBarsValue">Conversion contribution</strong>
+                  </div>
+                </div>
+                <div class="data-chart-bars" id="dataDemoBars" aria-label="Animated bar chart">
+                  <span style="--bar-height: 34%;"><em>Web</em></span>
+                  <span style="--bar-height: 52%;"><em>SEO</em></span>
+                  <span style="--bar-height: 44%;"><em>Email</em></span>
+                  <span style="--bar-height: 71%;"><em>Social</em></span>
+                  <span style="--bar-height: 62%;"><em>Direct</em></span>
+                  <span style="--bar-height: 86%;"><em>Paid</em></span>
+                  <span style="--bar-height: 76%;"><em>Referral</em></span>
+                </div>
+              </article>
 
-                <strong id="demoMetricTwo">
-                  1,284
-                </strong>
-              </div>
+              <article class="data-dashboard-card data-dashboard-scatter-card">
+                <div class="data-dashboard-card-heading">
+                  <div>
+                    <span id="dataScatterLabel">CUSTOMER CLUSTERS</span>
+                    <strong id="dataScatterValue">4 behavior groups</strong>
+                  </div>
+                  <small><i></i> moving data points</small>
+                </div>
+                <div class="data-scatter-plot" id="dataScatterPlot" aria-label="Animated scatter plot">
+                  <span class="scatter-point cluster-a" style="--x:12%;--y:68%;--delay:.1s"></span>
+                  <span class="scatter-point cluster-a" style="--x:22%;--y:55%;--delay:.3s"></span>
+                  <span class="scatter-point cluster-a" style="--x:30%;--y:73%;--delay:.5s"></span>
+                  <span class="scatter-point cluster-b" style="--x:44%;--y:34%;--delay:.2s"></span>
+                  <span class="scatter-point cluster-b" style="--x:53%;--y:46%;--delay:.6s"></span>
+                  <span class="scatter-point cluster-b" style="--x:61%;--y:29%;--delay:.9s"></span>
+                  <span class="scatter-point cluster-c" style="--x:70%;--y:70%;--delay:.4s"></span>
+                  <span class="scatter-point cluster-c" style="--x:80%;--y:58%;--delay:.8s"></span>
+                  <span class="scatter-point cluster-c" style="--x:88%;--y:76%;--delay:1s"></span>
+                  <span class="scatter-point cluster-d" style="--x:38%;--y:82%;--delay:.7s"></span>
+                  <span class="scatter-point cluster-d" style="--x:58%;--y:78%;--delay:1.1s"></span>
+                  <span class="scatter-point cluster-d" style="--x:76%;--y:20%;--delay:1.2s"></span>
+                </div>
+                <div class="scatter-legend" id="dataScatterLegend">
+                  <span><i class="cluster-a"></i> Loyal</span>
+                  <span><i class="cluster-b"></i> Growing</span>
+                  <span><i class="cluster-c"></i> At risk</span>
+                  <span><i class="cluster-d"></i> New</span>
+                </div>
+              </article>
 
-
-              <div>
-                <span id="demoMetricThreeLabel">
-                  Growth
-                </span>
-
-                <strong id="demoMetricThree">
-                  +18%
-                </strong>
-              </div>
-
-            </div>
-
-
-            <div class="data-demo-chart">
-
-              <div class="data-chart-grid"></div>
-
-              <div class="data-chart-bars">
-
-                <span style="--bar-height: 34%;"></span>
-                <span style="--bar-height: 52%;"></span>
-                <span style="--bar-height: 44%;"></span>
-                <span style="--bar-height: 71%;"></span>
-                <span style="--bar-height: 62%;"></span>
-                <span style="--bar-height: 86%;"></span>
-                <span style="--bar-height: 76%;"></span>
-
-              </div>
+              <article class="data-dashboard-card data-dashboard-insight-card">
+                <div class="data-percentage-ring" id="dataPercentageRing" style="--percentage:76">
+                  <div><strong id="dataPercentageValue">76%</strong><span id="dataPercentageLabel">Retention</span></div>
+                </div>
+                <div class="data-dashboard-insight-copy">
+                  <span>ANALYTICAL NOTE</span>
+                  <strong id="dataInsightTitle">Returning customers drive stable growth.</strong>
+                  <p id="dataInsightText">The strongest period combines repeat purchases with higher-value acquisition channels.</p>
+                  <div class="data-project-labels" id="dataProjectLabels">
+                    <span>EDA</span><span>Trend analysis</span><span>Dashboard</span>
+                  </div>
+                </div>
+              </article>
 
             </div>
 
@@ -4106,470 +4162,341 @@
      PORTFOLIO START
 ========================================= -->
 
-<section
-  id="portfolio"
-  class="section portfolio portfolio-v2"
-  data-current-filter="*"
->
-
+<section id="portfolio" class="section portfolio portfolio-v2" data-current-filter="*">
   <div class="container">
-
     <div class="portfolio-v2-intro">
-      <div>
-        <span class="portfolio-v2-eyebrow">WORK / PORTFOLIO</span>
-        <h2>
-          Work that moved from
-          <span>idea to execution.</span>
-        </h2>
-      </div>
-
-      <p>
-        Websites, data projects, campaigns, and creative work built around real goals—not just aesthetics.
-        Everything is available below, so visitors can explore without switching views first.
-      </p>
+      <div><span class="portfolio-v2-eyebrow">WORK / PORTFOLIO</span><h2>Work that moved from <span>idea to execution.</span></h2></div>
+      <p>Explore web builds, automation tools, analytics, campaigns, and creative work. Every project is visible from the start.</p>
     </div>
 
     <div class="portfolio-toolbar portfolio-filter-toolbar">
-      <div class="portfolio-toolbar-label">
-        <i class="bi bi-grid-3x3-gap"></i>
-        <span>Explore all work</span>
-      </div>
-
+      <div class="portfolio-toolbar-label"><i class="bi bi-grid-3x3-gap"></i><span>Explore all work</span></div>
       <ul id="portfolio-filter" class="portfolio-v2-filter">
-        <li>
-          <a href="javascript:void(0)" data-filter="*" class="active">
-            <span>All</span><small>11</small>
-          </a>
-        </li>
-        <li>
-          <a href="javascript:void(0)" data-filter=".web">
-            <span>Web</span><small>06</small>
-          </a>
-        </li>
-        <li>
-          <a href="javascript:void(0)" data-filter=".data">
-            <span>Data</span><small>02</small>
-          </a>
-        </li>
-        <li>
-          <a href="javascript:void(0)" data-filter=".creative">
-            <span>Creative</span><small>01</small>
-          </a>
-        </li>
-        <li>
-          <a href="javascript:void(0)" data-filter=".content">
-            <span>Content</span><small>02</small>
-          </a>
-        </li>
+        <li><a href="javascript:void(0)" data-filter="*" class="active"><span>All</span><small>14</small></a></li>
+        <li><a href="javascript:void(0)" data-filter=".web"><span>Web</span><small>09</small></a></li>
+        <li><a href="javascript:void(0)" data-filter=".automation"><span>Automation</span><small>03</small></a></li>
+        <li><a href="javascript:void(0)" data-filter=".data"><span>Data</span><small>02</small></a></li>
+        <li><a href="javascript:void(0)" data-filter=".content"><span>Content</span><small>02</small></a></li>
+        <li><a href="javascript:void(0)" data-filter=".creative"><span>Creative</span><small>01</small></a></li>
       </ul>
     </div>
 
-    <div class="portfolio-grid-heading">
-      <div>
-        <span class="portfolio-v2-eyebrow">PROJECT EXPLORER</span>
-        <h3>All projects</h3>
-      </div>
-      <p id="portfolioResultLabel">Showing all 11 projects</p>
-    </div>
+    <div class="portfolio-grid-heading"><div><span class="portfolio-v2-eyebrow">PROJECT EXPLORER</span><h3>All projects</h3></div><p id="portfolioResultLabel">Showing all 14 projects</p></div>
 
     <div class="portfolio-items row">
-
-      <!-- 01 - FIRE & RESCUE ACADEMY -->
       <div class="col-md-6 portfolio-item web">
         <article class="portfolio-v2-card">
-          <div class="portfolio-v2-media portfolio-web-media" data-hover-label="VISIT LIVE ↗">
-            <div class="project-browser-mini">
-              <div class="project-browser-header">
-                <span></span><span></span><span></span>
-                <small>fireandrescueacademy.com</small>
-              </div>
-              <img src="assets/img/webdesigner/portfolio-item4.png" alt="Fire and Rescue Academy website">
-            </div>
-            <span class="portfolio-hover-label">VISIT LIVE ↗</span>
-          </div>
+          <div class="portfolio-v2-media project-art project-art-web project-art-fire" data-hover-label="VISIT LIVE ↗">
+      <div class="project-art-browser">
+        <div class="project-art-browserbar"><span></span><span></span><span></span><small>fireandrescueacademy.com</small></div>
+        <div class="project-art-screen"><div class="project-art-copy"><small>WEB • LMS</small><strong>Fire & Rescue Academy</strong><i></i><i></i></div><div class="ui-art-cards"><i></i><i></i><i></i></div><span class="project-art-character" aria-hidden="true"><iconify-icon icon="mdi:fire-truck"></iconify-icon></span><span class="project-art-pointer">➜</span></div>
+      </div>
+      <span class="portfolio-hover-label">VISIT LIVE ↗</span>
+    </div>
           <div class="portfolio-v2-card-content">
-            <div class="portfolio-project-index"><span>01 / WEB</span><small>LMS • SEO</small></div>
-            <h3>Fire &amp; Rescue Academy</h3>
-            <p>A digital training platform combining website development, online course delivery, content structure, and search optimization.</p>
+            <div class="portfolio-project-index"><span>01 / WEB</span><small>LMS</small></div>
+            <h3>Fire & Rescue Academy</h3>
+            <p>A digital training platform for emergency-services education, online courses, and search visibility.</p>
             <div class="portfolio-project-tags"><span>WordPress</span><span>Tutor LMS</span><span>SEO</span></div>
             <div class="portfolio-card-actions">
-              <button type="button" class="portfolio-text-action portfolio-quick-view-btn" data-project="fire">
-                Project Details <i class="bi bi-arrow-right"></i>
-              </button>
-              <a href="https://fireandrescueacademy.com/" target="_blank" rel="noopener noreferrer"
-                class="portfolio-card-icon-link" aria-label="Visit Fire and Rescue Academy">
-                <i class="bi bi-arrow-up-right"></i>
-              </a>
+              <button type="button" class="portfolio-text-action portfolio-quick-view-btn" data-project="fire">Project Details <i class="bi bi-arrow-right"></i></button>
+              <a href="https://fireandrescueacademy.com/" target="_blank" rel="noopener noreferrer" class="portfolio-card-icon-link" aria-label="Visit live: Fire & Rescue Academy"><i class="bi bi-arrow-up-right"></i></a>
             </div>
           </div>
         </article>
       </div>
 
-      <!-- 02 - ISKOLARLINK -->
       <div class="col-md-6 portfolio-item web">
         <article class="portfolio-v2-card">
-          <div class="portfolio-v2-media portfolio-web-media" data-hover-label="OPEN PROJECT ↗">
-            <div class="project-browser-mini">
-              <div class="project-browser-header">
-                <span></span><span></span><span></span>
-                <small>iskolarlink</small>
-              </div>
-              <img src="assets/img/webdesigner/iskolarlink.png" alt="IskolarLink student information platform">
-            </div>
-            <span class="portfolio-hover-label">OPEN PROJECT ↗</span>
-          </div>
+          <div class="portfolio-v2-media project-art project-art-web project-art-iskolar" data-hover-label="OPEN PROJECT ↗">
+      <div class="project-art-browser">
+        <div class="project-art-browserbar"><span></span><span></span><span></span><small>iskolarlink.app</small></div>
+        <div class="project-art-screen"><div class="project-art-copy"><small>WEB • PLATFORM</small><strong>IskolarLink</strong><i></i><i></i></div><div class="ui-art-cards"><i></i><i></i><i></i></div><span class="project-art-character" aria-hidden="true"><iconify-icon icon="solar:square-academic-cap-2-bold-duotone"></iconify-icon></span><span class="project-art-pointer">➜</span></div>
+      </div>
+      <span class="portfolio-hover-label">OPEN PROJECT ↗</span>
+    </div>
           <div class="portfolio-v2-card-content">
             <div class="portfolio-project-index"><span>02 / WEB</span><small>PLATFORM</small></div>
             <h3>IskolarLink</h3>
-            <p>A student information and coordination platform designed to simplify academic communication and digital workflows.</p>
+            <p>A student information and coordination platform that brings academic workflows into one clearer space.</p>
             <div class="portfolio-project-tags"><span>React</span><span>Platform</span><span>Workflow</span></div>
             <div class="portfolio-card-actions">
-              <button type="button" class="portfolio-text-action portfolio-quick-view-btn" data-project="iskolar">
-                Project Details <i class="bi bi-arrow-right"></i>
-              </button>
-              <a href="preview/IskolarLink.com/IskolarLink-main/#/" target="_blank" rel="noopener noreferrer"
-                class="portfolio-card-icon-link" aria-label="Open IskolarLink">
-                <i class="bi bi-arrow-up-right"></i>
-              </a>
+              <button type="button" class="portfolio-text-action portfolio-quick-view-btn" data-project="iskolar">Project Details <i class="bi bi-arrow-right"></i></button>
+              <a href="preview/IskolarLink.com/IskolarLink-main/#/" target="_blank" rel="noopener noreferrer" class="portfolio-card-icon-link" aria-label="Open project: IskolarLink"><i class="bi bi-arrow-up-right"></i></a>
             </div>
           </div>
         </article>
       </div>
 
-      <!-- 03 - CORPORATE DISASTER RESPONSE -->
       <div class="col-md-6 portfolio-item web">
         <article class="portfolio-v2-card">
-          <div class="portfolio-v2-media portfolio-web-media" data-hover-label="VISIT LIVE ↗">
-            <div class="project-browser-mini">
-              <div class="project-browser-header">
-                <span></span><span></span><span></span>
-                <small>conquerorscc.com</small>
-              </div>
-              <img src="assets/img/webdesigner/companysite.png" alt="Corporate Disaster Response and Training website">
-            </div>
-            <span class="portfolio-hover-label">VISIT LIVE ↗</span>
-          </div>
+          <div class="portfolio-v2-media project-art project-art-web project-art-response" data-hover-label="VISIT LIVE ↗">
+      <div class="project-art-browser">
+        <div class="project-art-browserbar"><span></span><span></span><span></span><small>conquerorscc.com</small></div>
+        <div class="project-art-screen"><div class="project-art-copy"><small>WEB • CORPORATE</small><strong>Disaster Response & Training</strong><i></i><i></i></div><div class="ui-art-cards"><i></i><i></i><i></i></div><span class="project-art-character" aria-hidden="true"><iconify-icon icon="mdi:shield-star-outline"></iconify-icon></span><span class="project-art-pointer">➜</span></div>
+      </div>
+      <span class="portfolio-hover-label">VISIT LIVE ↗</span>
+    </div>
           <div class="portfolio-v2-card-content">
             <div class="portfolio-project-index"><span>03 / WEB</span><small>CORPORATE</small></div>
-            <h3>Corporate Disaster Response</h3>
-            <p>A corporate website for a disaster-response and professional-training organization, structured around credibility and clear services.</p>
+            <h3>Disaster Response & Training</h3>
+            <p>A professional website for a disaster-response and training organization with clear service pathways.</p>
             <div class="portfolio-project-tags"><span>WordPress</span><span>Responsive</span><span>Content</span></div>
             <div class="portfolio-card-actions">
-              <button type="button" class="portfolio-text-action portfolio-quick-view-btn" data-project="corporate">
-                Project Details <i class="bi bi-arrow-right"></i>
-              </button>
-              <a href="https://conquerorscc.com/" target="_blank" rel="noopener noreferrer"
-                class="portfolio-card-icon-link" aria-label="Visit Corporate Disaster Response website">
-                <i class="bi bi-arrow-up-right"></i>
-              </a>
+              <button type="button" class="portfolio-text-action portfolio-quick-view-btn" data-project="corporate">Project Details <i class="bi bi-arrow-right"></i></button>
+              <a href="https://conquerorscc.com/" target="_blank" rel="noopener noreferrer" class="portfolio-card-icon-link" aria-label="Visit live: Disaster Response & Training"><i class="bi bi-arrow-up-right"></i></a>
             </div>
           </div>
         </article>
       </div>
 
-      <!-- 04 - LAKBAY BAGUIO -->
       <div class="col-md-6 portfolio-item web">
         <article class="portfolio-v2-card">
-          <div class="portfolio-v2-media portfolio-web-media portfolio-site-mockup preview-lakbay" data-hover-label="OPEN PROJECT ↗">
-            <div class="portfolio-site-preview">
-              <div class="site-preview-bar"><span></span><span></span><span></span><small>lakbaybaguio.com</small></div>
-              <div class="site-preview-body">
-                <div class="site-preview-kicker">BAGUIO, PLANNED YOUR WAY</div>
-                <strong>Lakbay Baguio</strong>
-                <p>Itinerary ideas, local stops, and a little room to breathe.</p>
-                <div class="site-preview-pills"><span>Explore</span><span>Build a trip</span></div>
-              </div>
-            </div>
-            <span class="portfolio-hover-label">OPEN PROJECT ↗</span>
-          </div>
+          <div class="portfolio-v2-media project-art project-art-web project-art-lakbay" data-hover-label="OPEN PROJECT ↗">
+      <div class="project-art-browser">
+        <div class="project-art-browserbar"><span></span><span></span><span></span><small>lakbaybaguio.com</small></div>
+        <div class="project-art-screen"><div class="project-art-copy"><small>WEB • TRAVEL APP</small><strong>Lakbay Baguio</strong><i></i><i></i></div><div class="travel-route"><i></i><i></i><i></i></div><span class="project-art-character" aria-hidden="true"><iconify-icon icon="mdi:pine-tree"></iconify-icon></span><span class="project-art-pointer">➜</span></div>
+      </div>
+      <span class="portfolio-hover-label">OPEN PROJECT ↗</span>
+    </div>
           <div class="portfolio-v2-card-content">
             <div class="portfolio-project-index"><span>04 / WEB</span><small>TRAVEL APP</small></div>
             <h3>Lakbay Baguio</h3>
-            <p>A Baguio itinerary experience that helps visitors discover places, shape a trip, and enjoy a calmer travel-planning flow.</p>
+            <p>A calmer, more personal Baguio itinerary experience with local discovery and conversational guidance.</p>
             <div class="portfolio-project-tags"><span>HTML</span><span>CSS</span><span>JavaScript</span></div>
             <div class="portfolio-card-actions">
-              <button type="button" class="portfolio-text-action portfolio-quick-view-btn" data-project="lakbay">
-                Project Details <i class="bi bi-arrow-right"></i>
-              </button>
-              <a href="preview/lakbaybaguio.com/index.html" target="_blank" rel="noopener noreferrer"
-                class="portfolio-card-icon-link" aria-label="Open Lakbay Baguio">
-                <i class="bi bi-arrow-up-right"></i>
-              </a>
+              <button type="button" class="portfolio-text-action portfolio-quick-view-btn" data-project="lakbay">Project Details <i class="bi bi-arrow-right"></i></button>
+              <a href="preview/lakbaybaguio.com/index.html" target="_blank" rel="noopener noreferrer" class="portfolio-card-icon-link" aria-label="Open project: Lakbay Baguio"><i class="bi bi-arrow-up-right"></i></a>
             </div>
           </div>
         </article>
       </div>
 
-      <!-- 05 - MEBS CONSTRUCTION -->
       <div class="col-md-6 portfolio-item web">
         <article class="portfolio-v2-card">
-          <div class="portfolio-v2-media portfolio-web-media portfolio-site-mockup preview-mebs" data-hover-label="OPEN PROJECT ↗">
-            <div class="portfolio-site-preview">
-              <div class="site-preview-bar"><span></span><span></span><span></span><small>mebsconstruction.com</small></div>
-              <div class="site-preview-body">
-                <div class="site-preview-kicker">ENGINEERED TO LAST</div>
-                <strong>MeBS Construction</strong>
-                <p>Modern homes backed by proven engineering.</p>
-                <div class="site-preview-pills"><span>Projects</span><span>Engineering</span></div>
-              </div>
-            </div>
-            <span class="portfolio-hover-label">OPEN PROJECT ↗</span>
-          </div>
+          <div class="portfolio-v2-media project-art project-art-web project-art-mebs" data-hover-label="OPEN PROJECT ↗">
+      <div class="project-art-browser">
+        <div class="project-art-browserbar"><span></span><span></span><span></span><small>mebsconstruction.com</small></div>
+        <div class="project-art-screen"><div class="project-art-copy"><small>WEB • CONSTRUCTION</small><strong>MeBS Construction</strong><i></i><i></i></div><div class="building-art"><i></i><i></i><i></i></div><span class="project-art-character" aria-hidden="true"><iconify-icon icon="mdi:crane"></iconify-icon></span><span class="project-art-pointer">➜</span></div>
+      </div>
+      <span class="portfolio-hover-label">OPEN PROJECT ↗</span>
+    </div>
           <div class="portfolio-v2-card-content">
             <div class="portfolio-project-index"><span>05 / WEB</span><small>CONSTRUCTION</small></div>
             <h3>MeBS Construction</h3>
-            <p>A modern construction-company website focused on engineering credibility, project presentation, and clear client pathways.</p>
+            <p>A modern construction-company website centered on engineering credibility and project presentation.</p>
             <div class="portfolio-project-tags"><span>HTML</span><span>CSS</span><span>UI/UX</span></div>
             <div class="portfolio-card-actions">
-              <button type="button" class="portfolio-text-action portfolio-quick-view-btn" data-project="mebs">
-                Project Details <i class="bi bi-arrow-right"></i>
-              </button>
-              <a href="preview/mebsconstruction.com/index.html" target="_blank" rel="noopener noreferrer"
-                class="portfolio-card-icon-link" aria-label="Open MeBS Construction">
-                <i class="bi bi-arrow-up-right"></i>
-              </a>
+              <button type="button" class="portfolio-text-action portfolio-quick-view-btn" data-project="mebs">Project Details <i class="bi bi-arrow-right"></i></button>
+              <a href="preview/mebsconstruction.com/index.html" target="_blank" rel="noopener noreferrer" class="portfolio-card-icon-link" aria-label="Open project: MeBS Construction"><i class="bi bi-arrow-up-right"></i></a>
             </div>
           </div>
         </article>
       </div>
 
-      <!-- 06 - CLOUD CHASER -->
       <div class="col-md-6 portfolio-item web">
         <article class="portfolio-v2-card">
-          <div class="portfolio-v2-media portfolio-web-media portfolio-site-mockup preview-cloudchaser" data-hover-label="OPEN PROJECT ↗">
-            <div class="portfolio-site-preview">
-              <div class="site-preview-bar"><span></span><span></span><span></span><small>cloudchaser.com</small></div>
-              <div class="site-preview-body">
-                <div class="site-preview-kicker">DREAM • DISCOVER • DEPART</div>
-                <strong>Cloud Chaser</strong>
-                <p>Curated Philippine and Asian journeys, planned around your pace.</p>
-                <div class="site-preview-pills"><span>Trips</span><span>Request</span></div>
-              </div>
-            </div>
-            <span class="portfolio-hover-label">OPEN PROJECT ↗</span>
-          </div>
+          <div class="portfolio-v2-media project-art project-art-web project-art-cloud" data-hover-label="OPEN TRIPS ↗">
+      <div class="project-art-browser">
+        <div class="project-art-browserbar"><span></span><span></span><span></span><small>cloudchaser.com</small></div>
+        <div class="project-art-screen"><div class="project-art-copy"><small>WEB • TRAVEL</small><strong>Cloud Chaser</strong><i></i><i></i></div><div class="cloud-art"><i></i><i></i><i></i></div><span class="project-art-character" aria-hidden="true"><iconify-icon icon="mdi:airplane"></iconify-icon></span><span class="project-art-pointer">➜</span></div>
+      </div>
+      <span class="portfolio-hover-label">OPEN TRIPS ↗</span>
+    </div>
           <div class="portfolio-v2-card-content">
             <div class="portfolio-project-index"><span>06 / WEB</span><small>TRAVEL</small></div>
             <h3>Cloud Chaser</h3>
-            <p>A polished travel-agency experience for browsing curated trips, understanding itineraries, and requesting a journey.</p>
-            <div class="portfolio-project-tags"><span>HTML</span><span>CSS</span><span>JavaScript</span></div>
+            <p>A polished travel-agency experience for Philippine and Asian trips, itineraries, and trip requests.</p>
+            <div class="portfolio-project-tags"><span>HTML</span><span>CSS</span><span>Travel UX</span></div>
             <div class="portfolio-card-actions">
-              <button type="button" class="portfolio-text-action portfolio-quick-view-btn" data-project="cloudchaser">
-                Project Details <i class="bi bi-arrow-right"></i>
-              </button>
-              <a href="preview/cloudchaser.com/trips.html" target="_blank" rel="noopener noreferrer"
-                class="portfolio-card-icon-link" aria-label="Open Cloud Chaser trips">
-                <i class="bi bi-arrow-up-right"></i>
-              </a>
+              <button type="button" class="portfolio-text-action portfolio-quick-view-btn" data-project="cloudchaser">Project Details <i class="bi bi-arrow-right"></i></button>
+              <a href="preview/cloudchaser.com/trips.html" target="_blank" rel="noopener noreferrer" class="portfolio-card-icon-link" aria-label="Open trips: Cloud Chaser"><i class="bi bi-arrow-up-right"></i></a>
             </div>
           </div>
         </article>
       </div>
 
-      <!-- 07 - LET PERFORMANCE -->
-      <div class="col-md-6 portfolio-item data">
-        <article class="portfolio-v2-card portfolio-data-card">
-          <div class="portfolio-v2-media portfolio-data-media" data-hover-label="VIEW ANALYSIS →">
-            <img src="assets/img/webdesigner/portfolio-item7.png" alt="LET Performance Trends data analysis">
-            <div class="portfolio-data-overlay">
-              <div class="portfolio-mini-chart">
-                <span style="--data-height:32%;"></span><span style="--data-height:47%;"></span>
-                <span style="--data-height:42%;"></span><span style="--data-height:68%;"></span>
-                <span style="--data-height:58%;"></span><span style="--data-height:83%;"></span>
-              </div>
-              <small>2018 → 2023</small>
-            </div>
-            <span class="portfolio-hover-label">VIEW ANALYSIS →</span>
-          </div>
+      <div class="col-md-6 portfolio-item web automation">
+        <article class="portfolio-v2-card">
+          <div class="portfolio-v2-media project-art project-art-web project-art-letter" data-hover-label="OPEN PROJECT ↗">
+      <div class="project-art-browser">
+        <div class="project-art-browserbar"><span></span><span></span><span></span><small>layoutletter.com</small></div>
+        <div class="project-art-screen"><div class="project-art-copy"><small>AUTOMATION • CREATOR TOOL</small><strong>LayoutLetter</strong><i></i><i></i></div><div class="newsletter-blocks"><i></i><i></i><i></i><i></i></div><span class="project-art-character" aria-hidden="true"><iconify-icon icon="mdi:email-edit-outline"></iconify-icon></span><span class="project-art-pointer">➜</span></div>
+      </div>
+      <span class="portfolio-hover-label">OPEN PROJECT ↗</span>
+    </div>
           <div class="portfolio-v2-card-content">
-            <div class="portfolio-project-index"><span>07 / DATA</span><small>EDUCATION ANALYTICS</small></div>
+            <div class="portfolio-project-index"><span>07 / AUTOMATION</span><small>CREATOR TOOL</small></div>
+            <h3>LayoutLetter</h3>
+            <p>A visual newsletter builder that helps creators and businesses assemble polished campaigns faster.</p>
+            <div class="portfolio-project-tags"><span>Automation</span><span>Newsletter</span><span>Builder</span></div>
+            <div class="portfolio-card-actions">
+              <button type="button" class="portfolio-text-action portfolio-quick-view-btn" data-project="layoutletter">Project Details <i class="bi bi-arrow-right"></i></button>
+              <a href="preview/LayoutLetter.com/index.html" target="_blank" rel="noopener noreferrer" class="portfolio-card-icon-link" aria-label="Open project: LayoutLetter"><i class="bi bi-arrow-up-right"></i></a>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <div class="col-md-6 portfolio-item web automation">
+        <article class="portfolio-v2-card">
+          <div class="portfolio-v2-media project-art project-art-web project-art-mountain" data-hover-label="OPEN PROJECT ↗">
+      <div class="project-art-browser">
+        <div class="project-art-browserbar"><span></span><span></span><span></span><small>discovermountainprovince.com</small></div>
+        <div class="project-art-screen"><div class="project-art-copy"><small>WEB • TOURISM</small><strong>Discover Mountain Province</strong><i></i><i></i></div><div class="mountain-ridge"><i></i><i></i><i></i></div><span class="project-art-character" aria-hidden="true"><iconify-icon icon="mdi:mountain"></iconify-icon></span><span class="project-art-pointer">➜</span></div>
+      </div>
+      <span class="portfolio-hover-label">OPEN PROJECT ↗</span>
+    </div>
+          <div class="portfolio-v2-card-content">
+            <div class="portfolio-project-index"><span>08 / WEB</span><small>TOURISM</small></div>
+            <h3>Discover Mountain Province</h3>
+            <p>A destination website created to make Mountain Province stories, places, and trip ideas easier to discover.</p>
+            <div class="portfolio-project-tags"><span>Tourism</span><span>Discovery</span><span>Responsive</span></div>
+            <div class="portfolio-card-actions">
+              <button type="button" class="portfolio-text-action portfolio-quick-view-btn" data-project="mountain">Project Details <i class="bi bi-arrow-right"></i></button>
+              <a href="preview/DiscoverMountainProvince.com/index.html" target="_blank" rel="noopener noreferrer" class="portfolio-card-icon-link" aria-label="Open project: Discover Mountain Province"><i class="bi bi-arrow-up-right"></i></a>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <div class="col-md-6 portfolio-item web automation">
+        <article class="portfolio-v2-card">
+          <div class="portfolio-v2-media project-art project-art-web project-art-ready" data-hover-label="OPEN PROJECT ↗">
+      <div class="project-art-browser">
+        <div class="project-art-browserbar"><span></span><span></span><span></span><small>readystation.com</small></div>
+        <div class="project-art-screen"><div class="project-art-copy"><small>AUTOMATION • LMS</small><strong>ReadyStation LMS</strong><i></i><i></i></div><div class="readiness-meter"><i></i><b>READY</b></div><span class="project-art-character" aria-hidden="true"><iconify-icon icon="mdi:fire-extinguisher"></iconify-icon></span><span class="project-art-pointer">➜</span></div>
+      </div>
+      <span class="portfolio-hover-label">OPEN PROJECT ↗</span>
+    </div>
+          <div class="portfolio-v2-card-content">
+            <div class="portfolio-project-index"><span>09 / AUTOMATION</span><small>LMS</small></div>
+            <h3>ReadyStation LMS</h3>
+            <p>A training platform designed for first responders—built for the fireground, not the boardroom.</p>
+            <div class="portfolio-project-tags"><span>LMS</span><span>First Responders</span><span>Training</span></div>
+            <div class="portfolio-card-actions">
+              <button type="button" class="portfolio-text-action portfolio-quick-view-btn" data-project="readystation">Project Details <i class="bi bi-arrow-right"></i></button>
+              <a href="preview/ReadyStation.com/index.html" target="_blank" rel="noopener noreferrer" class="portfolio-card-icon-link" aria-label="Open project: ReadyStation LMS"><i class="bi bi-arrow-up-right"></i></a>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <div class="col-md-6 portfolio-item data">
+        <article class="portfolio-v2-card">
+          <div class="portfolio-v2-media project-art project-art-data project-art-let" data-hover-label="EXPLORE ANALYSIS ↗">
+              <div class="data-art-head"><span>2018—2023 dataset</span><strong>LET SIGNALS</strong></div>
+              <div class="data-art-bars"><i style="--v:84%"><em>NCR</em></i><i style="--v:68%"><em>CAR</em></i><i style="--v:58%"><em>VII</em></i><i style="--v:44%"><em>XI</em></i><i style="--v:71%"><em>IV-A</em></i></div>
+              <svg class="data-art-line" viewBox="0 0 420 120" aria-hidden="true"><polyline points="8,95 72,70 138,82 205,43 272,58 340,25 412,38"></polyline><circle cx="205" cy="43" r="7"></circle><circle cx="340" cy="25" r="7"></circle></svg>
+              <div class="data-art-stats"><span><b>6</b> years</span><span><b>Top 10</b> ranks</span><span><b>PH</b> regions</span></div>
+              <span class="portfolio-hover-label">EXPLORE ANALYSIS ↗</span>
+            </div>
+          <div class="portfolio-v2-card-content">
+            <div class="portfolio-project-index"><span>10 / DATA</span><small>EDUCATION</small></div>
             <h3>LET Performance Trends</h3>
-            <p>Exploring licensure-examination performance, geographic patterns, and educational trends through structured data analysis.</p>
+            <p>An interactive analysis of Philippine LET Top 10 performance, institutions, geography, and ratings.</p>
             <div class="portfolio-project-tags"><span>Python</span><span>Analytics</span><span>Visualization</span></div>
             <div class="portfolio-card-actions">
-              <button type="button" class="portfolio-text-action portfolio-quick-view-btn" data-project="let">
-                Project Details <i class="bi bi-arrow-right"></i>
-              </button>
-              <a href="let-performance-analysis.html" class="portfolio-card-icon-link" aria-label="View LET Performance Analysis">
-                <i class="bi bi-arrow-up-right"></i>
-              </a>
+              <button type="button" class="portfolio-text-action portfolio-quick-view-btn" data-project="let">Project Details <i class="bi bi-arrow-right"></i></button>
+              <a href="let-performance-analysis.html" class="portfolio-card-icon-link" aria-label="Explore analysis: LET Performance Trends"><i class="bi bi-arrow-up-right"></i></a>
             </div>
           </div>
         </article>
       </div>
 
-      <!-- 08 - SPENDING BEHAVIOR -->
       <div class="col-md-6 portfolio-item data">
-        <article class="portfolio-v2-card portfolio-data-card">
-          <div class="portfolio-v2-media portfolio-data-media" data-hover-label="VIEW ANALYSIS →">
-            <img src="assets/img/webdesigner/portfolio-item6.png" alt="Customer spending behavior analysis">
-            <div class="portfolio-data-overlay">
-              <div class="portfolio-data-points"><span></span><span></span><span></span><span></span><span></span></div>
-              <small>BEHAVIOR → SEGMENTS → FORECAST</small>
-            </div>
-            <span class="portfolio-hover-label">VIEW ANALYSIS →</span>
-          </div>
+        <article class="portfolio-v2-card">
+          <div class="portfolio-v2-media project-art project-art-data project-art-spending" data-hover-label="EXPLORE ANALYSIS ↗">
+          <div class="cluster-art"><span class="cluster c1"></span><span class="cluster c2"></span><span class="cluster c3"></span><span class="cluster c4"></span><span class="cluster c5"></span><span class="cluster c6"></span><span class="cluster c7"></span><span class="cluster c8"></span></div>
+          <div class="forecast-art"><i style="--h:42%"></i><i style="--h:61%"></i><i style="--h:54%"></i><i style="--h:78%"></i><i style="--h:68%"></i><i style="--h:90%"></i></div>
+          <div class="data-art-head"><span>customer signals</span><strong>SEGMENT + FORECAST</strong></div>
+          <div class="data-art-stats"><span><b>4</b> clusters</span><span><b>ARIMA</b> trend</span><span><b>EDA</b> insights</span></div>
+          <span class="portfolio-hover-label">EXPLORE ANALYSIS ↗</span>
+        </div>
           <div class="portfolio-v2-card-content">
-            <div class="portfolio-project-index"><span>08 / DATA</span><small>CUSTOMER BEHAVIOR</small></div>
+            <div class="portfolio-project-index"><span>11 / DATA</span><small>BEHAVIOR</small></div>
             <h3>Spending Behavior Analysis</h3>
-            <p>Customer-spending exploration using segmentation, association analysis, and forecasting to identify useful behavioral patterns.</p>
-            <div class="portfolio-project-tags"><span>Python</span><span>K-Means</span><span>ARIMA</span></div>
+            <p>Customer segmentation, purchasing relationships, and transaction forecasting in one case study.</p>
+            <div class="portfolio-project-tags"><span>K-Means</span><span>Apriori</span><span>ARIMA</span></div>
             <div class="portfolio-card-actions">
-              <button type="button" class="portfolio-text-action portfolio-quick-view-btn" data-project="spending">
-                Project Details <i class="bi bi-arrow-right"></i>
-              </button>
-              <a href="customer-spending-analysis.html" class="portfolio-card-icon-link" aria-label="View Spending Behavior Analysis">
-                <i class="bi bi-arrow-up-right"></i>
-              </a>
+              <button type="button" class="portfolio-text-action portfolio-quick-view-btn" data-project="spending">Project Details <i class="bi bi-arrow-right"></i></button>
+              <a href="customer-spending-analysis.html" class="portfolio-card-icon-link" aria-label="Explore analysis: Spending Behavior Analysis"><i class="bi bi-arrow-up-right"></i></a>
             </div>
           </div>
         </article>
       </div>
 
-      <!-- 09 - CAMPAIGN LANDING EXPERIENCE -->
       <div class="col-md-6 portfolio-item content">
         <article class="portfolio-v2-card">
-          <div class="portfolio-v2-media portfolio-content-media" data-hover-label="VIEW CAMPAIGN ↗">
-            <img src="assets/img/webdesigner/campaign-blog1.png" alt="Campaign landing page project">
-            <div class="portfolio-content-overlay"><span>CAMPAIGN</span><strong>Digital Landing Experience</strong></div>
-            <span class="portfolio-hover-label">VIEW CAMPAIGN ↗</span>
-          </div>
+          <div class="portfolio-v2-media project-art project-art-content project-art-campaign1" data-hover-label="VIEW CAMPAIGN ↗">
+          <div class="content-art-stack"><article><small>01</small><strong>PLAN</strong><p>Clear message, clear next step.</p></article><article><small>02</small><strong>CREATE</strong><p>Visual rhythm built for attention.</p></article><article><small>03</small><strong>PUBLISH</strong><p>Content that keeps moving.</p></article></div>
+          <div class="content-art-cursor">✦</div>
+          <span class="portfolio-hover-label">VIEW CAMPAIGN ↗</span>
+        </div>
           <div class="portfolio-v2-card-content">
-            <div class="portfolio-project-index"><span>09 / CONTENT</span><small>CAMPAIGN</small></div>
+            <div class="portfolio-project-index"><span>12 / CONTENT</span><small>CAMPAIGN</small></div>
             <h3>Campaign Landing Experience</h3>
-            <p>A campaign-oriented web experience combining content, front-end development, and conversion-focused presentation.</p>
-            <div class="portfolio-project-tags"><span>HTML</span><span>CSS</span><span>JavaScript</span></div>
+            <p>A conversion-focused campaign experience combining content structure, front-end work, and visual hierarchy.</p>
+            <div class="portfolio-project-tags"><span>Campaign</span><span>Content</span><span>Front end</span></div>
             <div class="portfolio-card-actions">
-              <button type="button" class="portfolio-text-action portfolio-quick-view-btn" data-project="campaign1">
-                Project Details <i class="bi bi-arrow-right"></i>
-              </button>
-              <a href="http://paidmediasandbox.3jzvudtzb5-dv13xg0776gq.p.temp-site.link/luke/mood/v2-20off/v2startup.html"
-                target="_blank" rel="noopener noreferrer" class="portfolio-card-icon-link" aria-label="View campaign project">
-                <i class="bi bi-arrow-up-right"></i>
-              </a>
+              <button type="button" class="portfolio-text-action portfolio-quick-view-btn" data-project="campaign1">Project Details <i class="bi bi-arrow-right"></i></button>
+              <a href="http://paidmediasandbox.3jzvudtzb5-dv13xg0776gq.p.temp-site.link/luke/mood/v2-20off/v2startup.html" target="_blank" rel="noopener noreferrer" class="portfolio-card-icon-link" aria-label="View campaign: Campaign Landing Experience"><i class="bi bi-arrow-up-right"></i></a>
             </div>
           </div>
         </article>
       </div>
 
-      <!-- 10 - INTERACTIVE CAMPAIGN BLOG -->
       <div class="col-md-6 portfolio-item content">
         <article class="portfolio-v2-card">
-          <div class="portfolio-v2-media portfolio-content-media" data-hover-label="VIEW CAMPAIGN ↗">
-            <img src="assets/img/webdesigner/campaign-blog2.png" alt="Interactive campaign blog project">
-            <div class="portfolio-content-overlay"><span>CONTENT</span><strong>Interactive Campaign</strong></div>
-            <span class="portfolio-hover-label">VIEW CAMPAIGN ↗</span>
-          </div>
+          <div class="portfolio-v2-media project-art project-art-content project-art-campaign2" data-hover-label="VIEW CAMPAIGN ↗">
+          <div class="content-art-stack"><article><small>01</small><strong>HOOK</strong><p>Clear message, clear next step.</p></article><article><small>02</small><strong>STORY</strong><p>Visual rhythm built for attention.</p></article><article><small>03</small><strong>ACTION</strong><p>Content that keeps moving.</p></article></div>
+          <div class="content-art-cursor">✦</div>
+          <span class="portfolio-hover-label">VIEW CAMPAIGN ↗</span>
+        </div>
           <div class="portfolio-v2-card-content">
-            <div class="portfolio-project-index"><span>10 / CONTENT</span><small>INTERACTIVE</small></div>
+            <div class="portfolio-project-index"><span>13 / CONTENT</span><small>INTERACTIVE</small></div>
             <h3>Interactive Campaign Blog</h3>
-            <p>A front-end campaign experience built around visual storytelling, interactive presentation, and digital engagement.</p>
-            <div class="portfolio-project-tags"><span>HTML</span><span>CSS</span><span>JavaScript</span></div>
+            <p>A visual storytelling experience designed to make promotional content more engaging and explorable.</p>
+            <div class="portfolio-project-tags"><span>Storytelling</span><span>Interactive</span><span>Digital</span></div>
             <div class="portfolio-card-actions">
-              <button type="button" class="portfolio-text-action portfolio-quick-view-btn" data-project="campaign2">
-                Project Details <i class="bi bi-arrow-right"></i>
-              </button>
-              <a href="https://va-0097.github.io/Mood/" target="_blank" rel="noopener noreferrer"
-                class="portfolio-card-icon-link" aria-label="View interactive campaign">
-                <i class="bi bi-arrow-up-right"></i>
-              </a>
+              <button type="button" class="portfolio-text-action portfolio-quick-view-btn" data-project="campaign2">Project Details <i class="bi bi-arrow-right"></i></button>
+              <a href="https://va-0097.github.io/Mood/" target="_blank" rel="noopener noreferrer" class="portfolio-card-icon-link" aria-label="View campaign: Interactive Campaign Blog"><i class="bi bi-arrow-up-right"></i></a>
             </div>
           </div>
         </article>
       </div>
 
-      <!-- 11 - CREATIVE COLLECTION -->
       <div class="col-12 portfolio-item creative">
         <article class="portfolio-creative-collection">
           <div class="portfolio-creative-copy">
-            <div class="portfolio-project-index"><span>11 / CREATIVE</span><small>SELECTED VISUAL WORK</small></div>
+            <div class="portfolio-project-index"><span>14 / CREATIVE</span><small>SELECTED VISUAL + MOTION WORK</small></div>
             <h3>Creative <span>Collection</span></h3>
-            <p>Selected campaign graphics, social assets, promotional visuals, motion pieces, and brand-aligned creative work.</p>
-            <div class="portfolio-project-tags"><span>Graphic Design</span><span>Campaigns</span><span>Social</span><span>Motion</span></div>
-            <button type="button" class="portfolio-creative-open" id="openCreativeGallery">
-              View All Works <i class="bi bi-images"></i>
-            </button>
+            <p>Campaign graphics, social assets, promotional visuals, motion pieces, and AI-assisted creative production.</p>
+            <div class="portfolio-project-tags"><span>Graphic Design</span><span>Campaigns</span><span>Motion</span><span>AI Video</span></div>
+            <button type="button" class="portfolio-creative-open" id="openCreativeGallery">View All Works <i class="bi bi-images"></i></button>
           </div>
-
           <div class="portfolio-creative-mosaic">
-            <button type="button" class="creative-mosaic-item creative-large creative-gallery-trigger"
-              data-gallery-index="0" aria-label="View Creative Work 01">
-              <img src="assets/img/webdesigner/graphic1.gif" alt="Creative Work 01"><span>VIEW</span>
-            </button>
-            <button type="button" class="creative-mosaic-item creative-gallery-trigger"
-              data-gallery-index="1" aria-label="View Creative Motion Work 02">
-              <video autoplay loop muted playsinline>
-                <source src="assets/img/webdesigner/graphic2.mp4" type="video/mp4">
-              </video><span>VIEW MOTION</span>
-            </button>
-            <button type="button" class="creative-mosaic-item creative-gallery-trigger"
-              data-gallery-index="2" aria-label="View Creative Work 03">
-              <img src="assets/img/webdesigner/graphic3.png" alt="Creative Work 03"><span>VIEW</span>
-            </button>
-            <button type="button" class="creative-mosaic-item creative-gallery-trigger"
-              data-gallery-index="3" aria-label="View Creative Work 04">
-              <img src="assets/img/webdesigner/graphic4.png" alt="Creative Work 04"><span>VIEW</span>
-            </button>
-            <button type="button" class="creative-mosaic-item creative-gallery-trigger"
-              data-gallery-index="4" aria-label="View Creative Work 05">
-              <img src="assets/img/webdesigner/graphic5.png" alt="Creative Work 05"><span>VIEW</span>
-            </button>
+            <button type="button" class="creative-mosaic-item creative-gallery-trigger" data-gallery-index="0" aria-label="View Creative Work 01"><img src="assets/img/webdesigner/graphic1.gif" alt="Creative Work 01"><span>VIEW</span></button>
+            <button type="button" class="creative-mosaic-item creative-gallery-trigger" data-gallery-index="1" aria-label="View Creative Motion Work 02"><video autoplay loop muted playsinline><source src="assets/img/webdesigner/graphic2.mp4" type="video/mp4"></video><span>VIEW MOTION</span></button>
+            <button type="button" class="creative-mosaic-item creative-gallery-trigger cafely-video-tile" data-gallery-index="12" aria-label="View Cafely AI promotional video"><video autoplay loop muted playsinline preload="metadata"><source src="assets/img/webdesigner/CafelyPromoVid.mp4" type="video/mp4"></video><span>CAFELY • AI VIDEO</span></button>
+            <button type="button" class="creative-mosaic-item creative-gallery-trigger" data-gallery-index="2" aria-label="View Creative Work 03"><img src="assets/img/webdesigner/graphic3.png" alt="Creative Work 03"><span>VIEW</span></button>
+            <button type="button" class="creative-mosaic-item creative-gallery-trigger" data-gallery-index="3" aria-label="View Creative Work 04"><img src="assets/img/webdesigner/graphic4.png" alt="Creative Work 04"><span>VIEW</span></button>
+            <button type="button" class="creative-mosaic-item creative-gallery-trigger" data-gallery-index="4" aria-label="View Creative Work 05"><img src="assets/img/webdesigner/graphic5.png" alt="Creative Work 05"><span>VIEW</span></button>
           </div>
-
-          <div id="creativeVideo02" class="mfp-hide creative-video-popup">
-            <div class="creative-video-popup-inner">
-              <span>02 / MOTION</span>
-              <h3>Creative Motion Work</h3>
-              <video controls loop playsinline preload="metadata">
-                <source src="assets/img/webdesigner/graphic2.mp4" type="video/mp4">
-                Your browser does not support video playback.
-              </video>
-            </div>
-          </div>
+          <div id="creativeVideo02" class="mfp-hide creative-video-popup"><div class="creative-video-popup-inner"><span>02 / MOTION</span><h3>Creative Motion Work</h3><video controls loop playsinline preload="metadata"><source src="assets/img/webdesigner/graphic2.mp4" type="video/mp4">Your browser does not support video playback.</video></div></div>
+          <div id="creativeVideoCafely" class="mfp-hide creative-video-popup"><div class="creative-video-popup-inner"><span>AI-GENERATED PROMOTIONAL VIDEO</span><h3>Cafely Promo Video</h3><video controls loop playsinline preload="metadata"><source src="assets/img/webdesigner/CafelyPromoVid.mp4" type="video/mp4">Your browser does not support video playback.</video></div></div>
         </article>
       </div>
-
     </div>
 
-    <section class="portfolio-final-cta">
-      <div>
-        <span class="portfolio-v2-eyebrow">HAVE SOMETHING IN MIND?</span>
-        <h3>Let's turn the idea into <span>something worth showing here.</span></h3>
-        <p>Websites, analytics, optimization, creative work, or connected digital support—every project starts with a problem worth solving.</p>
-      </div>
-      <a href="#contact" class="portfolio-start-btn to-contact">
-        Start a Project <i class="bi bi-arrow-right"></i>
-      </a>
-    </section>
-
+    <section class="portfolio-final-cta"><div><span class="portfolio-v2-eyebrow">HAVE SOMETHING IN MIND?</span><h3>Let's turn the idea into <span>something worth showing here.</span></h3><p>Websites, analytics, automation, creative work, or connected digital support—every project starts with a problem worth solving.</p></div><a href="#contact" class="portfolio-start-btn to-contact">Start a Project <i class="bi bi-arrow-right"></i></a></section>
   </div>
 
   <div class="portfolio-drawer-backdrop" id="portfolioDrawerBackdrop"></div>
-
   <aside class="portfolio-project-drawer" id="portfolioProjectDrawer" aria-hidden="true" aria-label="Project details">
-    <button type="button" class="portfolio-drawer-close" id="portfolioDrawerClose" aria-label="Close project preview">
-      <i class="bi bi-x-lg"></i>
-    </button>
-
-    <div class="portfolio-drawer-inner">
-      <span class="portfolio-drawer-category" id="portfolioDrawerCategory">PROJECT</span>
-      <h2 id="portfolioDrawerTitle">Project Title</h2>
-      <p class="portfolio-drawer-summary" id="portfolioDrawerSummary"></p>
-
-      <div class="portfolio-drawer-section">
-        <span>MY CONTRIBUTION</span>
-        <div class="portfolio-drawer-list" id="portfolioDrawerContribution"></div>
-      </div>
-
-      <div class="portfolio-drawer-section">
-        <span>TOOLS / STACK</span>
-        <div class="portfolio-drawer-tags" id="portfolioDrawerStack"></div>
-      </div>
-
-      <div class="portfolio-drawer-actions" id="portfolioDrawerActions"></div>
-    </div>
+    <button type="button" class="portfolio-drawer-close" id="portfolioDrawerClose" aria-label="Close project preview"><i class="bi bi-x-lg"></i></button>
+    <div class="portfolio-drawer-inner"><span class="portfolio-drawer-category" id="portfolioDrawerCategory">PROJECT</span><h2 id="portfolioDrawerTitle">Project Title</h2><p class="portfolio-drawer-summary" id="portfolioDrawerSummary"></p><div class="portfolio-drawer-section"><span>MY CONTRIBUTION</span><div class="portfolio-drawer-list" id="portfolioDrawerContribution"></div></div><div class="portfolio-drawer-section"><span>TOOLS / STACK</span><div class="portfolio-drawer-tags" id="portfolioDrawerStack"></div></div><div class="portfolio-drawer-actions" id="portfolioDrawerActions"></div></div>
   </aside>
-
 </section>
 
 <!-- ========================================
@@ -5963,15 +5890,26 @@
   <!--  Color Pallet  -->
   <div id="color-switcher" class="color-switcher">
     <div class="text-center color-pallet hide">
-      <h6 class="theme-skin-title">Light &amp; Dark</h6>
-      <ul class="color-scheme list-inline">
-        <li class="list-inline-item">
-          <a href="javascript:void(0)" class="light-scheme" role="button" aria-pressed="false"><i class="bi bi-brightness-high"></i> Light</a>
-        </li>
-        <li class="list-inline-item">
-          <a href="javascript:void(0)" class="dark-scheme" role="button" aria-pressed="false"><i class="bi bi-moon"></i> Dark</a>
-        </li>
-      </ul>
+      <h6 class="theme-skin-title">Appearance</h6>
+      <div class="theme-mode-control">
+        <button
+          type="button"
+          class="theme-mode-switch"
+          id="themeModeSwitch"
+          role="switch"
+          aria-checked="false"
+          aria-label="Switch between light and dark mode"
+        >
+          <span class="theme-mode-track" aria-hidden="true">
+            <span class="theme-mode-ambient theme-mode-ambient-sun"><i class="bi bi-sun-fill"></i></span>
+            <span class="theme-mode-ambient theme-mode-ambient-moon"><i class="bi bi-moon-stars-fill"></i></span>
+            <span class="theme-mode-thumb">
+              <i class="bi bi-sun-fill theme-thumb-sun"></i>
+              <i class="bi bi-moon-stars-fill theme-thumb-moon"></i>
+            </span>
+          </span>
+        </button>
+      </div>
 
     </div>
     <div class="pallet-button hide">

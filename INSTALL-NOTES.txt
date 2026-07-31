@@ -1,0 +1,14 @@
+LUKAS PORTFOLIO — SECOND REVISION
+
+Replace these files in the matching project paths:
+- index.html
+- assets/css/style.css
+- assets/css/portfolio-v2.css
+- assets/css/resume-v2.css
+- assets/css/theme-mode.css
+- assets/js/luke.js
+
+The Cafely creative-video card references this exact existing asset path:
+assets/img/webdesigner/CafelyPromoVid.com
+
+Keep that media file at the exact path above. The revised package contains code files only; it does not contain the Cafely video asset because the media file itself was not uploaded with the source files.

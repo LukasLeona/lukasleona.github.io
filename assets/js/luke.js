@@ -319,41 +319,101 @@ function skills() {
 /*-------------------------  Mobile Menu  -------------------------*/
 function mobileDesign() {
     "use strict";
-    $('.menu-toggle').on('click', function() {
-        menuAnimation();
-    });
-    $('.menu li a').on('click', function() {
-        if ($window.width() < 992) {
-            menuAnimation();
+
+    var toggle = document.querySelector(".menu-toggle");
+    var drawer = document.querySelector(".left-side");
+    var overlay = document.querySelector(".menu-overlay");
+    var close = document.getElementById("mobileMenuClose");
+
+    function setOpen(open) {
+      if (!drawer || window.innerWidth >= 992) {
+        return;
+      }
+
+      document.body.classList.toggle("mobile-menu-open", open);
+      drawer.classList.toggle("nav-open", open);
+      drawer.classList.toggle("nav-close", !open);
+      drawer.setAttribute("aria-hidden", open ? "false" : "true");
+
+      drawer.style.removeProperty("left");
+      drawer.style.removeProperty("right");
+      drawer.style.removeProperty("width");
+      drawer.style.removeProperty("padding-top");
+
+      if (toggle) {
+        toggle.classList.toggle("menu-open", open);
+        toggle.setAttribute("aria-expanded", open ? "true" : "false");
+      }
+
+      if (overlay) {
+        overlay.classList.toggle("d-none", !open);
+      }
+
+      document.querySelectorAll(".next-prev-page.d-block.d-lg-none").forEach(function (nav) {
+        nav.classList.toggle("d-none", open);
+      });
+    }
+
+    window.setMobileMenuOpen = setOpen;
+
+    if (toggle) {
+      toggle.setAttribute("role", "button");
+      toggle.setAttribute("tabindex", "0");
+      toggle.setAttribute("aria-label", "Open mobile navigation");
+      toggle.setAttribute("aria-expanded", "false");
+      toggle.addEventListener("click", function () {
+        setOpen(!document.body.classList.contains("mobile-menu-open"));
+      });
+      toggle.addEventListener("keydown", function (event) {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          toggle.click();
         }
+      });
+    }
+
+    if (close) {
+      close.addEventListener("click", function () { setOpen(false); });
+    }
+
+    if (overlay) {
+      overlay.addEventListener("click", function () { setOpen(false); });
+    }
+
+    document.querySelectorAll(".left-side .menu a").forEach(function (link) {
+      link.addEventListener("click", function () {
+        if (window.innerWidth < 992) {
+          setOpen(false);
+        }
+      });
     });
+
+    document.addEventListener("keydown", function (event) {
+      if (event.key === "Escape") {
+        setOpen(false);
+      }
+    });
+
+    window.addEventListener("resize", function () {
+      if (window.innerWidth >= 992) {
+        document.body.classList.remove("mobile-menu-open");
+        if (overlay) overlay.classList.add("d-none");
+        if (toggle) toggle.classList.remove("menu-open");
+        drawer.removeAttribute("aria-hidden");
+      } else {
+        setOpen(false);
+      }
+    });
+
+    if (window.innerWidth < 992) {
+      requestAnimationFrame(function () { setOpen(false); });
+    }
 }
 
 function menuAnimation() {
-
     "use strict";
-
-    var $leftSide = $('.left-side');
-    if ($leftSide.hasClass("nav-open")) {
-        $("body").removeClass("mobile-menu-open");
-        $(".menu-toggle").removeClass("menu-open");
-        $(".menu-overlay").addClass("d-none");
-        if ($window.width() < 992) {
-            $(".next-prev-page").removeClass("d-none");
-        }
-        $leftSide.animate({
-            left: "200%"
-        }, 300).removeClass("nav-open").addClass("nav-close");
-    } else if ($leftSide.hasClass("nav-close")) {
-        $("body").addClass("mobile-menu-open");
-        $(".menu-toggle").addClass("menu-open");
-        $(".menu-overlay").removeClass("d-none");
-        if ($window.width() < 992) {
-            $(".next-prev-page").addClass("d-none");
-        }
-        $leftSide.animate({
-            left: "15px"
-        }, 300).removeClass("nav-close").addClass("nav-open");
+    if (window.setMobileMenuOpen && window.innerWidth < 992) {
+      window.setMobileMenuOpen(!document.body.classList.contains("mobile-menu-open"));
     }
 }
 
@@ -394,6 +454,13 @@ function scrollToAnchor() {
 function openMenu() {
 
   "use strict";
+
+  if ($window.width() < 992) {
+    $("body").removeClass("layout-expanded layout-collapsed");
+    $(".left-side").removeAttr("style").removeClass("nav-open").addClass("nav-close").attr("aria-hidden", "true");
+    $(".left-side .menu-align, .left-side .menu, .left-side .menu .list-group-item, .left-side img, .left-side h1, .left-side a.download-cv").removeAttr("style");
+    return;
+  }
 
 
   var childrenCount =
@@ -646,6 +713,13 @@ function openMenu() {
 function closeMenu() {
 
   "use strict";
+
+  if ($window.width() < 992) {
+    $("body").removeClass("layout-expanded layout-collapsed");
+    $(".left-side").removeAttr("style").removeClass("nav-open").addClass("nav-close").attr("aria-hidden", "true");
+    $(".left-side .menu-align, .left-side .menu, .left-side .menu .list-group-item, .left-side img, .left-side h1, .left-side a.download-cv").removeAttr("style");
+    return;
+  }
 
 
   var windowWidth =
@@ -1750,7 +1824,7 @@ function portfolioChatbot() {
     "Need help exploring?",
     "I can recommend a project.",
     "Ask what Luke can build.",
-    "Looking for web or data work?",
+    "Web, data, or automation?",
     "Let’s find the right section.",
     "Ready to start a project?"
   ];
@@ -2260,8 +2334,7 @@ function themeOption() {
     var storageKey = "lukas-theme";
     var root = document.documentElement;
     var body = document.body;
-    var lightButton = document.querySelector(".light-scheme");
-    var darkButton = document.querySelector(".dark-scheme");
+    var themeSwitch = document.getElementById("themeModeSwitch");
     var panel = document.querySelector("#color-switcher .color-pallet");
     var toggleButton = document.querySelector("#color-switcher .cp-toggle");
     var systemPreference = window.matchMedia
@@ -2280,67 +2353,95 @@ function themeOption() {
       try {
         window.localStorage.setItem(storageKey, theme);
       } catch (error) {
-        // The portfolio still works when storage is unavailable.
+        // Theme switching remains available when storage is blocked.
       }
     }
 
-    function updateControls(theme) {
+    function updateControl(theme) {
+      if (!themeSwitch) return;
+
       var isLight = theme === "light";
+      themeSwitch.classList.toggle("is-light", isLight);
+      themeSwitch.classList.toggle("is-dark", !isLight);
+      themeSwitch.setAttribute("aria-checked", isLight ? "true" : "false");
+      themeSwitch.setAttribute(
+        "aria-label",
+        isLight ? "Light mode active. Switch to dark mode" : "Dark mode active. Switch to light mode"
+      );
+    }
 
-      if (lightButton) {
-        lightButton.classList.toggle("active", isLight);
-        lightButton.setAttribute("aria-pressed", isLight ? "true" : "false");
+    function closeThemePanel() {
+      if (!panel) return;
+
+      panel.classList.add("theme-panel-closing");
+      panel.classList.remove("show");
+
+      if (toggleButton) {
+        toggleButton.setAttribute("aria-expanded", "false");
       }
 
-      if (darkButton) {
-        darkButton.classList.toggle("active", !isLight);
-        darkButton.setAttribute("aria-pressed", !isLight ? "true" : "false");
-      }
+      window.setTimeout(function () {
+        panel.classList.remove("theme-panel-closing");
+      }, 360);
     }
 
     function applyTheme(theme, persist) {
       var nextTheme = theme === "light" ? "light" : "dark";
 
+      root.classList.add("theme-is-changing");
       root.setAttribute("data-theme", nextTheme);
       body.setAttribute("data-theme", nextTheme);
       body.classList.toggle("dark-arshia", nextTheme === "dark");
       body.classList.toggle("light-arshia", nextTheme === "light");
 
-      updateControls(nextTheme);
+      updateControl(nextTheme);
 
       if (persist) {
         saveTheme(nextTheme);
       }
+
+      window.setTimeout(function () {
+        root.classList.remove("theme-is-changing");
+      }, 520);
     }
 
     var initialTheme = storedTheme();
 
     if (initialTheme !== "light" && initialTheme !== "dark") {
-      initialTheme = systemPreference && systemPreference.matches
-        ? "dark"
-        : "light";
+      initialTheme = systemPreference && systemPreference.matches ? "dark" : "light";
     }
 
     applyTheme(initialTheme, false);
 
-    if (darkButton) {
-      darkButton.addEventListener("click", function (event) {
-        event.preventDefault();
-        applyTheme("dark", true);
+    if (themeSwitch) {
+      themeSwitch.addEventListener("click", function () {
+        var currentTheme = root.getAttribute("data-theme") === "light" ? "light" : "dark";
+        applyTheme(currentTheme === "light" ? "dark" : "light", true);
+        closeThemePanel();
       });
-    }
 
-    if (lightButton) {
-      lightButton.addEventListener("click", function (event) {
-        event.preventDefault();
-        applyTheme("light", true);
+      themeSwitch.addEventListener("keydown", function (event) {
+        if (event.key === "ArrowLeft") {
+          event.preventDefault();
+          applyTheme("light", true);
+          closeThemePanel();
+        }
+        if (event.key === "ArrowRight") {
+          event.preventDefault();
+          applyTheme("dark", true);
+          closeThemePanel();
+        }
       });
     }
 
     if (toggleButton && panel) {
       toggleButton.addEventListener("click", function () {
-        var isOpen = panel.classList.contains("show");
-        toggleButton.setAttribute("aria-expanded", isOpen ? "true" : "false");
+        window.requestAnimationFrame(function () {
+          toggleButton.setAttribute(
+            "aria-expanded",
+            panel.classList.contains("show") ? "true" : "false"
+          );
+        });
       });
     }
 
@@ -2933,186 +3034,171 @@ function interactiveResume() {
 
 
     /* =====================================================
-       4. DATA DASHBOARD DEMO
+       4. DATA DASHBOARD DEMO — DATA CAPABILITY ONLY
     ===================================================== */
 
-    var chartButtons =
-        resumeSection.querySelectorAll(
-            ".data-demo-btn"
-        );
-
-    var chartBars =
-        resumeSection.querySelectorAll(
-            ".data-chart-bars span"
-        );
-
-
-    var metricOne =
-        document.getElementById(
-            "demoMetricOne"
-        );
-
-    var metricTwo =
-        document.getElementById(
-            "demoMetricTwo"
-        );
-
-    var metricThree =
-        document.getElementById(
-            "demoMetricThree"
-        );
-
-
-    var metricOneLabel =
-        document.getElementById(
-            "demoMetricOneLabel"
-        );
-
-    var metricTwoLabel =
-        document.getElementById(
-            "demoMetricTwoLabel"
-        );
-
-    var metricThreeLabel =
-        document.getElementById(
-            "demoMetricThreeLabel"
-        );
-
+    var dataDashboard = document.getElementById("resumeDataDashboard");
+    var chartButtons = resumeSection.querySelectorAll(".data-demo-btn");
 
     var dashboardViews = {
-
-        sales: {
-
-            bars:
-                [34, 52, 44, 71, 62, 86, 76],
-
-            labels:
-                ["Revenue", "Orders", "Growth"],
-
-            values:
-                ["₱482K", "1,284", "+18%"]
-
-        },
-
-
-        customers: {
-
-            bars:
-                [62, 48, 72, 55, 84, 69, 91],
-
-            labels:
-                ["Customers", "Returning", "Retention"],
-
-            values:
-                ["1,284", "42%", "76%"]
-
-        },
-
-
-        regions: {
-
-            bars:
-                [82, 58, 36, 72, 48, 64, 89],
-
-            labels:
-                ["Regions", "Top Market", "Coverage"],
-
-            values:
-                ["8", "NCR", "74%"]
-
-        }
-
+      sales: {
+        context: "Sales performance • monthly signal",
+        labels: ["Revenue", "Orders", "Growth"],
+        values: ["₱482K", "1,284", "18%"],
+        trends: ["+18.4%", "+12.1%", "vs. previous period"],
+        lineLabel: "REVENUE TREND",
+        lineValue: "₱482K",
+        linePeriod: "Jan — Jul",
+        line: [132,116,126,82,94,50,62],
+        bars: [34,52,44,71,62,86,76],
+        barNames: ["Web","SEO","Email","Social","Direct","Paid","Referral"],
+        barsLabel: "CHANNEL MIX",
+        barsValue: "Conversion contribution",
+        scatterLabel: "CUSTOMER CLUSTERS",
+        scatterValue: "4 behavior groups",
+        percentage: 76,
+        percentageLabel: "Retention",
+        insightTitle: "Returning customers drive stable growth.",
+        insightText: "The strongest period combines repeat purchases with higher-value acquisition channels.",
+        tags: ["EDA", "Trend analysis", "Dashboard"],
+        legend: ["Loyal", "Growing", "At risk", "New"]
+      },
+      customers: {
+        context: "Customer behavior • segment signal",
+        labels: ["Customers", "Returning", "Retention"],
+        values: ["1,284", "42%", "76%"],
+        trends: ["+9.8%", "+6.2%", "+4.1 pts"],
+        lineLabel: "ACTIVE CUSTOMERS",
+        lineValue: "1,284",
+        linePeriod: "7-month cohort",
+        line: [138,124,101,110,76,66,42],
+        bars: [62,48,72,55,84,69,91],
+        barNames: ["New","Repeat","VIP","Dormant","Mobile","Web","Referral"],
+        barsLabel: "SEGMENT SHARE",
+        barsValue: "Behavior distribution",
+        scatterLabel: "K-MEANS CLUSTERS",
+        scatterValue: "High value vs. frequency",
+        percentage: 68,
+        percentageLabel: "Repeat rate",
+        insightTitle: "A smaller loyal group contributes disproportionate value.",
+        insightText: "Frequency and order value reveal four actionable customer segments for retention and targeting.",
+        tags: ["K-Means", "Segmentation", "Cohorts"],
+        legend: ["Champions", "Regular", "Occasional", "At risk"]
+      },
+      regions: {
+        context: "Regional performance • geographic signal",
+        labels: ["Regions", "Top Market", "Coverage"],
+        values: ["8", "NCR", "74%"],
+        trends: ["+2 areas", "31% share", "+8.0 pts"],
+        lineLabel: "REGIONAL INDEX",
+        lineValue: "74%",
+        linePeriod: "coverage trend",
+        line: [142,130,112,92,104,68,48],
+        bars: [82,58,36,72,48,64,89],
+        barNames: ["NCR","CAR","III","IV-A","VII","XI","XII"],
+        barsLabel: "REGION SCORE",
+        barsValue: "Relative performance",
+        scatterLabel: "GEOGRAPHIC SIGNALS",
+        scatterValue: "performance + reach",
+        percentage: 74,
+        percentageLabel: "Coverage",
+        insightTitle: "Strong regions combine reach with consistent performance.",
+        insightText: "Regional comparison exposes concentration, under-served areas, and where the next opportunity may be.",
+        tags: ["Geographic analysis", "Comparisons", "Insights"],
+        legend: ["High reach", "High value", "Emerging", "Opportunity"]
+      }
     };
 
+    var dataX = [18,82,146,210,274,338,402];
 
-    function updateDashboard(viewName) {
-
-        var data =
-            dashboardViews[viewName];
-
-        if (!data) {
-            return;
-        }
-
-
-        chartBars.forEach(
-            function(bar, index) {
-
-                bar.style.setProperty(
-                    "--bar-height",
-                    data.bars[index] + "%"
-                );
-
-            }
-        );
-
-
-        if (metricOne) {
-
-            metricOne.textContent =
-                data.values[0];
-
-            metricOneLabel.textContent =
-                data.labels[0];
-
-        }
-
-
-        if (metricTwo) {
-
-            metricTwo.textContent =
-                data.values[1];
-
-            metricTwoLabel.textContent =
-                data.labels[1];
-
-        }
-
-
-        if (metricThree) {
-
-            metricThree.textContent =
-                data.values[2];
-
-            metricThreeLabel.textContent =
-                data.labels[2];
-
-        }
-
+    function setText(id, value) {
+      var element = document.getElementById(id);
+      if (element) element.textContent = value;
     }
 
+    function renderDataDashboard(viewName) {
+      if (!dataDashboard || !dashboardViews[viewName]) return;
 
-    chartButtons.forEach(function(button) {
+      var data = dashboardViews[viewName];
+      dataDashboard.classList.remove("is-updating");
+      void dataDashboard.offsetWidth;
+      dataDashboard.classList.add("is-updating");
 
-        button.addEventListener(
-            "click",
-            function() {
+      setText("dataDashboardContext", data.context);
+      setText("demoMetricOneLabel", data.labels[0]);
+      setText("demoMetricTwoLabel", data.labels[1]);
+      setText("demoMetricThreeLabel", data.labels[2]);
+      setText("demoMetricOne", data.values[0]);
+      setText("demoMetricTwo", data.values[1]);
+      setText("demoMetricThree", data.values[2]);
+      setText("demoMetricOneTrend", data.trends[0]);
+      setText("demoMetricTwoTrend", data.trends[1]);
+      setText("demoMetricThreeTrend", data.trends[2]);
+      setText("dataLineLabel", data.lineLabel);
+      setText("dataLineValue", data.lineValue);
+      setText("dataLinePeriod", data.linePeriod);
+      setText("dataBarsLabel", data.barsLabel);
+      setText("dataBarsValue", data.barsValue);
+      setText("dataScatterLabel", data.scatterLabel);
+      setText("dataScatterValue", data.scatterValue);
+      setText("dataPercentageValue", data.percentage + "%");
+      setText("dataPercentageLabel", data.percentageLabel);
+      setText("dataInsightTitle", data.insightTitle);
+      setText("dataInsightText", data.insightText);
 
-                chartButtons.forEach(
-                    function(item) {
+      var ring = document.getElementById("dataPercentageRing");
+      if (ring) ring.style.setProperty("--percentage", data.percentage);
 
-                        item.classList.remove(
-                            "active"
-                        );
+      var line = document.getElementById("dataDemoLine");
+      var area = document.getElementById("dataDemoArea");
+      var dots = document.getElementById("dataDemoDots");
+      var points = data.line.map(function (y, index) {
+        return dataX[index] + "," + y;
+      }).join(" ");
 
-                    }
-                );
+      if (line) line.setAttribute("points", points);
+      if (area) area.setAttribute("points", "18,164 " + points + " 402,164");
+      if (dots) {
+        dots.innerHTML = data.line.map(function (y, index) {
+          return '<circle cx="' + dataX[index] + '" cy="' + y + '" r="5"></circle>';
+        }).join("");
+      }
 
+      var bars = document.querySelectorAll("#dataDemoBars > span");
+      bars.forEach(function (bar, index) {
+        bar.style.setProperty("--bar-height", data.bars[index] + "%");
+        var label = bar.querySelector("em");
+        if (label) label.textContent = data.barNames[index];
+      });
 
-                button.classList.add(
-                    "active"
-                );
+      var tags = document.getElementById("dataProjectLabels");
+      if (tags) {
+        tags.innerHTML = data.tags.map(function (tag) {
+          return "<span>" + tag + "</span>";
+        }).join("");
+      }
 
+      var legend = document.querySelectorAll("#dataScatterLegend span");
+      legend.forEach(function (item, index) {
+        var dot = item.querySelector("i");
+        item.textContent = "";
+        if (dot) item.appendChild(dot);
+        item.appendChild(document.createTextNode(" " + data.legend[index]));
+      });
+    }
 
-                updateDashboard(
-                    button.dataset.chartView
-                );
-
-            }
-        );
-
+    chartButtons.forEach(function (button) {
+      button.addEventListener("click", function () {
+        chartButtons.forEach(function (item) {
+          var active = item === button;
+          item.classList.toggle("active", active);
+          item.setAttribute("aria-pressed", active ? "true" : "false");
+        });
+        renderDataDashboard(button.dataset.chartView || "sales");
+      });
     });
 
+    renderDataDashboard("sales");
 
 
     /* =====================================================
@@ -3648,6 +3734,7 @@ function interactiveResume() {
 
 }
 
+
 /* =========================================================
    INTERACTIVE PORTFOLIO
 ========================================================= */
@@ -3676,151 +3763,19 @@ function interactivePortfolio() {
   ===================================================== */
 
   var projects = {
-
-    fire: {
-      category: "WEB • LMS • SEO",
-      title: "Fire & Rescue Academy",
-      summary: "A professional digital training platform built to support emergency-services education, course delivery, content management, and online discoverability.",
-      contribution: [
-        "Website development and responsive implementation",
-        "Learning management system setup and course structure",
-        "SEO and content optimization",
-        "Technical troubleshooting and performance improvements"
-      ],
-      stack: ["WordPress", "Elementor", "Tutor LMS", "CSS", "SEO"],
-      links: [{ label: "Visit Live", url: "https://fireandrescueacademy.com/", external: true }]
-    },
-
-    iskolar: {
-      category: "WEB • PLATFORM",
-      title: "IskolarLink",
-      summary: "A student information and coordination platform designed to improve academic communication and organize digital workflows in one environment.",
-      contribution: [
-        "Platform and front-end development",
-        "Information architecture and content organization",
-        "Responsive interface implementation",
-        "Academic workflow presentation"
-      ],
-      stack: ["React", "JavaScript", "Web Development", "UI Structure"],
-      links: [{ label: "Open Project", url: "preview/IskolarLink.com/IskolarLink-main/#/", external: true }]
-    },
-
-    corporate: {
-      category: "WEB • CORPORATE",
-      title: "Corporate Disaster Response & Training",
-      summary: "A professional corporate website created for a disaster-response and training organization, focused on presenting services clearly and strengthening its digital presence.",
-      contribution: [
-        "Website design and development",
-        "Responsive implementation",
-        "Content presentation and structure",
-        "Digital presence improvements"
-      ],
-      stack: ["WordPress", "Web Design", "Responsive", "Content"],
-      links: [{ label: "Visit Live", url: "https://conquerorscc.com/", external: true }]
-    },
-
-    lakbay: {
-      category: "WEB • TRAVEL APP",
-      title: "Lakbay Baguio",
-      summary: "A Baguio itinerary experience that helps visitors discover local places, shape a trip, and enjoy a calmer, more personal travel-planning flow.",
-      contribution: [
-        "Travel-focused UI and content structure",
-        "Interactive itinerary experience",
-        "Responsive front-end implementation",
-        "Conversational emotional-support concept"
-      ],
-      stack: ["HTML", "CSS", "JavaScript", "Responsive UI"],
-      links: [{ label: "Open Project", url: "preview/lakbaybaguio.com/index.html", external: true }]
-    },
-
-    mebs: {
-      category: "WEB • CONSTRUCTION",
-      title: "MeBS Construction",
-      summary: "A modern construction-company website focused on engineering credibility, project presentation, and clear client pathways.",
-      contribution: [
-        "Website repurposing and front-end development",
-        "Construction-focused content adaptation",
-        "Responsive interface refinement",
-        "Brand and interaction improvements"
-      ],
-      stack: ["HTML", "CSS", "JavaScript", "UI/UX"],
-      links: [{ label: "Open Project", url: "preview/mebsconstruction.com/index.html", external: true }]
-    },
-
-    cloudchaser: {
-      category: "WEB • TRAVEL",
-      title: "Cloud Chaser",
-      summary: "A polished travel-agency experience for browsing curated Philippine and Asian trips, understanding itineraries, and requesting a journey.",
-      contribution: [
-        "Travel website repurposing",
-        "Destination and itinerary content structure",
-        "Responsive UI improvements",
-        "Interaction and conversion refinements"
-      ],
-      stack: ["HTML", "CSS", "JavaScript", "Travel UX"],
-      links: [{ label: "Open Trips", url: "preview/cloudchaser.com/trips.html", external: true }]
-    },
-
-    let: {
-      category: "DATA • EDUCATION ANALYTICS",
-      title: "LET Performance Trends",
-      summary: "A data-analysis project exploring licensure examination performance, regional patterns, and educational outcomes across multiple years.",
-      contribution: [
-        "Data preparation and exploratory analysis",
-        "Trend and geographic analysis",
-        "Visualization and interpretation",
-        "Interactive case-study presentation"
-      ],
-      stack: ["Python", "Data Analysis", "Visualization", "Statistics"],
-      links: [{ label: "Explore Analysis", url: "let-performance-analysis.html", external: false }]
-    },
-
-    spending: {
-      category: "DATA • CUSTOMER BEHAVIOR",
-      title: "Spending Behavior Analysis",
-      summary: "An analytical project examining customer spending behavior, meaningful market segments, purchasing relationships, and future transaction patterns.",
-      contribution: [
-        "Exploratory Data Analysis",
-        "Customer segmentation using K-Means",
-        "Association-rule analysis",
-        "Time-series forecasting"
-      ],
-      stack: ["Python", "Pandas", "K-Means", "Apriori", "ARIMA"],
-      links: [{ label: "Explore Analysis", url: "customer-spending-analysis.html", external: false }]
-    },
-
-    campaign1: {
-      category: "CONTENT • CAMPAIGN",
-      title: "Campaign Landing Experience",
-      summary: "A campaign-oriented digital experience combining front-end implementation, content presentation, and visual hierarchy for promotional engagement.",
-      contribution: [
-        "Front-end implementation",
-        "Campaign page layout",
-        "Responsive styling",
-        "Interactive content presentation"
-      ],
-      stack: ["HTML", "CSS", "JavaScript", "PHP"],
-      links: [{
-        label: "View Campaign",
-        url: "http://paidmediasandbox.3jzvudtzb5-dv13xg0776gq.p.temp-site.link/luke/mood/v2-20off/v2startup.html",
-        external: true
-      }]
-    },
-
-    campaign2: {
-      category: "CONTENT • INTERACTIVE",
-      title: "Interactive Campaign Blog",
-      summary: "A front-end campaign experience focused on visual storytelling, interactive presentation, and engaging content delivery.",
-      contribution: [
-        "Page development",
-        "Interactive front-end behavior",
-        "Responsive styling",
-        "Campaign presentation"
-      ],
-      stack: ["HTML", "CSS", "JavaScript"],
-      links: [{ label: "View Campaign", url: "https://va-0097.github.io/Mood/", external: true }]
-    }
-
+    fire:{category:"WEB • LMS • SEO",title:"Fire & Rescue Academy",summary:"A professional digital training platform for emergency-services education, course delivery, and online discoverability.",contribution:["Responsive website development","LMS course structure and delivery","SEO and content optimization","Technical troubleshooting"],stack:["WordPress","Tutor LMS","CSS","SEO"],links:[{label:"Visit Live",url:"https://fireandrescueacademy.com/",external:true}]},
+    iskolar:{category:"WEB • PLATFORM",title:"IskolarLink",summary:"A student information and coordination platform that brings academic communication and workflows into one clearer environment.",contribution:["React front-end development","Information architecture","Responsive implementation","Academic workflow presentation"],stack:["React","JavaScript","UI Structure"],links:[{label:"Open Project",url:"preview/IskolarLink.com/IskolarLink-main/#/",external:true}]},
+    corporate:{category:"WEB • CORPORATE",title:"Disaster Response & Training",summary:"A professional corporate website for a disaster-response and training organization.",contribution:["Website design and development","Responsive implementation","Content structure","Digital presence improvements"],stack:["WordPress","Responsive","Content"],links:[{label:"Visit Live",url:"https://conquerorscc.com/",external:true}]},
+    lakbay:{category:"WEB • TRAVEL APP",title:"Lakbay Baguio",summary:"A Baguio itinerary experience with local discovery, trip planning, and a conversational emotional-support concept.",contribution:["Travel-focused UI","Interactive itinerary flow","Responsive front end","Conversational support concept"],stack:["HTML","CSS","JavaScript"],links:[{label:"Open Project",url:"preview/lakbaybaguio.com/index.html",external:true}]},
+    mebs:{category:"WEB • CONSTRUCTION",title:"MeBS Construction",summary:"A modern construction-company website focused on engineering credibility and project presentation.",contribution:["Website repurposing","Industry-specific content adaptation","Responsive UI refinement","Brand interaction improvements"],stack:["HTML","CSS","JavaScript","UI/UX"],links:[{label:"Open Project",url:"preview/mebsconstruction.com/index.html",external:true}]},
+    cloudchaser:{category:"WEB • TRAVEL",title:"Cloud Chaser",summary:"A polished travel-agency experience for curated Philippine and Asian trips.",contribution:["Travel website repurposing","Itinerary content structure","Responsive refinement","Conversion improvements"],stack:["HTML","CSS","JavaScript","Travel UX"],links:[{label:"Open Trips",url:"preview/cloudchaser.com/trips.html",external:true}]},
+    layoutletter:{category:"AUTOMATION • CREATOR TOOL",title:"LayoutLetter",summary:"A visual newsletter builder for creators and businesses that makes campaign assembly faster and more approachable.",contribution:["Product interface concept","Visual builder workflow","Responsive front-end experience","Automation-oriented interaction design"],stack:["Automation","Newsletter","Builder","UI/UX"],links:[{label:"Open Project",url:"preview/LayoutLetter.com/index.html",external:true}]},
+    mountain:{category:"WEB • TOURISM",title:"Discover Mountain Province",summary:"A destination website for exploring Mountain Province through places, stories, and trip ideas.",contribution:["Tourism content structure","Destination-focused visual system","Responsive implementation","Discovery pathways"],stack:["HTML","CSS","JavaScript","Tourism UX"],links:[{label:"Open Project",url:"preview/DiscoverMountainProvince.com/index.html",external:true}]},
+    readystation:{category:"AUTOMATION • LMS",title:"ReadyStation LMS",summary:"A training platform built for first responders and the realities of fireground preparation.",contribution:["LMS product presentation","First-responder workflow framing","Responsive interface","Training-focused user experience"],stack:["LMS","Training","Automation","First Responders"],links:[{label:"Open Project",url:"preview/ReadyStation.com/index.html",external:true}]},
+    let:{category:"DATA • EDUCATION ANALYTICS",title:"LET Performance Trends",summary:"An interactive analysis of LET performance, institutions, geography, demographics, and examination ratings.",contribution:["Data preparation","Trend and geographic analysis","Visualization","Interactive case study"],stack:["Python","Analytics","Visualization","Statistics"],links:[{label:"Explore Analysis",url:"let-performance-analysis.html",external:false}]},
+    spending:{category:"DATA • CUSTOMER BEHAVIOR",title:"Spending Behavior Analysis",summary:"Customer segmentation, purchasing relationships, and future transaction forecasting.",contribution:["Exploratory analysis","K-Means segmentation","Apriori association analysis","ARIMA forecasting"],stack:["Python","Pandas","K-Means","Apriori","ARIMA"],links:[{label:"Explore Analysis",url:"customer-spending-analysis.html",external:false}]},
+    campaign1:{category:"CONTENT • CAMPAIGN",title:"Campaign Landing Experience",summary:"A conversion-focused campaign experience combining content, implementation, and visual hierarchy.",contribution:["Front-end implementation","Campaign layout","Responsive styling","Content presentation"],stack:["HTML","CSS","JavaScript","Content"],links:[{label:"View Campaign",url:"http://paidmediasandbox.3jzvudtzb5-dv13xg0776gq.p.temp-site.link/luke/mood/v2-20off/v2startup.html",external:true}]},
+    campaign2:{category:"CONTENT • INTERACTIVE",title:"Interactive Campaign Blog",summary:"A visual storytelling experience for interactive promotional content.",contribution:["Page development","Interactive behavior","Responsive styling","Campaign storytelling"],stack:["HTML","CSS","JavaScript"],links:[{label:"View Campaign",url:"https://va-0097.github.io/Mood/",external:true}]}
   };
 
 
@@ -4584,6 +4539,17 @@ var creativeGalleryItems = [
 
     title:
       "Creative Work 12"
+  },
+
+  {
+    src:
+      "#creativeVideoCafely",
+
+    type:
+      "inline",
+
+    title:
+      "Cafely Promo Video — AI Generated"
   }
 
 ];
