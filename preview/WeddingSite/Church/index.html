@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="A romantic, modern wedding invitation for Amelia and Rafael at The Peninsula Manila." />
+  <meta name="theme-color" content="#f5eee6" />
+  <title>Amelia & Rafael — Wedding Invitation</title>
+  <link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <div class="page-loader" id="pageLoader" aria-hidden="true">
+    <div class="loader-mark">A<span>&</span>R</div>
+    <p>Preparing our invitation</p>
+  </div>
+
+  <header class="site-header" id="siteHeader">
+    <a class="brand" href="#home" aria-label="Go to home">A<span>&</span>R</a>
+    <button class="menu-toggle" id="menuToggle" type="button" aria-label="Open navigation" aria-expanded="false">
+      <span></span><span></span>
+    </button>
+    <nav class="site-nav" id="siteNav" aria-label="Main navigation">
+      <a href="#story">Our Story</a>
+      <a href="#details">Details</a>
+      <a href="#gallery">Gallery</a>
+      <a href="#dress-code">Dress Code</a>
+      <a href="#gifts">Gifts</a>
+      <a class="nav-rsvp" href="#rsvp">RSVP</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="hero-image-wrap">
+        <img src="assets/images/hero-couple.webp" alt="A couple sharing a quiet moment in a garden at golden hour" fetchpriority="high" />
+      </div>
+      <div class="hero-overlay"></div>
+      <div class="hero-flourish hero-flourish-left" aria-hidden="true"></div>
+      <div class="hero-content reveal">
+        <p class="eyebrow">Together with our families</p>
+        <h1><span data-bride-name>Amelia</span> <i>&</i> <span data-groom-name>Rafael</span></h1>
+        <p class="hero-invite">joyfully invite you to celebrate their wedding</p>
+        <div class="hero-date" data-wedding-date-label>December 12, 2026</div>
+        <div class="hero-actions">
+          <a class="button button-primary" href="#rsvp">Confirm Attendance</a>
+          <button class="button button-ghost" id="calendarButton" type="button">Add to Calendar</button>
+        </div>
+      </div>
+      <a class="scroll-cue" href="#countdown" aria-label="Scroll to countdown">
+        <span>Scroll</span><i></i>
+      </a>
+    </section>
+
+    <section class="countdown-section" id="countdown">
+      <div class="section-shell countdown-shell reveal">
+        <p class="eyebrow">Until we say “I do”</p>
+        <div class="countdown" aria-live="polite">
+          <div><strong id="days">000</strong><span>Days</span></div>
+          <div><strong id="hours">00</strong><span>Hours</span></div>
+          <div><strong id="minutes">00</strong><span>Minutes</span></div>
+          <div><strong id="seconds">00</strong><span>Seconds</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="intro-section section-space">
+      <div class="section-shell narrow reveal">
+        <span class="section-kicker">A new chapter</span>
+        <h2>We found home in each other.</h2>
+        <p>
+          After years of shared dreams, quiet mornings, and adventures both big and small,
+          we are ready to begin forever. We would be honored to have you beside us as we celebrate this day.
+        </p>
+        <div class="signature">Amelia & Rafael</div>
+      </div>
+    </section>
+
+    <section class="details-section section-space" id="details">
+      <div class="section-shell">
+        <div class="section-heading reveal">
+          <span class="section-kicker">The celebration</span>
+          <h2>Wedding Details</h2>
+          <p>One beautiful day, two meaningful moments, and all our favorite people.</p>
+        </div>
+
+        <div class="event-grid">
+          <article class="event-card reveal">
+            <span class="event-number">01</span>
+            <div class="event-icon" aria-hidden="true">
+              <svg viewBox="0 0 48 48"><path d="M16 39h16M18 36V22l6-8 6 8v14M15 22h18M21 27h6M24 14V7M20 10h8"/></svg>
+            </div>
+            <p class="event-label">Ceremony</p>
+            <h3>The Peninsula Manila</h3>
+            <p class="event-time">4:00 PM</p>
+            <p>Rigodon Ballroom<br />Corner of Ayala and Makati Avenues, Makati City</p>
+            <a href="#location" class="text-link">View location <span>↗</span></a>
+          </article>
+
+          <article class="event-card reveal">
+            <span class="event-number">02</span>
+            <div class="event-icon" aria-hidden="true">
+              <svg viewBox="0 0 48 48"><path d="M13 9h22v8c0 7-5 13-11 13s-11-6-11-13V9ZM24 30v9M17 39h14M16 16h16"/></svg>
+            </div>
+            <p class="event-label">Reception</p>
+            <h3>The Peninsula Manila</h3>
+            <p class="event-time">6:30 PM</p>
+            <p>Rigodon Ballroom<br />Dinner, dancing, and joyful toasts to follow</p>
+            <a href="#location" class="text-link">View location <span>↗</span></a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="story-section section-space" id="story">
+      <div class="story-image reveal">
+        <img src="assets/images/garden-walk.webp" alt="The couple walking together through a garden" loading="lazy" />
+        <div class="image-note">Us, always.</div>
+      </div>
+      <div class="story-content reveal">
+        <span class="section-kicker">Our love story</span>
+        <h2>A little story about a very big love.</h2>
+        <div class="timeline">
+          <article>
+            <span>2019</span>
+            <h3>The First Hello</h3>
+            <p>A mutual friend, an unexpected conversation, and a feeling neither of us could ignore.</p>
+          </article>
+          <article>
+            <span>2021</span>
+            <h3>Our First Adventure</h3>
+            <p>We got wonderfully lost on a weekend trip and learned that every road felt right together.</p>
+          </article>
+          <article>
+            <span>2025</span>
+            <h3>The Question</h3>
+            <p>Under a sky full of stars, one question turned our favorite love story into forever.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="gallery-section section-space" id="gallery">
+      <div class="section-shell">
+        <div class="section-heading reveal">
+          <span class="section-kicker">Captured moments</span>
+          <h2>Our Gallery</h2>
+          <p>A glimpse of the laughter, promises, and places that brought us here.</p>
+        </div>
+        <div class="gallery-grid">
+          <button class="gallery-item gallery-wide reveal" data-full="assets/images/grand-staircase.webp" aria-label="Open grand staircase photo">
+            <img src="assets/images/grand-staircase.webp" alt="The couple posing inside an elegant grand staircase hall" loading="lazy" />
+            <span>View photo</span>
+          </button>
+          <button class="gallery-item reveal" data-full="assets/images/rings-detail.webp" aria-label="Open wedding rings photo">
+            <img src="assets/images/rings-detail.webp" alt="Close-up of the couple's hands and wedding rings" loading="lazy" />
+            <span>View photo</span>
+          </button>
+          <button class="gallery-item reveal" data-full="assets/images/reception-table.webp" aria-label="Open reception table photo">
+            <img src="assets/images/reception-table.webp" alt="A romantic candlelit reception table with earth-tone florals" loading="lazy" />
+            <span>View photo</span>
+          </button>
+          <button class="gallery-item gallery-wide reveal" data-full="assets/images/hero-couple.webp" aria-label="Open terrace portrait photo">
+            <img src="assets/images/hero-couple.webp" alt="The couple sharing an intimate moment on a terrace" loading="lazy" />
+            <span>View photo</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <section class="location-section" id="location">
+      <div class="location-copy reveal">
+        <span class="section-kicker light">The venue</span>
+        <h2>The Peninsula Manila</h2>
+        <p>
+          Corner of Ayala and Makati Avenues<br />Makati City, Metro Manila
+        </p>
+        <p class="location-note">Valet parking is available. Please arrive at least 30 minutes before the ceremony.</p>
+        <a class="button button-light" href="https://www.google.com/maps/search/?api=1&query=The+Peninsula+Manila" target="_blank" rel="noreferrer">Open in Google Maps</a>
+      </div>
+      <div class="location-map reveal">
+        <iframe
+          title="Map showing The Peninsula Manila"
+          src="https://www.google.com/maps?q=The+Peninsula+Manila&output=embed"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          allowfullscreen>
+        </iframe>
+      </div>
+    </section>
+
+    <section class="dress-section section-space" id="dress-code">
+      <div class="section-shell dress-layout">
+        <div class="dress-copy reveal">
+          <span class="section-kicker">What to wear</span>
+          <h2>Earth-Tone Formal</h2>
+          <p>
+            We invite our guests to dress in soft, romantic earth tones. Think polished silhouettes,
+            graceful textures, and colors inspired by a warm garden at sunset.
+          </p>
+          <div class="palette" aria-label="Suggested dress code colors">
+            <span style="--swatch:#f4eee4" title="Warm white"></span>
+            <span style="--swatch:#dfc7a9" title="Champagne"></span>
+            <span style="--swatch:#b87e73" title="Dusty rose"></span>
+            <span style="--swatch:#8d997c" title="Sage"></span>
+            <span style="--swatch:#b59a64" title="Muted gold"></span>
+            <span style="--swatch:#796458" title="Taupe"></span>
+          </div>
+          <p class="dress-note">Kindly avoid bright neon colors, denim, and all-white attire.</p>
+        </div>
+        <div class="dress-image reveal">
+          <img src="assets/images/rings-detail.webp" alt="Elegant wedding details in a soft earth-tone palette" loading="lazy" />
+        </div>
+      </div>
+    </section>
+
+    <section class="gifts-section section-space" id="gifts">
+      <div class="section-shell">
+        <div class="section-heading reveal">
+          <span class="section-kicker">With gratitude</span>
+          <h2>Gift Registry</h2>
+          <p>
+            Your presence is the greatest gift. For those who wish to give, these are the items currently registered for our future home.
+          </p>
+        </div>
+        <div class="gift-grid" id="giftGrid">
+          <article class="gift-card reveal" data-gift="Cast-Iron Dutch Oven" data-status="available">
+            <div class="gift-art gift-pot" aria-hidden="true"><span></span></div>
+            <div class="gift-meta"><span class="status available">Available</span><span>Kitchen</span></div>
+            <h3>Cast-Iron Dutch Oven</h3>
+            <p>For slow Sunday dinners and recipes we have yet to discover.</p>
+            <button class="gift-button" type="button">Reserve this gift</button>
+          </article>
+
+          <article class="gift-card reveal" data-gift="Espresso Machine" data-status="reserved">
+            <div class="gift-art gift-coffee" aria-hidden="true"><span></span></div>
+            <div class="gift-meta"><span class="status reserved">Reserved</span><span>Kitchen</span></div>
+            <h3>Espresso Machine</h3>
+            <p>For cozy mornings, long conversations, and coffee made with love.</p>
+            <button class="gift-button" type="button" disabled>Already reserved</button>
+          </article>
+
+          <article class="gift-card reveal" data-gift="Premium Bedding Set" data-status="available">
+            <div class="gift-art gift-bed" aria-hidden="true"><span></span></div>
+            <div class="gift-meta"><span class="status available">Available</span><span>Home</span></div>
+            <h3>Premium Bedding Set</h3>
+            <p>A soft and timeless set for restful nights in our first home.</p>
+            <button class="gift-button" type="button">Reserve this gift</button>
+          </article>
+
+          <article class="gift-card reveal" data-gift="Dinnerware Collection" data-status="gifted">
+            <div class="gift-art gift-plates" aria-hidden="true"><span></span></div>
+            <div class="gift-meta"><span class="status gifted">Gifted</span><span>Dining</span></div>
+            <h3>Dinnerware Collection</h3>
+            <p>A classic set for hosting the people we love around our table.</p>
+            <button class="gift-button" type="button" disabled>Gift received</button>
+          </article>
+
+          <article class="gift-card reveal" data-gift="Weekend Getaway Fund" data-status="available">
+            <div class="gift-art gift-luggage" aria-hidden="true"><span></span></div>
+            <div class="gift-meta"><span class="status available">Available</span><span>Experience</span></div>
+            <h3>Weekend Getaway Fund</h3>
+            <p>A contribution toward our first quiet escape as newlyweds.</p>
+            <button class="gift-button" type="button">Contribute to this gift</button>
+          </article>
+
+          <article class="gift-card reveal" data-gift="Living Room Accent Chair" data-status="available">
+            <div class="gift-art gift-chair" aria-hidden="true"><span></span></div>
+            <div class="gift-meta"><span class="status available">Available</span><span>Home</span></div>
+            <h3>Living Room Accent Chair</h3>
+            <p>A comfortable reading corner for stories, music, and slow afternoons.</p>
+            <button class="gift-button" type="button">Reserve this gift</button>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="rsvp-section section-space" id="rsvp">
+      <div class="rsvp-image reveal">
+        <img src="assets/images/reception-table.webp" alt="A romantic earth-tone wedding reception table" loading="lazy" />
+      </div>
+      <div class="rsvp-panel reveal">
+        <span class="section-kicker">Kindly respond</span>
+        <h2>Will you join us?</h2>
+        <p>Please submit one response per household on or before November 12, 2026.</p>
+
+        <form id="rsvpForm" class="rsvp-form">
+          <div class="field full">
+            <label for="guestName">Full name</label>
+            <input id="guestName" name="guestName" type="text" placeholder="Your full name" autocomplete="name" required />
+          </div>
+          <div class="field">
+            <label for="guestEmail">Email address</label>
+            <input id="guestEmail" name="guestEmail" type="email" placeholder="you@example.com" autocomplete="email" required />
+          </div>
+          <div class="field">
+            <label for="guestPhone">Contact number</label>
+            <input id="guestPhone" name="guestPhone" type="tel" placeholder="09XX XXX XXXX" autocomplete="tel" />
+          </div>
+          <div class="field full attendance-field">
+            <span class="field-label">Will you be attending?</span>
+            <div class="radio-group">
+              <label><input type="radio" name="attendance" value="Joyfully accepts" required /><span>Joyfully accepts</span></label>
+              <label><input type="radio" name="attendance" value="Regretfully declines" required /><span>Regretfully declines</span></label>
+            </div>
+          </div>
+          <div class="field">
+            <label for="guestCount">Number of guests</label>
+            <select id="guestCount" name="guestCount" required>
+              <option value="" selected disabled>Select</option>
+              <option value="1">1 guest</option>
+              <option value="2">2 guests</option>
+              <option value="3">3 guests</option>
+              <option value="4">4 guests</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="meal">Meal preference</label>
+            <select id="meal" name="meal" required>
+              <option value="" selected disabled>Select</option>
+              <option>Beef</option>
+              <option>Chicken</option>
+              <option>Fish</option>
+              <option>Vegetarian</option>
+            </select>
+          </div>
+          <div class="field full">
+            <label for="dietary">Dietary restrictions</label>
+            <input id="dietary" name="dietary" type="text" placeholder="Allergies or dietary requirements" />
+          </div>
+          <div class="field full">
+            <label for="guestMessage">Message for the couple</label>
+            <textarea id="guestMessage" name="guestMessage" rows="4" placeholder="Share a note, memory, or well wishes..."></textarea>
+          </div>
+          <button class="button button-primary submit-button" type="submit">Send RSVP</button>
+          <p class="form-note">Demo form only — no personal information is stored or transmitted.</p>
+        </form>
+      </div>
+    </section>
+
+    <section class="contact-section section-space" id="contact">
+      <div class="section-shell contact-card reveal">
+        <div>
+          <span class="section-kicker">Questions?</span>
+          <h2>We’re happy to help.</h2>
+        </div>
+        <div class="contact-info">
+          <p><span>Wedding Coordinator</span>Isabella Cruz</p>
+          <a href="mailto:hello@ameliaandrafael.com">hello@ameliaandrafael.com</a>
+          <a href="tel:+639171234567">+63 917 123 4567</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="closing-section">
+      <img src="assets/images/venue-evening.webp" alt="An elegant luxury hotel entrance glowing at dusk" loading="lazy" />
+      <div class="closing-overlay"></div>
+      <div class="closing-copy reveal">
+        <p>We cannot wait to celebrate with you.</p>
+        <h2><span data-bride-name>Amelia</span> <i>&</i> <span data-groom-name>Rafael</span></h2>
+        <span data-wedding-date-label>December 12, 2026</span>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <a class="brand" href="#home">A<span>&</span>R</a>
+    <p>#AmeliaAndRafael</p>
+    <p>Made with love for our special day.</p>
+  </footer>
+
+  <div class="modal" id="successModal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="successTitle">
+    <div class="modal-backdrop" data-close-modal></div>
+    <div class="modal-card success-card" role="document">
+      <button class="modal-close" type="button" data-close-modal aria-label="Close popup">×</button>
+      <div class="success-icon" aria-hidden="true"><span>✓</span></div>
+      <p class="eyebrow">Response received</p>
+      <h2 id="successTitle">RSVP Submitted</h2>
+      <p>Thank you for responding. We look forward to celebrating this beautiful day with you!</p>
+      <button class="button button-primary" type="button" data-close-modal>Close</button>
+    </div>
+  </div>
+
+  <div class="modal" id="giftModal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="giftModalTitle">
+    <div class="modal-backdrop" data-close-gift></div>
+    <div class="modal-card gift-modal-card" role="document">
+      <button class="modal-close" type="button" data-close-gift aria-label="Close gift form">×</button>
+      <p class="eyebrow">Reserve a gift</p>
+      <h2 id="giftModalTitle">A thoughtful choice</h2>
+      <p id="selectedGiftText">You selected a registry gift.</p>
+      <form id="giftForm" class="gift-form">
+        <input type="hidden" id="selectedGift" name="selectedGift" />
+        <div class="field">
+          <label for="giftGuestName">Your name</label>
+          <input id="giftGuestName" name="giftGuestName" type="text" required placeholder="Full name" />
+        </div>
+        <div class="field">
+          <label for="giftGuestEmail">Email address</label>
+          <input id="giftGuestEmail" name="giftGuestEmail" type="email" required placeholder="you@example.com" />
+        </div>
+        <div class="field">
+          <label for="giftNote">Message (optional)</label>
+          <textarea id="giftNote" name="giftNote" rows="3" placeholder="A short note for the couple"></textarea>
+        </div>
+        <button class="button button-primary" type="submit">Confirm Reservation</button>
+        <p class="form-note">Demo form only — no payment or information is processed.</p>
+      </form>
+      <div class="gift-success" id="giftSuccess" hidden>
+        <div class="success-icon"><span>✓</span></div>
+        <h3>Gift Reserved</h3>
+        <p>Your thoughtful gift has been marked as reserved. Thank you!</p>
+        <button class="button button-primary" type="button" data-close-gift>Done</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="lightbox" id="lightbox" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Gallery image viewer">
+    <button class="lightbox-close" type="button" aria-label="Close image">×</button>
+    <img id="lightboxImage" src="" alt="Expanded gallery view" />
+  </div>
+
+  <button class="back-to-top" id="backToTop" type="button" aria-label="Back to top">↑</button>
+</body>
+</html>
