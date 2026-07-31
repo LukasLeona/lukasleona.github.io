@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#FFF6F6" />
+  <meta name="description" content="LayoutLetter — a visual newsletter builder for creators and businesses." />
+  <title>LayoutLetter — Visual Newsletter Builder</title>
+
+  <link rel="icon" type="image/svg+xml" href="assets/logo.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="styles.css" />
+  <script defer src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+  <script defer src="app.js"></script>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <a class="brand" href="#" data-view="dashboard" aria-label="LayoutLetter dashboard">
+        <img src="assets/logo.svg" alt="" />
+        <span>
+          <strong>Layout</strong>Letter
+        </span>
+      </a>
+
+      <nav class="nav-list" aria-label="Main navigation">
+        <button class="nav-item active" data-view="dashboard">
+          <span class="nav-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M4 13h6V4H4v9Zm0 7h6v-5H4v5Zm10 0h6v-9h-6v9Zm0-16v5h6V4h-6Z"/></svg>
+          </span>
+          Dashboard
+        </button>
+        <button class="nav-item" data-view="builder">
+          <span class="nav-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="m4 17.25-.75 3.5 3.5-.75L17.81 8.94l-2.75-2.75L4 17.25Zm15.71-10.13a1 1 0 0 0 0-1.41l-1.42-1.42a1 1 0 0 0-1.41 0l-1.11 1.11 2.83 2.83 1.11-1.11Z"/></svg>
+          </span>
+          Builder
+        </button>
+        <button class="nav-item" data-view="templates">
+          <span class="nav-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M3 5a2 2 0 0 1 2-2h6v8H3V5Zm0 10a2 2 0 0 1 2-2h6v8H5a2 2 0 0 1-2-2v-4Zm10-12h6a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2h-6V3Zm0 10h8v6a2 2 0 0 1-2 2h-6v-8Z"/></svg>
+          </span>
+          Templates
+        </button>
+        <button class="nav-item" data-view="audience">
+          <span class="nav-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M16 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8ZM8 13a4 4 0 1 0 0-8 4 4 0 0 0 0 8Zm8 0c-2.67 0-8 1.34-8 4v3h14v-3c0-2.66-3.33-4-6-4ZM8 15c-3.11 0-6 1.56-6 4v1h4v-3c0-.73.27-1.4.75-2H8Z"/></svg>
+          </span>
+          Audience
+        </button>
+        <button class="nav-item" data-view="campaigns">
+          <span class="nav-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M4 4h16a2 2 0 0 1 2 2v1.18l-10 6.25-10-6.25V6a2 2 0 0 1 2-2Zm18 5.53V18a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9.53l9.47 5.92a1 1 0 0 0 1.06 0L22 9.53Z"/></svg>
+          </span>
+          Campaigns
+        </button>
+      </nav>
+
+      <div class="sidebar-card">
+        <span class="sidebar-card__eyebrow">QUICK TIP</span>
+        <strong>Send a test first.</strong>
+        <p>Preview your newsletter on desktop and mobile before sending.</p>
+        <button class="text-button" data-action="open-builder">Open builder →</button>
+      </div>
+
+      <div class="sidebar-footer">
+        <div class="avatar">LL</div>
+        <div>
+          <strong>Demo Workspace</strong>
+          <span>Creator plan</span>
+        </div>
+        <button class="icon-button small" aria-label="Workspace settings">•••</button>
+      </div>
+    </aside>
+
+    <div class="main-column">
+      <header class="topbar">
+        <button class="icon-button mobile-menu" id="menuToggle" aria-label="Open menu">
+          <svg viewBox="0 0 24 24"><path d="M4 6h16v2H4V6Zm0 5h16v2H4v-2Zm0 5h16v2H4v-2Z"/></svg>
+        </button>
+
+        <div class="topbar-title">
+          <span class="eyebrow" id="pageEyebrow">WORKSPACE</span>
+          <h1 id="pageTitle">Dashboard</h1>
+        </div>
+
+        <div class="topbar-actions">
+          <button class="icon-button" id="globalSearchButton" aria-label="Search">
+            <svg viewBox="0 0 24 24"><path d="m20.7 19.3-4.1-4.1a7.5 7.5 0 1 0-1.4 1.4l4.1 4.1 1.4-1.4ZM5 10.5a5.5 5.5 0 1 1 11 0 5.5 5.5 0 0 1-11 0Z"/></svg>
+          </button>
+          <button class="primary-button" data-action="new-campaign">
+            <span class="plus">+</span> New campaign
+          </button>
+        </div>
+      </header>
+
+      <main id="appView" class="view-host" aria-live="polite"></main>
+    </div>
+  </div>
+
+  <div class="toast-stack" id="toastStack" aria-live="polite"></div>
+
+  <div class="modal-backdrop hidden" id="previewModal" role="dialog" aria-modal="true" aria-labelledby="previewTitle">
+    <section class="modal preview-modal">
+      <div class="modal-header">
+        <div>
+          <span class="eyebrow">CAMPAIGN PREVIEW</span>
+          <h2 id="previewTitle">Newsletter preview</h2>
+        </div>
+        <div class="segmented-control">
+          <button class="segment active" data-preview-size="desktop">Desktop</button>
+          <button class="segment" data-preview-size="mobile">Mobile</button>
+        </div>
+        <button class="icon-button" data-close-modal="previewModal" aria-label="Close preview">×</button>
+      </div>
+      <div class="preview-stage">
+        <div id="modalPreviewFrame" class="preview-frame desktop"></div>
+      </div>
+    </section>
+  </div>
+
+  <div class="modal-backdrop hidden" id="sendModal" role="dialog" aria-modal="true" aria-labelledby="sendTitle">
+    <section class="modal send-modal">
+      <div class="modal-header">
+        <div>
+          <span class="eyebrow">FINAL STEP</span>
+          <h2 id="sendTitle">Send your campaign</h2>
+        </div>
+        <button class="icon-button" data-close-modal="sendModal" aria-label="Close send dialog">×</button>
+      </div>
+
+      <form id="sendForm" class="send-form">
+        <label>
+          Campaign name
+          <input id="sendCampaignName" type="text" required />
+        </label>
+        <label>
+          Email subject
+          <input id="sendSubject" type="text" placeholder="A fresh update from us" required />
+        </label>
+        <div class="form-grid">
+          <label>
+            Sender name
+            <input id="sendFromName" type="text" value="LayoutLetter Demo" required />
+          </label>
+          <label>
+            Reply-to email
+            <input id="sendReplyTo" type="email" placeholder="hello@example.com" required />
+          </label>
+        </div>
+
+        <div class="send-summary">
+          <div>
+            <span>Valid recipients</span>
+            <strong id="sendRecipientCount">0</strong>
+          </div>
+          <div>
+            <span>Estimated send time</span>
+            <strong id="sendEstimate">Under a minute</strong>
+          </div>
+        </div>
+
+        <label class="consent-row">
+          <input id="sendConsent" type="checkbox" required />
+          <span>I confirm that these contacts consented to receive this newsletter.</span>
+        </label>
+
+        <div class="modal-actions">
+          <button type="button" class="soft-button" id="sendTestButton">Send test</button>
+          <button type="submit" class="primary-button">Send campaign</button>
+        </div>
+
+        <p class="fine-print">Without SMTP settings, the included Node server runs in safe demo mode and records the campaign without sending real email.</p>
+      </form>
+    </section>
+  </div>
+
+  <template id="emptyStateTemplate">
+    <div class="empty-state">
+      <div class="empty-icon">✦</div>
+      <h3>Nothing here yet</h3>
+      <p>Create your first item to get started.</p>
+    </div>
+  </template>
+</body>
+</html>

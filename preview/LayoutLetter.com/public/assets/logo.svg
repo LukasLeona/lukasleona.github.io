@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title">
+  <title>LayoutLetter logo</title>
+  <defs>
+    <filter id="s" x="-40%" y="-40%" width="180%" height="180%">
+      <feDropShadow dx="3" dy="4" stdDeviation="4" flood-color="#2C687B" flood-opacity=".18"/>
+    </filter>
+  </defs>
+  <rect x="6" y="6" width="52" height="52" rx="17" fill="#FFF6F6" filter="url(#s)"/>
+  <path d="M19 18h8v20h14v8H19V18Z" fill="#2C687B"/>
+  <path d="M33 18h12v8H33z" fill="#8CC7C4"/>
+  <circle cx="44" cy="43" r="7" fill="#DB1A1A"/>
+</svg>
