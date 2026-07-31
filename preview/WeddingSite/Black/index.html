@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Midnight Rose — a premium romantic wedding invitation demo with RSVP and interactive gift registry.">
+  <meta name="theme-color" content="#11110f">
+  <title>Midnight Rose | Eleanor &amp; Julian</title>
+  <link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Allura&family=Bodoni+Moda:opsz,wght@6..96,400;6..96,500;6..96,600&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <svg class="svg-sprite" aria-hidden="true">
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M14 7l5 5-5 5"/></symbol>
+    <symbol id="i-heart" viewBox="0 0 24 24"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8l1.1 1.1L12 21l7.8-7.5 1.1-1.1a5.5 5.5 0 0 0-.1-7.8Z"/></symbol>
+    <symbol id="i-calendar" viewBox="0 0 24 24"><path d="M7 3v4M17 3v4M4 9h16M5 5h14a1 1 0 0 1 1 1v14H4V6a1 1 0 0 1 1-1Z"/></symbol>
+    <symbol id="i-ring" viewBox="0 0 24 24"><path d="m9 6 3-4 3 4M4 14a8 8 0 1 0 16 0 8 8 0 0 0-16 0Z"/></symbol>
+    <symbol id="i-glasses" viewBox="0 0 24 24"><path d="M7 3h2l-1 5M17 3h-2l1 5M4 9h6l-1 9H5L4 9Zm10 0h6l-1 9h-4l-1-9ZM10 11h4"/></symbol>
+    <symbol id="i-location" viewBox="0 0 24 24"><path d="M20 10c0 5-8 12-8 12S4 15 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></symbol>
+    <symbol id="i-dress" viewBox="0 0 24 24"><path d="M9 3h6l-1 5 5 11H5l5-11-1-5ZM8 8h8"/></symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24"><path d="M3 5h18v14H3zM3 7l9 7 9-7"/></symbol>
+    <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></symbol>
+    <symbol id="i-gift" viewBox="0 0 24 24"><path d="M3 10h18v11H3zM2 6h20v4H2zM12 6v15M12 6H7.5a2.5 2.5 0 1 1 0-5C10 1 12 6 12 6Zm0 0h4.5a2.5 2.5 0 1 0 0-5C14 1 12 6 12 6Z"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="i-trash" viewBox="0 0 24 24"><path d="M4 7h16M9 7V4h6v3M7 7l1 14h8l1-14"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></symbol>
+    <symbol id="i-expand" viewBox="0 0 24 24"><path d="M8 3H3v5M16 3h5v5M8 21H3v-5M16 21h5v-5"/></symbol>
+    <symbol id="i-instagram" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></symbol>
+  </svg>
+
+  <div class="page-progress" aria-hidden="true"><span id="pageProgress"></span></div>
+
+  <header class="site-header" id="top">
+    <a class="brand" href="#home" aria-label="Midnight Rose home">
+      <span class="brand-mark">E<span>&amp;</span>J</span>
+      <small>Midnight Rose</small>
+    </a>
+    <nav class="desktop-nav" aria-label="Primary navigation">
+      <a href="#story">Our Story</a>
+      <a href="#details">The Day</a>
+      <a href="#gallery">Gallery</a>
+      <a href="#registry">Registry</a>
+      <a href="#rsvp">RSVP</a>
+    </nav>
+    <a class="header-rsvp" href="#rsvp">RSVP <svg><use href="#i-arrow"/></svg></a>
+    <button class="menu-toggle" id="menuToggle" type="button" aria-expanded="false" aria-controls="mobileMenu" aria-label="Open menu">
+      <svg class="menu-icon"><use href="#i-menu"/></svg>
+      <svg class="close-icon"><use href="#i-close"/></svg>
+    </button>
+    <nav class="mobile-menu" id="mobileMenu" aria-label="Mobile navigation">
+      <a href="#home">Home</a><a href="#story">Our Story</a><a href="#details">The Day</a><a href="#gallery">Gallery</a><a href="#registry">Registry</a><a href="#rsvp">RSVP</a>
+      <p>September 26, 2027 · Kiawah Island</p>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="hero-copy reveal">
+        <p class="eyebrow">Together with their families</p>
+        <h1><span>Eleanor</span><em>&amp;</em><span>Julian</span></h1>
+        <p class="hero-kicker">invite you to celebrate an evening of love by the sea</p>
+        <div class="hero-date"><span>09</span><i></i><strong>26</strong><i></i><span>27</span></div>
+        <p class="hero-place">The Sanctuary · Kiawah Island, South Carolina</p>
+        <div class="hero-actions">
+          <a class="btn btn-dark" href="#rsvp">Confirm Attendance <svg><use href="#i-arrow"/></svg></a>
+          <button class="text-link" id="calendarHero" type="button"><svg><use href="#i-calendar"/></svg> Save the date</button>
+        </div>
+      </div>
+      <div class="hero-visual reveal">
+        <figure class="hero-frame">
+          <img src="assets/images/hero-couple.webp" alt="Bride and groom sharing a quiet moment by the coast" width="1400" height="1246">
+          <figcaption><span>Forever begins</span><strong>here.</strong></figcaption>
+        </figure>
+        <div class="hero-number">01</div>
+        <div class="hero-flower" aria-hidden="true"></div>
+      </div>
+      <aside class="hero-side-note">
+        <span>Scroll to discover</span><i></i>
+      </aside>
+    </section>
+
+    <section class="countdown-band" aria-label="Wedding countdown">
+      <div class="countdown-title"><span>Our forever begins in</span><svg><use href="#i-heart"/></svg></div>
+      <div class="countdown" id="countdown">
+        <div><strong id="days">000</strong><span>Days</span></div>
+        <i></i><div><strong id="hours">00</strong><span>Hours</span></div>
+        <i></i><div><strong id="minutes">00</strong><span>Minutes</span></div>
+        <i></i><div><strong id="seconds">00</strong><span>Seconds</span></div>
+      </div>
+    </section>
+
+    <section class="details section" id="details">
+      <div class="section-heading reveal">
+        <p class="eyebrow">The celebration</p>
+        <h2>A day made for <em>us</em></h2>
+        <p>Every detail has been thoughtfully chosen so we can slow down, celebrate, and share this chapter with the people we love most.</p>
+      </div>
+      <div class="event-grid">
+        <article class="event-card light reveal">
+          <div class="event-index">01</div>
+          <svg class="event-icon"><use href="#i-ring"/></svg>
+          <p>Ceremony</p><h3>Four thirty<br>in the afternoon</h3>
+          <span>Ocean Course Lawn<br>1 Sanctuary Beach Drive</span>
+          <a href="https://maps.google.com/?q=Kiawah+Island+South+Carolina" target="_blank" rel="noopener">View location <svg><use href="#i-arrow"/></svg></a>
+        </article>
+        <article class="event-card image reveal">
+          <img src="assets/images/beach-altar.webp" alt="Romantic beach ceremony setting" width="900" height="711" loading="lazy">
+          <div><span>Dress code</span><strong>Black tie optional</strong><small>Ivory · black · champagne · dusty rose</small></div>
+        </article>
+        <article class="event-card dark reveal">
+          <div class="event-index">02</div>
+          <svg class="event-icon"><use href="#i-glasses"/></svg>
+          <p>Dinner &amp; Dancing</p><h3>Six thirty<br>under the stars</h3>
+          <span>The Sanctuary Terrace<br>Kiawah Island, SC</span>
+          <button id="calendarDetails" type="button">Add to calendar <svg><use href="#i-calendar"/></svg></button>
+        </article>
+      </div>
+    </section>
+
+    <section class="story section" id="story">
+      <div class="story-photo reveal">
+        <img src="assets/images/beach-walk.webp" alt="Couple walking together at sunset" width="900" height="726" loading="lazy">
+        <span class="photo-stamp">Since 2018</span>
+      </div>
+      <div class="story-copy reveal">
+        <p class="eyebrow">How we got here</p>
+        <h2>It began with<br>a little <em>serendipity.</em></h2>
+        <p class="story-lead">A rainy coffee run, one shared umbrella, and a conversation neither of us wanted to end.</p>
+        <div class="timeline">
+          <article><span>2018</span><i></i><div><strong>We met</strong><p>A chance hello became the start of everything.</p></div></article>
+          <article><span>2020</span><i></i><div><strong>Our first escape</strong><p>Salt air, long walks, and a place that became ours.</p></div></article>
+          <article><span>2025</span><i></i><div><strong>She said yes</strong><p>At sunset, surrounded by the quiet rhythm of the sea.</p></div></article>
+          <article><span>2027</span><i></i><div><strong>Forever</strong><p>Our favorite people, one beautiful island, one new beginning.</p></div></article>
+        </div>
+        <blockquote>“In all the world, there is no heart for me like yours.”<cite>— Maya Angelou</cite></blockquote>
+      </div>
+    </section>
+
+    <section class="gallery section" id="gallery">
+      <div class="gallery-heading reveal">
+        <div><p class="eyebrow">Our favorite frames</p><h2>Moments we <em>treasure</em></h2></div>
+        <p>A collection of quiet glances, warm light, and memories we will carry into every chapter that follows.</p>
+      </div>
+      <div class="editorial-gallery">
+        <button class="gallery-item item-a reveal" data-image="assets/images/beach-embrace.webp" aria-label="Open romantic coastal portrait"><img src="assets/images/beach-embrace.webp" alt="Romantic coastal portrait" width="900" height="724" loading="lazy"><span>01 · The two of us</span><svg><use href="#i-expand"/></svg></button>
+        <button class="gallery-item item-b reveal" data-image="assets/images/rings-detail.webp" aria-label="Open wedding ring detail"><img src="assets/images/rings-detail.webp" alt="Wedding rings and floral detail" width="1200" height="900" loading="lazy"><span>02 · The promise</span><svg><use href="#i-expand"/></svg></button>
+        <button class="gallery-item item-c reveal" data-image="assets/images/reception-table.webp" aria-label="Open candlelit reception table"><img src="assets/images/reception-table.webp" alt="Candlelit reception table" width="1200" height="900" loading="lazy"><span>03 · Dinner by candlelight</span><svg><use href="#i-expand"/></svg></button>
+        <button class="gallery-item item-d reveal" data-image="assets/images/boardwalk.webp" aria-label="Open coastal boardwalk"><img src="assets/images/boardwalk.webp" alt="Coastal boardwalk leading to the beach" width="900" height="742" loading="lazy"><span>04 · Toward forever</span><svg><use href="#i-expand"/></svg></button>
+        <button class="gallery-item item-e reveal" data-image="assets/images/reception-lights.webp" aria-label="Open evening celebration"><img src="assets/images/reception-lights.webp" alt="Romantic evening reception lights" width="900" height="709" loading="lazy"><span>05 · After dusk</span><svg><use href="#i-expand"/></svg></button>
+        <button class="gallery-item item-f reveal" data-image="assets/images/sunset-shore.webp" aria-label="Open sunset shoreline"><img src="assets/images/sunset-shore.webp" alt="Sunset over the shoreline" width="900" height="737" loading="lazy"><span>06 · Golden hour</span><svg><use href="#i-expand"/></svg></button>
+      </div>
+    </section>
+
+    <section class="info-strip">
+      <article class="info-location reveal">
+        <svg><use href="#i-location"/></svg><div><span>Destination</span><strong>Kiawah Island</strong><p>South Carolina, USA</p></div>
+        <a href="https://maps.google.com/?q=Kiawah+Island+South+Carolina" target="_blank" rel="noopener">Map <svg><use href="#i-arrow"/></svg></a>
+      </article>
+      <article class="info-dress reveal">
+        <svg><use href="#i-dress"/></svg><div><span>Attire</span><strong>Black tie optional</strong><p>Romantic, refined, and ready for the coast.</p></div>
+        <div class="swatches" aria-label="Dress code colors"><i></i><i></i><i></i><i></i><i></i></div>
+      </article>
+      <article class="info-rsvp reveal">
+        <svg><use href="#i-mail"/></svg><div><span>Kindly reply by</span><strong>August 15, 2027</strong><p>We have reserved two seats in your honor.</p></div>
+        <a href="#rsvp">Reply <svg><use href="#i-arrow"/></svg></a>
+      </article>
+    </section>
+
+    <section class="registry section" id="registry">
+      <div class="registry-heading reveal">
+        <p class="eyebrow">A thoughtful gesture</p>
+        <h2>Our gift <em>registry</em></h2>
+        <p>Your presence is the greatest gift. For guests who would still love to bring something, add the gift you plan to give and it will appear instantly in our registered list.</p>
+      </div>
+      <div class="registry-layout">
+        <form class="gift-form reveal" id="giftForm" novalidate>
+          <div class="form-heading"><span><svg><use href="#i-gift"/></svg></span><div><small>Guest registry</small><h3>Add the gift you’re giving</h3></div></div>
+          <label>Your name<input id="giftGuest" name="giftGuest" type="text" placeholder="e.g. Sofia Reyes" required></label>
+          <label>Gift name<input id="giftName" name="giftName" type="text" placeholder="e.g. Weekend brunch experience" required></label>
+          <div class="form-row">
+            <label>Category<select id="giftCategory" name="giftCategory" required><option value="">Choose one</option><option value="home">Home</option><option value="kitchen">Kitchen</option><option value="experience">Experience</option><option value="keepsake">Keepsake</option><option value="cash">Cash gift</option></select></label>
+            <label>Estimated value<input id="giftValue" name="giftValue" type="text" placeholder="Optional"></label>
+          </div>
+          <label>Short note<textarea id="giftNote" name="giftNote" rows="3" placeholder="A short message for the couple (optional)"></textarea></label>
+          <button class="btn btn-gold" type="submit"><svg><use href="#i-plus"/></svg> Add to registered gifts</button>
+          <p class="form-privacy">Demo behavior: gifts are saved only in this browser using local storage.</p>
+        </form>
+
+        <div class="gift-list-wrap reveal">
+          <div class="gift-list-header"><div><small>Already registered</small><h3>Gifts from our guests</h3></div><span id="giftCount">6 gifts</span></div>
+          <div class="gift-grid" id="giftGrid" aria-live="polite">
+            <article class="gift-card preset"><div class="gift-art kitchen"><svg><use href="#i-gift"/></svg></div><div><span>Kitchen</span><h4>Artisan cookware set</h4><p>Registered by Camille &amp; Theo</p></div><strong>$280</strong><em>Reserved</em></article>
+            <article class="gift-card preset"><div class="gift-art home"><svg><use href="#i-heart"/></svg></div><div><span>Home</span><h4>Linen bedding collection</h4><p>Registered by Mara</p></div><strong>$190</strong><em>Registered</em></article>
+            <article class="gift-card preset"><div class="gift-art experience"><svg><use href="#i-location"/></svg></div><div><span>Experience</span><h4>Sunset sailing for two</h4><p>Registered by Liam &amp; Ben</p></div><strong>$240</strong><em>Reserved</em></article>
+            <article class="gift-card preset"><div class="gift-art keepsake"><svg><use href="#i-ring"/></svg></div><div><span>Keepsake</span><h4>Handmade memory album</h4><p>Registered by Nica</p></div><strong>$85</strong><em>Registered</em></article>
+            <article class="gift-card preset"><div class="gift-art cash"><svg><use href="#i-gift"/></svg></div><div><span>Cash gift</span><h4>Honeymoon fund</h4><p>Registered by the Santos family</p></div><strong>Any amount</strong><em>Open</em></article>
+            <article class="gift-card preset"><div class="gift-art home"><svg><use href="#i-glasses"/></svg></div><div><span>Home</span><h4>Champagne glass set</h4><p>Registered by Elise</p></div><strong>$120</strong><em>Gifted</em></article>
+          </div>
+          <button class="clear-gifts" id="clearGuestGifts" type="button"><svg><use href="#i-trash"/></svg> Clear guest-added demo gifts</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="rsvp section" id="rsvp">
+      <div class="rsvp-image reveal"><img src="assets/images/reception-table.webp" alt="Romantic candlelit wedding dinner" width="1200" height="900" loading="lazy"><div><span>We hope you’ll join us</span><strong>for dinner,<br>dancing &amp; forever.</strong></div></div>
+      <form class="rsvp-form reveal" id="rsvpForm" novalidate>
+        <p class="eyebrow">Kindly respond</p><h2>Will you be <em>there?</em></h2>
+        <div class="form-row"><label>Full name<input id="rsvpName" name="name" type="text" required placeholder="Your full name"></label><label>Email address<input id="rsvpEmail" name="email" type="email" required placeholder="name@example.com"></label></div>
+        <div class="form-row"><label>Attendance<select id="attendance" name="attendance" required><option value="">Please select</option><option value="yes">Joyfully accepts</option><option value="no">Regretfully declines</option></select></label><label>Number of guests<select id="guestCount" name="guestCount" required><option value="">Select</option><option>1</option><option>2</option><option>3</option><option>4</option></select></label></div>
+        <div class="form-row"><label>Meal preference<select id="meal" name="meal"><option value="">Please select</option><option>Beef tenderloin</option><option>Herb-roasted salmon</option><option>Garden risotto</option></select></label><label>Dietary notes<input id="dietary" name="dietary" type="text" placeholder="Allergies or restrictions"></label></div>
+        <label>Message for the couple<textarea id="rsvpMessage" name="message" rows="4" placeholder="Share a little love..."></textarea></label>
+        <button class="btn btn-light" type="submit">Send my RSVP <svg><use href="#i-arrow"/></svg></button>
+      </form>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-quote">
+      <span class="footer-quote-kicker">To love, laughter,</span>
+      <strong>and every beautiful chapter after.</strong>
+      <div class="footer-ornament" aria-hidden="true"><i></i><svg><use href="#i-heart"/></svg><i></i></div>
+    </div>
+
+    <div class="footer-main">
+      <div class="footer-intro">
+        <a class="footer-monogram" href="#top" aria-label="Back to Midnight Rose home">
+          <span>E</span><em>&amp;</em><span>J</span>
+        </a>
+        <p class="footer-name">Eleanor <em>&amp;</em> Julian</p>
+        <p>We cannot wait to gather by the sea and celebrate this once-in-a-lifetime chapter with the people we love most.</p>
+      </div>
+
+      <div class="footer-column">
+        <small>The wedding</small>
+        <p><strong>September 26, 2027</strong><br>The Sanctuary<br>Kiawah Island, South Carolina</p>
+        <a class="footer-inline-link" href="https://maps.google.com/?q=Kiawah+Island+South+Carolina" target="_blank" rel="noopener">View location <svg><use href="#i-arrow"/></svg></a>
+      </div>
+
+      <div class="footer-column footer-links">
+        <small>Explore</small>
+        <nav aria-label="Footer navigation">
+          <a href="#story">Our story</a>
+          <a href="#details">The day</a>
+          <a href="#gallery">Gallery</a>
+          <a href="#registry">Gift registry</a>
+          <a href="#rsvp">RSVP</a>
+        </nav>
+      </div>
+
+      <div class="footer-column footer-contact">
+        <small>Questions?</small>
+        <a href="mailto:hello@eleanorandjulian.com"><svg><use href="#i-mail"/></svg><span>hello@eleanorandjulian.com</span></a>
+        <a href="tel:+18435550198"><svg><use href="#i-heart"/></svg><span>+1 (843) 555-0198</span></a>
+        <div class="footer-social-row">
+          <a href="#" aria-label="Instagram"><svg><use href="#i-instagram"/></svg></a>
+          <span>#EleanorAndJulian</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <span>© 2027 Eleanor &amp; Julian</span>
+      <span class="footer-made">Made with <svg><use href="#i-heart"/></svg> by the sea</span>
+      <a class="footer-top" href="#top"><span>Back to top</span><svg><use href="#i-arrow"/></svg></a>
+    </div>
+  </footer>
+
+  <dialog class="modal" id="successModal">
+    <button class="modal-close" type="button" aria-label="Close"><svg><use href="#i-close"/></svg></button>
+    <div class="modal-icon"><svg><use href="#i-check"/></svg></div>
+    <p class="eyebrow" id="modalEyebrow">Response received</p>
+    <h2 id="modalTitle">Thank you.</h2>
+    <p id="modalMessage">Your response has been received.</p>
+    <button class="btn btn-dark modal-action" type="button">Close</button>
+  </dialog>
+
+  <dialog class="lightbox" id="lightbox">
+    <button class="lightbox-close" type="button" aria-label="Close image"><svg><use href="#i-close"/></svg></button>
+    <img id="lightboxImage" alt="Expanded wedding gallery photograph">
+  </dialog>
+
+  <script src="script.js"></script>
+</body>
+</html>
