@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="A romantic beach wedding invitation for Amelia and Matthew on Jekyll Island, Georgia." />
+  <meta name="theme-color" content="#f8f2e8" />
+  <title>Amelia & Matthew — Georgia Beach Wedding</title>
+  <link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <div class="page-loader" id="pageLoader" aria-hidden="true">
+    <div class="loader-shell">⌇</div>
+    <p>Opening our seaside invitation</p>
+  </div>
+
+  <header class="site-header" id="siteHeader">
+    <a class="brand" href="#home" aria-label="Go to home">
+      <span data-bride-initial>A</span><i>&</i><span data-groom-initial>M</span>
+    </a>
+    <button class="menu-toggle" id="menuToggle" type="button" aria-label="Open navigation" aria-expanded="false">
+      <span></span><span></span>
+    </button>
+    <nav class="site-nav" id="siteNav" aria-label="Main navigation">
+      <a href="#story">Our Story</a>
+      <a href="#details">Details</a>
+      <a href="#gallery">Gallery</a>
+      <a href="#location">Location</a>
+      <a href="#gifts">Gifts</a>
+      <a class="nav-rsvp" href="#rsvp">RSVP</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="hero-copy reveal">
+        <p class="eyebrow">Together with our families</p>
+        <h1><span data-bride-name>Amelia</span><i>&</i><span data-groom-name>Matthew</span></h1>
+        <p class="hero-invite">invite you to celebrate their wedding by the sea</p>
+        <p class="hero-date" data-wedding-date-label>May 22, 2027</p>
+        <p class="hero-place">Jekyll Island · Georgia</p>
+        <div class="hero-actions">
+          <a class="button button-primary" href="#rsvp">RSVP Now</a>
+          <button class="button button-outline" id="calendarButton" type="button">Add to Calendar</button>
+        </div>
+        <div class="hero-note"><span>Salt air</span><i></i><span>Soft light</span><i></i><span>Forever</span></div>
+      </div>
+      <div class="hero-visual reveal">
+        <div class="hero-frame">
+          <img src="assets/images/hero-beach.webp" alt="A bride and groom embracing on the beach at sunset" fetchpriority="high" />
+        </div>
+        <span class="floating-shell shell-one" aria-hidden="true">◡</span>
+        <span class="floating-shell shell-two" aria-hidden="true">✦</span>
+        <div class="hero-card">
+          <span>Save the date</span>
+          <strong>05 · 22 · 27</strong>
+        </div>
+      </div>
+      <a class="scroll-cue" href="#countdown" aria-label="Scroll to countdown"><span></span></a>
+    </section>
+
+    <section class="countdown-section" id="countdown">
+      <div class="section-shell countdown-shell reveal">
+        <div class="countdown-heading">
+          <p class="eyebrow">The tide is bringing us closer</p>
+          <h2>Counting down to our forever</h2>
+        </div>
+        <div class="countdown" aria-live="polite">
+          <div><strong id="days">000</strong><span>Days</span></div>
+          <div><strong id="hours">00</strong><span>Hours</span></div>
+          <div><strong id="minutes">00</strong><span>Minutes</span></div>
+          <div><strong id="seconds">00</strong><span>Seconds</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="details-section section-space" id="details">
+      <div class="section-shell">
+        <div class="section-heading reveal">
+          <span class="section-kicker">Meet us by the water</span>
+          <h2>The Wedding Day</h2>
+          <p>A relaxed coastal celebration filled with sea breeze, candlelight, and everyone we love.</p>
+        </div>
+        <div class="event-grid">
+          <article class="event-card reveal">
+            <span class="event-index">01</span>
+            <div class="event-mark" aria-hidden="true">◇</div>
+            <p class="event-label">Ceremony</p>
+            <h3>Driftwood Beach</h3>
+            <p class="event-time">4:30 PM</p>
+            <p>Jekyll Island, Georgia<br />Barefoot vows along the shoreline</p>
+            <a class="text-link" href="https://www.google.com/maps/search/?api=1&query=Driftwood+Beach+Jekyll+Island+Georgia" target="_blank" rel="noreferrer">Open map <span>↗</span></a>
+          </article>
+          <article class="event-card featured reveal">
+            <span class="event-index">02</span>
+            <div class="event-mark" aria-hidden="true">✦</div>
+            <p class="event-label">Cocktail Hour</p>
+            <h3>Oceanfront Lawn</h3>
+            <p class="event-time">5:30 PM</p>
+            <p>Golden-hour drinks, coastal bites,<br />and music beside the dunes</p>
+            <a class="text-link" href="#location">Venue details <span>↓</span></a>
+          </article>
+          <article class="event-card reveal">
+            <span class="event-index">03</span>
+            <div class="event-mark" aria-hidden="true">◌</div>
+            <p class="event-label">Reception</p>
+            <h3>Jekyll Island Club</h3>
+            <p class="event-time">6:30 PM</p>
+            <p>Riverview Drive, Jekyll Island<br />Dinner and dancing under the lights</p>
+            <a class="text-link" href="https://www.google.com/maps/search/?api=1&query=Jekyll+Island+Club+Resort" target="_blank" rel="noreferrer">Open map <span>↗</span></a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="story-section section-space" id="story">
+      <div class="story-visual reveal">
+        <img src="assets/images/story-collage.webp" alt="A collage of seaside wedding moments" loading="lazy" />
+        <div class="story-stamp">Our favorite adventure</div>
+      </div>
+      <div class="story-copy reveal">
+        <span class="section-kicker">Our story</span>
+        <h2>It started with a road trip to the coast.</h2>
+        <p class="story-lead">A missed turn led us to the ocean, and somehow every road after that led us back to each other.</p>
+        <div class="timeline">
+          <article><span>2018</span><h3>We Met</h3><p>A shared table, an easy conversation, and the beginning of everything.</p></article>
+          <article><span>2020</span><h3>First Escape</h3><p>A spontaneous weekend by the sea became our favorite tradition.</p></article>
+          <article><span>2025</span><h3>The Proposal</h3><p>At sunset, with waves in the background, the answer was always yes.</p></article>
+          <article><span>2027</span><h3>Forever</h3><p>We return to the coast to begin our next and best chapter.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="gallery-section section-space" id="gallery">
+      <div class="section-shell gallery-shell">
+        <div class="gallery-heading reveal">
+          <div class="gallery-title-block">
+            <span class="section-kicker">Seaside memories</span>
+            <h2>Moments We<br /><em>Treasure</em></h2>
+          </div>
+          <div class="gallery-heading-copy">
+            <span class="gallery-line" aria-hidden="true"></span>
+            <p>Little glimpses of the coast, the celebration, and the love surrounding our day.</p>
+            <small>Jekyll Island · Georgia</small>
+          </div>
+        </div>
+
+        <div class="gallery-grid" aria-label="Wedding photo gallery">
+          <button class="gallery-item gallery-portrait reveal" data-full="assets/images/hero-beach.webp" aria-label="Open golden-hour beach portrait">
+            <img src="assets/images/hero-beach.webp" alt="Bride and groom embracing on the beach at golden hour" loading="lazy" />
+            <span class="gallery-number">01</span>
+            <span class="gallery-caption"><small>Portraits</small><strong>Golden hour</strong></span>
+            <span class="gallery-view" aria-hidden="true">↗</span>
+          </button>
+
+          <button class="gallery-item gallery-altar reveal" data-full="assets/images/beach-altar.webp" aria-label="Open beach ceremony altar">
+            <img src="assets/images/beach-altar.webp" alt="Wedding altar facing the Atlantic Ocean" loading="lazy" />
+            <span class="gallery-number">02</span>
+            <span class="gallery-caption"><small>Ceremony</small><strong>Where we say “I do”</strong></span>
+            <span class="gallery-view" aria-hidden="true">↗</span>
+          </button>
+
+          <button class="gallery-item gallery-boardwalk reveal" data-full="assets/images/boardwalk.webp" aria-label="Open coastal boardwalk photograph">
+            <img src="assets/images/boardwalk.webp" alt="Wooden boardwalk leading through the dunes to the sea" loading="lazy" />
+            <span class="gallery-number">03</span>
+            <span class="gallery-caption"><small>Arrival</small><strong>Path to the shoreline</strong></span>
+            <span class="gallery-view" aria-hidden="true">↗</span>
+          </button>
+
+          <button class="gallery-item gallery-reception reveal" data-full="assets/images/reception-table.webp" aria-label="Open candlelit reception table">
+            <img src="assets/images/reception-table.webp" alt="Elegant candlelit wedding reception table" loading="lazy" />
+            <span class="gallery-number">04</span>
+            <span class="gallery-caption"><small>Reception</small><strong>Dinner by candlelight</strong></span>
+            <span class="gallery-view" aria-hidden="true">↗</span>
+          </button>
+
+          <button class="gallery-item gallery-embrace reveal" data-full="assets/images/beach-embrace.webp" aria-label="Open couple beneath palm trees">
+            <img src="assets/images/beach-embrace.webp" alt="Bride and groom embracing beneath palm trees" loading="lazy" />
+            <span class="gallery-number">05</span>
+            <span class="gallery-caption"><small>Together</small><strong>Beneath the palms</strong></span>
+            <span class="gallery-view" aria-hidden="true">↗</span>
+          </button>
+
+          <button class="gallery-item gallery-walk reveal" data-full="assets/images/beach-walk.webp" aria-label="Open couple walking by the sea">
+            <img src="assets/images/beach-walk.webp" alt="Bride and groom walking along the shoreline" loading="lazy" />
+            <span class="gallery-number">06</span>
+            <span class="gallery-caption"><small>Us</small><strong>Along the water</strong></span>
+            <span class="gallery-view" aria-hidden="true">↗</span>
+          </button>
+
+          <button class="gallery-item gallery-rings reveal" data-full="assets/images/rings-detail.webp" aria-label="Open wedding rings detail">
+            <img src="assets/images/rings-detail.webp" alt="Wedding rings and bouquet detail" loading="lazy" />
+            <span class="gallery-number">07</span>
+            <span class="gallery-caption"><small>Details</small><strong>The promise</strong></span>
+            <span class="gallery-view" aria-hidden="true">↗</span>
+          </button>
+
+          <button class="gallery-item gallery-sunset reveal" data-full="assets/images/sunset-shore.webp" aria-label="Open sunset over the ocean">
+            <img src="assets/images/sunset-shore.webp" alt="Warm sunset over the Atlantic shoreline" loading="lazy" />
+            <span class="gallery-number">08</span>
+            <span class="gallery-caption"><small>The coast</small><strong>Last light</strong></span>
+            <span class="gallery-view" aria-hidden="true">↗</span>
+          </button>
+
+          <button class="gallery-item gallery-lights reveal" data-full="assets/images/reception-lights.webp" aria-label="Open evening reception lights">
+            <img src="assets/images/reception-lights.webp" alt="Wedding reception glowing beneath string lights" loading="lazy" />
+            <span class="gallery-number">09</span>
+            <span class="gallery-caption"><small>Celebration</small><strong>After sunset</strong></span>
+            <span class="gallery-view" aria-hidden="true">↗</span>
+          </button>
+        </div>
+
+        <div class="gallery-signoff reveal">
+          <span aria-hidden="true">✦</span>
+          <p>Every photograph holds a little piece of the day we cannot wait to share with you.</p>
+          <span aria-hidden="true">✦</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="location-section" id="location">
+      <div class="location-image reveal">
+        <img src="assets/images/boardwalk.webp" alt="A coastal boardwalk on Jekyll Island" loading="lazy" />
+        <div class="location-badge"><span>Jekyll Island</span><strong>Georgia</strong></div>
+      </div>
+      <div class="location-copy reveal">
+        <span class="section-kicker light">The destination</span>
+        <h2>A weekend on the Georgia coast.</h2>
+        <p>Our celebration will take place on Jekyll Island, where moss-draped trees meet wide beaches and the Atlantic Ocean.</p>
+        <div class="travel-notes">
+          <div><span>Arrive</span><p>Jacksonville International Airport is approximately one hour away.</p></div>
+          <div><span>Stay</span><p>Choose accommodations around Jekyll Island or nearby St. Simons Island.</p></div>
+        </div>
+        <a class="button button-light" href="https://www.google.com/maps/search/?api=1&query=Jekyll+Island+Georgia" target="_blank" rel="noreferrer">Explore the Location</a>
+      </div>
+      <div class="location-map reveal">
+        <iframe title="Map of Jekyll Island, Georgia" src="https://www.google.com/maps?q=Jekyll+Island+Georgia&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+      </div>
+    </section>
+
+    <section class="dress-section section-space" id="dress-code">
+      <div class="section-shell dress-layout">
+        <div class="dress-copy reveal">
+          <span class="section-kicker">What to wear</span>
+          <h2>Coastal Formal</h2>
+          <p>Lightweight fabrics, polished silhouettes, and soft colors inspired by sand, sea glass, oyster shells, and sunset skies.</p>
+          <div class="palette" aria-label="Suggested dress code colors">
+            <span style="--swatch:#f1e7d7" title="Sand"></span>
+            <span style="--swatch:#c9b091" title="Driftwood"></span>
+            <span style="--swatch:#98a58e" title="Sage"></span>
+            <span style="--swatch:#9fb4b3" title="Sea glass"></span>
+            <span style="--swatch:#cf9a89" title="Sunset rose"></span>
+            <span style="--swatch:#d5bd88" title="Muted gold"></span>
+          </div>
+          <p class="dress-note">Please avoid bright white, neon colors, and very casual beachwear.</p>
+        </div>
+        <div class="dress-image reveal"><img src="assets/images/polaroids.webp" alt="Coastal wedding inspiration photos" loading="lazy" /></div>
+      </div>
+    </section>
+
+    <section class="response-section section-space" id="rsvp">
+      <div class="section-shell response-grid">
+        <div class="rsvp-panel reveal">
+          <span class="section-kicker">Kindly respond</span>
+          <h2>Will you join us?</h2>
+          <p>Please send your response on or before April 10, 2027.</p>
+          <form id="rsvpForm" class="form-grid">
+            <label class="field"><span>Full name</span><input type="text" name="fullName" placeholder="Your name" required /></label>
+            <label class="field"><span>Email or contact number</span><input type="text" name="contact" placeholder="How we can reach you" required /></label>
+            <label class="field"><span>Will you be attending?</span><select name="attendance" required><option value="" selected disabled>Select response</option><option>Joyfully accepts</option><option>Regretfully declines</option></select></label>
+            <label class="field"><span>Number of guests</span><select name="guests" required><option value="" selected disabled>Select number</option><option>1</option><option>2</option><option>3</option><option>4</option></select></label>
+            <label class="field"><span>Meal preference</span><select name="meal" required><option value="" selected disabled>Select preference</option><option>Coastal chicken</option><option>Herb-roasted fish</option><option>Garden entrée</option></select></label>
+            <label class="field"><span>Dietary restrictions</span><input type="text" name="dietary" placeholder="Optional" /></label>
+            <label class="field field-full"><span>Message for the couple</span><textarea name="message" rows="5" placeholder="Leave a little note..."></textarea></label>
+            <button class="button button-primary field-full" type="submit">Submit RSVP</button>
+          </form>
+        </div>
+
+        <div class="gift-panel reveal" id="gifts">
+          <span class="section-kicker">Gift registry</span>
+          <h2>Gifts already registered</h2>
+          <p>Your presence is our greatest gift. For guests who would still love to give, these are the items currently on our registry.</p>
+          <div class="gift-grid">
+            <article class="gift-card" data-gift="Beach Weekend Fund" data-status="available"><div class="gift-visual beach-fund">🌊</div><div class="gift-copy"><h3>Beach Weekend Fund</h3><p>Any contribution</p><span class="status available">Available</span><button class="gift-button" type="button">Reserve gift</button></div></article>
+            <article class="gift-card" data-gift="Espresso Machine" data-status="reserved"><div class="gift-visual">☕</div><div class="gift-copy"><h3>Espresso Machine</h3><p>$260</p><span class="status reserved">Reserved</span><button class="gift-button" type="button" disabled>Already reserved</button></div></article>
+            <article class="gift-card" data-gift="Linen Bedding Set" data-status="available"><div class="gift-visual">▤</div><div class="gift-copy"><h3>Linen Bedding Set</h3><p>$180</p><span class="status available">Available</span><button class="gift-button" type="button">Reserve gift</button></div></article>
+            <article class="gift-card" data-gift="Dinnerware Collection" data-status="gifted"><div class="gift-visual">◯</div><div class="gift-copy"><h3>Dinnerware Collection</h3><p>$220</p><span class="status gifted">Gifted</span><button class="gift-button" type="button" disabled>Gift received</button></div></article>
+            <article class="gift-card" data-gift="Sunset Dinner Voucher" data-status="available"><div class="gift-visual">✦</div><div class="gift-copy"><h3>Sunset Dinner Voucher</h3><p>$150</p><span class="status available">Available</span><button class="gift-button" type="button">Reserve gift</button></div></article>
+            <article class="gift-card" data-gift="Carry-On Luggage" data-status="available"><div class="gift-visual">▣</div><div class="gift-copy"><h3>Carry-On Luggage</h3><p>$190</p><span class="status available">Available</span><button class="gift-button" type="button">Reserve gift</button></div></article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="closing-section">
+      <div class="closing-image"><img src="assets/images/sunset-shore.webp" alt="A calm beach sunset" loading="lazy" /></div>
+      <div class="closing-copy reveal">
+        <p class="eyebrow">Meet us where the sky touches the sea</p>
+        <h2>We cannot wait to celebrate with you.</h2>
+        <p>For questions, contact our wedding coordinator at <a href="mailto:hello@ameliaandmatthew.com">hello@ameliaandmatthew.com</a>.</p>
+        <div class="signature">Amelia & Matthew</div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>Jekyll Island, Georgia · May 22, 2027</p>
+    <p>Made with love for our favorite people.</p>
+    <p>© 2027 Amelia & Matthew</p>
+  </footer>
+
+  <button class="back-to-top" id="backToTop" type="button" aria-label="Back to top">↑</button>
+
+  <div class="modal" id="successModal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="successTitle">
+    <div class="modal-card">
+      <button class="modal-close" type="button" data-close-modal aria-label="Close">×</button>
+      <div class="success-icon">✓</div>
+      <p class="eyebrow">Thank you</p>
+      <h2 id="successTitle">RSVP submitted!</h2>
+      <p>Your response has been received. We cannot wait to celebrate with you by the sea.</p>
+      <button class="button button-primary" type="button" data-close-modal>Close</button>
+    </div>
+  </div>
+
+  <div class="modal" id="giftModal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="giftModalTitle">
+    <div class="modal-card gift-modal-card">
+      <button class="modal-close" type="button" data-close-gift aria-label="Close">×</button>
+      <form id="giftForm">
+        <p class="eyebrow">A thoughtful gesture</p>
+        <h2 id="giftModalTitle">Reserve this gift</h2>
+        <p id="selectedGiftText"></p>
+        <input id="selectedGift" type="hidden" name="gift" />
+        <label class="field"><span>Your name</span><input type="text" name="giftName" required /></label>
+        <label class="field"><span>Email address</span><input type="email" name="giftEmail" required /></label>
+        <button class="button button-primary" type="submit">Confirm Reservation</button>
+      </form>
+      <div id="giftSuccess" class="gift-success" hidden>
+        <div class="success-icon">✓</div><h2>Gift reserved!</h2><p>Thank you. This gift has now been marked as reserved for this demo.</p><button class="button button-primary" type="button" data-close-gift>Close</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="lightbox" id="lightbox" aria-hidden="true" role="dialog" aria-modal="true">
+    <button class="lightbox-close" type="button" aria-label="Close photo">×</button>
+    <img id="lightboxImage" src="" alt="Expanded gallery photograph" />
+  </div>
+</body>
+</html>
