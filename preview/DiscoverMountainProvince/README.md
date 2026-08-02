@@ -17,9 +17,10 @@ Then open `http://localhost:8080` in a browser.
 ## Included files
 
 - `index.html` — page structure and tourism content
-- `styles.css` — responsive layout, color system, illustrations, and motion
-- `script.js` — sound controls, navigation, filters, trip builder, dialogs, and reveal effects
+- `styles.css` — responsive layout, photographic cards, color system, and motion
+- `script.js` — sound controls, navigation, filters, activity rail, trip builder, dialogs, counters, parallax, and reveal effects
 - `assets/pulag-hero.mp4` — supplied 64-second, 1920×1080 hero film with its original audio
+- `assets/images/` — optimized WebP versions of the supplied destination photographs and the culture illustration
 - `assets/favicon.svg` — palette-matched browser icon
 - `site.webmanifest` — basic installable-site metadata
 
@@ -33,5 +34,7 @@ Modern browsers block autoplaying audio. The film therefore starts automatically
 - Colors are the first variables in `styles.css`: `#1C315E`, `#227C70`, `#88A47C`, and `#E6E2C3`.
 - Destination field notes and sample itineraries are near the bottom of `script.js`.
 - Replace `assets/pulag-hero.mp4` with another MP4 using the same filename to change the hero film without editing code.
+
+The cultural dance visual is an AI-generated editorial illustration and is labeled as such on the page. It should not be presented as a documentary photograph of a specific event or community.
 
 Before publishing, replace sample trip guidance with verified local tourism information, current access rules, accredited-guide details, transportation information, and official contact links.

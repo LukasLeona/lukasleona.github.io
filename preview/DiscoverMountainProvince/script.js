@@ -192,6 +192,140 @@ hero.addEventListener("pointermove", (event) => {
   hero.style.setProperty("--pointer-y", `${y}%`);
 });
 
+// Scroll-linked image motion and tactile card tilt, disabled for reduced motion.
+const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+const parallaxImages = document.querySelectorAll("[data-parallax-image]");
+let motionTicking = false;
+
+const updateMotion = () => {
+  const viewportHeight = window.innerHeight;
+  const heroShift = Math.min(window.scrollY * 0.08, 64);
+  heroVideo.style.setProperty("--hero-video-y", `${heroShift}px`);
+
+  parallaxImages.forEach((image) => {
+    const frame = image.parentElement.getBoundingClientRect();
+    if (frame.bottom < -100 || frame.top > viewportHeight + 100) return;
+
+    const distance = frame.top + frame.height / 2 - viewportHeight / 2;
+    const shift = Math.max(-18, Math.min(18, (distance / viewportHeight) * -18));
+    image.style.setProperty("--image-y", `${shift}px`);
+  });
+
+  motionTicking = false;
+};
+
+const requestMotionUpdate = () => {
+  if (motionTicking || prefersReducedMotion) return;
+  motionTicking = true;
+  requestAnimationFrame(updateMotion);
+};
+
+if (!prefersReducedMotion) {
+  window.addEventListener("scroll", requestMotionUpdate, { passive: true });
+  window.addEventListener("resize", requestMotionUpdate, { passive: true });
+  requestMotionUpdate();
+
+  if (window.matchMedia("(pointer: fine)").matches) {
+    document.querySelectorAll("[data-tilt]").forEach((card) => {
+      card.addEventListener("pointermove", (event) => {
+        const bounds = card.getBoundingClientRect();
+        const x = (event.clientX - bounds.left) / bounds.width - 0.5;
+        const y = (event.clientY - bounds.top) / bounds.height - 0.5;
+        card.style.setProperty("--tilt-x", `${x * 3.4}deg`);
+        card.style.setProperty("--tilt-y", `${y * -3.4}deg`);
+      });
+
+      card.addEventListener("pointerleave", () => {
+        card.style.setProperty("--tilt-x", "0deg");
+        card.style.setProperty("--tilt-y", "0deg");
+      });
+    });
+  }
+}
+
+// Count key province facts when they enter the viewport.
+const counterObserver = new IntersectionObserver(
+  (entries, observer) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+
+      const element = entry.target;
+      const target = Number(element.dataset.count);
+      const suffix = element.dataset.countSuffix || "";
+      const startedAt = performance.now();
+      const duration = 1250;
+
+      const animateCount = (time) => {
+        const progress = Math.min((time - startedAt) / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        element.textContent = `${Math.round(target * eased).toLocaleString()}${suffix}`;
+        if (progress < 1) requestAnimationFrame(animateCount);
+      };
+
+      element.textContent = `0${suffix}`;
+      requestAnimationFrame(animateCount);
+      observer.unobserve(element);
+    });
+  },
+  { threshold: 0.7 }
+);
+
+document.querySelectorAll("[data-count]").forEach((counter) => counterObserver.observe(counter));
+
+// Recreation rail: buttons, mouse drag, and a live progress indicator.
+const activityRail = document.querySelector("[data-activity-rail]");
+const activityPrevious = document.querySelector("[data-activity-prev]");
+const activityNext = document.querySelector("[data-activity-next]");
+const activityProgress = document.querySelector("[data-activity-progress]");
+let activityDragging = false;
+let activityStartX = 0;
+let activityStartScroll = 0;
+let activityProgressFrame = 0;
+
+const updateActivityProgress = () => {
+  const total = Math.max(activityRail.scrollWidth, 1);
+  const progress = Math.min((activityRail.scrollLeft + activityRail.clientWidth) / total, 1);
+  activityProgress.style.setProperty("--rail-progress", String(progress));
+};
+
+const requestActivityProgress = () => {
+  cancelAnimationFrame(activityProgressFrame);
+  activityProgressFrame = requestAnimationFrame(updateActivityProgress);
+};
+
+const moveActivityRail = (direction) => {
+  activityRail.scrollBy({ left: direction * Math.min(activityRail.clientWidth * 0.78, 480), behavior: "smooth" });
+};
+
+activityPrevious.addEventListener("click", () => moveActivityRail(-1));
+activityNext.addEventListener("click", () => moveActivityRail(1));
+activityRail.addEventListener("scroll", requestActivityProgress, { passive: true });
+window.addEventListener("resize", requestActivityProgress, { passive: true });
+
+activityRail.addEventListener("pointerdown", (event) => {
+  if (event.pointerType !== "mouse") return;
+  activityDragging = true;
+  activityStartX = event.clientX;
+  activityStartScroll = activityRail.scrollLeft;
+  activityRail.classList.add("is-dragging");
+  activityRail.setPointerCapture(event.pointerId);
+});
+
+activityRail.addEventListener("pointermove", (event) => {
+  if (!activityDragging) return;
+  activityRail.scrollLeft = activityStartScroll - (event.clientX - activityStartX);
+});
+
+const stopActivityDrag = () => {
+  activityDragging = false;
+  activityRail.classList.remove("is-dragging");
+};
+
+activityRail.addEventListener("pointerup", stopActivityDrag);
+activityRail.addEventListener("pointercancel", stopActivityDrag);
+activityRail.addEventListener("lostpointercapture", stopActivityDrag);
+updateActivityProgress();
+
 // Destination filtering.
 const filterButtons = document.querySelectorAll("[data-filter]");
 const destinationCards = document.querySelectorAll("[data-categories]");
@@ -221,7 +355,7 @@ const itineraries = {
     badge: "Essential",
     days: [
       { title: "Bontoc orientation", note: "Museum context, local lunch, and a gentle valley walk", time: "Day 01" },
-      { title: "Maligcong at first light", note: "Guided terrace walk, village time, and a slow return", time: "Day 02" }
+      { title: "Mt. Kupapey at first light", note: "Guided summit, terrace walk, village time, and a slow return", time: "Day 02" }
     ]
   },
   3: {
@@ -229,7 +363,7 @@ const itineraries = {
     badge: "Balanced",
     days: [
       { title: "Arrive through Bontoc", note: "Museum context, local food, and time to settle in", time: "Day 01" },
-      { title: "Maligcong sunrise", note: "Guided terrace walk and a quiet village morning", time: "Day 02" },
+      { title: "Kupapey and Maligcong", note: "Guided sunrise summit, terraces, and a quiet village morning", time: "Day 02" },
       { title: "Sagada stories", note: "Choose a cultural walk, cave route, or pine trail", time: "Day 03" }
     ]
   },
@@ -238,7 +372,7 @@ const itineraries = {
     badge: "Immersive",
     days: [
       { title: "Meet Bontoc", note: "Museum context, market flavors, and the Chico River valley", time: "Day 01" },
-      { title: "Maligcong sunrise", note: "Guided terraces and an easy village afternoon", time: "Day 02" },
+      { title: "Kupapey and Mt. Fato", note: "A guided ridge day above Maligcong's terraces", time: "Day 02" },
       { title: "Sagada underground", note: "A guided cave route matched to your comfort", time: "Day 03" },
       { title: "Forest and heritage", note: "Pine trails and respectfully guided cultural sites", time: "Day 04" },
       { title: "The high road home", note: "A flexible Bauko stop and room for mountain weather", time: "Day 05" }
@@ -319,6 +453,30 @@ const placeNotes = {
       ["Pace", "One night or a long morning"],
       ["Remember", "Stay off planted terrace beds"],
       ["Pack", "Water, layers & trail shoes"]
+    ]
+  },
+  kupapey: {
+    kicker: "Field notes · Sunrise & summit",
+    title: "Mt. Kupapey",
+    description:
+      "Mt. Kupapey is known for an early climb above Maligcong's terraces. Go with a local guide, begin before dawn only when conditions are suitable, and make room for village context after the view.",
+    facts: [
+      ["Good for", "Sunrise hiking & broad views"],
+      ["Pace", "An early guided half-day"],
+      ["Remember", "Keep noise low before sunrise"],
+      ["Pack", "Headlamp, water & warm layers"]
+    ]
+  },
+  fato: {
+    kicker: "Field notes · Pine trail & ridges",
+    title: "Mt. Fato",
+    description:
+      "Mt. Fato extends the Maligcong mountain experience through pine forest and open ridges. A local guide can match the route to weather, time, and your group's ability.",
+    facts: [
+      ["Good for", "Longer walks & pine trails"],
+      ["Pace", "Half to full day"],
+      ["Pair with", "Mt. Kupapey when appropriate"],
+      ["Pack", "Trail shoes, water & sun cover"]
     ]
   },
   bauko: {

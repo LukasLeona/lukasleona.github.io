@@ -41,6 +41,7 @@
       <nav class="site-nav" id="site-navigation" aria-label="Primary navigation" data-nav>
         <a href="#discover">Discover</a>
         <a href="#places">Places</a>
+        <a href="#activities">Activities</a>
         <a href="#journey">Plan a journey</a>
         <a href="#travel-well">Travel well</a>
       </nav>
@@ -158,11 +159,11 @@
 
         <div class="page-shell fact-ribbon" data-reveal aria-label="Mountain Province highlights">
           <article>
-            <strong>10</strong>
+            <strong data-count="10">10</strong>
             <span>mountain municipalities</span>
           </article>
           <article>
-            <strong>1,000+</strong>
+            <strong data-count="1000" data-count-suffix="+">1,000+</strong>
             <span>stories in every landscape</span>
           </article>
           <article>
@@ -189,102 +190,164 @@
           </div>
 
           <div class="destination-grid" data-destination-grid>
-            <article class="destination-card destination-card--feature" data-categories="nature adventure" data-reveal>
-              <div class="destination-art art--sagada" aria-hidden="true">
-                <svg viewBox="0 0 720 520" preserveAspectRatio="xMidYMid slice">
-                  <circle cx="548" cy="119" r="64" />
-                  <path class="far" d="M-20 321 120 191l79 78 93-118 129 142 83-72 236 201v118H-20Z" />
-                  <path class="near" d="M-30 404 115 283l94 74 114-135 119 128 92-88 216 173v106H-30Z" />
-                  <path class="trail" d="M206 527c83-62 145-87 217-126 42-22 80-53 111-88" />
-                </svg>
+            <article class="destination-card destination-card--feature" data-categories="nature adventure culture" data-reveal data-tilt>
+              <figure class="destination-art">
+                <img src="assets/images/sagada-clouds.webp" alt="Cloud-filled mountain valleys framed by pine trees in Sagada" loading="lazy" decoding="async" data-parallax-image />
                 <span class="destination-number">01</span>
-              </div>
+                <figcaption>Sagada · Mountain Province</figcaption>
+              </figure>
               <div class="destination-card__body">
                 <div>
                   <p class="card-kicker">Caves · cliffs · pine trails</p>
                   <h3>Sagada</h3>
                 </div>
-                <p>Walk between limestone caves, forest paths, and sacred heritage sites with a local guide.</p>
+                <p>Walk between limestone caves, forest paths, cloud viewpoints, and sacred heritage sites with a local guide.</p>
                 <button class="card-link" type="button" data-place-open="sagada" aria-label="Read field notes for Sagada">
                   Read field notes <span aria-hidden="true">↗</span>
                 </button>
               </div>
             </article>
 
-            <article class="destination-card" data-categories="culture" data-reveal>
-              <div class="destination-art art--bontoc" aria-hidden="true">
-                <svg viewBox="0 0 520 430" preserveAspectRatio="xMidYMid slice">
-                  <circle cx="390" cy="93" r="53" />
-                  <path class="far" d="M-20 282 86 176l86 72 81-113 115 117 81-76 90 98v176H-20Z" />
-                  <path class="river" d="M-30 373c124-60 210 31 325-20 83-37 140-19 249 33v81H-30Z" />
-                  <path class="line" d="M-10 367c119-56 200 20 305-26 89-39 148-17 235 26" />
-                </svg>
+            <article class="destination-card" data-categories="culture nature" data-reveal data-tilt>
+              <figure class="destination-art">
+                <img src="assets/images/bontoc-sunset.webp" alt="Bontoc valley and town beneath a dramatic red sunset" loading="lazy" decoding="async" data-parallax-image />
                 <span class="destination-number">02</span>
-              </div>
+                <figcaption>Bontoc · Provincial capital</figcaption>
+              </figure>
               <div class="destination-card__body">
                 <div>
                   <p class="card-kicker">History · craft · river valley</p>
                   <h3>Bontoc</h3>
                 </div>
-                <p>Begin with the museum, then listen for the deeper history held by the Chico River valley.</p>
+                <p>Begin with local history, then meet the markets, neighborhoods, and Chico River valley at an unhurried pace.</p>
                 <button class="card-link" type="button" data-place-open="bontoc" aria-label="Read field notes for Bontoc">
                   Read field notes <span aria-hidden="true">↗</span>
                 </button>
               </div>
             </article>
 
-            <article class="destination-card" data-categories="nature culture" data-reveal>
-              <div class="destination-art art--maligcong" aria-hidden="true">
-                <svg viewBox="0 0 520 430" preserveAspectRatio="xMidYMid slice">
-                  <circle cx="111" cy="91" r="51" />
-                  <path class="far" d="M-20 248 84 142l76 72 99-117 110 125 84-66 88 103v191H-20Z" />
-                  <g class="terraces">
-                    <path d="M-20 290c94-31 167-28 239 1 87 36 169 33 321-12" />
-                    <path d="M-20 330c104-31 178-24 245 4 86 36 167 29 315-13" />
-                    <path d="M-20 370c94-25 165-17 240 10 91 33 178 20 320-21" />
-                    <path d="M-20 411c94-19 168-10 239 13 98 31 191 14 321-26" />
-                  </g>
-                </svg>
+            <article class="destination-card" data-categories="nature culture adventure" data-reveal data-tilt>
+              <figure class="destination-art">
+                <img src="assets/images/maligcong-terraces.webp" alt="Green stone-walled rice terraces surrounding Maligcong village" loading="lazy" decoding="async" data-parallax-image />
                 <span class="destination-number">03</span>
-              </div>
+                <figcaption>Maligcong · Bontoc</figcaption>
+              </figure>
               <div class="destination-card__body">
                 <div>
                   <p class="card-kicker">Terraces · sunrise · village life</p>
                   <h3>Maligcong</h3>
                 </div>
-                <p>See stone-walled terraces catch first light, then share a quiet morning in the village.</p>
+                <p>See stone-walled terraces catch first light, then spend a quiet morning learning how the landscape is cared for.</p>
                 <button class="card-link" type="button" data-place-open="maligcong" aria-label="Read field notes for Maligcong">
                   Read field notes <span aria-hidden="true">↗</span>
                 </button>
               </div>
             </article>
 
-            <article class="destination-card" data-categories="nature adventure" data-reveal>
-              <div class="destination-art art--bauko" aria-hidden="true">
-                <svg viewBox="0 0 520 430" preserveAspectRatio="xMidYMid slice">
-                  <circle cx="392" cy="86" r="48" />
-                  <path class="far" d="M-15 292 90 178l78 63 92-121 110 121 72-67 97 107v170H-15Z" />
-                  <path class="near" d="M-20 355 102 256l79 59 99-109 102 112 78-67 82 85v115H-20Z" />
-                  <g class="pines">
-                    <path d="m84 278-26 60h52Zm0 37v61" />
-                    <path d="m155 247-31 71h62Zm0 45v90" />
-                    <path d="m425 269-29 66h58Zm0 41v69" />
-                  </g>
-                </svg>
+            <article class="destination-card destination-card--feature destination-card--reverse" data-categories="nature adventure" data-reveal data-tilt>
+              <figure class="destination-art">
+                <img src="assets/images/mt-kupapey.webp" alt="Sunlit rice terraces and misty mountain villages seen from Mount Kupapey" loading="lazy" decoding="async" data-parallax-image />
                 <span class="destination-number">04</span>
-              </div>
+                <figcaption>Mt. Kupapey · Maligcong</figcaption>
+              </figure>
               <div class="destination-card__body">
                 <div>
-                  <p class="card-kicker">Ridges · farms · cool air</p>
+                  <p class="card-kicker">Sunrise · summit · terrace views</p>
+                  <h3>Mt. Kupapey</h3>
+                </div>
+                <p>Climb before dawn for a sweeping view of Maligcong's terraces, layered ridges, and villages waking beneath the clouds.</p>
+                <button class="card-link" type="button" data-place-open="kupapey" aria-label="Read field notes for Mount Kupapey">
+                  Read field notes <span aria-hidden="true">↗</span>
+                </button>
+              </div>
+            </article>
+
+            <article class="destination-card" data-categories="nature adventure" data-reveal data-tilt>
+              <figure class="destination-art">
+                <img src="assets/images/mt-fato.webp" alt="A hiker resting beneath pine trees on the Mount Fato trail" loading="lazy" decoding="async" data-parallax-image />
+                <span class="destination-number">05</span>
+                <figcaption>Mt. Fato · Maligcong</figcaption>
+              </figure>
+              <div class="destination-card__body">
+                <div>
+                  <p class="card-kicker">Pines · ridges · longer trails</p>
+                  <h3>Mt. Fato</h3>
+                </div>
+                <p>Follow pine-shaded paths to open ridges, often paired with Mt. Kupapey for a fuller guided mountain day.</p>
+                <button class="card-link" type="button" data-place-open="fato" aria-label="Read field notes for Mount Fato">
+                  Read field notes <span aria-hidden="true">↗</span>
+                </button>
+              </div>
+            </article>
+
+            <article class="destination-card" data-categories="nature adventure" data-reveal data-tilt>
+              <figure class="destination-art">
+                <img src="assets/images/bauko-waterfall.webp" alt="A tall waterfall descending a green mountainside in Bauko" loading="lazy" decoding="async" data-parallax-image />
+                <span class="destination-number">06</span>
+                <figcaption>Bauko · Mountain Province</figcaption>
+              </figure>
+              <div class="destination-card__body">
+                <div>
+                  <p class="card-kicker">Waterfalls · farms · cool air</p>
                   <h3>Bauko</h3>
                 </div>
-                <p>Take the high road through vegetable farms, pine ridges, and wide-open mountain weather.</p>
+                <p>Take the high road through working farms, pine ridges, and waterfall country shaped by mountain weather.</p>
                 <button class="card-link" type="button" data-place-open="bauko" aria-label="Read field notes for Bauko">
                   Read field notes <span aria-hidden="true">↗</span>
                 </button>
               </div>
             </article>
           </div>
+        </div>
+      </section>
+
+      <section class="activities section" id="activities" aria-labelledby="activities-title">
+        <div class="page-shell activities__header">
+          <div class="section-heading section-heading--compact" data-reveal>
+            <p class="eyebrow eyebrow--light">Move through the mountains</p>
+            <h2 id="activities-title">Choose your kind<br /><em>of adventure.</em></h2>
+          </div>
+          <div class="carousel-controls" data-reveal>
+            <button type="button" data-activity-prev aria-label="Previous activities">←</button>
+            <button type="button" data-activity-next aria-label="Next activities">→</button>
+          </div>
+        </div>
+
+        <div class="activity-rail" data-activity-rail data-reveal>
+          <article class="activity-card">
+            <img src="assets/images/mt-fato.webp" alt="Hiker on a pine forest trail at Mount Fato" loading="lazy" decoding="async" />
+            <div class="activity-card__shade"></div>
+            <span>01 · On foot</span>
+            <div><h3>Summit hiking</h3><p>Mt. Fato and Mt. Kupapey</p></div>
+          </article>
+          <article class="activity-card">
+            <img src="assets/images/sagada-sunrise.webp" alt="Sun rising above a sea of clouds in Sagada" loading="lazy" decoding="async" />
+            <div class="activity-card__shade"></div>
+            <span>02 · At first light</span>
+            <div><h3>Sunrise walks</h3><p>Cloud views and pine ridges</p></div>
+          </article>
+          <article class="activity-card">
+            <img src="assets/images/bauko-waterfall.webp" alt="Waterfall flowing over a broad rock face in Bauko" loading="lazy" decoding="async" />
+            <div class="activity-card__shade"></div>
+            <span>03 · Follow the water</span>
+            <div><h3>Waterfall trails</h3><p>Weather-led highland walks</p></div>
+          </article>
+          <article class="activity-card">
+            <img src="assets/images/mt-kupapey.webp" alt="Rice terraces beneath Mount Kupapey" loading="lazy" decoding="async" />
+            <div class="activity-card__shade"></div>
+            <span>04 · Across the fields</span>
+            <div><h3>Terrace trekking</h3><p>Guided walks on working land</p></div>
+          </article>
+          <article class="activity-card">
+            <img src="assets/images/sagada-clouds.webp" alt="Pine trees and mountain clouds in Sagada" loading="lazy" decoding="async" />
+            <div class="activity-card__shade"></div>
+            <span>05 · Go deeper</span>
+            <div><h3>Caves & forest</h3><p>Accredited local guides required</p></div>
+          </article>
+        </div>
+        <div class="page-shell activities__note" data-reveal>
+          <p>Every route changes with weather, access, and community guidance. Match the activity to your experience and confirm conditions locally.</p>
+          <span data-activity-progress aria-hidden="true"><i></i></span>
         </div>
       </section>
 
@@ -350,6 +413,56 @@
               <div><h3>Quiet & crisp</h3><p>November — December</p></div>
               <p>Cool evenings and an inviting, reflective pace.</p>
             </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="culture section" id="culture" aria-labelledby="culture-title">
+        <div class="culture-ticker" aria-hidden="true">
+          <div>
+            <span>Gong rhythms</span><i>✦</i><span>Living traditions</span><i>✦</i><span>Woven stories</span><i>✦</i><span>Community memory</span><i>✦</i>
+            <span>Gong rhythms</span><i>✦</i><span>Living traditions</span><i>✦</i><span>Woven stories</span><i>✦</i><span>Community memory</span><i>✦</i>
+          </div>
+        </div>
+
+        <div class="page-shell culture__layout">
+          <figure class="culture__visual" data-reveal>
+            <img
+              src="assets/images/culture-dance-illustration.webp"
+              alt="Illustrative scene of a Cordilleran community gong dance in the mountains"
+              loading="lazy"
+              decoding="async"
+              data-parallax-image
+            />
+            <figcaption>AI-generated editorial illustration · not a documentary photograph</figcaption>
+          </figure>
+
+          <div class="culture__story" data-reveal>
+            <p class="eyebrow">Culture is living</p>
+            <h2 id="culture-title">Listen for what<br /><em>the mountains carry.</em></h2>
+            <p class="culture__lead">
+              Mountain Province is home to distinct Indigenous communities, languages, and ways of life.
+              Gong rhythms, community dances, weaving, food, and oral history continue to carry identity and memory.
+            </p>
+            <p>
+              Encounter culture on community terms: listen before labeling, ask before recording, and remember that
+              traditions are lived relationships—not performances created for a visitor's camera.
+            </p>
+
+            <div class="culture-notes">
+              <article>
+                <span>01</span>
+                <div><h3>Gongs & dance</h3><p>Collective rhythm brings movement, celebration, and community together.</p></div>
+              </article>
+              <article>
+                <span>02</span>
+                <div><h3>Woven knowledge</h3><p>Textiles carry skilled practice, identity, pattern, and meaning across generations.</p></div>
+              </article>
+              <article>
+                <span>03</span>
+                <div><h3>Stories in context</h3><p>Local museums and community guides help visitors understand what they encounter.</p></div>
+              </article>
+            </div>
           </div>
         </div>
       </section>
@@ -420,8 +533,8 @@
           <span class="brand__text"><strong>Discover</strong><span>Mountain Province</span></span>
         </a>
         <div class="footer__links">
-          <div><span>Explore</span><a href="#places">Places</a><a href="#journey">Journeys</a></div>
-          <div><span>Know before you go</span><a href="#travel-well">Travel well</a><a href="#discover">About the province</a></div>
+          <div><span>Explore</span><a href="#places">Places</a><a href="#activities">Activities</a><a href="#journey">Journeys</a></div>
+          <div><span>Know before you go</span><a href="#culture">Living culture</a><a href="#travel-well">Travel well</a><a href="#discover">About the province</a></div>
         </div>
       </div>
       <div class="page-shell footer__bottom">

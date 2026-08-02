@@ -422,7 +422,8 @@ h2 em {
   max-width: none;
   object-fit: cover;
   object-position: center 45%;
-  transform: scale(1.012);
+  transform: translate3d(0, var(--hero-video-y, 0px), 0) scale(1.045);
+  will-change: transform;
 }
 
 .hero__wash {
@@ -819,25 +820,46 @@ h2 em {
 }
 
 .destination-card {
+  --lift: 0px;
+  --tilt-x: 0deg;
+  --tilt-y: 0deg;
   display: grid;
-  grid-template-columns: minmax(0, 0.9fr) minmax(260px, 1.1fr);
-  min-height: 390px;
+  grid-template-columns: minmax(210px, 0.88fr) minmax(260px, 1.12fr);
+  min-width: 0;
+  min-height: 420px;
   overflow: hidden;
   border-radius: var(--radius-lg);
   background: var(--cream);
   box-shadow: 0 8px 30px rgba(28, 49, 94, 0.05);
+  transform: perspective(1100px) translateY(var(--lift)) rotateX(var(--tilt-y)) rotateY(var(--tilt-x));
+  transform-style: preserve-3d;
   transition: opacity 350ms ease, transform 450ms var(--ease), box-shadow 450ms ease;
+  will-change: transform;
 }
 
 .destination-card--feature {
   grid-column: 1 / -1;
-  grid-template-columns: minmax(0, 1.35fr) minmax(330px, 0.65fr);
-  min-height: 500px;
+  grid-template-columns: minmax(0, 1.3fr) minmax(340px, 0.7fr);
+  min-height: 520px;
+}
+
+.destination-card--reverse .destination-art {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.destination-card--feature.destination-card--reverse {
+  grid-template-columns: minmax(340px, 0.7fr) minmax(0, 1.3fr);
+}
+
+.destination-card--reverse .destination-card__body {
+  grid-column: 1;
+  grid-row: 1;
 }
 
 .destination-card:hover {
+  --lift: -7px;
   box-shadow: var(--shadow);
-  transform: translateY(-7px);
 }
 
 .destination-card.is-filtered-out {
@@ -846,25 +868,52 @@ h2 em {
 
 .destination-art {
   position: relative;
+  margin: 0;
   min-height: 280px;
   overflow: hidden;
   background: var(--sage);
 }
 
-.destination-art svg {
-  width: 100%;
-  height: 100%;
-  transition: transform 850ms var(--ease);
+.destination-art::after {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 48%, rgba(8, 26, 35, 0.62) 100%);
+  content: "";
+  pointer-events: none;
 }
 
-.destination-card:hover .destination-art svg {
-  transform: scale(1.035);
+.destination-art img {
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: cover;
+  transform: scale(1.055) translate3d(0, var(--image-y, 0px), 0);
+  transition: transform 1.1s var(--ease), filter 700ms ease;
+  will-change: transform;
+}
+
+.destination-card:hover .destination-art img {
+  filter: saturate(1.06) contrast(1.03);
+  transform: scale(1.1) translate3d(0, var(--image-y, 0px), 0);
+}
+
+.destination-art figcaption {
+  position: absolute;
+  right: 20px;
+  bottom: 18px;
+  z-index: 2;
+  color: rgba(255, 255, 255, 0.76);
+  font-size: 0.57rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
 }
 
 .destination-number {
   position: absolute;
   top: 24px;
   left: 24px;
+  z-index: 2;
   display: grid;
   width: 46px;
   height: 46px;
@@ -881,13 +930,18 @@ h2 em {
   flex-direction: column;
   align-items: flex-start;
   justify-content: space-between;
-  padding: clamp(30px, 4.2vw, 56px);
+  min-width: 0;
+  padding: clamp(30px, 3.6vw, 52px);
+  container-type: inline-size;
 }
 
 .destination-card__body h3 {
+  max-width: 100%;
   margin: 0;
   color: var(--navy);
-  font-size: clamp(2.2rem, 4vw, 4rem);
+  font-size: clamp(2rem, 13cqi, 4rem);
+  overflow-wrap: anywhere;
+  text-wrap: balance;
 }
 
 .destination-card__body > p {
@@ -927,80 +981,174 @@ h2 em {
   transform: translate(3px, -3px);
 }
 
-.art--sagada {
-  background: #769a8a;
+/* Activities */
+.activities {
+  overflow: hidden;
+  background: #102443;
+  color: var(--white);
 }
 
-.art--sagada circle,
-.art--maligcong circle,
-.art--bauko circle,
-.art--bontoc circle {
-  fill: var(--sand);
-  opacity: 0.84;
+.activities__header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 42px;
+  margin-bottom: 58px;
 }
 
-.art--sagada .far {
-  fill: #316e6c;
+.activities h2 {
+  color: var(--white);
 }
 
-.art--sagada .near {
-  fill: var(--navy);
+.activities h2 em {
+  color: var(--sage);
 }
 
-.art--sagada .trail {
-  fill: none;
-  stroke: var(--sand);
-  stroke-width: 10;
+.carousel-controls {
+  display: flex;
+  gap: 10px;
 }
 
-.art--bontoc {
-  background: #c9c7a8;
+.carousel-controls button {
+  display: grid;
+  width: 52px;
+  height: 52px;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 50%;
+  background: transparent;
+  color: var(--white);
+  font-size: 1.1rem;
+  cursor: pointer;
+  place-items: center;
+  transition: background-color 220ms ease, color 220ms ease, transform 220ms var(--ease);
 }
 
-.art--bontoc .far {
-  fill: var(--sage);
+.carousel-controls button:hover {
+  background: var(--sand);
+  color: var(--navy);
+  transform: scale(1.06);
 }
 
-.art--bontoc .river {
-  fill: var(--teal);
+.activity-rail {
+  display: grid;
+  grid-auto-columns: clamp(280px, 34vw, 455px);
+  grid-auto-flow: column;
+  gap: 18px;
+  overflow-x: auto;
+  padding: 6px max(32px, calc((100vw - 1240px) / 2)) 28px;
+  cursor: grab;
+  scroll-behavior: smooth;
+  scroll-padding-inline: max(32px, calc((100vw - 1240px) / 2));
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
 }
 
-.art--bontoc .line {
-  fill: none;
-  stroke: var(--sand);
-  stroke-width: 7;
+.activity-rail::-webkit-scrollbar {
+  display: none;
 }
 
-.art--maligcong {
-  background: #97ae8a;
+.activity-rail.is-dragging {
+  cursor: grabbing;
+  scroll-behavior: auto;
+  scroll-snap-type: none;
 }
 
-.art--maligcong .far {
-  fill: var(--teal);
+.activity-card {
+  position: relative;
+  display: flex;
+  aspect-ratio: 0.82;
+  min-height: 430px;
+  overflow: hidden;
+  padding: 28px;
+  border-radius: 26px;
+  isolation: isolate;
+  scroll-snap-align: start;
+  transform: translateZ(0);
 }
 
-.art--maligcong .terraces {
-  fill: none;
-  stroke: var(--sand);
-  stroke-width: 13;
+.activity-card img,
+.activity-card__shade {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  width: 100%;
+  height: 100%;
 }
 
-.art--bauko {
-  background: #89a8a0;
+.activity-card img {
+  max-width: none;
+  object-fit: cover;
+  transition: transform 1s var(--ease), filter 600ms ease;
 }
 
-.art--bauko .far {
-  fill: var(--teal);
+.activity-card__shade {
+  z-index: -1;
+  background: linear-gradient(180deg, rgba(5, 19, 36, 0.18), rgba(5, 19, 36, 0.08) 35%, rgba(5, 19, 36, 0.88) 100%);
 }
 
-.art--bauko .near {
-  fill: var(--navy);
+.activity-card:hover img {
+  filter: saturate(1.08);
+  transform: scale(1.075);
 }
 
-.art--bauko .pines {
-  fill: var(--sand);
-  stroke: var(--sand);
-  stroke-width: 4;
+.activity-card > span {
+  align-self: flex-start;
+  padding: 7px 10px;
+  border: 1px solid rgba(255, 255, 255, 0.36);
+  border-radius: 999px;
+  font-size: 0.58rem;
+  font-weight: 800;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  backdrop-filter: blur(10px);
+}
+
+.activity-card > div:last-child {
+  align-self: flex-end;
+  margin-top: auto;
+}
+
+.activity-card h3 {
+  margin-bottom: 10px;
+  color: var(--white);
+  font-size: clamp(1.7rem, 3vw, 2.65rem);
+}
+
+.activity-card p {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.68);
+  font-size: 0.72rem;
+}
+
+.activities__note {
+  display: grid;
+  grid-template-columns: minmax(0, 600px) minmax(180px, 1fr);
+  align-items: center;
+  gap: 60px;
+  margin-top: 34px;
+}
+
+.activities__note p {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.54);
+  font-size: 0.7rem;
+}
+
+.activities__note > span {
+  display: block;
+  height: 2px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.activities__note i {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: var(--sage);
+  transform: scaleX(var(--rail-progress, 0));
+  transform-origin: left;
+  transition: transform 160ms linear;
 }
 
 /* Journey builder */
@@ -1257,6 +1405,149 @@ h2 em {
 
 .season-track article > p {
   max-width: 420px;
+}
+
+/* Living culture */
+.culture {
+  position: relative;
+  overflow: hidden;
+  background: var(--sand);
+}
+
+.culture-ticker {
+  position: absolute;
+  top: 54px;
+  right: 0;
+  left: 0;
+  overflow: hidden;
+  color: rgba(28, 49, 94, 0.1);
+  font-size: clamp(2.4rem, 5vw, 5.4rem);
+  font-weight: 800;
+  letter-spacing: -0.05em;
+  line-height: 1;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.culture-ticker div {
+  display: flex;
+  align-items: center;
+  gap: 34px;
+  width: max-content;
+  animation: culture-ticker 34s linear infinite;
+}
+
+.culture-ticker i {
+  color: rgba(34, 124, 112, 0.18);
+  font-size: 0.32em;
+  font-style: normal;
+}
+
+.culture__layout {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1.08fr) minmax(390px, 0.92fr);
+  align-items: center;
+  gap: clamp(55px, 8vw, 110px);
+  padding-top: 80px;
+}
+
+.culture__visual {
+  position: relative;
+  min-height: 680px;
+  margin: 0;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+}
+
+.culture__visual::after {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 70%, rgba(6, 20, 34, 0.7));
+  content: "";
+  pointer-events: none;
+}
+
+.culture__visual img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: cover;
+  object-position: center;
+  transform: scale(1.06) translate3d(0, var(--image-y, 0px), 0);
+  will-change: transform;
+}
+
+.culture__visual figcaption {
+  position: absolute;
+  right: 22px;
+  bottom: 19px;
+  z-index: 1;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.55rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.culture__story h2 {
+  font-size: clamp(2.7rem, 4.6vw, 4.6rem);
+}
+
+.culture__lead {
+  margin-top: 32px;
+  color: var(--ink) !important;
+  font-size: clamp(1.04rem, 1.7vw, 1.3rem) !important;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  line-height: 1.55;
+}
+
+.culture__story > p:not(.eyebrow) {
+  color: var(--muted);
+  font-size: 0.84rem;
+}
+
+.culture-notes {
+  display: grid;
+  gap: 0;
+  margin-top: 38px;
+  border-top: 1px solid var(--line);
+}
+
+.culture-notes article {
+  display: grid;
+  grid-template-columns: 42px 1fr;
+  gap: 18px;
+  padding-block: 19px;
+  border-bottom: 1px solid var(--line);
+  transition: padding 250ms var(--ease), background-color 250ms ease;
+}
+
+.culture-notes article:hover {
+  padding-inline: 12px;
+  background: rgba(255, 255, 255, 0.28);
+}
+
+.culture-notes article > span {
+  color: var(--teal);
+  font-size: 0.62rem;
+  font-weight: 800;
+}
+
+.culture-notes h3 {
+  margin-bottom: 7px;
+  color: var(--navy);
+  font-size: 1rem;
+}
+
+.culture-notes p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.68rem;
+  line-height: 1.55;
 }
 
 /* Travel well */
@@ -1563,6 +1854,10 @@ h2 em {
   to { opacity: 1; transform: none; }
 }
 
+@keyframes culture-ticker {
+  to { transform: translateX(-50%); }
+}
+
 /* Responsive */
 @media (max-width: 1080px) {
   :root {
@@ -1640,6 +1935,12 @@ h2 em {
     grid-row: span 1;
   }
 
+  .destination-card--reverse .destination-art,
+  .destination-card--reverse .destination-card__body {
+    grid-column: auto;
+    grid-row: auto;
+  }
+
   .destination-art {
     height: 320px;
   }
@@ -1654,6 +1955,19 @@ h2 em {
 
   .journey__intro {
     max-width: 650px;
+  }
+
+  .culture__layout {
+    grid-template-columns: 1fr;
+    gap: 60px;
+  }
+
+  .culture__visual {
+    min-height: 590px;
+  }
+
+  .culture__story {
+    max-width: 720px;
   }
 
   .care-grid {
@@ -1805,6 +2119,31 @@ h2 em {
     min-height: 315px;
   }
 
+  .destination-card__body h3 {
+    font-size: clamp(2.25rem, 15cqi, 3.8rem);
+  }
+
+  .activities__header {
+    align-items: flex-start;
+    flex-direction: column;
+    margin-bottom: 42px;
+  }
+
+  .activity-rail {
+    grid-auto-columns: min(82vw, 360px);
+    padding-inline: 18px;
+    scroll-padding-inline: 18px;
+  }
+
+  .activity-card {
+    min-height: 420px;
+  }
+
+  .activities__note {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+
   .journey__layout {
     gap: 50px;
   }
@@ -1825,6 +2164,24 @@ h2 em {
 
   .season-track article > p {
     grid-column: 2;
+  }
+
+  .culture-ticker {
+    top: 36px;
+  }
+
+  .culture__layout {
+    padding-top: 45px;
+  }
+
+  .culture__visual {
+    min-height: 460px;
+  }
+
+  .culture__visual figcaption {
+    right: 14px;
+    bottom: 13px;
+    left: 14px;
   }
 
   .travel-well__lead {
@@ -1878,6 +2235,20 @@ h2 em {
   .destination-card__body {
     min-height: 300px;
     padding: 28px;
+  }
+
+  .destination-art,
+  .destination-card--feature .destination-art {
+    height: 265px;
+  }
+
+  .activity-card {
+    min-height: 390px;
+    padding: 23px;
+  }
+
+  .culture__visual {
+    min-height: 390px;
   }
 
   .day-picker,
