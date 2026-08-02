@@ -1984,7 +1984,7 @@ function portfolioChatbot() {
     ) {
       return {
         messages: [
-          "For web work, start with Lakbay Baguio, MeBS Construction, Cloud Chaser, or Fire & Rescue Academy.",
+          "For web work, start with Slow Pour, Lakbay Baguio, LayoutLetter, Cloud Chaser, or MeBS Construction.",
           "For analytics, the LET and Spending Behavior case studies show Luke’s data workflow and interpretation."
         ],
         action: {
@@ -3753,6 +3753,7 @@ function interactivePortfolio() {
   ===================================================== */
 
   var projects = {
+    slowpour:{category:"WEB • 3D SCROLL EXPERIENCE",title:"Slow Pour — 3D Coffee Experience",summary:"An artistic coffee landing page where scrolling controls the visual progression of the drink and reveals a changing editorial story.",contribution:["Scroll-scrubbed coffee animation","Responsive desktop, tablet, and mobile layouts","Alternating editorial text choreography","Smooth motion and transition design"],stack:["HTML","CSS","JavaScript","Scroll Animation","Responsive UI"],links:[{label:"Open Experience",url:"/preview/CoffeeCup/index.html",external:true}]},
     fire:{category:"WEB • LMS • SEO",title:"Fire & Rescue Academy",summary:"A professional digital training platform for emergency-services education, course delivery, and online discoverability.",contribution:["Responsive website development","LMS course structure and delivery","SEO and content optimization","Technical troubleshooting"],stack:["WordPress","Tutor LMS","CSS","SEO"],links:[{label:"Visit Live",url:"https://fireandrescueacademy.com/",external:true}]},
     iskolar:{category:"WEB • PLATFORM",title:"IskolarLink",summary:"A student information and coordination platform that brings academic communication and workflows into one clearer environment.",contribution:["React front-end development","Information architecture","Responsive implementation","Academic workflow presentation"],stack:["React","JavaScript","UI Structure"],links:[{label:"Open Project",url:"preview/IskolarLink.com/IskolarLink-main/#/",external:true}]},
     corporate:{category:"WEB • CORPORATE",title:"Disaster Response & Training",summary:"A professional corporate website for a disaster-response and training organization.",contribution:["Website design and development","Responsive implementation","Content structure","Digital presence improvements"],stack:["WordPress","Responsive","Content"],links:[{label:"Visit Live",url:"https://conquerorscc.com/",external:true}]},

@@ -3953,3 +3953,190 @@ and
 @media (prefers-reduced-motion: reduce) {
   #portfolio .project-art-character { animation:none !important; }
 }
+
+
+/* =========================================================
+   SLOW POUR — 3D COFFEE PROJECT ART
+========================================================= */
+#portfolio .project-art-coffee {
+  --art-accent: #d99153;
+  --art-accent-2: #f4dfc7;
+  --art-bg-1: #4a352b;
+  --art-bg-2: #181311;
+}
+
+#portfolio .coffee-art-screen {
+  background:
+    radial-gradient(circle at 73% 42%, rgba(244,223,199,.22), transparent 28%),
+    linear-gradient(110deg, rgba(217,145,83,.08), transparent 48%),
+    #1b1715;
+}
+
+#portfolio .project-art-coffee .project-art-copy {
+  width: 46%;
+}
+
+#portfolio .coffee-art-stage {
+  position: absolute;
+  inset: 13px 16px 14px 47%;
+  display: grid;
+  place-items: center;
+  perspective: 700px;
+}
+
+#portfolio .coffee-art-halo {
+  position: absolute;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(244,223,199,.24), rgba(217,145,83,.08) 42%, transparent 70%);
+  filter: blur(4px);
+  animation: coffeeHaloBreathe 3.6s ease-in-out infinite;
+}
+
+#portfolio .coffee-art-cup {
+  position: relative;
+  width: 78px;
+  height: 122px;
+  overflow: hidden;
+  border: 2px solid rgba(255,255,255,.66);
+  border-top-color: rgba(255,255,255,.82);
+  border-radius: 16px 16px 24px 24px;
+  background: linear-gradient(115deg, rgba(255,255,255,.23), rgba(255,255,255,.035) 42%, rgba(255,255,255,.12));
+  box-shadow:
+    inset 10px 0 16px rgba(255,255,255,.09),
+    inset -10px 0 18px rgba(0,0,0,.18),
+    0 20px 28px rgba(0,0,0,.35);
+  transform-style: preserve-3d;
+  animation: coffeeCupFloat 3.2s ease-in-out infinite;
+}
+
+#portfolio .coffee-art-cup::after {
+  content: "";
+  position: absolute;
+  left: 9px;
+  right: 9px;
+  bottom: 5px;
+  height: 8px;
+  border-radius: 50%;
+  border-bottom: 2px solid rgba(255,255,255,.45);
+}
+
+#portfolio .coffee-art-espresso,
+#portfolio .coffee-art-cream,
+#portfolio .coffee-art-caramel {
+  position: absolute;
+  left: 4px;
+  right: 4px;
+  bottom: 4px;
+  border-radius: 7px 7px 19px 19px;
+}
+
+#portfolio .coffee-art-espresso {
+  height: 78%;
+  background: linear-gradient(to top, #412015, #754128 58%, #a5633d);
+}
+
+#portfolio .coffee-art-cream {
+  z-index: 2;
+  width: 86px;
+  height: 84px;
+  left: -28px;
+  right: auto;
+  bottom: 14px;
+  border-radius: 48% 52% 45% 55%;
+  background: rgba(239,222,199,.9);
+  filter: blur(.3px);
+  animation: coffeeCreamSwirl 4.1s ease-in-out infinite;
+}
+
+#portfolio .coffee-art-caramel {
+  z-index: 3;
+  left: 9px;
+  right: 9px;
+  bottom: 33px;
+  height: 6px;
+  border-radius: 50%;
+  border-top: 3px solid #d68a49;
+  transform: rotate(-14deg);
+  box-shadow: 0 -25px 0 -1px rgba(214,138,73,.88), 0 24px 0 -1px rgba(214,138,73,.72);
+  animation: coffeeCaramelDrift 3.7s ease-in-out infinite;
+}
+
+#portfolio .coffee-art-ice {
+  position: absolute;
+  z-index: 4;
+  width: 24px;
+  height: 24px;
+  border: 1px solid rgba(255,255,255,.55);
+  border-radius: 6px;
+  background: linear-gradient(145deg, rgba(255,255,255,.34), rgba(255,255,255,.05));
+  box-shadow: inset 4px 4px 8px rgba(255,255,255,.12);
+}
+
+#portfolio .coffee-art-ice-one { left: 11px; top: 24px; transform: rotate(14deg); }
+#portfolio .coffee-art-ice-two { right: 10px; top: 37px; transform: rotate(-11deg); }
+#portfolio .coffee-art-ice-three { left: 29px; top: 53px; transform: rotate(7deg); }
+
+#portfolio .coffee-art-pour {
+  position: absolute;
+  z-index: 5;
+  top: -20px;
+  left: 52%;
+  width: 7px;
+  height: 75px;
+  border-radius: 99px;
+  background: linear-gradient(to bottom, rgba(217,145,83,0), #d99153 24%, #8c4b2b);
+  transform: translateX(-50%) rotate(4deg);
+  filter: drop-shadow(0 5px 4px rgba(0,0,0,.25));
+  animation: coffeePourPulse 2.6s ease-in-out infinite;
+}
+
+#portfolio .coffee-art-orbit {
+  position: absolute;
+  width: 145px;
+  height: 67px;
+  border: 1px solid rgba(217,145,83,.42);
+  border-left-color: transparent;
+  border-radius: 50%;
+  transform: rotate(-15deg);
+  animation: coffeeOrbit 5.5s linear infinite;
+}
+
+@keyframes coffeeCupFloat {
+  0%,100% { transform: translateY(4px) rotateY(-10deg) rotateZ(-2deg); }
+  50% { transform: translateY(-7px) rotateY(12deg) rotateZ(2deg); }
+}
+
+@keyframes coffeeCreamSwirl {
+  0%,100% { transform: translate(-3px, 12px) rotate(-8deg) scale(.92); }
+  50% { transform: translate(17px, -3px) rotate(18deg) scale(1.06); }
+}
+
+@keyframes coffeeCaramelDrift {
+  0%,100% { transform: translateX(-2px) rotate(-14deg); }
+  50% { transform: translateX(5px) rotate(10deg); }
+}
+
+@keyframes coffeePourPulse {
+  0%,100% { opacity: .45; transform: translateX(-50%) scaleY(.82) rotate(4deg); }
+  50% { opacity: 1; transform: translateX(-50%) scaleY(1.08) rotate(-2deg); }
+}
+
+@keyframes coffeeHaloBreathe {
+  0%,100% { transform: scale(.92); opacity: .55; }
+  50% { transform: scale(1.08); opacity: .95; }
+}
+
+@keyframes coffeeOrbit {
+  to { transform: rotate(345deg); }
+}
+
+@media (max-width: 767px) {
+  #portfolio .project-art-coffee .project-art-copy { width: 48%; }
+  #portfolio .coffee-art-stage { inset: 10px 7px 10px 49%; transform: scale(.82); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #portfolio .project-art-coffee * { animation: none !important; }
+}
