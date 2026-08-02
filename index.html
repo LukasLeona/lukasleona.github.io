@@ -8,25 +8,44 @@
   content="width=device-width, initial-scale=1.0"
 >
   <meta name="color-scheme" content="dark light">
-  <title>Lukas - Portfolio</title>
+  <title>Luke Mark Leona | Web Developer & Data Analyst Philippines</title>
 
   <script>
     (function () {
+      var storageKey = "lukas-theme-preference-v2";
       try {
-        var savedTheme = localStorage.getItem("lukas-theme");
-        var preferredTheme = savedTheme ||
-          (window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches
-            ? "light"
-            : "dark");
-        document.documentElement.setAttribute("data-theme", preferredTheme);
+        var savedTheme = localStorage.getItem(storageKey);
+        var initialTheme = savedTheme === "light" || savedTheme === "dark"
+          ? savedTheme
+          : "dark";
+        document.documentElement.setAttribute("data-theme", initialTheme);
       } catch (error) {
         document.documentElement.setAttribute("data-theme", "dark");
       }
     }());
   </script>
-  <meta name="description" content="" />
-  <meta name="keywords" content="" />
+  <meta name="description" content="Luke Mark Leona is a Philippines-based web developer, software engineer, and data analyst building responsive websites, SEO, automation, and data solutions.">
+  <meta name="keywords" content="Luke Mark Leona, Luke Leona, web developer Philippines, freelance web developer Philippines, affordable website developer, data analyst Philippines, software engineer, SEO, automation">
   <meta name="author" content="Luke Mark P. Leona" />
+  <!-- SEO META START -->
+  <link rel="canonical" href="https://lukasleona.com/">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+  <meta property="og:locale" content="en_PH">
+  <meta property="og:type" content="profile">
+  <meta property="og:site_name" content="Luke Mark Leona Portfolio">
+  <meta property="og:title" content="Luke Mark Leona | Web Developer & Data Analyst Philippines">
+  <meta property="og:description" content="Luke Mark Leona is a Philippines-based web developer, software engineer, data analyst, and freelance Tech VA building responsive websites, automation, SEO, and data solutions.">
+  <meta property="og:url" content="https://lukasleona.com/">
+  <meta property="og:image" content="https://lukasleona.com/assets/img/og/luke-mark-leona-portfolio.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Luke Mark Leona — web developer, software engineer, and data analyst in the Philippines">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Luke Mark Leona | Web Developer & Data Analyst Philippines">
+  <meta name="twitter:description" content="Luke Mark Leona is a Philippines-based web developer, software engineer, data analyst, and freelance Tech VA building responsive websites, automation, SEO, and data solutions.">
+  <meta name="twitter:image" content="https://lukasleona.com/assets/img/og/luke-mark-leona-portfolio.png">
+  <!-- SEO META END -->
+
   <!--  FavIcon  -->
   <link rel="shortcut icon" href="assets/img/favicon.png">
   <!-- Google Fonts -->
@@ -69,6 +88,87 @@
 <script
   src="https://code.iconify.design/iconify-icon/3.0.0/iconify-icon.min.js">
 </script>
+
+  <!-- STRUCTURED DATA START -->
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://lukasleona.com/#website",
+      "url": "https://lukasleona.com/",
+      "name": "Luke Mark Leona Portfolio",
+      "description": "Portfolio of Luke Mark Leona, a Philippines-based web developer, software engineer, data analyst, and freelance Tech VA.",
+      "inLanguage": "en-PH"
+    },
+    {
+      "@type": "ProfilePage",
+      "@id": "https://lukasleona.com/#profile",
+      "url": "https://lukasleona.com/",
+      "name": "Luke Mark Leona — Web Developer and Data Analyst",
+      "isPartOf": {
+        "@id": "https://lukasleona.com/#website"
+      },
+      "mainEntity": {
+        "@id": "https://lukasleona.com/#person"
+      }
+    },
+    {
+      "@type": "Person",
+      "@id": "https://lukasleona.com/#person",
+      "name": "Luke Mark Leona",
+      "alternateName": [
+        "Luke Leona",
+        "Lukas Leona"
+      ],
+      "url": "https://lukasleona.com/",
+      "image": "https://lukasleona.com/assets/img/webdesigner/profile-img.png",
+      "jobTitle": "Software Engineer, Web Developer, and Data Analyst",
+      "homeLocation": {
+        "@type": "Country",
+        "name": "Philippines"
+      },
+      "sameAs": [
+        "https://www.linkedin.com/in/luke-mark-leona/",
+        "https://github.com/LukasLeona"
+      ],
+      "knowsAbout": [
+        "Web development",
+        "Responsive web design",
+        "Data analytics",
+        "SEO",
+        "Automation",
+        "WordPress",
+        "JavaScript",
+        "Python",
+        "SQL"
+      ]
+    },
+    {
+      "@type": "ProfessionalService",
+      "@id": "https://lukasleona.com/#services",
+      "name": "Luke Mark Leona Web Development and Data Services",
+      "url": "https://lukasleona.com/#contact",
+      "areaServed": {
+        "@type": "Country",
+        "name": "Philippines"
+      },
+      "provider": {
+        "@id": "https://lukasleona.com/#person"
+      },
+      "serviceType": [
+        "Web development",
+        "Website optimization",
+        "SEO support",
+        "Data analysis",
+        "Workflow automation"
+      ]
+    }
+  ]
+}
+  </script>
+  <!-- STRUCTURED DATA END -->
 </head>
 
 <body class="dark-arshia">
@@ -248,7 +348,7 @@
       <div class="left-side-image">
         <img src="assets/img/webdesigner/profile-img.png" alt="/">
       </div>
-      <h1 class="mt-1">LUKAS</h1>
+      <div class="mt-1 menu-profile-name" aria-label="Lukas">LUKAS</div>
       <a class="download-cv primary-button d-none d-lg-inline-block"
         href="https://drive.google.com/file/d/1S9-G_qkcsKzORcCjKaqnArnIk833Lfn7/view?usp=sharing" target="_blank"
         rel="noopener noreferrer">
@@ -365,23 +465,23 @@
               <div class="hero-content mt-4 mx-auto mx-lg-0 text-lg-left mt-lg-none">
 
                 <!-- Typed headline -->
-                <h2 class="hero-main-title">
+                <h1 class="hero-main-title">
 
                   <span class="hero-title-line">
-                    <span id="typed-title-before"></span>
-                    <span id="typed-name" class="hero-name"></span>
+                    <span id="typed-title-before">Hello, I'm </span>
+                    <span id="typed-name" class="hero-name">Luke Leona.</span>
                   </span>
 
                   <span class="hero-title-line hero-title-second">
-                    <span id="typed-title-after"></span>
+                    <span id="typed-title-after">I build digital experiences that work.</span>
                   </span>
 
-                </h2>
+                </h1>
 
 
                 <!-- Rotating typed roles -->
                 <p class="hero-role-line">
-                  <span id="typed-role"></span>
+                  <span id="typed-role">SOFTWARE ENGINEER • WEB DEVELOPER</span>
                   <span class="cursor">|</span>
                 </p>
 
@@ -537,9 +637,9 @@
 
             <p class="about-v2-lead">
 
-              I combine technical execution, creative thinking,
-              and data-driven decision-making to help businesses
-              build stronger digital experiences.
+              Based in the Philippines, I combine technical execution,
+              creative thinking, and data-driven decision-making to help
+              businesses build responsive, practical, and affordable digital experiences.
 
             </p>
 
@@ -4262,10 +4362,10 @@
           <div class="portfolio-v2-card-content">
             <div class="portfolio-project-index"><span>04 / WEB</span><small>TRAVEL APP</small></div>
             <h3>Lakbay Baguio</h3>
-            <p>A calmer, more personal Baguio itinerary experience with local discovery and conversational guidance.</p>
+            <p>A Baguio itinerary generator that helps travelers build a calmer, more personal trip plan with local discovery and conversational guidance.</p>
             <div class="portfolio-project-tags"><span>HTML</span><span>CSS</span><span>JavaScript</span></div>
             <div class="portfolio-card-actions">
-              <button type="button" class="portfolio-text-action portfolio-quick-view-btn" data-project="lakbay">Project Details <i class="bi bi-arrow-right"></i></button>
+              <a href="lakbay-baguio-itinerary-generator.html" class="portfolio-text-action" aria-label="Read the Lakbay Baguio itinerary generator case study">Case Study <i class="bi bi-arrow-right"></i></a>
               <a href="preview/lakbaybaguio.com/index.html" target="_blank" rel="noopener noreferrer" class="portfolio-card-icon-link" aria-label="Open project: Lakbay Baguio"><i class="bi bi-arrow-up-right"></i></a>
             </div>
           </div>
@@ -5887,34 +5987,26 @@
   </div>
   <!--  Background Shapes End  -->
 
-  <!--  Color Pallet  -->
-  <div id="color-switcher" class="color-switcher">
-    <div class="text-center color-pallet hide">
-      <h6 class="theme-skin-title">Appearance</h6>
-      <div class="theme-mode-control">
-        <button
-          type="button"
-          class="theme-mode-switch"
-          id="themeModeSwitch"
-          role="switch"
-          aria-checked="false"
-          aria-label="Switch between light and dark mode"
-        >
-          <span class="theme-mode-track" aria-hidden="true">
-            <span class="theme-mode-ambient theme-mode-ambient-sun"><i class="bi bi-sun-fill"></i></span>
-            <span class="theme-mode-ambient theme-mode-ambient-moon"><i class="bi bi-moon-stars-fill"></i></span>
-            <span class="theme-mode-thumb">
-              <i class="bi bi-sun-fill theme-thumb-sun"></i>
-              <i class="bi bi-moon-stars-fill theme-thumb-moon"></i>
-            </span>
-          </span>
-        </button>
-      </div>
-
-    </div>
-    <div class="pallet-button hide">
-      <a href="javascript:void(0)" class="cp-toggle" aria-label="Open light and dark mode settings" aria-expanded="false"><i class="bi bi-gear"></i></a>
-    </div>
+  <!-- Direct animated light / dark switch -->
+  <div id="color-switcher" class="color-switcher direct-theme-switcher">
+    <button
+      type="button"
+      class="theme-mode-switch"
+      id="themeModeSwitch"
+      role="switch"
+      aria-checked="false"
+      aria-label="Dark mode active. Switch to light mode"
+      title="Switch light and dark mode"
+    >
+      <span class="theme-mode-track" aria-hidden="true">
+        <span class="theme-mode-stars"></span>
+        <span class="theme-mode-cloud"></span>
+        <span class="theme-mode-thumb">
+          <i class="bi bi-sun-fill theme-thumb-sun"></i>
+          <i class="bi bi-moon-stars-fill theme-thumb-moon"></i>
+        </span>
+      </span>
+    </button>
   </div>
 
   <!-- Mouase Magic Cursor Start -->
@@ -6143,11 +6235,16 @@
       );
 
 
-    /* Start animation */
+    /* Start animation. Static text remains in the source for accessibility and SEO. */
 
     window.addEventListener(
       "load",
       function () {
+        titleElements.forEach(function (element) {
+          if (element) element.textContent = "";
+        });
+        var roleElement = document.getElementById("typed-role");
+        if (roleElement) roleElement.textContent = "";
         typeTitle();
       }
     );

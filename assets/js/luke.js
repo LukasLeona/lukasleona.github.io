@@ -2331,19 +2331,17 @@ function themeOption() {
 
     "use strict";
 
-    var storageKey = "lukas-theme";
+    var storageKey = "lukas-theme-preference-v2";
     var root = document.documentElement;
     var body = document.body;
     var themeSwitch = document.getElementById("themeModeSwitch");
-    var panel = document.querySelector("#color-switcher .color-pallet");
-    var toggleButton = document.querySelector("#color-switcher .cp-toggle");
-    var systemPreference = window.matchMedia
-      ? window.matchMedia("(prefers-color-scheme: dark)")
-      : null;
+    var isAnimating = false;
+    var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     function storedTheme() {
       try {
-        return window.localStorage.getItem(storageKey);
+        var saved = window.localStorage.getItem(storageKey);
+        return saved === "light" || saved === "dark" ? saved : null;
       } catch (error) {
         return null;
       }
@@ -2353,7 +2351,7 @@ function themeOption() {
       try {
         window.localStorage.setItem(storageKey, theme);
       } catch (error) {
-        // Theme switching remains available when storage is blocked.
+        // The switch still works when browser storage is unavailable.
       }
     }
 
@@ -2370,100 +2368,92 @@ function themeOption() {
       );
     }
 
-    function closeThemePanel() {
-      if (!panel) return;
-
-      panel.classList.add("theme-panel-closing");
-      panel.classList.remove("show");
-
-      if (toggleButton) {
-        toggleButton.setAttribute("aria-expanded", "false");
-      }
-
-      window.setTimeout(function () {
-        panel.classList.remove("theme-panel-closing");
-      }, 360);
+    function commitTheme(theme, persist) {
+      root.setAttribute("data-theme", theme);
+      body.setAttribute("data-theme", theme);
+      body.classList.toggle("dark-arshia", theme === "dark");
+      body.classList.toggle("light-arshia", theme === "light");
+      updateControl(theme);
+      if (persist) saveTheme(theme);
     }
 
-    function applyTheme(theme, persist) {
-      var nextTheme = theme === "light" ? "light" : "dark";
+    function transitionTheme(nextTheme) {
+      if (isAnimating) return;
 
-      root.classList.add("theme-is-changing");
-      root.setAttribute("data-theme", nextTheme);
-      body.setAttribute("data-theme", nextTheme);
-      body.classList.toggle("dark-arshia", nextTheme === "dark");
-      body.classList.toggle("light-arshia", nextTheme === "light");
+      var currentTheme = root.getAttribute("data-theme") === "light" ? "light" : "dark";
+      if (currentTheme === nextTheme) return;
 
+      if (reduceMotion || !themeSwitch || typeof Element.prototype.animate !== "function") {
+        commitTheme(nextTheme, true);
+        return;
+      }
+
+      isAnimating = true;
+      themeSwitch.classList.add("is-rolling");
       updateControl(nextTheme);
 
-      if (persist) {
-        saveTheme(nextTheme);
-      }
+      var rect = themeSwitch.getBoundingClientRect();
+      var originX = rect.left + rect.width / 2;
+      var originY = rect.top + rect.height / 2;
+      var farX = Math.max(originX, window.innerWidth - originX);
+      var farY = Math.max(originY, window.innerHeight - originY);
+      var radius = Math.ceil(Math.sqrt(farX * farX + farY * farY)) + 24;
+
+      var curtain = document.createElement("div");
+      curtain.className = "theme-transition-curtain theme-transition-to-" + nextTheme;
+      curtain.style.setProperty("--theme-origin-x", originX + "px");
+      curtain.style.setProperty("--theme-origin-y", originY + "px");
+      document.body.appendChild(curtain);
+
+      var reveal = curtain.animate(
+        [
+          { clipPath: "circle(0px at " + originX + "px " + originY + "px)", opacity: 1 },
+          { clipPath: "circle(" + radius + "px at " + originX + "px " + originY + "px)", opacity: 1 }
+        ],
+        { duration: 760, easing: "cubic-bezier(.65,0,.25,1)", fill: "forwards" }
+      );
 
       window.setTimeout(function () {
-        root.classList.remove("theme-is-changing");
-      }, 520);
+        commitTheme(nextTheme, true);
+      }, 330);
+
+      reveal.finished.then(function () {
+        return curtain.animate(
+          [{ opacity: 1 }, { opacity: 0 }],
+          { duration: 220, easing: "ease", fill: "forwards" }
+        ).finished;
+      }).then(function () {
+        curtain.remove();
+        themeSwitch.classList.remove("is-rolling");
+        isAnimating = false;
+      }).catch(function () {
+        commitTheme(nextTheme, true);
+        curtain.remove();
+        themeSwitch.classList.remove("is-rolling");
+        isAnimating = false;
+      });
     }
 
-    var initialTheme = storedTheme();
-
-    if (initialTheme !== "light" && initialTheme !== "dark") {
-      initialTheme = systemPreference && systemPreference.matches ? "dark" : "light";
-    }
-
-    applyTheme(initialTheme, false);
+    var initialTheme = storedTheme() || "dark";
+    commitTheme(initialTheme, false);
 
     if (themeSwitch) {
       themeSwitch.addEventListener("click", function () {
         var currentTheme = root.getAttribute("data-theme") === "light" ? "light" : "dark";
-        applyTheme(currentTheme === "light" ? "dark" : "light", true);
-        closeThemePanel();
+        transitionTheme(currentTheme === "light" ? "dark" : "light");
       });
 
       themeSwitch.addEventListener("keydown", function (event) {
         if (event.key === "ArrowLeft") {
           event.preventDefault();
-          applyTheme("light", true);
-          closeThemePanel();
+          transitionTheme("light");
         }
         if (event.key === "ArrowRight") {
           event.preventDefault();
-          applyTheme("dark", true);
-          closeThemePanel();
+          transitionTheme("dark");
         }
       });
     }
-
-    if (toggleButton && panel) {
-      toggleButton.addEventListener("click", function () {
-        window.requestAnimationFrame(function () {
-          toggleButton.setAttribute(
-            "aria-expanded",
-            panel.classList.contains("show") ? "true" : "false"
-          );
-        });
-      });
-    }
-
-    if (systemPreference && systemPreference.addEventListener) {
-      systemPreference.addEventListener("change", function (event) {
-        if (!storedTheme()) {
-          applyTheme(event.matches ? "dark" : "light", false);
-        }
-      });
-    }
-
-    $('.theme-skin li .flat-skin').click(function() {
-        $("body").removeClass('neo-arshia');
-        $('.theme-skin li a').removeClass('active');
-        $(this).addClass('active');
-    });
-
-    $('.theme-skin li .neo-skin').click(function() {
-        $("body").addClass('neo-arshia');
-        $('.theme-skin li a').removeClass('active');
-        $(this).addClass('active');
-    });
 }
 
 
