@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css?v=4">
 </head>
 <body>
   <div class="loader" id="loader" aria-live="polite">
@@ -33,7 +33,7 @@
       <a href="#blend">The blend</a>
       <a href="#customize">Customize</a>
       <a href="#moments">Our ritual</a>
-      <a class="nav-cta" href="#order">Order now</a>
+      <a href="#order">Order</a>
     </nav>
   </header>
 
@@ -57,56 +57,41 @@
         <div class="story__orb story__orb--one" aria-hidden="true"></div>
         <div class="story__orb story__orb--two" aria-hidden="true"></div>
 
-        <div class="story__copy-wrap">
-          <article class="story-scene is-active" data-scene="0">
-            <p class="eyebrow">Slow Pour Coffee</p>
-            <h1>Make space for <em>something good.</em></h1>
-            <p class="scene-copy">A smooth iced caramel coffee made for slow mornings, quiet afternoons, and everything in between.</p>
-            <a class="text-link" href="#blend">Discover the blend <span>↘</span></a>
+        <div class="story__copy-wrap" aria-live="polite">
+          <article class="story-scene story-scene--left story-scene--top story-scene--dark is-active" data-scene="0">
+            <p class="eyebrow">The beginning</p>
+            <h1>It begins with <em>a pause.</em></h1>
+            <p class="scene-copy">An empty glass, a quiet moment, and the promise of something worth slowing down for.</p>
           </article>
 
-          <article class="story-scene" data-scene="1">
+          <article class="story-scene story-scene--right story-scene--bottom story-scene--light" data-scene="1">
             <p class="eyebrow">01 — The chill</p>
-            <h2>Cool from the <em>first drop.</em></h2>
-            <p class="scene-copy">Crystal-clear ice keeps every sip refreshing without hiding the coffee underneath.</p>
+            <h2>Chilled from the <em>very first drop.</em></h2>
+            <p class="scene-copy">Crystal-clear ice tumbles in, catching the light before the coffee begins.</p>
           </article>
 
-          <article class="story-scene" data-scene="2">
+          <article class="story-scene story-scene--left story-scene--top story-scene--dark" data-scene="2">
             <p class="eyebrow">02 — The bold</p>
-            <h2>Deep, rich, and <em>unmistakably smooth.</em></h2>
-            <p class="scene-copy">A bold espresso base brings roasted cocoa notes, balanced aroma, and a satisfying finish.</p>
-            <div class="flavor-pills" aria-label="Flavor notes">
-              <span>Roasted cocoa</span><span>Toasted caramel</span><span>Smooth finish</span>
-            </div>
+            <h2>Boldness finds <em>its way in.</em></h2>
+            <p class="scene-copy">Deep espresso flows around every cube, building a rich and aromatic foundation.</p>
           </article>
 
-          <article class="story-scene" data-scene="3">
+          <article class="story-scene story-scene--right story-scene--bottom story-scene--light" data-scene="3">
             <p class="eyebrow">03 — The balance</p>
-            <h2>Where bold meets <em>beautifully soft.</em></h2>
-            <p class="scene-copy">Creamy milk moves through the espresso, creating a silky drink that stays full of character.</p>
-            <blockquote>Strong enough to wake you. Smooth enough to slow you down.</blockquote>
+            <h2>Then everything <em>becomes softer.</em></h2>
+            <p class="scene-copy">Silky milk blooms through the espresso in slow, delicate waves.</p>
           </article>
 
-          <article class="story-scene" data-scene="4">
+          <article class="story-scene story-scene--left story-scene--middle story-scene--dark" data-scene="4">
             <p class="eyebrow">04 — The finish</p>
-            <h2>A little sweetness goes a <em>long way.</em></h2>
-            <p class="scene-copy">Golden caramel adds a warm, buttery finish to every chilled sip.</p>
-            <dl class="mini-specs">
-              <div><dt>Espresso</dt><dd>Bold</dd></div>
-              <div><dt>Milk</dt><dd>Creamy</dd></div>
-              <div><dt>Caramel</dt><dd>Sweet</dd></div>
-              <div><dt>Ice</dt><dd>Refreshing</dd></div>
-            </dl>
+            <h2>Liquid gold, drawn through <em>every sip.</em></h2>
+            <p class="scene-copy">Warm caramel folds into the coffee like silk—sweet, smooth, and never too much.</p>
           </article>
 
-          <article class="story-scene" data-scene="5">
+          <article class="story-scene story-scene--right story-scene--middle story-scene--light" data-scene="5">
             <p class="eyebrow">Iced caramel latte</p>
-            <h2>Your new <em>slow-down ritual.</em></h2>
-            <p class="scene-copy">Bold espresso, creamy milk, and golden caramel—made for moments you want to stay in a little longer.</p>
-            <div class="hero-actions">
-              <a class="button button--light" href="#order">Order your coffee</a>
-              <a class="button button--ghost" href="#blend">Explore the blend</a>
-            </div>
+            <h2>Slow down. <em>Sip something good.</em></h2>
+            <p class="scene-copy">Bold espresso. Silky milk. Golden caramel. One beautifully unhurried cup.</p>
           </article>
         </div>
 
@@ -299,6 +284,6 @@
     </div>
   </footer>
 
-  <script src="script.js"></script>
+  <script src="script.js?v=4"></script>
 </body>
 </html>

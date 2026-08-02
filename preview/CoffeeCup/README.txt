@@ -1,23 +1,15 @@
-SLOW POUR — SCROLL-BASED COFFEE LANDING PAGE
+SLOW POUR COFFEE — V4
 
-FILES
-- index.html
-- style.css
-- script.js
-- assets/video/slow-pour-coffee.mp4
-- assets/images/coffee-poster.jpg
-- assets/images/coffee-final.jpg
+Hero fixes:
+- All hero copy is placed well inside the frame, not against the browser edges.
+- Scenes alternate left, right, left, right, left, right.
+- Left scenes enter from the left; right scenes enter from the right.
+- Text size and safe margins adapt to short laptop screens, tablets, and phones.
+- Left-side text uses a dark treatment on the light background; right-side text uses a light treatment on the dark background.
+- CSS and JavaScript include cache-busting version tags so the browser does not reuse the previous layout.
 
-HOW TO OPEN
-1. Extract the ZIP file.
-2. Open the folder in VS Code.
-3. Install/use the Live Server extension.
-4. Right-click index.html and choose “Open with Live Server”.
-
-The video is controlled by page scrolling. The page also includes a responsive mobile menu, interactive drink customizer, reveal animations, a testimonial marquee, and tablet/mobile layouts.
-
-CUSTOMIZE
-- Change text and sections in index.html.
-- Change colors near the top of style.css under :root.
-- Replace assets/video/slow-pour-coffee.mp4 with another MP4 using the same filename.
-- The final email order button currently uses orders@slowpour.example. Replace it with your real address or checkout URL.
+RUN
+1. Extract the folder.
+2. Open it in VS Code.
+3. Open index.html with Live Server.
+4. Hard refresh once with Ctrl + Shift + R if an older tab was already open.

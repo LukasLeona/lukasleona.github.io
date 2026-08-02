@@ -9,9 +9,10 @@
   const header = document.getElementById('siteHeader');
   const menuToggle = document.getElementById('menuToggle');
   const nav = document.getElementById('siteNav');
+  const storyStage = story?.querySelector('.story__stage');
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  const sceneStops = [0, 0.15, 0.31, 0.49, 0.68, 0.86, 1];
+  const sceneStops = [0, 0.12, 0.27, 0.50, 0.65, 0.88, 1];
   let duration = 8;
   let targetTime = 0;
   let displayedTime = 0;
@@ -43,6 +44,11 @@
       scenes[nextScene]?.classList.add('is-active');
       currentScene = nextScene;
     }
+
+    scenes.forEach((scene, index) => {
+      scene.setAttribute('aria-hidden', String(index !== nextScene));
+    });
+    if (storyStage) storyStage.dataset.scene = String(nextScene);
 
     if (sceneNumber) sceneNumber.textContent = String(nextScene + 1).padStart(2, '0');
     if (progressBar) progressBar.style.transform = `scaleX(${progress})`;
