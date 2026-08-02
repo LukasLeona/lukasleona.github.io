@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 800">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#173f3b"/><stop offset="1" stop-color="#0c2524"/></linearGradient>
+    <linearGradient id="gear" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#f3eec2"/><stop offset="1" stop-color="#c7b96f"/></linearGradient>
+    <filter id="shadow"><feDropShadow dx="0" dy="18" stdDeviation="22" flood-opacity=".28"/></filter>
+    <pattern id="grid" width="42" height="42" patternUnits="userSpaceOnUse"><path d="M42 0H0v42" fill="none" stroke="#ffffff" stroke-opacity=".045"/></pattern>
+  </defs>
+  <rect width="920" height="800" rx="58" fill="url(#bg)"/>
+  <rect width="920" height="800" rx="58" fill="url(#grid)"/>
+  <circle cx="734" cy="170" r="190" fill="#558467" opacity=".22"/>
+  <circle cx="116" cy="660" r="210" fill="#4B1426" opacity=".45"/>
+  <g opacity=".65" stroke="#EFEABB" stroke-width="8" stroke-linecap="round">
+    <path d="M650 90v250M604 115h92M604 160h92M604 205h92M604 250h92M604 295h92"/>
+  </g>
+  <g filter="url(#shadow)" transform="translate(134 100)">
+    <g transform="translate(100 42)">
+      <path d="M180 78c0-52 42-78 95-78s95 26 95 78l-17 49H197Z" fill="#4B1426"/>
+      <path d="M196 95h158" stroke="#EFEABB" stroke-width="16" stroke-linecap="round"/>
+      <path d="M232 39h86l20 29H211Z" fill="#17433F"/>
+      <circle cx="275" cy="64" r="15" fill="#EFEABB"/>
+      <rect x="213" y="115" width="124" height="100" rx="46" fill="#d0a476"/>
+      <path d="M226 145c32 17 65 17 98 0" fill="none" stroke="#9d6b51" stroke-width="6"/>
+      <path d="M165 220c30-36 70-54 110-54s81 18 110 54l35 260H130Z" fill="url(#gear)"/>
+      <path d="M142 284h266M151 392h248" stroke="#4B1426" stroke-width="24" opacity=".9"/>
+      <path d="M142 300h266M151 408h248" stroke="#EFEABB" stroke-width="8"/>
+      <path d="M235 210v250M315 210v250" stroke="#17433F" stroke-width="12" opacity=".88"/>
+      <path d="M190 235 94 415M360 235l96 180" stroke="url(#gear)" stroke-width="62" stroke-linecap="round"/>
+      <path d="M87 421h70M393 421h70" stroke="#4B1426" stroke-width="34" stroke-linecap="round"/>
+      <rect x="164" y="218" width="222" height="54" rx="14" fill="#17433F"/>
+      <text x="275" y="253" text-anchor="middle" font-family="Poppins, Arial" font-size="20" font-weight="700" fill="#EFEABB" letter-spacing="4">READY</text>
+    </g>
+  </g>
+  <g transform="translate(545 510)" filter="url(#shadow)">
+    <rect width="300" height="196" rx="28" fill="#fff"/>
+    <rect x="24" y="24" width="62" height="62" rx="18" fill="#EFEABB"/>
+    <path d="M44 56h22M55 45v22" stroke="#4B1426" stroke-width="6" stroke-linecap="round"/>
+    <text x="104" y="49" font-family="Poppins, Arial" font-size="14" font-weight="600" fill="#558467">LIVE TRAINING</text>
+    <text x="104" y="76" font-family="Poppins, Arial" font-size="22" font-weight="700" fill="#17433F">HazMat Awareness</text>
+    <rect x="24" y="113" width="252" height="10" rx="5" fill="#e8ece9"/>
+    <rect x="24" y="113" width="184" height="10" rx="5" fill="#558467"/>
+    <text x="24" y="156" font-family="Poppins, Arial" font-size="14" fill="#48605d">Interactive checkpoint</text>
+    <text x="256" y="156" text-anchor="end" font-family="Poppins, Arial" font-size="14" font-weight="700" fill="#4B1426">73%</text>
+  </g>
+</svg>

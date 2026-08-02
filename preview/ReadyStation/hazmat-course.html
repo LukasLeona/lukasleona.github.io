@@ -1,0 +1,429 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#17433F">
+    <link rel="icon" href="assets/images/favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="assets/css/readystation.css">
+    <title>HazMat Awareness Course Demo | ReadyStation LMS</title>
+</head>
+
+<body class="player-body">
+    <div class="player-shell">
+        <header class="player-topbar">
+            <div style="display:flex;align-items:center;gap:12px"><button id="courseMenuToggle"
+                    class="btn btn-ghost btn-sm" type="button" aria-label="Open course outline"><svg class="icon"
+                        viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M4 6h16M4 12h16M4 18h16" />
+                    </svg></button><a class="brand" href="index.html"><img src="assets/images/logo.svg"
+                        alt="ReadyStation LMS"></a></div><span class="player-course-title">HazMat Awareness ·
+                Interactive course demo</span><a class="btn btn-ghost btn-sm" href="hazmat-awareness.html">Exit
+                course</a>
+        </header>
+        <div class="player-grid">
+            <aside class="player-sidebar">
+                <h2>HazMat Awareness</h2>
+                <div class="player-progress-label"><span>Course progress</span><strong
+                        id="courseProgressValue">0%</strong></div>
+                <div class="progress-track"><span id="courseProgressBar" style="width:0"></span></div>
+                <div class="lesson-group">
+                    <div class="lesson-group-title">Course lessons</div><button class="lesson-link"
+                        data-lesson="intro"><span class="lesson-status"></span><span>Course
+                            introduction</span></button><button class="lesson-link" data-lesson="define"><span
+                            class="lesson-status"></span><span>Defining hazardous materials</span></button><button
+                        class="lesson-link" data-lesson="harm"><span class="lesson-status"></span><span>How hazardous
+                            materials can harm you</span></button><button class="lesson-link" data-lesson="roles"><span
+                            class="lesson-status"></span><span>Roles and responsibilities</span></button><button
+                        class="lesson-link" data-lesson="clues"><span class="lesson-status"></span><span>Seven clues to
+                            hazmat</span></button><button class="lesson-link" data-lesson="classes"><span
+                            class="lesson-status"></span><span>Nine UN hazard classes</span></button><button
+                        class="lesson-link" data-lesson="resources"><span class="lesson-status"></span><span>Hazard
+                            information resources</span></button><button class="lesson-link" data-lesson="erg"><span
+                            class="lesson-status"></span><span>Using the ERG</span></button><button class="lesson-link"
+                        data-lesson="isolate"><span class="lesson-status"></span><span>Isolate and deny
+                            entry</span></button><button class="lesson-link" data-lesson="monitoring"><span
+                            class="lesson-status"></span><span>Monitoring and detection devices</span></button>
+                </div>
+                <div class="form-note" style="margin-top:24px">Demo progress is saved in this browser only.</div>
+            </aside>
+            <main class="player-main">
+                <section class="lesson-panel" data-lesson-panel="intro">
+                    <div class="lesson-heading"><span class="eyebrow">Course introduction</span>
+                        <h1>HazMat Awareness</h1>
+                        <p>Learn to recognize hazardous materials, understand awareness-level responsibilities, collect
+                            initial information from a safe location, and support protective actions.</p>
+                    </div>
+                    <div class="lesson-card">
+                        <h2>How this demo works</h2>
+                        <p>This course converts the supplied HazMat Awareness material into shorter digital lessons with
+                            quizzes, matching, and drag-and-drop activities. Complete a checkpoint or use the Next
+                            Lesson button to save progress on this device.</p>
+                        <ul class="key-points">
+                            <li>Read the operational concept before interacting.</li>
+                            <li>Use the feedback to understand why a decision is safe or unsafe.</li>
+                            <li>Remember that this demo does not replace agency-approved training or practical
+                                evaluation.</li>
+                        </ul>
+                    </div>
+                    <div class="lesson-card">
+                        <h2>Course objectives</h2>
+                        <ul class="key-points">
+                            <li>Recognize hazardous materials and weapons of mass destruction at an incident scene.</li>
+                            <li>List ways hazardous materials can cause harm.</li>
+                            <li>Explain awareness-level roles, limitations, and initial protective actions.</li>
+                            <li>Use recognition clues and initial-response information resources from a safe location.
+                            </li>
+                        </ul>
+                    </div>
+                </section>
+
+                <section class="lesson-panel" data-lesson-panel="define">
+                    <div class="lesson-heading"><span class="eyebrow">Foundation · Lesson 1</span>
+                        <h1>Defining hazardous materials</h1>
+                        <p>Recognize what makes a material hazardous when it is not properly controlled.</p>
+                    </div>
+                    <div class="lesson-card">
+                        <h2>Core definition</h2>
+                        <p>In the supplied course material, a hazardous material is any substance or material that poses
+                            an unreasonable risk to health, safety, property, or the environment if it is not properly
+                            controlled during handling, storage, manufacture, processing, use, disposal, or
+                            transportation.</p>
+                        <div class="callout"><strong>Key idea:</strong> Chemical, biological, and radiological products
+                            may be safely manufactured, used, transported, or stored every day. They become a concern
+                            when uncontrolled conditions create unreasonable risk.</div>
+                    </div>
+                    <div class="lesson-card" data-quiz
+                        data-correct-message="Correct. The defining concern is unreasonable risk when the material is not properly controlled."
+                        data-wrong-message="Review the definition. A material is not classified as hazmat merely because it is found at an emergency scene.">
+                        <h3>Learning checkpoint</h3>
+                        <p>Which statement best reflects the course definition?</p>
+                        <div class="option-list"><button class="quiz-option" data-correct="false"><span
+                                    class="quiz-letter">A</span>Any liquid stored inside an industrial
+                                building.</button><button class="quiz-option" data-correct="true"><span
+                                    class="quiz-letter">B</span>A substance that poses unreasonable risk when it is not
+                                properly controlled.</button><button class="quiz-option" data-correct="false"><span
+                                    class="quiz-letter">C</span>Only a material already confirmed by a monitoring
+                                device.</button></div>
+                        <p class="quiz-feedback" aria-live="polite"></p>
+                    </div>
+                </section>
+
+                <section class="lesson-panel" data-lesson-panel="harm">
+                    <div class="lesson-heading"><span class="eyebrow">Foundation · Lesson 2</span>
+                        <h1>How hazardous materials can harm you</h1>
+                        <p>Use TRACEM-P to remember seven mechanisms of harm.</p>
+                    </div>
+                    <div class="lesson-card">
+                        <h2>TRACEM-P</h2>
+                        <p>The acronym represents potential hazards at an incident scene:</p>
+                        <ul class="key-points">
+                            <li><strong>Thermal</strong> — heat or cold, including fire, chemical reaction, cryogenic
+                                liquids, or liquefied gases.</li>
+                            <li><strong>Radiological</strong> — exposure to materials that emit ionizing radiation.</li>
+                            <li><strong>Asphyxiating</strong> — oxygen displacement or toxic effects that prevent the
+                                proper use of oxygen.</li>
+                            <li><strong>Chemical</strong> — poisoning, respiratory injury, or corrosive damage.</li>
+                            <li><strong>Etiological/Biological</strong> — harm from pathogens, bacteria, viruses, or
+                                poisonous organisms.</li>
+                            <li><strong>Mechanical</strong> — debris, trips and falls, noise, and other physical
+                                hazards.</li>
+                            <li><strong>Psychological</strong> — mental harm caused by fear or witnessing a violent
+                                event.</li>
+                        </ul>
+                    </div>
+                    <div class="lesson-card" data-quiz
+                        data-correct-message="Correct. Flying debris is a mechanical mechanism of harm."
+                        data-wrong-message="Think about whether the harm comes from heat, radiation, oxygen problems, chemicals, biology, physical force, or psychological effects.">
+                        <h3>Checkpoint: identify the mechanism</h3>
+                        <p>An explosion sends fragments across the incident scene. Which TRACEM-P category applies?</p>
+                        <div class="option-list"><button class="quiz-option" data-correct="false"><span
+                                    class="quiz-letter">A</span>Thermal</button><button class="quiz-option"
+                                data-correct="true"><span class="quiz-letter">B</span>Mechanical</button><button
+                                class="quiz-option" data-correct="false"><span
+                                    class="quiz-letter">C</span>Etiological/Biological</button></div>
+                        <p class="quiz-feedback"></p>
+                    </div>
+                </section>
+
+                <section class="lesson-panel" data-lesson-panel="roles">
+                    <div class="lesson-heading"><span class="eyebrow">Foundation · Lesson 3</span>
+                        <h1>Roles and responsibilities</h1>
+                        <p>Understand your role, your limitations, and when you cannot proceed further.</p>
+                    </div>
+                    <div class="lesson-card">
+                        <h2>Awareness-level priorities</h2>
+                        <p>The material emphasizes a slow, methodical approach. First responders must understand the
+                            role they play, understand their limitations, and realize when they cannot proceed any
+                            further.</p>
+                        <ul class="key-points">
+                            <li>Recognize the presence of hazardous materials.</li>
+                            <li>Protect yourself and avoid becoming exposed or contaminated.</li>
+                            <li>Call for trained resources and communicate available information.</li>
+                            <li>Support isolation and deny entry within your level of training and local procedures.
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="lesson-card" data-quiz
+                        data-correct-message="Correct. Recognition, self-protection, notification, and scene control are consistent with awareness-level responsibilities."
+                        data-wrong-message="Awareness-level personnel should not enter the hot zone, handle product, or operate detection devices outside their training.">
+                        <h3>Scenario decision</h3>
+                        <p>You observe an unknown vapor cloud near a damaged tank. What is the safest awareness-level
+                            action?</p>
+                        <div class="option-list"><button class="quiz-option" data-correct="false"><span
+                                    class="quiz-letter">A</span>Enter the vapor cloud to identify the leak
+                                source.</button><button class="quiz-option" data-correct="true"><span
+                                    class="quiz-letter">B</span>Maintain distance, recognize available clues, isolate
+                                the area, and request appropriate resources.</button><button class="quiz-option"
+                                data-correct="false"><span class="quiz-letter">C</span>Use a detector near the release
+                                point to determine concentration.</button></div>
+                        <p class="quiz-feedback"></p>
+                    </div>
+                </section>
+
+                <section class="lesson-panel" data-lesson-panel="clues">
+                    <div class="lesson-heading"><span class="eyebrow">Recognition · Lesson 4</span>
+                        <h1>Seven clues to the presence of hazmat</h1>
+                        <p>Recognition information generally moves from lower-risk, distance-based clues toward clues
+                            that may require closer proximity or specialized equipment.</p>
+                    </div>
+                    <div class="lesson-card">
+                        <h2>The seven clues</h2>
+                        <ol style="padding-left:22px;color:var(--ink-soft)">
+                            <li>Locations, occupancy types, and preincident surveys</li>
+                            <li>Basic container information</li>
+                            <li>Transportation placards, markings, and labels</li>
+                            <li>Nontransportation hazmat markings and labels</li>
+                            <li>Hazard information reference sources</li>
+                            <li>Sensory clues, including victim signs and symptoms</li>
+                            <li>Monitoring and detection devices</li>
+                        </ol>
+                        <div class="callout"><strong>Distance often equates to safety.</strong> The closer you must be
+                            to identify a material, the greater the chance of exposure to harmful effects.</div>
+                    </div>
+                    <div class="lesson-card" data-drag-activity>
+                        <h3>Drag only true recognition clues into the right box</h3>
+                        <p>Place each item under “HazMat recognition clue” or “Not one of the seven clues.”</p>
+                        <div class="drag-layout">
+                            <div class="drag-bank">
+                                <h4>Items</h4><span id="clue1" class="drag-chip" draggable="true" data-group="yes">Basic
+                                    container information</span><span id="clue2" class="drag-chip" draggable="true"
+                                    data-group="yes">Transportation placards</span><span id="clue3" class="drag-chip"
+                                    draggable="true" data-group="yes">Victim signs and symptoms</span><span id="clue4"
+                                    class="drag-chip" draggable="true" data-group="no">Apparatus fuel level</span><span
+                                    id="clue5" class="drag-chip" draggable="true" data-group="no">Crew meal
+                                    schedule</span>
+                            </div>
+                            <div style="display:grid;gap:12px">
+                                <div class="drop-zone" data-accept="yes">
+                                    <h4>HazMat recognition clue</h4>
+                                </div>
+                                <div class="drop-zone" data-accept="no">
+                                    <h4>Not one of the seven clues</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="drag-feedback" aria-live="polite"></p>
+                    </div>
+                </section>
+
+                <section class="lesson-panel" data-lesson-panel="classes">
+                    <div class="lesson-heading"><span class="eyebrow">Recognition · Lesson 5</span>
+                        <h1>Nine UN hazard classes</h1>
+                        <p>Hazard classes support communication by identifying the principal chemical or physical
+                            hazard.</p>
+                    </div>
+                    <div class="lesson-card">
+                        <h2>The classes</h2>
+                        <div class="grid three-col">
+                            <div class="info-card" style="padding:16px"><strong>1</strong><br>Explosives</div>
+                            <div class="info-card" style="padding:16px"><strong>2</strong><br>Gases</div>
+                            <div class="info-card" style="padding:16px"><strong>3</strong><br>Flammable liquids</div>
+                            <div class="info-card" style="padding:16px"><strong>4</strong><br>Flammable solids</div>
+                            <div class="info-card" style="padding:16px"><strong>5</strong><br>Oxidizers & organic
+                                peroxides</div>
+                            <div class="info-card" style="padding:16px"><strong>6</strong><br>Toxic & infectious
+                                substances</div>
+                            <div class="info-card" style="padding:16px"><strong>7</strong><br>Radioactive materials
+                            </div>
+                            <div class="info-card" style="padding:16px"><strong>8</strong><br>Corrosive substances</div>
+                            <div class="info-card" style="padding:16px"><strong>9</strong><br>Miscellaneous dangerous
+                                substances</div>
+                        </div>
+                    </div>
+                    <div class="lesson-card">
+                        <h3>Match each class with its hazard</h3>
+                        <p>Select an item on the left, then select its correct description on the right.</p>
+                        <div class="match-board" data-match-board>
+                            <div class="match-column"><button class="match-item" data-side="left" data-match="1">Class
+                                    1</button><button class="match-item" data-side="left" data-match="3">Class
+                                    3</button><button class="match-item" data-side="left" data-match="7">Class
+                                    7</button><button class="match-item" data-side="left" data-match="8">Class
+                                    8</button></div>
+                            <div class="match-column"><button class="match-item" data-side="right"
+                                    data-match="8">Corrosive substances</button><button class="match-item"
+                                    data-side="right" data-match="1">Explosives</button><button class="match-item"
+                                    data-side="right" data-match="7">Radioactive materials</button><button
+                                    class="match-item" data-side="right" data-match="3">Flammable liquids</button></div>
+                        </div>
+                        <p class="match-feedback"></p>
+                    </div>
+                </section>
+
+                <section class="lesson-panel" data-lesson-panel="resources">
+                    <div class="lesson-heading"><span class="eyebrow">Initial information · Lesson 6</span>
+                        <h1>Hazard information resources</h1>
+                        <p>Use the right information source for fixed-facility and transportation incidents.</p>
+                    </div>
+                    <div class="lesson-card">
+                        <h2>Common resources</h2>
+                        <ul class="key-points">
+                            <li><strong>Fixed facilities:</strong> safety data sheets, inventory records, facility
+                                documents, signs, markings, container shapes, and labels.</li>
+                            <li><strong>Transportation incidents:</strong> the Emergency Response Guidebook, shipping
+                                papers, placards, and container shapes.</li>
+                            <li><strong>Shipping-paper sequence:</strong> identification number, proper shipping name,
+                                hazard class or division, and packing group—ISHP.</li>
+                            <li><strong>SDS:</strong> a detailed 16-section information sheet supplied by a chemical
+                                manufacturer or importer.</li>
+                        </ul>
+                    </div>
+                    <div class="lesson-card">
+                        <h3>Match the resource to its purpose</h3>
+                        <div class="match-board" data-match-board>
+                            <div class="match-column"><button class="match-item" data-side="left"
+                                    data-match="erg">ERG</button><button class="match-item" data-side="left"
+                                    data-match="sds">Safety Data Sheet</button><button class="match-item"
+                                    data-side="left" data-match="papers">Shipping papers</button></div>
+                            <div class="match-column"><button class="match-item" data-side="right"
+                                    data-match="papers">Provides shipment description using the ISHP
+                                    sequence</button><button class="match-item" data-side="right"
+                                    data-match="erg">Initial transportation-incident hazard and protective
+                                    guidance</button><button class="match-item" data-side="right"
+                                    data-match="sds">Detailed manufacturer or importer hazard information in 16
+                                    sections</button></div>
+                        </div>
+                        <p class="match-feedback"></p>
+                    </div>
+                </section>
+
+                <section class="lesson-panel" data-lesson-panel="erg">
+                    <div class="lesson-heading"><span class="eyebrow">Initial information · Lesson 7</span>
+                        <h1>Using the Emergency Response Guidebook</h1>
+                        <p>The ERG helps emergency responders identify initial hazards and protective actions during
+                            transportation emergencies.</p>
+                    </div>
+                    <div class="lesson-card">
+                        <h2>Ways to locate an initial action guide</h2>
+                        <ul class="key-points">
+                            <li>Use a four-digit UN identification number in the yellow-bordered pages.</li>
+                            <li>Use the material name in the blue-bordered pages when the exact spelling is known.</li>
+                            <li>Use a transportation placard and the placard reference table.</li>
+                            <li>Use container profiles in the white pages to cross-reference container shapes and guide
+                                numbers.</li>
+                        </ul>
+                        <div class="callout"><strong>Limitation:</strong> The supplied material states that the ERG is
+                            primarily designed for highways, railroads, and pipelines. It does not cover every
+                            fixed-facility or urban circumstance.</div>
+                    </div>
+                    <div class="lesson-card" data-quiz
+                        data-correct-message="Correct. A visible four-digit UN number can be looked up in the yellow-bordered pages."
+                        data-wrong-message="Review the ERG lookup methods. The yellow-bordered pages are organized by four-digit identification number.">
+                        <h3>Guided checkpoint</h3>
+                        <p>You can safely read a four-digit UN identification number from a transport placard. Where
+                            should you begin?</p>
+                        <div class="option-list"><button class="quiz-option" data-correct="true"><span
+                                    class="quiz-letter">A</span>Yellow-bordered pages</button><button
+                                class="quiz-option" data-correct="false"><span class="quiz-letter">B</span>Blue-bordered
+                                pages only</button><button class="quiz-option" data-correct="false"><span
+                                    class="quiz-letter">C</span>SDS Section 16</button></div>
+                        <p class="quiz-feedback"></p>
+                    </div>
+                </section>
+
+                <section class="lesson-panel" data-lesson-panel="isolate">
+                    <div class="lesson-heading"><span class="eyebrow">Protective actions · Lesson 8</span>
+                        <h1>Isolate and deny entry</h1>
+                        <p>Scene control protects personnel and the public by separating them from the source of harm
+                            and limiting cross-contamination.</p>
+                    </div>
+                    <div class="lesson-card">
+                        <h2>Isolation</h2>
+                        <p>Isolation involves securing and maintaining the emergency scene by establishing perimeters or
+                            cordons and denying entry to unauthorized personnel. It also includes preventing
+                            contaminated people or animals from leaving the scene and spreading hazardous materials.</p>
+                        <ul class="key-points">
+                            <li>Establish an outer perimeter or outer cordon to control access and egress.</li>
+                            <li>Use personnel at entrances for indoor incidents when appropriate.</li>
+                            <li>Position safely and follow local policies, procedures, and the incident command
+                                structure.</li>
+                        </ul>
+                    </div>
+                    <div class="lesson-card" data-quiz
+                        data-correct-message="Correct. Isolation controls access and helps prevent cross-contamination."
+                        data-wrong-message="Isolation does not mean entering the hazard area or allowing potentially contaminated people to leave uncontrolled.">
+                        <h3>Checkpoint</h3>
+                        <p>Which action best supports isolation and deny entry?</p>
+                        <div class="option-list"><button class="quiz-option" data-correct="false"><span
+                                    class="quiz-letter">A</span>Allow everyone to leave through the same access point
+                                without control.</button><button class="quiz-option" data-correct="true"><span
+                                    class="quiz-letter">B</span>Establish a perimeter and prevent unauthorized access or
+                                uncontrolled egress.</button><button class="quiz-option" data-correct="false"><span
+                                    class="quiz-letter">C</span>Approach the source to move it away from the
+                                public.</button></div>
+                        <p class="quiz-feedback"></p>
+                    </div>
+                </section>
+
+                <section class="lesson-panel" data-lesson-panel="monitoring">
+                    <div class="lesson-heading"><span class="eyebrow">Scope review · Lesson 9</span>
+                        <h1>Monitoring and detection devices</h1>
+                        <p>Understand why use of these devices is outside the awareness-level scope described in the
+                            supplied material.</p>
+                    </div>
+                    <div class="lesson-card">
+                        <h2>Purpose and limitation</h2>
+                        <p>Monitoring and detection devices can help determine the presence, concentration, and scope of
+                            hazardous materials. However, the supplied course states that awareness-level personnel are
+                            not trained to use them. The devices require actual contact with the hazardous material to
+                            measure it, which is outside awareness-level actions.</p>
+                        <div class="callout"><strong>Scope boundary:</strong> Recognize that monitoring may be needed,
+                            but do not perform work that exceeds your training and authorization.</div>
+                    </div>
+                    <div class="lesson-card" data-quiz
+                        data-correct-message="Correct. Their operation requires training and contact with the hazardous material beyond awareness-level scope."
+                        data-wrong-message="The limitation is not about the device size or cost; it is about training, contact with the material, and operational scope.">
+                        <h3>Final checkpoint</h3>
+                        <p>Why are monitoring and detection devices outside awareness-level scope?</p>
+                        <div class="option-list"><button class="quiz-option" data-correct="false"><span
+                                    class="quiz-letter">A</span>They are only used after every incident is
+                                over.</button><button class="quiz-option" data-correct="true"><span
+                                    class="quiz-letter">B</span>They require training and actual contact with the
+                                material beyond awareness-level actions.</button><button class="quiz-option"
+                                data-correct="false"><span class="quiz-letter">C</span>They cannot identify hazardous
+                                materials.</button></div>
+                        <p class="quiz-feedback"></p>
+                    </div>
+                    <div class="lesson-card">
+                        <h2>Course demo complete</h2>
+                        <p>You have reviewed the core structure of ReadyStation’s HazMat Awareness demo. Use the Next
+                            Lesson button to mark this final lesson complete.</p><a class="btn btn-secondary"
+                            href="courses.html">Return to course catalog <svg class="icon" viewBox="0 0 24 24"
+                                aria-hidden="true">
+                                <path d="M5 12h14M13 6l6 6-6 6" />
+                            </svg></a>
+                    </div>
+                </section>
+
+                <div class="player-actions"><button id="prevLesson" class="btn btn-ghost" type="button">Previous
+                        lesson</button><button id="nextLesson" class="btn btn-primary" type="button">Next
+                        lesson</button></div>
+            </main>
+        </div>
+    </div>
+    <div class="toast" role="status" aria-live="polite"></div>
+    <script src="assets/js/course-player.js"></script>
+</body>
+
+</html>
