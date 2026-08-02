@@ -20,13 +20,16 @@ Then open `http://localhost:8080` in a browser.
 - `styles.css` — responsive layout, photographic cards, color system, and motion
 - `script.js` — sound controls, navigation, filters, activity rail, trip builder, dialogs, counters, parallax, and reveal effects
 - `assets/pulag-hero.mp4` — supplied 64-second, 1920×1080 hero film with its original audio
+- `assets/ritual-dance.mp4` — supplied 50-second, 1920×1080 culture-section film
 - `assets/images/` — optimized WebP versions of the supplied destination photographs and the culture illustration
 - `assets/favicon.svg` — palette-matched browser icon
 - `site.webmanifest` — basic installable-site metadata
 
 ## Hero sound behavior
 
-Modern browsers block autoplaying audio. The film therefore starts automatically while muted. Selecting **Enter with sound** or the speaker button enables the video's original soundtrack. Its volume fades out when the hero leaves the screen and fades back in when the visitor returns.
+Visitors now enter the hero immediately without an opening prompt. The site attempts to begin the original hero soundtrack automatically and the header speaker control mutes or restores it. Browsers that block unprompted audio will keep the film playing silently until the visitor selects the speaker. Its volume fades out when the hero leaves the screen and fades back in when the visitor returns.
+
+The ritual-dance film begins automatically, muted, when its culture section enters view. It loops inline and includes its own play/pause control.
 
 ## Customize
 

@@ -9,6 +9,8 @@ const videoToggle = document.querySelector("[data-video-toggle]");
 const menuToggle = document.querySelector("[data-menu-toggle]");
 const navigation = document.querySelector("[data-nav]");
 const progressBar = document.querySelector(".scroll-progress span");
+const cultureVideo = document.querySelector("[data-culture-video]");
+const cultureVideoToggle = document.querySelector("[data-culture-video-toggle]");
 
 let soundEnabled = false;
 let heroIsVisible = true;
@@ -92,6 +94,50 @@ videoToggle.addEventListener("click", async () => {
     videoToggle.setAttribute("aria-label", "Play background film");
   }
 });
+
+// The culture film begins automatically when it enters view. It remains muted
+// so it never competes with the hero soundtrack.
+let cultureManuallyPaused = false;
+
+const updateCultureVideoUI = () => {
+  const paused = cultureVideo.paused;
+  cultureVideoToggle.classList.toggle("is-paused", paused);
+  cultureVideoToggle.querySelector("span").textContent = paused ? "Play film" : "Pause film";
+  cultureVideoToggle.setAttribute("aria-label", paused ? "Play community dance film" : "Pause community dance film");
+};
+
+cultureVideoToggle.addEventListener("click", async () => {
+  if (cultureVideo.paused) {
+    cultureManuallyPaused = false;
+    try {
+      await cultureVideo.play();
+    } catch (error) {
+      cultureManuallyPaused = true;
+    }
+  } else {
+    cultureManuallyPaused = true;
+    cultureVideo.pause();
+  }
+  updateCultureVideoUI();
+});
+
+const cultureVideoObserver = new IntersectionObserver(
+  async ([entry]) => {
+    if (entry.intersectionRatio >= 0.2 && !cultureManuallyPaused) {
+      try {
+        await cultureVideo.play();
+      } catch (error) {
+        cultureManuallyPaused = true;
+      }
+    } else if (entry.intersectionRatio < 0.05) {
+      cultureVideo.pause();
+    }
+    updateCultureVideoUI();
+  },
+  { threshold: [0, 0.05, 0.2, 0.6] }
+);
+
+cultureVideoObserver.observe(cultureVideo);
 
 const heroSoundObserver = new IntersectionObserver(
   ([entry]) => {
@@ -534,5 +580,25 @@ placeDialog.addEventListener("cancel", () => document.body.classList.remove("dia
 
 document.querySelector("[data-year]").textContent = new Date().getFullYear();
 
-// Start the muted film even when the browser delays the initial autoplay request.
-safePlay();
+// Enter the homepage immediately. Try the soundtrack first, then keep the film
+// moving silently when the browser's autoplay policy blocks unprompted audio.
+const startDirectExperience = async () => {
+  heroVideo.volume = 0.68;
+  heroVideo.muted = false;
+  const startedWithSound = await safePlay();
+
+  if (startedWithSound) {
+    soundEnabled = true;
+  } else {
+    heroVideo.muted = true;
+    await safePlay();
+    videoToggle.classList.remove("is-paused");
+    videoToggle.querySelector("span").textContent = "Pause film";
+    videoToggle.setAttribute("aria-label", "Pause background film");
+    soundEnabled = false;
+  }
+
+  updateSoundUI();
+};
+
+startDirectExperience();

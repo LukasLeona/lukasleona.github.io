@@ -1469,7 +1469,8 @@ h2 em {
   pointer-events: none;
 }
 
-.culture__visual img {
+.culture__visual img,
+.culture__video {
   position: absolute;
   inset: 0;
   width: 100%;
@@ -1481,6 +1482,11 @@ h2 em {
   will-change: transform;
 }
 
+.culture__video {
+  object-fit: cover;
+  transform: scale(1.015);
+}
+
 .culture__visual figcaption {
   position: absolute;
   right: 22px;
@@ -1490,6 +1496,53 @@ h2 em {
   font-size: 0.55rem;
   font-weight: 700;
   letter-spacing: 0.04em;
+}
+
+.culture__visual--video figcaption {
+  top: 19px;
+  right: 20px;
+  bottom: auto;
+  padding: 7px 10px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 999px;
+  background: rgba(8, 23, 48, 0.25);
+  backdrop-filter: blur(10px);
+}
+
+.culture-video-toggle {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 10px 13px;
+  border: 1px solid rgba(255, 255, 255, 0.34);
+  border-radius: 999px;
+  background: rgba(8, 23, 48, 0.28);
+  color: var(--white);
+  font-size: 0.6rem;
+  font-weight: 800;
+  cursor: pointer;
+  backdrop-filter: blur(10px);
+}
+
+.culture-video-toggle svg {
+  width: 15px;
+  fill: currentColor;
+}
+
+.culture-video-toggle .icon-play {
+  display: none;
+}
+
+.culture-video-toggle.is-paused .icon-pause {
+  display: none;
+}
+
+.culture-video-toggle.is-paused .icon-play {
+  display: block;
 }
 
 .culture__story h2 {
@@ -2181,6 +2234,18 @@ h2 em {
   .culture__visual figcaption {
     right: 14px;
     bottom: 13px;
+    left: 14px;
+  }
+
+  .culture__visual--video figcaption {
+    top: 14px;
+    right: 14px;
+    bottom: auto;
+    left: auto;
+  }
+
+  .culture-video-toggle {
+    bottom: 14px;
     left: 14px;
   }
 

@@ -110,8 +110,8 @@
           </div>
         </div>
 
-        <div class="sound-invite-wrap page-shell">
-          <button class="sound-invite" type="button" data-sound-invite>
+        <div class="sound-invite-wrap page-shell" hidden>
+          <button class="sound-invite" type="button" data-sound-invite hidden>
             <span class="sound-invite__icon" aria-hidden="true">
               <i></i><i></i><i></i><i></i>
             </span>
@@ -426,15 +426,27 @@
         </div>
 
         <div class="page-shell culture__layout">
-          <figure class="culture__visual" data-reveal>
-            <img
-              src="assets/images/culture-dance-illustration.webp"
-              alt="Illustrative scene of a Cordilleran community gong dance in the mountains"
-              loading="lazy"
-              decoding="async"
-              data-parallax-image
-            />
-            <figcaption>AI-generated editorial illustration · not a documentary photograph</figcaption>
+          <figure class="culture__visual culture__visual--video" data-reveal>
+            <video
+              class="culture__video"
+              data-culture-video
+              autoplay
+              muted
+              loop
+              playsinline
+              preload="metadata"
+              poster="assets/images/culture-dance-illustration.webp"
+              aria-label="Community ritual dance film"
+            >
+              <source src="assets/ritual-dance.mp4" type="video/mp4" />
+              Your browser does not support embedded video.
+            </video>
+            <figcaption>Community dance · supplied film</figcaption>
+            <button class="culture-video-toggle" type="button" data-culture-video-toggle aria-label="Pause community dance film">
+              <svg class="icon-pause" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 4h3v12H5zm7 0h3v12h-3z" /></svg>
+              <svg class="icon-play" viewBox="0 0 20 20" aria-hidden="true"><path d="m6 4 10 6-10 6V4Z" /></svg>
+              <span>Pause film</span>
+            </button>
           </figure>
 
           <div class="culture__story" data-reveal>
