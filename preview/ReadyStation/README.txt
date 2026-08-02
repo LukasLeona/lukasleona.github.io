@@ -50,3 +50,6 @@ IMPORTANT DEMO NOTES
 
 NEXT DEVELOPMENT PHASE
 The front end is ready to be connected to authentication, a learner database, admin course management, server-based progress, certificates, email, reporting, and organization-level access.
+
+
+Revision update (Aug 2026): functional HazMat course sidebar/menu, scrollable course player, expanded chapter outline with sections/quiz/test layout, helper bot on non-course pages, and homepage firefighter imagery.

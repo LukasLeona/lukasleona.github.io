@@ -143,6 +143,65 @@
     });
   });
 
+  // Helper bot (hidden on course player pages)
+  if (!document.body.classList.contains('player-body')) {
+    const botMessages = {
+      start: 'Hi, I’m the ReadyStation guide. I can answer quick questions about this LMS demo.',
+      courses: 'You can start with HazMat Awareness, then continue to HazMat Operations, Fire Instructor 1, Fire Inspector 1, Driver Operator – Pumper, and Driver Operator – ARFF. All courses shown in the demo are free.',
+      login: 'Login and registration are visible for the demo, but backend account functionality has not been connected yet.',
+      learning: 'The HazMat Awareness course includes sections, quizzes, tests, a progress bar, and interactive checkpoints rather than long passive reading pages.',
+      support: 'Need implementation help? Use the contact page to ask about production setup, LMS integrations, or branding updates.'
+    };
+    const bot = document.createElement('div');
+    bot.className = 'rs-bot';
+    bot.innerHTML = `
+      <button class="rs-bot-toggle" type="button" aria-expanded="false" aria-label="Open ReadyStation helper">
+        <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 10h8M8 14h5"/><path d="M12 2a8 8 0 0 0-8 8c0 2.19.88 4.17 2.29 5.61V22l4.06-2.03A7.96 7.96 0 0 0 12 20a8 8 0 1 0 0-18Z"/></svg>
+        <span>Need help?</span>
+      </button>
+      <div class="rs-bot-panel" hidden>
+        <div class="rs-bot-head">
+          <strong>ReadyStation Helper</strong>
+          <button class="rs-bot-close" type="button" aria-label="Close helper">×</button>
+        </div>
+        <div class="rs-bot-body">
+          <div class="rs-bot-message bot">${botMessages.start}</div>
+          <div class="rs-bot-quick-actions">
+            <button type="button" data-bot-key="courses">Which courses are available?</button>
+            <button type="button" data-bot-key="learning">How does the learning demo work?</button>
+            <button type="button" data-bot-key="login">Does login work yet?</button>
+            <button type="button" data-bot-key="support">How can I request support?</button>
+          </div>
+        </div>
+      </div>`;
+    document.body.appendChild(bot);
+
+    const botToggle = $('.rs-bot-toggle', bot);
+    const botPanel = $('.rs-bot-panel', bot);
+    const botClose = $('.rs-bot-close', bot);
+    const setBot = isOpen => {
+      botPanel.hidden = !isOpen;
+      bot.classList.toggle('open', isOpen);
+      botToggle?.setAttribute('aria-expanded', String(isOpen));
+    };
+    botToggle?.addEventListener('click', () => setBot(botPanel.hidden));
+    botClose?.addEventListener('click', () => setBot(false));
+    $$('.rs-bot-quick-actions button', bot).forEach(button => {
+      button.addEventListener('click', () => {
+        const body = $('.rs-bot-body', bot);
+        const userMessage = document.createElement('div');
+        userMessage.className = 'rs-bot-message user';
+        userMessage.textContent = button.textContent;
+        const botReply = document.createElement('div');
+        botReply.className = 'rs-bot-message bot';
+        botReply.textContent = botMessages[button.dataset.botKey] || botMessages.start;
+        body.appendChild(userMessage);
+        body.appendChild(botReply);
+        body.scrollTop = body.scrollHeight;
+      });
+    });
+  }
+
   // Copy year
   $$('[data-current-year]').forEach(element => {
     element.textContent = new Date().getFullYear();

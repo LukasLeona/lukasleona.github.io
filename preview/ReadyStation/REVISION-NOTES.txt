@@ -1,0 +1,35 @@
+ReadyStation LMS — Revision Build
+Generated: August 2, 2026
+
+Completed revisions
+-------------------
+1. The HazMat course outline/menu now works as an off-canvas drawer on tablet/mobile and can collapse/expand on desktop.
+2. The course player and outline have independent, reliable scrolling areas.
+3. The course outline follows this structure:
+   - Course Intro
+   - Chapter 1: 4 sections, Quiz, Test
+   - Chapter 2: 9 sections, Quiz, Test
+   - Chapter 3: 4 sections, Quiz, Test
+4. The course includes quick checks, matching activities, drag-and-drop activities, touch-friendly card placement, and paged assessments.
+5. Assessments now include:
+   - Chapter 1 Quiz: 14 questions
+   - Chapter 1 Test: 26 questions
+   - Chapter 2 Quiz: 20 questions
+   - Chapter 2 Test: 57 questions
+   - Chapter 3 Quiz: 13 questions
+   - Chapter 3 Test: 30 questions
+6. Chapter 1 and Chapter 3 grading use the uploaded answer-key files.
+7. A separate Chapter 2 answer-key file was not found. The Chapter 2 grading mapping is explicitly identified in the course UI as derived from the uploaded Chapter 2 lesson material.
+8. Firefighter photographs were added to the homepage and HazMat course visuals.
+9. A ReadyStation helper bot is visible on normal site pages and intentionally hidden from the course player.
+10. Progress and completion status are saved locally in the browser for demo purposes.
+
+QA performed
+------------
+- Local asset-reference validation: passed
+- JavaScript syntax validation: passed
+- CSS brace validation: passed
+- Assessment and outline counts validated
+
+Open index.html to view the homepage.
+Open hazmat-course.html to test the course player.

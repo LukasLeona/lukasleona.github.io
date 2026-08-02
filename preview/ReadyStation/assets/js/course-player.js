@@ -1,148 +1,543 @@
 (() => {
   'use strict';
 
+  const courseData = {"title":"HazMat Awareness","imageIntro":"assets/images/hazmat-training-photo.png","chapters":[{"id":"course-intro-group","title":"Course Intro","items":[{"id":"course-intro","label":"Course Intro","type":"lesson","title":"Course introduction","subtitle":"Welcome to ReadyStation LMS","description":"A structured HazMat Awareness demo for firefighters that turns the uploaded source material into focused sections, checkpoints, quizzes, and tests.","image":"assets/images/hazmat-training-photo.png","blocks":[{"title":"What this course covers","body":"<p>This demo follows the uploaded chapter materials for <strong>Introduction to Hazardous Materials</strong>, <strong>Recognize and Identify the Presence of Hazmat</strong>, and <strong>Initiate Protective Actions</strong>. The outline intentionally mirrors a learning-management flow: course intro, chapter sections, quiz, and test.</p>"},{"title":"Learning approach","body":"<ul class=\"key-points\"><li>Short sections rather than a single long reading page</li><li>Interactive checks, drag-and-drop, and matching activities</li><li>Chapter quizzes and tests based on the uploaded question files</li><li>Progress bar and completion tracking inside the course sidebar</li></ul>"},{"title":"Remember the boundary of this demo","body":"<div class=\"callout\"><strong>Important:</strong> This course player is a web demo. It does not replace agency-approved practical evaluation, local SOPs, or instructor-led skills verification.</div>"}],"activity":{"type":"quickCheck","prompt":"What is the main goal of this ReadyStation demo course?","options":[{"text":"To function as a passive PDF reader only","correct":false},{"text":"To present firefighter training content in a structured, interactive LMS format","correct":true},{"text":"To replace all field exercises and agency policies","correct":false}],"correctMessage":"Correct. The goal is a clean, interactive LMS demo built around firefighter training content.","wrongMessage":"Review the course introduction. ReadyStation is meant to be interactive, not just a reading site."}}]},{"id":"chapter-1","title":"Chapter 1","subtitle":"Introduction to Hazardous Materials","items":[{"id":"ch1-sec1","label":"Section 1","type":"lesson","chapter":"Chapter 1","chapterTitle":"Introduction to Hazardous Materials","title":"Defining hazardous materials","description":"Understand what makes a material hazardous and why hazmat incidents are often more complex than other emergencies.","blocks":[{"title":"Definition of hazardous materials","body":"<p>The chapter defines a hazardous material as <strong>any substance or material that poses an unreasonable risk to health, safety, property, and/or the environment if not properly controlled</strong> during handling, storage, manufacture, processing, use, disposal, or transportation.</p>"},{"title":"WMD and CBRNE context","body":"<p>When particularly dangerous materials are used deliberately as weapons, they may be treated as <strong>weapons of mass destruction (WMD)</strong>. The material also introduces the CBRNE categories: <strong>Chemical, Biological, Radiological, Nuclear, and Explosive</strong>.</p>"},{"title":"Why hazmat incidents are complex","body":"<p>Hazmat incidents can involve fires, explosions, criminal acts, transportation accidents, or container failures. Hazardous materials are not always clearly defined before responders arrive, so awareness-level personnel must stay alert and avoid unsafe assumptions.</p>"}],"activity":{"type":"quickCheck","prompt":"Which statement best matches the course definition of a hazardous material?","options":[{"text":"Only an illegal substance being transported by road or rail","correct":false},{"text":"Any material that poses unreasonable risk if not properly controlled","correct":true},{"text":"Only a product that has already leaked or exploded","correct":false}],"correctMessage":"Correct. The key idea is unreasonable risk when the material is not properly controlled.","wrongMessage":"Try again. The definition is broader than illegal substances or already-spilled products."}},{"id":"ch1-sec2","label":"Section 2","type":"lesson","chapter":"Chapter 1","chapterTitle":"Introduction to Hazardous Materials","title":"How can hazardous materials harm you?","description":"Review TRACEM-P, routes of exposure, and the difference between contamination and exposure.","blocks":[{"title":"Mechanisms of harm: TRACEM-P","body":"<p>The course uses <strong>TRACEM-P</strong> to represent common hazards: <strong>Thermal, Radiological, Asphyxiating, Chemical, Etiological/Biological, Mechanical, and Psychological</strong>.</p><div class=\"chip-row\"><span class=\"course-chip\">Thermal</span><span class=\"course-chip\">Radiological</span><span class=\"course-chip\">Asphyxiating</span><span class=\"course-chip\">Chemical</span><span class=\"course-chip\">Etiological/Biological</span><span class=\"course-chip\">Mechanical</span><span class=\"course-chip\">Psychological</span></div>"},{"title":"Routes of exposure","body":"<p>The four routes of exposure are <strong>inhalation</strong>, <strong>ingestion</strong>, <strong>absorption</strong>, and <strong>injection</strong>. The chapter also stresses that inhalation is a common route of entry, while skin and eye exposure occur through absorption.</p>"},{"title":"Contamination versus exposure","body":"<p><strong>Contamination</strong> is the transfer of a hazardous material to a person, object, or the environment. <strong>Exposure</strong> occurs when the hazardous material has entered, or may have entered, the body. Cross-contamination can spread the hazard from one location to another.</p>"}],"activity":{"type":"matching","prompt":"Match each route of exposure to the best description.","leftTitle":"Route","rightTitle":"Description","pairs":[{"left":"Inhalation","right":"Breathing a hazardous material through the nose or mouth"},{"left":"Ingestion","right":"Swallowing a hazardous material"},{"left":"Absorption","right":"Material passing through skin or eyes"},{"left":"Injection","right":"Material entering through a puncture in the skin"}],"successMessage":"Great work. Those are the four routes of exposure discussed in the chapter."}},{"id":"ch1-sec3","label":"Section 3","type":"lesson","chapter":"Chapter 1","chapterTitle":"Introduction to Hazardous Materials","title":"Roles and responsibilities","description":"Know the difference between Awareness Level Personnel and Operations Level Responders, and review the APIE-T response model.","blocks":[{"title":"Awareness level priorities","body":"<p>Awareness Level Personnel are expected to recognize the presence of hazmat, protect themselves, isolate the area, deny entry when appropriate, and request appropriate resources. They should use a <strong>slow, methodical approach</strong> and avoid contact with the product.</p>"},{"title":"Operations level context","body":"<p>Operations Level Responders are trained to respond defensively to protect individuals, the environment, and property from the effects of the release. Awareness personnel should not move beyond their training and authorization.</p>"},{"title":"APIE-T process","body":"<ol class=\"lesson-list\"><li><strong>Analyze</strong> the incident</li><li><strong>Plan</strong> the initial response</li><li><strong>Implement</strong> the response</li><li><strong>Evaluate</strong> progress</li><li><strong>Terminate</strong> the incident</li></ol>"}],"activity":{"type":"quickCheck","prompt":"You arrive at an unknown vapor release near a damaged tank. What is the safest awareness-level action?","options":[{"text":"Approach the tank to identify the product up close","correct":false},{"text":"Maintain distance, recognize available clues, isolate the area, and request trained resources","correct":true},{"text":"Begin emergency product control using hand tools","correct":false}],"correctMessage":"Correct. Recognition, self-protection, scene control, and notification fit the awareness-level role.","wrongMessage":"Review the role boundaries. Awareness personnel should not approach, handle, or control the product directly."}},{"id":"ch1-sec4","label":"Section 4","type":"lesson","chapter":"Chapter 1","chapterTitle":"Introduction to Hazardous Materials","title":"Who governs a hazmat incident?","description":"Review the framework of laws, regulations, codes, standards, and local planning that shape hazmat response.","blocks":[{"title":"Key governing terms","body":"<p><strong>Laws</strong> establish authority. <strong>Regulations</strong> describe how compliance is achieved. <strong>Codes</strong> provide enforceable requirements when adopted, and <strong>standards</strong> such as those from NFPA provide detailed best-practice guidance.</p>"},{"title":"National, state, and local influence","body":"<p>The course points learners toward federal, state, and local involvement, including agency-specific requirements and local emergency planning. Training expectations are based on the duties and functions personnel are expected to perform.</p>"},{"title":"LEPC and local planning","body":"<p>Local Emergency Planning Committees (LEPCs) may collect information from hazmat facilities and make it available to the public. Local emergency response plans and SOPs help responders understand roles, responsibilities, and notification pathways.</p>"}],"activity":{"type":"matching","prompt":"Match each term to the best description.","leftTitle":"Term","rightTitle":"Description","pairs":[{"left":"Law","right":"Creates authority and legal obligations"},{"left":"Regulation","right":"Details how compliance is achieved"},{"left":"Standard","right":"Guidance document developed by organizations such as NFPA"},{"left":"LEPC","right":"Local group that may collect and share hazmat facility information"}],"successMessage":"Correct. Those governance terms help frame how hazmat response is organized."}},{"id":"ch1-quiz","label":"Quiz","type":"assessment","chapter":"Chapter 1","chapterTitle":"Introduction to Hazardous Materials","title":"Chapter 1 Quiz","description":"A short interactive quiz based on the uploaded Chapter 1 quiz and answer key.","passLabel":"Quiz submitted","questions":[{"q":"Hazardous materials (hazmat)/dangerous goods are defined as any: (7)","options":["controlled substances or materials that are not in storage and/or are being transported by road, rail, or water.","illegal or illicit substances or materials that pose an unreasonable risk to health, safety, property, and/or the environment.","substances or materials that pose an unreasonable risk to health, safety, property, and/or the environment if not properly controlled.","substances or materials that are intended to be used as a weapon to cause death or serious bodily injury to a significant number of people."],"correct":2,"explanation":"Correct answer: C. substances or materials that pose an unreasonable risk to health, safety, property, and/or the environment if not properly controlled.","sourceNumber":1},{"q":"Any weapon or device intended to or having the capability to cause death or serious injury to a number of people through the release, dissemination, or impact of toxic or poisonous chemicals, a disease organism, or radiation/radioactivity is referred to as a: (7)","options":["hazardous weapon.","clandestine laboratory.","terrorist/criminal incident.","weapon of mass destruction (WMD)."],"correct":3,"explanation":"Correct answer: D. weapon of mass destruction (WMD).","sourceNumber":2},{"q":"What can make hazmat incidents particularly difficult to respond to? (8)","options":["Hazmat incidents require a faster, more risky approach.","Only hazmat technicians are allowed at a hazmat incident.","Responders are not trained to respond to hazmat incidents.","Hazardous materials are not always clearly defined before first responders arrive."],"correct":3,"explanation":"Correct answer: D. Hazardous materials are not always clearly defined before first responders arrive.","sourceNumber":3},{"q":"One of the more common hazardous materials found at a hazmat incident is: (9)","options":["hazardous waste.","flammable gases.","radioactive materials.","toxic and infectious substances."],"correct":1,"explanation":"Correct answer: B. flammable gases.","sourceNumber":4},{"q":"The mechanisms of harm refer to: (9)","options":["ionizing and nonionizing radiation.","the physical properties of a substance.","the method by which damage to the body happens.","the General Hazardous Materials Behavior Model (GEBMO)."],"correct":2,"explanation":"Correct answer: C. the method by which damage to the body happens.","sourceNumber":5},{"q":"What is the most common route of exposure through which hazardous materials enter the body? (10)","options":["Injection","Ingestion","Inhalation","Absorption"],"correct":2,"explanation":"Correct answer: C. Inhalation.","sourceNumber":6},{"q":"What do you call the transfer of a hazardous material in greater than acceptable quantities to persons, equipment, or the environment? (11)","options":["Hazard","Infection","Exposure","Contamination"],"correct":3,"explanation":"Correct answer: D. Contamination.","sourceNumber":7},{"q":"A single exposure or several repeated exposures to a substance within a short period is considered a(an) _____ exposure. (12)","options":["acute","chronic","etiologic","recurring"],"correct":0,"explanation":"Correct answer: A. acute.","sourceNumber":8},{"q":"Awareness Level Personnel responsibilities may include: (14)","options":["limited offensive tasks.","evacuating the hazard area.","performing tasks where they may come in contact with hazmat.","managing hazmat personnel and operations under direction of the Incident Commander."],"correct":1,"explanation":"Correct answer: B. evacuating the hazard area.","sourceNumber":9},{"q":"What is a five-step response model that a responder can use at any incident? (16)","options":["APIE-T","CBRNE","COBRA","B-NICE"],"correct":0,"explanation":"Correct answer: A. APIE-T.","sourceNumber":10},{"q":"Responders trained and certified to the Operations Level are expected to: (17)","options":["perform offensive tasks and supervise the activities of Awareness Level Personnel.","manage the hazmat personnel and operations under the direction of the Incident Commander.","take command of the incident by making command decisions that will help mitigate the emergency.","respond defensively to protect individuals, the environment, and property from the effects of the release."],"correct":3,"explanation":"Correct answer: D. respond defensively to protect individuals, the environment, and property from the effects of the release.","sourceNumber":11},{"q":"What provides how compliance is achieved for hazmat incidents? (20)","options":["Laws","Codes","Standards","Regulations"],"correct":3,"explanation":"Correct answer: D. Regulations.","sourceNumber":12},{"q":"Organizations such as the National Fire Protection Agency (NFPA) develop ____ that are voluntary and applied at national, state, regional, and international levels. (22)","options":["laws","codes","standards","regulations"],"correct":2,"explanation":"Correct answer: C. standards.","sourceNumber":13},{"q":"A Local Emergency Planning Committee (LEPC): (24)","options":["can exceed federal requirements for hazmat management.","usually regulates the transport of hazmat within its state borders.","should always be the first to respond to a hazmat incident or emergency.","may collect information from hazmat facilities and make it available to the public."],"correct":3,"explanation":"Correct answer: D. may collect information from hazmat facilities and make it available to the public.","sourceNumber":14}]},{"id":"ch1-test","label":"Test","type":"assessment","chapter":"Chapter 1","chapterTitle":"Introduction to Hazardous Materials","title":"Chapter 1 Test","description":"A chapter test based on the uploaded Chapter 1 test and answer key.","passLabel":"Test submitted","questions":[{"q":"Any substances that pose an unreasonable risk to health, safety, property, and/or the environment if not properly controlled are known as: (7) [5.2.1]","options":["reagents.","chemical agents.","radioactive materials (RAM).","hazardous materials (hazmat)."],"correct":3,"explanation":"Correct answer: D. hazardous materials (hazmat).","sourceNumber":1},{"q":"When particularly dangerous hazardous materials are used as weapons, they are known as: (7) [5.2.1]","options":["munitions.","hazardous weapons.","weapons of mass destruction (WMD).","radiological dispersal weapons (RDW)."],"correct":2,"explanation":"Correct answer: C. weapons of mass destruction (WMD).","sourceNumber":2},{"q":"What is a hazmat incident? (8) [5.2.1]","options":["Any substance in transport that poses an unreasonable risk to people, the environment, and/or property.","An emergency involving a substance that poses an unreasonable risk to people, the environment, and/or property.","An emergency where any hazardous materials involved are always clearly defined and identified before emergency responders arrive.","Infrequent incidents that emergency responders will most likely not encounter, but pose more dangerous risks than other incident types."],"correct":1,"explanation":"Correct answer: B. An emergency involving a substance that poses an unreasonable risk to people, the environment, and/or property.","sourceNumber":3},{"q":"When compared to other types of emergency incidents, hazmat incidents are: (8) [5.2.1]","options":["often less complex.","often more complex.","more complex but require fewer resources.","less complex and take a shorter amount of time to mitigate."],"correct":1,"explanation":"Correct answer: B. often more complex.","sourceNumber":4},{"q":"Why must you understand the mechanisms of harm? (9) [5.2.1]","options":["To prevent legal issues","To help prevent injuries","To properly complete billing forms","To conduct the post-incident analysis (PIA)"],"correct":1,"explanation":"Correct answer: B. To help prevent injuries.","sourceNumber":5},{"q":"What is the most common way that a hazardous material enters the body? (10) [5.2.1]","options":["Injection","Ingestion","Inhalation","Absorption"],"correct":2,"explanation":"Correct answer: C. Inhalation.","sourceNumber":6},{"q":"What is the route of entry when a material passes through skin or eyes and enters the body? (10) [5.2.1]","options":["Injection","Ingestion","Inhalation","Absorption"],"correct":3,"explanation":"Correct answer: D. Absorption.","sourceNumber":7},{"q":"The transfer of a hazardous material in greater than acceptable quantities to a person, equipment, or the environment is called: (11) [5.2.1]","options":["exposure.","contamination.","decontamination.","cross contamination."],"correct":1,"explanation":"Correct answer: B. contamination.","sourceNumber":8},{"q":"If a driver gets diesel onto their skin and the diesel absorbs into their body, they have been: (12) [5.2.1]","options":["infected.","exposed.","inhibited.","extricated."],"correct":1,"explanation":"Correct answer: B. exposed.","sourceNumber":9},{"q":"_____ health effects are long-term effects that may take years to appear, such as cancer. (12) [5.2.1]","options":["Acute","Chronic","Ambient","Secondary"],"correct":1,"explanation":"Correct answer: B. Chronic.","sourceNumber":10},{"q":"Personnel involved in a hazmat incident must be mindful of risk and: (14) [5.1.1, 5.1.3, 5.2.1]","options":["use a slow methodical approach.","able to perform mission-specific tasks.","mitigate the hazard as soon as possible.","trained to the hazmat Operations Level, at minimum."],"correct":0,"explanation":"Correct answer: A. use a slow methodical approach.","sourceNumber":11},{"q":"Training for personnel that respond to a hazmat incident is: (14) [5.1.1, 5.1.3]","options":["recommended but not required.","reserved for specialized personnel.","based on duties and function to be performed.","usually done during actual emergency operations at an incident."],"correct":2,"explanation":"Correct answer: C. based on duties and function to be performed.","sourceNumber":12},{"q":"What type of personnel are typically at a hazmat incident when it occurs, but can only perform limited defensive actions? (14) [5.1.1, 5.1.3]","options":["Hazmat Technicians","Hazmat Safety Personnel","Awareness Level Personnel","Operations Level Responders"],"correct":2,"explanation":"Correct answer: C. Awareness Level Personnel.","sourceNumber":13},{"q":"Which hazmat personnel are dispatched to the scene to perform defensive actions, but are not expected to come in direct contact with the hazardous material? (14) [5.1.1, 5.1.3]","options":["Awareness Level Personnel","Operations Level Responders","Hazardous material technician with specialty","First responder with Operations Mission-Specific level training"],"correct":1,"explanation":"Correct answer: B. Operations Level Responders.","sourceNumber":14},{"q":"First responders with Operations Mission-Specific level training may: (14) [5.1.1, 5.1.3]","options":["perform tasks where they come into contact with the hazardous material.","perform offensive tasks, including controlling releases at hazmat incidents.","manage the incident by making command decisions to mitigate the emergency.","direct hazmat personnel and operations under the direction of the Incident Commander."],"correct":0,"explanation":"Correct answer: A. perform tasks where they come into contact with the hazardous material.","sourceNumber":15},{"q":"When faced with an incident involving hazardous materials, Awareness Level Personnel are expected to: (15) [5.1.1, 5.1.3, 5.3.1]","options":["plan and conduct decontamination procedures.","terminate the incident once the hazmat area is deemed safe.","establish scene control by isolating the hazardous area and denying entry.","implement the planned response to mitigate or control a release from a safe distance."],"correct":2,"explanation":"Correct answer: C. establish scene control by isolating the hazardous area and denying entry.","sourceNumber":16},{"q":"Situational awareness must always be exercised while Awareness Level Personnel: (16) [5.1.1, 5.1.3]","options":["analyze the incident.","terminate the incident.","plan the initial response.","evaluate the progress of an incident."],"correct":0,"explanation":"Correct answer: A. analyze the incident.","sourceNumber":17},{"q":"What are the steps of the APIE-T process? (16) [5.1.1, 5.1.3]","options":["Analyze the incident, plan the initial response, implement the response, evaluate progress, termination of incident","Assign tasks, plan the initial response, identify the hazard(s), evaluate incident scene, termination of planning stage","Assign tasks, plan the initial response, implement the response, evaluate effectiveness of the response, termination of incident","Analyze the incident, plan the initial response, implement the preincident survey, evaluate effectiveness of preincident survey, terminate the preplannning stage"],"correct":0,"explanation":"Correct answer: A. Analyze the incident, plan the initial response, implement the response, evaluate progress, termination of incident.","sourceNumber":18},{"q":"What is a role of Awareness Level Personnel in implementing the response step of the APIE-T process? (16) [5.1.1, 5.1.3, 5.3.1]","options":["Performing emergency decontamination","Establishing the Incident Management System (IMS)","Initiating protective action to protect themselves and others","Identifying and preserving potential evidence if crime is suspected"],"correct":2,"explanation":"Correct answer: C. Initiating protective action to protect themselves and others.","sourceNumber":19},{"q":"During termination of an incident, Awareness Level Personnel: (16) [5.1.1, 5.1.3, 5.4.1]","options":["may participate in briefings.","are not present or participating.","perform decontamination procedures.","are responsible for terminating the incident."],"correct":0,"explanation":"Correct answer: A. may participate in briefings.","sourceNumber":20},{"q":"A _____ details procedures for implementing, complying, and enforcing a law. (20) [5.1.3]","options":["code","standard","mandate","regulation"],"correct":3,"explanation":"Correct answer: D. regulation.","sourceNumber":21},{"q":"What is usually enforced by a government agency for the protection of public safety? (20) [5.1.3]","options":["Codes","Standards","Proprietary standards","Job performance requirements"],"correct":0,"explanation":"Correct answer: A. Codes.","sourceNumber":22},{"q":"Compliance with _____ is voluntary. (22) [5.1.3]","options":["laws","codes","standards","regulations"],"correct":2,"explanation":"Correct answer: C. standards.","sourceNumber":23},{"q":"When might the State Emergency Response Commission (SERC) be needed to help coordinate hazmat management? (24) [5.1.3, 5.2.1]","options":["During a small spill of flammable gas","If emergency or technical decontamination is needed","If an emergency is too expensive for a local community to handle","When a hazmat incident requires responders to come in contact with the hazmat"],"correct":2,"explanation":"Correct answer: C. If an emergency is too expensive for a local community to handle.","sourceNumber":24},{"q":"Which emergency committee may collect and store information from hazmat facilities and makes the information available to the public? (24) [5.1.3]","options":["Local Emergency Planning Committee (LEPC)","State Emergency Response Committee (SERC)","Federal Emergency Management Agency (FEMA)","Hazmat Emergency Response Committee (HERC)"],"correct":0,"explanation":"Correct answer: A. Local Emergency Planning Committee (LEPC).","sourceNumber":25},{"q":"Many local communities regulate hazmat traffic through: (25) [5.1.3, 5.2.1]","options":["educational programs.","random fees and fines.","specific zoning requirements.","public relations highway campaigns."],"correct":2,"explanation":"Correct answer: C. specific zoning requirements.","sourceNumber":26}]}]},{"id":"chapter-2","title":"Chapter 2","subtitle":"Recognize and Identify the Presence of Hazmat","items":[{"id":"ch2-sec1","label":"Section 1","type":"lesson","chapter":"Chapter 2","chapterTitle":"Recognize and Identify the Presence of Hazmat","title":"Seven clues to the presence of hazmat","description":"Recognize the seven clues and why distance usually equates to safety.","blocks":[{"title":"The seven clues","body":"<ol class=\"lesson-list\"><li>Locations, occupancy types, and preincident surveys</li><li>Basic container information</li><li>Transportation placards, markings, and labels</li><li>Nontransportation hazmat markings and labels</li><li>Hazard information reference sources</li><li>Sensory clues including victim signs and symptoms</li><li>Monitoring and detection devices</li></ol>"},{"title":"Risk increases as you get closer","body":"<p>The chapter explains that some clues are visible from a distance while others require you to move closer. <strong>The closer you must be to identify the material, the greater your chance for harmful exposure.</strong> That is why distance often equates to safety.</p>"},{"title":"Review question","body":"<div class=\"callout\"><strong>Review:</strong> What are the seven clues to the presence of hazardous materials, and why does the order generally represent increasing risk?</div>"}],"activity":{"type":"dragSort","prompt":"Drag the clues into the two observation groups: safer distant clues and closer/higher-risk clues.","groups":[{"id":"distant","title":"Visible from a safer distance"},{"id":"closer","title":"Requires closer observation / higher risk"}],"items":[{"text":"Transportation placards, markings, and labels","group":"distant"},{"text":"Locations, occupancy types, and preincident surveys","group":"distant"},{"text":"Basic container information","group":"closer"},{"text":"Sensory clues including victim signs and symptoms","group":"closer"}],"successMessage":"Nice work. The activity reinforces that responders should prefer safer, distant clues whenever possible."}},{"id":"ch2-sec2","label":"Section 2","type":"lesson","chapter":"Chapter 2","chapterTitle":"Recognize and Identify the Presence of Hazmat","title":"Locations, occupancy types, and preincident surveys","description":"Learn how locations and occupancies can hint at hazmat presence before a label is ever read.","blocks":[{"title":"Location and occupancy","body":"<p>A <strong>location</strong> is the geographic area or address of the incident. An <strong>occupancy</strong> refers to the type and use of the structure. Both can help awareness-level personnel anticipate the possible presence of hazardous materials.</p>"},{"title":"Transportation and high-profile locations","body":"<p>Roadways, railways, waterways, airways, and pipelines all introduce transportation risk. The chapter also highlights <strong>high-profile locations</strong> such as public areas with high traffic, government facilities, financial institutions, schools, markets, and public transportation systems.</p>"},{"title":"Preincident surveys","body":"<p>Preincident surveys simplify and reduce on-scene decision making. They help responders understand likely hazards, access points, problem areas, and facility-specific concerns before the emergency happens.</p>"}],"activity":{"type":"quickCheck","prompt":"Which example below is considered a high-profile location in the chapter material?","options":[{"text":"A government facility","correct":true},{"text":"A building with a fume hood only","correct":false},{"text":"A residential driveway with no special use","correct":false}],"correctMessage":"Correct. Government facilities are one example of a high-profile location.","wrongMessage":"Check the high-profile location examples in the lesson. Public, high-traffic locations are emphasized."}},{"id":"ch2-sec3","label":"Section 3","type":"lesson","chapter":"Chapter 2","chapterTitle":"Recognize and Identify the Presence of Hazmat","title":"Basic container information","description":"Use packaging type, pressure clues, and container shape to gather information from a safe location.","blocks":[{"title":"Bulk versus nonbulk","body":"<p>Bulk packaging exceeds specified thresholds and carries material without an intermediate form of containment. Nonbulk packaging is smaller and more common in drums, cylinders, and smaller containers.</p>"},{"title":"Pressure clues and shapes","body":"<p>Rounded ends, spherical shapes, and thermos-bottle shapes can indicate different storage conditions. As a general principle, shape can hint at pressure, cryogenic storage, or whether the container is nonpressurized.</p>"},{"title":"Container observations must remain defensive","body":"<p>Awareness-level personnel use these clues to recognize potential hazards without making contact with the product.</p>"}],"activity":{"type":"matching","prompt":"Match the container clue to the likely storage condition.","leftTitle":"Clue","rightTitle":"Likely meaning","pairs":[{"left":"Spherical container","right":"Indicates contents under high pressure"},{"left":"Thermos bottle shape","right":"Often associated with cryogens"},{"left":"Oval cross section with flat or nearly flat ends","right":"Transportation container shape indicating nonpressurized contents"},{"left":"Bulk packaging","right":"No intermediate form of containment and exceeds specified size thresholds"}],"successMessage":"Correct. Container clues can help with recognition from a safe location."}},{"id":"ch2-sec4","label":"Section 4","type":"lesson","chapter":"Chapter 2","chapterTitle":"Recognize and Identify the Presence of Hazmat","title":"Hazard classes and divisions","description":"Identify the nine UN hazard classes and understand that products are classified by their most dangerous properties.","blocks":[{"title":"Nine UN hazard classes","body":"<div class=\"hazard-grid\"><div class=\"hazard-box\"><strong>1</strong><span>Explosives</span></div><div class=\"hazard-box\"><strong>2</strong><span>Gases</span></div><div class=\"hazard-box\"><strong>3</strong><span>Flammable liquids</span></div><div class=\"hazard-box\"><strong>4</strong><span>Flammable solids</span></div><div class=\"hazard-box\"><strong>5</strong><span>Oxidizers and organic peroxides</span></div><div class=\"hazard-box\"><strong>6</strong><span>Toxic and infectious substances</span></div><div class=\"hazard-box\"><strong>7</strong><span>Radioactive materials</span></div><div class=\"hazard-box\"><strong>8</strong><span>Corrosive substances</span></div><div class=\"hazard-box\"><strong>9</strong><span>Miscellaneous dangerous goods</span></div></div>"},{"title":"How classes are assigned","body":"<p>In general, a product’s hazard class is assigned based on its <strong>most dangerous chemical and/or physical properties</strong>.</p>"}],"activity":{"type":"quickCheck","prompt":"Under the United Nations system, Class 2 hazards are:","options":[{"text":"Explosives","correct":false},{"text":"Gases","correct":true},{"text":"Corrosives","correct":false}],"correctMessage":"Correct. Class 2 covers gases.","wrongMessage":"Review the hazard-class chart. Class 2 corresponds to gases."}},{"id":"ch2-sec5","label":"Section 5","type":"lesson","chapter":"Chapter 2","chapterTitle":"Recognize and Identify the Presence of Hazmat","title":"Transportation placards, markings, and labels","description":"Recognize the diamond-shaped placards and markings used on transportation containers and vehicles.","blocks":[{"title":"Placards and markings","body":"<p>Transportation container, cargo tank, tank car, and trailer hazards are commonly identified by <strong>diamond-shaped placards</strong> placed on all four sides of the vehicle or container.</p>"},{"title":"Using the placard safely","body":"<p>Placards can point you to a hazard class, a four-digit identification number, and ultimately the correct ERG guide. They support recognition and should be used from a safe distance whenever possible.</p>"}],"activity":{"type":"quickCheck","prompt":"What common transportation clue appears as a diamond-shaped sign on vehicles transporting hazmat?","options":[{"text":"A placard","correct":true},{"text":"An LEPC marker","correct":false},{"text":"A signal word label only","correct":false}],"correctMessage":"Correct. Placards are a major recognition clue on transportation containers and vehicles.","wrongMessage":"Try again. The chapter specifically points to diamond-shaped placards."},"image":"assets/images/hazmat-training-photo.png"},{"id":"ch2-sec6","label":"Section 6","type":"lesson","chapter":"Chapter 2","chapterTitle":"Recognize and Identify the Presence of Hazmat","title":"Nontransportation hazmat markings and labels","description":"Review NFPA 704 and GHS label concepts used at fixed facilities and nontransportation settings.","blocks":[{"title":"NFPA 704","body":"<p>The NFPA 704 system uses a four-color marker to communicate hazards. The <strong>blue</strong> section indicates health hazard, the <strong>red</strong> section indicates flammability, the <strong>yellow</strong> section indicates instability/reactivity, and the <strong>white</strong> section communicates special hazards.</p>"},{"title":"GHS labels and signal words","body":"<p>The Globally Harmonized System (GHS) uses labels and safety data sheets to convey hazard information. The two primary signal words used to alert readers are <strong>Danger</strong> and <strong>Warning</strong>.</p>"}],"activity":{"type":"matching","prompt":"Match the label system element to its meaning.","leftTitle":"Element","rightTitle":"Meaning","pairs":[{"left":"NFPA 704 red quadrant","right":"Flammability hazard"},{"left":"NFPA 704 blue quadrant","right":"Health hazard"},{"left":"GHS signal word “Danger”","right":"Indicates a more severe hazard level"},{"left":"GHS signal word “Warning”","right":"Indicates a less severe hazard level than Danger"}],"successMessage":"Correct. NFPA and GHS each help responders recognize hazards in different settings."}},{"id":"ch2-sec7","label":"Section 7","type":"lesson","chapter":"Chapter 2","chapterTitle":"Recognize and Identify the Presence of Hazmat","title":"Hazard information resources","description":"Use reference sources such as the ERG, shipping papers, and safety data sheets to identify hazards.","blocks":[{"title":"ERG and transportation guidance","body":"<p>The <strong>Emergency Response Guidebook (ERG)</strong> was developed to guide personnel who may be first to arrive at a transportation incident involving hazmat.</p>"},{"title":"Shipping papers and SDS","body":"<p>Shipping papers identify the product being transported. Safety data sheets (SDSs) provide detailed chemical information and are formatted according to GHS expectations.</p>"},{"title":"Use multiple information sources","body":"<div class=\"callout\"><strong>Important note:</strong> The course reminds learners not to rely on the ERG alone. Responders should seek additional material-specific information whenever possible.</div>"}],"activity":{"type":"matching","prompt":"Match the information source to its best use.","leftTitle":"Source","rightTitle":"Best use","pairs":[{"left":"Emergency Response Guidebook (ERG)","right":"Initial transportation incident guidance and protective actions"},{"left":"Shipping papers","right":"Identifies the product being transported"},{"left":"Safety Data Sheet (SDS)","right":"Detailed chemical information in a standardized format"},{"left":"Chemical inventory information","right":"Helps fixed facilities identify what materials may be present"}],"successMessage":"Correct. Those resources support recognition and identification."}},{"id":"ch2-sec8","label":"Section 8","type":"lesson","chapter":"Chapter 2","chapterTitle":"Recognize and Identify the Presence of Hazmat","title":"Sensory clues and victim signs and symptoms","description":"Use sensory clues carefully and recognize that victim signs and symptoms can signal hazmat presence.","blocks":[{"title":"Sensory clues","body":"<p>The five senses can provide clues, but they also introduce risk. As a general rule, <strong>vision is the safest sense</strong> to use. Smell and taste should not be relied upon for product identification.</p>"},{"title":"Victim signs and symptoms","body":"<p>Victim behavior, irritation, breathing difficulty, or other symptoms can signal exposure, but awareness-level personnel should continue to protect themselves and avoid entering the contaminated area.</p>"}],"activity":{"type":"quickCheck","prompt":"Which of the five senses is usually the safest to use to detect hazmat at an incident?","options":[{"text":"Smell","correct":false},{"text":"Vision","correct":true},{"text":"Taste","correct":false}],"correctMessage":"Correct. Vision is generally the safest sense to use for recognition.","wrongMessage":"Avoid using risky sensory methods. The chapter points to vision as the safest sense."}},{"id":"ch2-sec9","label":"Section 9","type":"lesson","chapter":"Chapter 2","chapterTitle":"Recognize and Identify the Presence of Hazmat","title":"Monitoring and detection devices","description":"Recognize the role and limitations of monitoring and detection devices at the awareness level.","blocks":[{"title":"Purpose of the devices","body":"<p>Monitoring and detection devices can help determine whether hazmat is present and what concentrations may exist. They are important tools at many incidents.</p>"},{"title":"Awareness-level limitation","body":"<p>The uploaded material reminds learners that the use of monitoring and detection devices is <strong>outside the scope of action for awareness-level personnel</strong>. The devices often require contact with or close proximity to the material, which exceeds awareness-level responsibilities.</p>"}],"activity":{"type":"quickCheck","prompt":"Why are monitoring and detection devices outside awareness-level scope?","options":[{"text":"Because they cannot detect any hazardous materials","correct":false},{"text":"Because their use requires contact or proximity and training beyond awareness-level actions","correct":true},{"text":"Because placards make them unnecessary at every incident","correct":false}],"correctMessage":"Correct. The limitation is about operational scope and training.","wrongMessage":"Review the scope boundary. Monitoring tools may require close contact and training beyond awareness-level duties."}},{"id":"ch2-quiz","label":"Quiz","type":"assessment","chapter":"Chapter 2","chapterTitle":"Recognize and Identify the Presence of Hazmat","title":"Chapter 2 Quiz","description":"A short interactive quiz based on the uploaded Chapter 2 quiz.","passLabel":"Quiz submitted","questions":[{"q":"Awareness Level Personnel must be able to: (31)","options":["perform emergency decontamination at a hazmat incident.","recognize and identify the presence of hazardous materials.","use monitoring and detection devices to identify hazardous materials.","perform offensive tasks to help mitigate hazardous materials at a hazmat incident."],"correct":1,"explanation":"Correct answer: B. recognize and identify the presence of hazardous materials.","sourceNumber":1},{"q":"The specific geographic area or address of a hazmat incident is referred to as the: (33)","options":["location.","hot zone.","occupancy.","high profile area."],"correct":0,"explanation":"Correct answer: A. location.","sourceNumber":2},{"q":"An example of a high-profile location would be a(an): (35)","options":["government facility.","illicit drug laboratory.","residential neighborhood.","building with an exhaust fume hood."],"correct":0,"explanation":"Correct answer: A. government facility.","sourceNumber":3},{"q":"In what type of packaging are materials loaded with no intermediate form of containment? (39)","options":["Bulk packaging","Nonbulk packaging","Composite packaging","Compound packaging"],"correct":0,"explanation":"Correct answer: A. Bulk packaging.","sourceNumber":4},{"q":"A spherical shaped container can be an indicator that the contents are: (44)","options":["nonpressurized.","at high temperature.","under high pressure.","at atmospheric to low pressure."],"correct":2,"explanation":"Correct answer: C. under high pressure.","sourceNumber":5},{"q":"A vertical cylinder with a cone bottom and elevated with legs, smaller in diameter than height: (45)","options":["may contain anything.","always contains cryogens.","indicates contents are harmless.","is more dangerous than any other container."],"correct":0,"explanation":"Correct answer: A. may contain anything.","sourceNumber":6},{"q":"What type of transportation containers have an oval cross section with flat or nearly flat ends? (47)","options":["Cryogenic","Mixed cargo","High pressure","Nonpressurized"],"correct":3,"explanation":"Correct answer: D. Nonpressurized.","sourceNumber":7},{"q":"Which container shape is designed to store and transport cryogens? (47)","options":["Spherical","Rectangular","Thermos bottle","Horseshoe-shape"],"correct":2,"explanation":"Correct answer: C. Thermos bottle.","sourceNumber":8},{"q":"In general, a product's hazard class is assigned based on: (49)","options":["how quickly it will start to burn.","how common or rare the product is.","its least dangerous chemical and/or physical properties.","its most dangerous chemical and/or physical properties."],"correct":3,"explanation":"Correct answer: D. its most dangerous chemical and/or physical properties.","sourceNumber":9},{"q":"The United Nations (UN) system uses ____ hazard classes to categorize hazardous materials. (49)","options":["four","nine","ten","sixteen"],"correct":1,"explanation":"Correct answer: B. nine.","sourceNumber":10},{"q":"Transportation container, cargo tank, tank car, and trailer hazards are identified by diamond-shaped _____ that appear on all four sides of the vehicle transporting hazmat. (66)","options":["labels","colors","placards","markings"],"correct":2,"explanation":"Correct answer: C. placards.","sourceNumber":11},{"q":"Where in the Emergency Response Guidebook (ERG) can you find a key to the to the four-digit UN/NA identification numbers? (68)","options":["Blue-bordered section","White-bordered section","Green-bordered section","Yellow-bordered section"],"correct":3,"explanation":"Correct answer: D. Yellow-bordered section.","sourceNumber":12},{"q":"A hazard rating of 4 in the blue quadrant of an NFPA 704 marker indicates a _______ hazard (76)","options":["severe","special","minimal","flammability"],"correct":0,"explanation":"Correct answer: A. severe.","sourceNumber":13},{"q":"The red quadrant on the NFPA 704 System marking represents a(an): (76)","options":["health hazard.","special hazard.","instability hazard.","flammability hazard."],"correct":3,"explanation":"Correct answer: D. flammability hazard.","sourceNumber":14},{"q":"The two signal words used by the Globally Harmonized System (GHS) to alert the reader of a potential hazard on a label or safety data sheets are Danger and: (83)","options":["Caution.","Harmful.","Warning.","Flammable."],"correct":2,"explanation":"Correct answer: C. Warning.","sourceNumber":15},{"q":"When searching for the waybill or train consist for a railcar, where should you check first? (86)","options":["In the engine","In the caboose","With the train crew","With the railroad company"],"correct":2,"explanation":"Correct answer: C. With the train crew.","sourceNumber":16},{"q":"Which hazard information source was developed to provide guidance for those personnel who may be the first to arrive at a transportation incident involving hazmat? (87)","options":["Bill of lading","Chemical inventory lists (CIL)","Globally Harmonized System (GHS)","Emergency Response Guidebook (ERG)"],"correct":3,"explanation":"Correct answer: D. Emergency Response Guidebook (ERG).","sourceNumber":17},{"q":"Safety data sheets (SDSs) are formatted according to ____ specifications. (87)","options":["Globally Harmonized System (GHS)","Chemical Abstract Service (CAS)","Hazard Communication Standard (HCS)","National Fire Protection Association (NFPA)"],"correct":0,"explanation":"Correct answer: A. Globally Harmonized System (GHS).","sourceNumber":18},{"q":"Which of the five senses is usually the safest to use to detect hazmat at an incident? (90)","options":["Smell","Taste","Vision","Hearing"],"correct":2,"explanation":"Correct answer: C. Vision.","sourceNumber":19},{"q":"Regarding the use of monitoring and detection devices to determine the presence of hazmat, it is important to remember that: (93)","options":["personnel should not come in contact with hazmat when using the devices.","use of the five senses is safer than using monitoring and detection devices.","use of the devices is outside the scope of action for awareness level personnel.","monitoring and detection devices cannot detect the concentration(s) of hazmat present."],"correct":2,"explanation":"Correct answer: C. use of the devices is outside the scope of action for awareness level personnel.","sourceNumber":20}],"gradingNote":"Automatic grading for this Chapter 2 assessment uses an answer mapping derived from the uploaded Chapter 2 lesson outline and course content. A separate Chapter 2 answer-key file was not found in the uploaded files."},{"id":"ch2-test","label":"Test","type":"assessment","chapter":"Chapter 2","chapterTitle":"Recognize and Identify the Presence of Hazmat","title":"Chapter 2 Test","description":"A chapter test built from the uploaded Chapter 2 materials and question file.","passLabel":"Test submitted","questions":[{"q":"When hazmat is involved, _____ often equates to safety. (32) [5.2.1]","options":["distance","identification","seeing the product","smelling the product"],"correct":0,"explanation":"Correct answer: A. distance.","sourceNumber":1},{"q":"Which of the seven hazmat clues usually poses the least amount of risk to Awareness Level Personnel? (32) [5.2.1]","options":["Sensory clues","Basic container information","Monitoring and detection devices","Locations, occupancy types, and preincident surveys"],"correct":3,"explanation":"Correct answer: D. Locations, occupancy types, and preincident surveys.","sourceNumber":2},{"q":"High-profile locations are those public areas: (35) [5.2.1]","options":["with high traffic or volume.","with a high volume of hazmat transport.","where hazmat cannot be contained if it is leaked.","in low-lying areas that may be affected by flood conditions."],"correct":0,"explanation":"Correct answer: A. with high traffic or volume.","sourceNumber":3},{"q":"Features such as a building having a fume hood exhaust on the roof: (36) [5.2.1]","options":["are indicators of a high-profile occupancy.","are indicators that an illegal laboratory is inside.","mean that there is less of a hazmat risk inside the building.","should be noted during preincident surveys and initial scene size-up."],"correct":3,"explanation":"Correct answer: D. should be noted during preincident surveys and initial scene size-up.","sourceNumber":4},{"q":"Clandestine drug laboratories, including cannabis and cannabidiol (CBD) operations: (37) [5.2.1]","options":["are often booby trapped.","should be labeled as high-profile locations.","usually have a fume hood exhaust on the roof.","are becoming safer as CBD products are being decriminalized."],"correct":0,"explanation":"Correct answer: A. are often booby trapped.","sourceNumber":5},{"q":"To simplify and reduce on-site decisions at a hazmat incident, it helps to: (37) [5.2.1]","options":["conduct preincident surveys.","establish Incident Command away from the scene.","not arrive on scene until the hazmat incident is clearly defined.","first use monitoring and detection devices to identify hazard(s) present."],"correct":0,"explanation":"Correct answer: A. conduct preincident surveys.","sourceNumber":6},{"q":"How does nonbulk packaging differ from bulk packaging? (40) [5.2.1]","options":["It usually is less hazardous than bulk packaging.","It usually is more hazardous than bulk packaging.","It is larger than the minimum criteria established for bulk packaging.","It is smaller than the minimum criteria established for bulk packaging."],"correct":3,"explanation":"Correct answer: D. It is smaller than the minimum criteria established for bulk packaging.","sourceNumber":7},{"q":"What is a clue that a container is pressurized? (41) [5.2.1]","options":["The contents are nonbulk.","The container has rounded ends.","The container is at a fixed facility.","The container has flat sides or ends."],"correct":1,"explanation":"Correct answer: B. The container has rounded ends.","sourceNumber":8},{"q":"What is one indicator that the contents in a container are under high pressure? (44) [5.2.1]","options":["The container has a spherical shape.","The container has a horse-shoe shape.","The container has an oval cross section.","The container is a horizontal cylinder with flat ends."],"correct":0,"explanation":"Correct answer: A. The container has a spherical shape.","sourceNumber":9},{"q":"Which fixed storage container shape stores many liquid products at atmospheric to low pressure? (45) [5.2.1]","options":["Spherical","Thermos bottle","Circular with flat ends","Cylindrical with rounded ends"],"correct":2,"explanation":"Correct answer: C. Circular with flat ends.","sourceNumber":10},{"q":"Which fixed storage container shape is not indicative of any specific hazard? (45) [5.2.1]","options":["Circular with flat ends","Cylindrical with rounded ends","Horizontal cylinder with flat ends","Vertical cylinder with a cone bottom"],"correct":3,"explanation":"Correct answer: D. Vertical cylinder with a cone bottom.","sourceNumber":11},{"q":"A container with a horizontal shape and flat ends at a fixed facility is an indicator of: (46) [5.2.1]","options":["mixed cargo.","cryogenic storage.","high pressure liquid storage.","atmospheric to low pressure liquid storage."],"correct":3,"explanation":"Correct answer: D. atmospheric to low pressure liquid storage.","sourceNumber":12},{"q":"Which transportation container shape indicates nonpressurized containers? (47) [5.2.1]","options":["Oval","Spherical","Thermos bottle","Cylindrical with rounded ends"],"correct":0,"explanation":"Correct answer: A. Oval.","sourceNumber":13},{"q":"Which transportation container shape is an indicator of cryogens? (47) [5.2.1]","options":["Oval","Spherical","Thermos bottle","Horseshoe-shaped"],"correct":2,"explanation":"Correct answer: C. Thermos bottle.","sourceNumber":14},{"q":"Which transportation container shape may carry mixed cargo? (48) [5.2.1]","options":["Oval","Spherical","Rectangular","Thermos bottle"],"correct":2,"explanation":"Correct answer: C. Rectangular.","sourceNumber":15},{"q":"In general, a product's hazard class is assigned based on: (49) [5.2.1]","options":["location and/or occupancy.","the type of response needed to mitigate the hazard.","its most dangerous chemical and/or physical properties.","the number and type of personnel needed to mitigate the hazard."],"correct":2,"explanation":"Correct answer: C. its most dangerous chemical and/or physical properties.","sourceNumber":16},{"q":"Under the United Nations (UN) system, Class 2 hazards are: (49) [5.2.1]","options":["gases.","explosives.","flammable solids.","flammable liquids."],"correct":0,"explanation":"Correct answer: A. gases.","sourceNumber":17},{"q":"Which hazard class contains oxidizers and organic peroxides? (49) [5.2.1]","options":["Class 3","Class 5","Class 6","Class 8"],"correct":1,"explanation":"Correct answer: B. Class 5.","sourceNumber":18},{"q":"Class 6 materials and substances include: (49) [5.2.1]","options":["radioactive materials.","corrosive substances.","toxic and infectious substances.","oxidizing substances and organic peroxides."],"correct":2,"explanation":"Correct answer: C. toxic and infectious substances.","sourceNumber":19},{"q":"Class 8 hazard class includes: (49) [5.2.1]","options":["radioactive materials.","corrosive substances.","infectious substances.","miscellaneous dangerous goods."],"correct":1,"explanation":"Correct answer: B. corrosive substances.","sourceNumber":20},{"q":"The primary hazards of explosives are thermal and _____ energy. (50) [5.2.1]","options":["infrared","chemical","corrosive","mechanical"],"correct":3,"explanation":"Correct answer: D. mechanical.","sourceNumber":21},{"q":"The hazards from which Hazard Class include a blast-pressure wave, shrapnel and fragmentation, and/or an incendiary thermal effect? (50 - 52) [5.2.1]","options":["Class 1 - Explosives","Class 3 - Flammable Liquids","Class 6 - Poisons, Poison Inhalation Hazards, and Infectious Substances","Class 8 - Corrosives"],"correct":0,"explanation":"Correct answer: A. Class 1 - Explosives.","sourceNumber":22},{"q":"Which Hazard Class is most likely to be transported and stored in pressure or cryogenic containers? (52) [5.2.1]","options":["Class 1 - Explosives","Class 2 - Gases","Class 4 - Flammable Solids","Class 7 - Radioactive Materials"],"correct":1,"explanation":"Correct answer: B. Class 2 - Gases.","sourceNumber":23},{"q":"Most hazmat incidents in Class 3 Flammable and Combustible Liquids involve: (54) [5.2.1]","options":["gasoline and diesel fuel spills.","toxic and infectious substances.","substances that cause full thickness destruction of human skin.","substances that initiate or promote combustion in other materials."],"correct":0,"explanation":"Correct answer: A. gasoline and diesel fuel spills.","sourceNumber":24},{"q":"Class 4 hazards include flammable solids, spontaneously combustible materials, and: (54) [5.2.1]","options":["flammable gases.","flammable liquids.","oxidizing substances.","dangerous when wet."],"correct":3,"explanation":"Correct answer: D. dangerous when wet.","sourceNumber":25},{"q":"Which Hazard Class contains materials in the solid state of matter that do not require an external ignition source or may give off toxic or flammable gas when in contact with water? (54 - 56) [5.2.1]","options":["Class 1 - Explosives","Class 4 - Flammable Solids, Spontaneously Combustible, and Dangerous When Wet","Class 5 - Oxidizers and Organic Peroxides","Class 7 - Radioactive Materials"],"correct":1,"explanation":"Correct answer: B. Class 4 - Flammable Solids, Spontaneously Combustible, and Dangerous When Wet.","sourceNumber":26},{"q":"Because organic peroxides are prone to reactivity, they should be stored: (57) [5.2.1]","options":["at the maximum safe storage temperature (MSST).","below the maximum safe storage temperature (MSST).","at the self-accelerating decomposition temperature (SADT).","above the self-accelerating decomposition temperature (SADT)."],"correct":1,"explanation":"Correct answer: B. below the maximum safe storage temperature (MSST).","sourceNumber":27},{"q":"Which Hazard Class contains materials that are known to be toxic and/or have the potential to cause disease in humans or animals? (59) [5.2.1]","options":["Class 3 - Flammable Liquids (and Combustible Liquids [U.S.])","Class 5 - Oxidizers and Organic Peroxides","Class 6 - Toxic* Substances and Infectious Substances","Class 9 - Miscellaneous Hazardous Materials"],"correct":2,"explanation":"Correct answer: C. Class 6 - Toxic* Substances and Infectious Substances.","sourceNumber":28},{"q":"A specific hazard for Class 7 - Radioactive Materials is that they: (61) [5.2.1]","options":["may react violently when mixed together or combined with water.","readily give off oxygen or other oxidizing substances and vigorously support combustion.","cannot be detected with the senses, and require specialized monitoring and detection equipment.","have a significant potential energy that may rapidly expand and release upon activation (undergo an explosion)."],"correct":2,"explanation":"Correct answer: C. cannot be detected with the senses, and require specialized monitoring and detection equipment.","sourceNumber":29},{"q":"A primary hazard for Class 8 - Corrosives is that they: (63) [5.2.1]","options":["are an elevated temperature material.","readily give off oxygen or other oxidizing substances.","may release energy in the form of light, gas, and/or heat.","cause full thickness destruction of human skin at the site of contact."],"correct":3,"explanation":"Correct answer: D. cause full thickness destruction of human skin at the site of contact.","sourceNumber":30},{"q":"Class 9 (Miscellaneous Dangerous Goods/Hazardous Materials Articles) hazards will: (64) [5.2.1]","options":["primarily be reactive or mechanical hazards.","only be detectable by monitoring and detection equipment.","only present a hazard during transportation if exposed to extreme temperatures.","present a hazard during transportation but do not the meet the definition of any other hazard class."],"correct":3,"explanation":"Correct answer: D. present a hazard during transportation but do not the meet the definition of any other hazard class.","sourceNumber":31},{"q":"Lithium batteries and polychlorinated biphenyls (PCBs) are Class ____ hazardous materials. (65) [5.2.1]","options":["4 (Spontaneously Combustible)","6 (Toxic)","8 (Corrosive)","9 (Miscellaneous)"],"correct":3,"explanation":"Correct answer: D. 9 (Miscellaneous).","sourceNumber":32},{"q":"Which Hazard Class contains both marine pollutants and hazardous waste? (65) [5.2.1]","options":["Class 3 - Flammable Liquids (and Combustible Liquids [U.S.])","Class 5 - Oxidizers and Organic Peroxides","Class 6 - Poisons, Poison Inhalation Hazards, and Infectious Substances","Class 9 - Miscellaneous Hazardous Materials"],"correct":3,"explanation":"Correct answer: D. Class 9 - Miscellaneous Hazardous Materials.","sourceNumber":33},{"q":"The color and number of each placard identifies: (66) [5.2.1]","options":["special hazards.","UN/NA identification numbers.","the hazard class of the contents.","health, flammability, and instability hazards."],"correct":2,"explanation":"Correct answer: C. the hazard class of the contents.","sourceNumber":34},{"q":"In which section of the ERG can you find a key to the UN/NA identification numbers? (68) [5.2.1]","options":["The blue-bordered section","The green-bordered section","The yellow-bordered section","The orange-bordered section"],"correct":2,"explanation":"Correct answer: C. The yellow-bordered section.","sourceNumber":35},{"q":"On an intermodal tank or container, the bottom number on the orange panel is the: (69) [5.2.1]","options":["NFPA 704 rating.","hazard identification code.","UN/NA identification number.","Chemical Abstract Service® (CAS®) number."],"correct":2,"explanation":"Correct answer: C. UN/NA identification number.","sourceNumber":36},{"q":"If the hazard identification code on an orange panel is doubled, it indicates: (69) [5.2.1]","options":["an additional special hazard.","an intensification of that hazard.","that the material will react dangerously with water.","that the product has a risk of spontaneous violent reaction."],"correct":1,"explanation":"Correct answer: B. an intensification of that hazard.","sourceNumber":37},{"q":"What is the difference between labels and placards? (69) [5.2.1]","options":["Labels are larger than placards.","Labels are not specific to a certain style, while placards are.","Labels are on bulk hazardous materials; placards are on nonbulk hazardous materials.","Labels are placed on hazmat packages; placards are placed on hazmat transport vehicles."],"correct":3,"explanation":"Correct answer: D. Labels are placed on hazmat packages; placards are placed on hazmat transport vehicles.","sourceNumber":38},{"q":"What does the DOT call a reusable material suspected or known to contain an infectious substance that is generated in the diagnosis, treatment, immunization, or biomedical research of humans or animals? (72) [5.2.1]","options":["Marine pollutant","Inhalation hazard","Petroleum sour crude oil","Regulated medical waste"],"correct":3,"explanation":"Correct answer: D. Regulated medical waste.","sourceNumber":39},{"q":"The bulk packaging marking Petroleum Sour Crude Oil is used to transport petroleum crude oil containing hydrogen sulfide (i.e., sour crude oil) in sufficient concentration that: (72) [5.2.1]","options":["ionizing radiation is actively emitted.","polymerization may occur spontaneously.","it may react violently when mixed with acids or bases.","vapors evolved from the crude oil may present an inhalation hazard."],"correct":3,"explanation":"Correct answer: D. vapors evolved from the crude oil may present an inhalation hazard.","sourceNumber":40},{"q":"Which piece of information is provided on a pipeline marker? (72) [5.2.1]","options":["Pipeline operator","Direction of the pipeline","Exact location of the pipeline","Number of pipelines in the area"],"correct":0,"explanation":"Correct answer: A. Pipeline operator.","sourceNumber":41},{"q":"Which hazmat marking system would you most likely find at a fixed facility? (74) [5.2.1]","options":["HOT system","NFPA 704 system","DOT classification system","UN/NA Identification Number system"],"correct":1,"explanation":"Correct answer: B. NFPA 704 system.","sourceNumber":42},{"q":"The four color-coded divisions of the NFPA 704 system are: (76) [5.2.1]","options":["stop, danger, warning, and caution.","toxicity, reactivity, oxidizer, and flammability.","flammability, oxidizer, reactivity, and corrosivity.","health, flammability, instability, and special hazards."],"correct":3,"explanation":"Correct answer: D. health, flammability, instability, and special hazards.","sourceNumber":43},{"q":"The yellow background on a NFPA 704 marker represents the ____ hazard rating. (76) [5.2.1]","options":["health","instability","flammability","special hazards"],"correct":1,"explanation":"Correct answer: B. instability.","sourceNumber":44},{"q":"The bottom quadrant of a NFPA 704 marking: (76) [5.2.1]","options":["is always blank.","should be yellow.","contains special hazards.","has a hazard rating between 0 and 4."],"correct":2,"explanation":"Correct answer: C. contains special hazards.","sourceNumber":45},{"q":"Who regulates the manufacture and labeling of pesticides in the U.S.? (81) [5.2.1]","options":["Chemical Abstract Services® (CAS®)","Environmental Protection Agency (EPA)","International Organization for Standardization (ISO)","Occupational Safety and Health Administration (OSHA)"],"correct":1,"explanation":"Correct answer: B. Environmental Protection Agency (EPA).","sourceNumber":46},{"q":"In the Globally Harmonized System of Classification and Labeling of Chemicals (GHS), what is the signal word for the most severe hazard categories? (83) [5.2.1]","options":["Danger","Hazmat","Harmful","Warning"],"correct":0,"explanation":"Correct answer: A. Danger.","sourceNumber":47},{"q":"Shipments of hazardous materials must be accompanied by: (85) [5.2.1]","options":["an ERG.","shipping papers.","safety data sheets (SDSs).","a Uniform Hazardous Waste Manifest."],"correct":1,"explanation":"Correct answer: B. shipping papers.","sourceNumber":48},{"q":"In shipping papers, the most important information is provided first, starting with the: (85) [5.2.1]","options":["packing group.","proper shipping name.","hazard class or division.","UN/NA identification number."],"correct":3,"explanation":"Correct answer: D. UN/NA identification number.","sourceNumber":49},{"q":"When searching for a waybill or train consist, personnel should first: (86) [5.2.1]","options":["look in the engine.","check the reporting mark.","check with the train crew.","contact the railroad company."],"correct":2,"explanation":"Correct answer: C. check with the train crew.","sourceNumber":50},{"q":"The Emergency Response Guidebook (ERG) is: (87) [5.2.1]","options":["made specifically for railway incidents.","designed for those at the Operations Mission-Specific level or higher.","a detailed information bulletin that provides 16 types of specific information about a product.","developed to provide guidance to those that first arrive at a transportation incident involving hazmat."],"correct":3,"explanation":"Correct answer: D. developed to provide guidance to those that first arrive at a transportation incident involving hazmat.","sourceNumber":51},{"q":"Which hazard information source would provide the most detail about a specific hazardous material? (87 - 88) [5.2.1]","options":["Bill of lading","Safety data sheet (SDS)","Emergency Response Guidebook (ERG)","Wireless Information System for Emergency Responders (WISER)"],"correct":1,"explanation":"Correct answer: B. Safety data sheet (SDS).","sourceNumber":52},{"q":"Which of the five senses can be used to identify or detect hazmat with some degree of safety? (90) [5.2.1]","options":["Smell and taste","Smell and touch","Touch and taste","Sight and hearing"],"correct":3,"explanation":"Correct answer: D. Sight and hearing.","sourceNumber":53},{"q":"At a hazmat incident, the presence of leaking vapors: (91) [5.2.1]","options":["are usually visible with binoculars.","can be safely detected by the sense of taste.","should first be detected by the sense of smell.","may be indicated by a hissing or whistling noise."],"correct":3,"explanation":"Correct answer: D. may be indicated by a hissing or whistling noise.","sourceNumber":54},{"q":"Generally, if Awareness Level Personnel can detect an odor of hazardous materials, it should be assumed that: (91) [5.2.1]","options":["they are in no danger.","exposure has occurred.","personnel are just outside the danger area.","the hazardous materials are more dangerous than those with no odor."],"correct":1,"explanation":"Correct answer: B. exposure has occurred.","sourceNumber":55},{"q":"While Awareness Level Personnel should not use their sense of touch to detect hazardous materials at a scene,: (91) [5.2.1]","options":["they may do so if wearing the proper PPE.","they can observe victims or witnesses that came in contact with the hazardous materials.","they can use their other senses to determine if the the hazardous materials are safe to touch.","monitoring and detection devices will allow awareness personnel to safely come in contact with the hazardous materials."],"correct":1,"explanation":"Correct answer: B. they can observe victims or witnesses that came in contact with the hazardous materials.","sourceNumber":56},{"q":"Although monitoring and detection devices can be useful in determining the presence of hazmat, Awareness Level Personnel: (93) [5.2.1]","options":["should only use the devices as a last resort.","are not qualified/trained to use the devices to detect hazmat.","will need to get permission from the IC before using the devices.","should avoid coming in contact with the hazmat when using the devices."],"correct":1,"explanation":"Correct answer: B. are not qualified/trained to use the devices to detect hazmat.","sourceNumber":57}],"gradingNote":"Automatic grading for this Chapter 2 assessment uses an answer mapping derived from the uploaded Chapter 2 lesson outline and course content. A separate Chapter 2 answer-key file was not found in the uploaded files."}]},{"id":"chapter-3","title":"Chapter 3","subtitle":"Initiate Protective Actions","items":[{"id":"ch3-sec1","label":"Section 1","type":"lesson","chapter":"Chapter 3","chapterTitle":"Initiate Protective Actions","title":"Collect hazard information","description":"Determine what information can be gathered safely to support isolation and protection.","blocks":[{"title":"Why information is needed","body":"<p>Once a hazmat incident has been recognized, information is needed to determine safe distances for <strong>isolation and protection</strong>.</p>"},{"title":"Information available from a safe location","body":"<p>From a safe location, personnel may identify hazardous materials by <strong>name</strong>, <strong>UN/NA identification number</strong>, and the <strong>type of placard applied</strong>. Shipping documents also provide hazard classes, divisions, and packing group information.</p>"},{"title":"Packing groups","body":"<ul class=\"key-points\"><li><strong>Packing Group I</strong> — high danger</li><li><strong>Packing Group II</strong> — medium danger</li><li><strong>Packing Group III</strong> — low danger</li></ul>"},{"title":"Review question","body":"<div class=\"callout\"><strong>Review:</strong> Where can you find a key to reading and understanding shipping papers? The uploaded lesson outline points to the inside cover of the ERG.</div>"}],"activity":{"type":"quickCheck","prompt":"Where can you find a key to reading and understanding shipping documents?","options":[{"text":"The inside cover of the ERG","correct":true},{"text":"Only in the orange-bordered pages","correct":false},{"text":"Only on the placard itself","correct":false}],"correctMessage":"Correct. The inside cover of the ERG helps users understand shipping papers.","wrongMessage":"Review the lesson. The inside cover of the ERG is specifically mentioned."}},{"id":"ch3-sec2","label":"Section 2","type":"lesson","chapter":"Chapter 3","chapterTitle":"Initiate Protective Actions","title":"Use the Emergency Response Guidebook (ERG)","description":"Learn how the ERG is organized and how responders find an initial action guide.","blocks":[{"title":"What the ERG is for","body":"<p>The ERG helps emergency responders quickly identify initial hazards during transportation incidents and supports protective actions during the initial response phase.</p>"},{"title":"Common ways to find a guide page","body":"<ul class=\"key-points\"><li>Use a <strong>four-digit UN identification number</strong> in the <strong>yellow-bordered pages</strong></li><li>Use the <strong>material name</strong> in the <strong>blue-bordered pages</strong></li><li>Use the <strong>placard reference table</strong></li><li>Use <strong>container profiles</strong> in the white pages</li></ul>"},{"title":"Major ERG sections","body":"<div class=\"hazard-grid erg-grid\"><div class=\"hazard-box\"><strong>White</strong><span>Instructions, shipping papers, user guidance</span></div><div class=\"hazard-box\"><strong>Yellow</strong><span>Numerical ID index</span></div><div class=\"hazard-box\"><strong>Blue</strong><span>Material name index</span></div><div class=\"hazard-box\"><strong>Orange</strong><span>Initial action guides</span></div><div class=\"hazard-box\"><strong>Green</strong><span>Isolation and protective action distances</span></div></div>"},{"title":"Important limitation","body":"<div class=\"callout\"><strong>Remember:</strong> The ERG is primarily designed for transportation incidents at highways, railroads, and pipelines. It does not address every possible circumstance, especially at fixed facilities and some urban settings.</div>"}],"activity":{"type":"matching","prompt":"Match the ERG section color to its main purpose.","leftTitle":"ERG section","rightTitle":"Purpose","pairs":[{"left":"Yellow pages","right":"Four-digit UN/NA identification number index"},{"left":"Blue pages","right":"Alphabetical material name index"},{"left":"Orange pages","right":"Initial action guides with hazard and response information"},{"left":"Green pages","right":"Initial isolation and protective action distances"}],"successMessage":"Correct. Those ERG sections are some of the most important navigation points for initial response."},"image":"assets/images/home-hero-firefighters.png"},{"id":"ch3-sec3","label":"Section 3","type":"lesson","chapter":"Chapter 3","chapterTitle":"Initiate Protective Actions","title":"Isolate and deny entry","description":"Use scene control to separate people from the source of harm and reduce cross-contamination.","blocks":[{"title":"Isolation and scene control","body":"<p>Protective actions such as isolation and scene control improve safety by separating people from the potential source of harm. The boundary established to prevent unauthorized access to and egress from the scene is the <strong>isolation perimeter</strong>.</p>"},{"title":"Protective actions","body":"<p>Evacuation, defending in place, and sheltering in place are all part of the protective-action process. Awareness-level personnel may help identify and establish the initial isolation zone while staying within their role.</p>"}],"activity":{"type":"quickCheck","prompt":"Which action best supports isolate and deny entry?","options":[{"text":"Establish a perimeter and prevent unauthorized access or uncontrolled egress","correct":true},{"text":"Allow contaminated persons to leave freely to reduce crowding","correct":false},{"text":"Enter the hot zone to move the source away from the public","correct":false}],"correctMessage":"Correct. Isolation protects people and limits spread of contamination.","wrongMessage":"Review the concept of isolation perimeter and scene control."}},{"id":"ch3-sec4","label":"Section 4","type":"lesson","chapter":"Chapter 3","chapterTitle":"Initiate Protective Actions","title":"Notify","description":"Understand the notification role of awareness-level personnel and the importance of SOPs and response plans.","blocks":[{"title":"Notification responsibilities","body":"<p>The uploaded material states that personnel trained at the awareness level are responsible for <strong>making appropriate notifications</strong> according to predetermined SOPs and emergency response plans.</p>"},{"title":"When to notify law enforcement","body":"<p>If you discover a hazmat incident and suspect <strong>terrorist or criminal activity</strong>, law enforcement should be notified immediately. Responders near a terrorist attack should document observations if it is safe to do so.</p>"},{"title":"Know your role","body":"<p>Awareness-level personnel know their role in the notification process from <strong>predetermined SOPs and/or emergency response plans</strong>, not from improvisation at the scene.</p>"}],"activity":{"type":"quickCheck","prompt":"If you discover a hazmat incident and suspect terrorist or criminal activity, what should you do?","options":[{"text":"Immediately notify law enforcement","correct":true},{"text":"Wait until after mitigation is complete","correct":false},{"text":"Confiscate bystander devices and hold a press conference","correct":false}],"correctMessage":"Correct. Suspicion of criminal or terrorist activity should trigger immediate law-enforcement notification.","wrongMessage":"Review the chapter guidance on notification and scene security."}},{"id":"ch3-quiz","label":"Quiz","type":"assessment","chapter":"Chapter 3","chapterTitle":"Initiate Protective Actions","title":"Chapter 3 Quiz","description":"A short quiz based on the uploaded Chapter 3 quiz and answer key.","passLabel":"Quiz submitted","questions":[{"q":"Once a hazmat incident has been recognized, what is needed next? (101)","options":["A hazmat technician","A preincident survey","A rescue team and a decontamination corridor","Information to determine safe distances for isolation and protection"],"correct":3,"explanation":"Correct answer: D. Information to determine safe distances for isolation and protection.","sourceNumber":1},{"q":"Where in the ERG can you find a key to reading and understanding the shipping documents? (101)","options":["The inside cover","The blue-bordered pages","The yellow-bordered pages","The white pages in the front of the book"],"correct":0,"explanation":"Correct answer: A. The inside cover.","sourceNumber":2},{"q":"The Emergency Response Guidebook (ERG) is primarily designed to be used at hazmat incidents occurring at: (102)","options":["private dwellings.","fixed containers and facilities.","highways, railroads, and pipelines.","airports or onboard commercial flights."],"correct":2,"explanation":"Correct answer: C. highways, railroads, and pipelines.","sourceNumber":3},{"q":"When using the ERG, what allows responders to locate the most specific initial action guide? (103)","options":["Hazard class number","Shipping papers or documents","Four-digit ID number or chemical name","Table of Placards and Initial Response Guide to Use On-Scene"],"correct":2,"explanation":"Correct answer: C. Four-digit ID number or chemical name.","sourceNumber":4},{"q":"The distance within which all persons should be considered for evacuation in all directions from the hazmat spill or leak source is the: (107)","options":["isolation zone.","minimum safe distance.","initial isolation distance.","protective action distance."],"correct":2,"explanation":"Correct answer: C. initial isolation distance.","sourceNumber":5},{"q":"Where can a responder at a hazmat incident find a flowchart addressing each step in the decision-making process? (113)","options":["Last page of the ERG","First page of the ERG","On the hazmat placard","On the preincident survey"],"correct":1,"explanation":"Correct answer: B. First page of the ERG.","sourceNumber":6},{"q":"How do protective actions like isolation and scene control improve safety at a hazmat incident? (114)","options":["Separates people from the potential source of harm","Keeps information away from the press and the public","Highlights the incident and draws attention to the scene","Helps spread the hazmat around so it is less concentrated"],"correct":0,"explanation":"Correct answer: A. Separates people from the potential source of harm.","sourceNumber":7},{"q":"The boundary established to prevent unauthorized access to and egress from a hazmat scene is the: (114)","options":["hot zone.","inner cordon.","isolation perimeter.","protective distance."],"correct":2,"explanation":"Correct answer: C. isolation perimeter.","sourceNumber":8},{"q":"Evacuation, defending in place, and sheltering in place are part of the _____ process. (114)","options":["ERG","isolation","command","notification"],"correct":1,"explanation":"Correct answer: B. isolation.","sourceNumber":9},{"q":"If you are on or near the scene when a terrorist attack occurs, you should: (116)","options":["attempt to contain any hazmat that you see.","document your observations if is safe to do so.","confiscate cell phones or cameras from bystanders.","announce that you are in charge and hold a press conference."],"correct":1,"explanation":"Correct answer: B. document your observations if is safe to do so.","sourceNumber":10},{"q":"Personnel trained at the Awareness Level: (116)","options":["should define roles in the notification process.","are responsible for making appropriate notifications.","should refrain from making official notifications to additional personnel.","may come in contact with hazmat in order to make appropriate notifications."],"correct":1,"explanation":"Correct answer: B. are responsible for making appropriate notifications.","sourceNumber":11},{"q":"If a hazmat incident occurs, how do you know your role in the notification process? (117)","options":["The 9-1-1 operator will tell you what to do","The ERG decision-making chart will guide you","Awareness level personnel do not make notifications","Predetermined SOPs and/or emergency response plans"],"correct":3,"explanation":"Correct answer: D. Predetermined SOPs and/or emergency response plans.","sourceNumber":12},{"q":"If you discover a hazmat incident, under what circumstances should you immediately notify law enforcement? (117)","options":["If the scene appears deserted","If a train or airplane is involved","When a toxic chemical has been spilled","If you suspect terrorist or criminal activity"],"correct":3,"explanation":"Correct answer: D. If you suspect terrorist or criminal activity.","sourceNumber":13}]},{"id":"ch3-test","label":"Test","type":"assessment","chapter":"Chapter 3","chapterTitle":"Initiate Protective Actions","title":"Chapter 3 Test","description":"A chapter test based on the uploaded Chapter 3 test and answer key.","passLabel":"Test submitted","questions":[{"q":"What hazard information is contained on the inside cover of the ERG? (101) [5.2.1, 5.3.1]","options":["Instructions for using the ERG","A key to reading and understanding shipping documents","Safety recommendations and general hazard information","A four digit UN/NA ID number index list in numerical order"],"correct":1,"explanation":"Correct answer: B. A key to reading and understanding shipping documents.","sourceNumber":1},{"q":"In a shipping document for hazardous materials, what is listed first? (101) [5.2.1]","options":["4-digit UN number","Packing group number","Hazard classes and divisions","Proper chemical shipping name"],"correct":0,"explanation":"Correct answer: A. 4-digit UN number.","sourceNumber":2},{"q":"Hazardous materials/dangerous goods in shipping documents are assigned a packing group in accordance with the: (101) [5.2.1, 5.3.1]","options":["protective action distances.","hazard classes and divisions.","degree of danger they present.","amount of hazmat/dangerous goods in the group."],"correct":2,"explanation":"Correct answer: C. degree of danger they present.","sourceNumber":3},{"q":"Packing Group I on shipping documents indicates: (101) [5.2.1, 5.3.1]","options":["no danger.","low danger.","high danger.","medium danger."],"correct":2,"explanation":"Correct answer: C. high danger.","sourceNumber":4},{"q":"The ERG is primarily designed to be used at hazardous materials incidents occurring at: (102) [5.2.1, 5.3.1]","options":["industrial facilities.","fixed facility locations.","clandestine/illicit laboratories.","highways, railroads, and pipelines."],"correct":3,"explanation":"Correct answer: D. highways, railroads, and pipelines.","sourceNumber":5},{"q":"After identifying the four-digit U.N. identification number on a placard, orange panel, or shipping papers, look up the appropriate Guide No. in the _____ pages of the ERG. (102) [5.2.1]","options":["blue-bordered","white-bordered","yellow-bordered","orange-bordered"],"correct":2,"explanation":"Correct answer: C. yellow-bordered.","sourceNumber":6},{"q":"If the name and correct spelling of a hazardous material at an incident scene is known, it can be found in the ____ pages of the ERG. (102) [5.2.1]","options":["blue-bordered","white-bordered","yellow-bordered","orange-bordered"],"correct":0,"explanation":"Correct answer: A. blue-bordered.","sourceNumber":7},{"q":"The white-bordered pages in the ERG provide: (103) [5.2.1]","options":["instructions for using the ERG.","a four-digit UN/NA number index list in numerical order.","safety recommendations and general hazards information.","an index of dangerous goods in alphabetical order by material name."],"correct":0,"explanation":"Correct answer: A. instructions for using the ERG.","sourceNumber":8},{"q":"The front section of the white-bordered pages in the ERG contains information on: (103) [5.2.1]","options":["protective clothing.","fire and spill control.","BLEVE safety precautions.","the hazard classification system."],"correct":3,"explanation":"Correct answer: D. the hazard classification system.","sourceNumber":9},{"q":"Where in the ERG can the User's Guide be found? (104) [5.2.1]","options":["Front cover","Blue-bordered pages","Green-bordered pages","White-bordered pages, back section"],"correct":3,"explanation":"Correct answer: D. White-bordered pages, back section.","sourceNumber":10},{"q":"Where in the ERG can you find information on indicators of WMDs and improvised explosive devices (IEDs)? (104) [5.2.1, 5.3.1]","options":["Green-bordered pages","Yellow-bordered pages","Orange-bordered pages","White pages, back section"],"correct":3,"explanation":"Correct answer: D. White pages, back section.","sourceNumber":11},{"q":"Substances highlighted in green in the ERG indicate that these substances: (104 - 105) [5.2.1]","options":["will polymerize.","have the highest potential hazard.","are gases or may release gases that are a toxic inhalation hazard.","are beyond the scope of what awareness level personnel can handle."],"correct":2,"explanation":"Correct answer: C. are gases or may release gases that are a toxic inhalation hazard.","sourceNumber":12},{"q":"A \"P\" following the guide number in the ERG indicates that a material: (105) [5.2.1, 5.3.1]","options":["polymerizes.","is poisonous.","is a potential hazard.","has a protective action distance."],"correct":0,"explanation":"Correct answer: A. polymerizes.","sourceNumber":13},{"q":"Why is the orange-bordered section of the ERG the most useful section? (106) [5.2.1]","options":["It provides the ERG User's Guide.","It provides the four-digit UN/NA ID number index list.","It provides an index of dangerous goods in alphabetical order.","It provides safety recommendations and general hazard information."],"correct":3,"explanation":"Correct answer: D. It provides safety recommendations and general hazard information.","sourceNumber":14},{"q":"Which section of the ERG lists potential hazards, public safety information, and emergency response information? (106) [5.2.1, 5.3.1]","options":["Blue-bordered","White-bordered","Yellow-bordered","Orange-bordered"],"correct":3,"explanation":"Correct answer: D. Orange-bordered.","sourceNumber":15},{"q":"General information on protective clothing and respiratory protection recommendations can be found in the _____ section of the orange-bordered pages in the ERG. (107) [5.2.1]","options":["Initial Action","Public Safety","Potential Hazards","Emergency Response"],"correct":1,"explanation":"Correct answer: B. Public Safety.","sourceNumber":16},{"q":"The role of Awareness Level Personnel in evacuating personnel from a hazmat incident may be limited to: (108) [5.3.1]","options":["establishing a shelter in place.","moving contaminated victims to an isolated area.","identifying and establishing the initial isolation zone.","decontaminating personnel entering the initial isolation zone."],"correct":2,"explanation":"Correct answer: C. identifying and establishing the initial isolation zone.","sourceNumber":17},{"q":"Information on extinguishing agents and controlling spills or leaks are found in the _____ section of the orange-bordered pages in the ERG. (108) [5.2.1, 5.3.1]","options":["Initial Action","Public Safety","Potential Hazards","Emergency Response"],"correct":3,"explanation":"Correct answer: D. Emergency Response.","sourceNumber":18},{"q":"If victims at hazmat incidents show signs of contamination, Awareness Level Personnel should: (110) [5.2.1, 5.3.1]","options":["begin decontamination procedures.","decontaminate victims before providing first aid.","refrain from handling or touching victims, even to provide first aid.","protect/defend in place until victims are safe from additional harm."],"correct":2,"explanation":"Correct answer: C. refrain from handling or touching victims, even to provide first aid.","sourceNumber":19},{"q":"Which section of the ERG contains the Table of Initial Isolation and Protective Action Distances? (110) [5.2.1, 5.3.1]","options":["Blue-bordered pages","Green-bordered pages","Yellow-bordered pages","Orange-bordered pages"],"correct":1,"explanation":"Correct answer: B. Green-bordered pages.","sourceNumber":20},{"q":"Table 3 of the green-bordered pages in the ERG provides initial isolation and protective action distances for different quantities of: (110 - 112) [5.2.1, 5.3.1]","options":["small and large spills.","materials spilled in water.","water reactive materials that produce toxic gases.","common toxic inhalation hazards (TIH)/poison inhalation hazards (PIH)."],"correct":3,"explanation":"Correct answer: D. common toxic inhalation hazards (TIH)/poison inhalation hazards (PIH).","sourceNumber":21},{"q":"In the table of initial isolation and protective action distances, a difference between small spills and large spills is: (111) [5.2.1, 5.3.1]","options":["a large spill is less than 55 gallons (208 L).","a large spill is more than 55 gallons (208 L).","only large spills are further divided into daytime and nighttime situations.","only small spills are further divided into daytime and nighttime situations."],"correct":1,"explanation":"Correct answer: B. a large spill is more than 55 gallons (208 L).","sourceNumber":22},{"q":"Initial isolation distances in the green-bordered pages of the ERG: (112) [5.2.1, 5.3.1]","options":["do not include TIH materials.","are only provided for small spills.","will always be at least 100 feet (30 m).","are beyond the scope of awareness personnel duties."],"correct":2,"explanation":"Correct answer: C. will always be at least 100 feet (30 m).","sourceNumber":23},{"q":"If a water reactive material is not a toxic inhalation hazard (TIH) and is not spilled in water, safety distances in the ERG will be found in: (112) [5.2.1, 5.3.1]","options":["the orange guide.","the UN/NA ID number index list.","Table 2 of the green-bordered pages.","Table 1 of the green-bordered pages."],"correct":0,"explanation":"Correct answer: A. the orange guide.","sourceNumber":24},{"q":"At a hazmat scene, the isolation perimeter is the: (114) [5.3.1]","options":["area where persons involved in the incident are evacuated.","area where contaminated victims can receive first aid treatment.","boundary that establishes areas where awareness personnel are not permitted.","boundary established to prevent unauthorized access to and egress from the scene."],"correct":3,"explanation":"Correct answer: D. boundary established to prevent unauthorized access to and egress from the scene.","sourceNumber":25},{"q":"Awareness Level Personnel may be trained to _____ without calling for additional assistance. (115) [5.3.1]","options":["decontaminate victims","mitigate hazmat incidents","mitigate incidental releases","come in contact with hazmat"],"correct":2,"explanation":"Correct answer: C. mitigate incidental releases.","sourceNumber":26},{"q":"When notifying others of a hazmat incident, what is one piece of information Awareness Level Personnel should try to report? (116) [5.4.1]","options":["Who is at fault for the incident","Precise location of the incident","An opinion on what probably happened","Whether the chemical involved is hot or cold to touch"],"correct":1,"explanation":"Correct answer: B. Precise location of the incident.","sourceNumber":27},{"q":"How does Awareness Level Personnel response at a terrorist/criminal incident differ from ordinary hazmat incidents? (117) [5.2.1, 5.3.1, 5.4.1]","options":["They will be required to manage media relations.","Awareness Level Personnel will have to interview witnesses.","Awareness Level Personnel will need to notify law enforcement immediately.","Only law enforcement can isolate the incident and deny entry in these situations."],"correct":2,"explanation":"Correct answer: C. Awareness Level Personnel will need to notify law enforcement immediately.","sourceNumber":28},{"q":"Which statement regarding reporting and communications at a hazmat incident describe the role of Awareness Level Personnel? (117) [5.4.1]","options":["Awareness Level Personnel should define roles in the notification process.","Awareness Level Personnel should establish their own internal and external reporting and communication methods.","Reporting and communication at a hazmat incident are outside the scope of Awareness Level Personnel responsibilities.","For Awareness Level Personnel, notification may be as simple as dialing 9-1-1 to report an incident and request emergency assistance."],"correct":3,"explanation":"Correct answer: D. For Awareness Level Personnel, notification may be as simple as dialing 9-1-1 to report an incident and request emergency assistance.","sourceNumber":29},{"q":"At a hazmat incident, who usually initiates predetermined actions laid out by the agency's SOPs? (117) [5.4.1]","options":["Dispatch","Safety Officer","The first units to arrive","Any bystanders with medical training"],"correct":2,"explanation":"Correct answer: C. The first units to arrive.","sourceNumber":30}]}]}]};
+  const storageKey = 'readystation-hazmat-v2-progress';
+  const chapterStateKey = 'readystation-hazmat-v2-openchapters';
   const $ = (selector, context = document) => context.querySelector(selector);
   const $$ = (selector, context = document) => [...context.querySelectorAll(selector)];
-  const lessonLinks = $$('.lesson-link[data-lesson]');
-  const lessonPanels = $$('.lesson-panel[data-lesson-panel]');
-  const sidebar = $('.player-sidebar');
-  const menuButton = $('#courseMenuToggle');
-  let currentIndex = 0;
-  const completeLessons = new Set(JSON.parse(localStorage.getItem('readystation-hazmat-progress') || '[]'));
 
-  const showToast = message => {
+  const flatItems = courseData.chapters.flatMap(chapter => chapter.items.map(item => ({ ...item, chapterId: chapter.id, chapterHeading: chapter.title, chapterSubtitle: chapter.subtitle || '' })));
+  const completed = new Set(JSON.parse(localStorage.getItem(storageKey) || '[]'));
+  const openChapters = new Set(JSON.parse(localStorage.getItem(chapterStateKey) || JSON.stringify(courseData.chapters.map(ch => ch.id))));
+  let currentIndex = 0;
+
+  const elements = {
+    outline: $('#courseOutline'),
+    container: $('#lessonContainer'),
+    breadcrumb: $('#lessonBreadcrumb'),
+    prev: $('#prevLesson'),
+    next: $('#nextLesson'),
+    progressTop: $('#courseProgressValue'),
+    progressSide: $('#courseProgressValueSidebar'),
+    progressBar: $('#courseProgressBar'),
+    completedCount: $('#outlineCompletedCount'),
+    totalCount: $('#outlineTotalCount'),
+    sidebar: $('#playerSidebar'),
+    overlay: $('#playerOverlay'),
+    main: $('#playerMain'),
+    menu: $('#courseMenuToggle'),
+    sidebarClose: $('#sidebarClose')
+  };
+
+  const showToast = (message) => {
     const toast = $('.toast');
+    if (!toast) return;
     toast.textContent = message;
     toast.classList.add('show');
-    clearTimeout(window.__courseToast);
-    window.__courseToast = setTimeout(() => toast.classList.remove('show'), 3000);
+    clearTimeout(window.__rsCourseToast);
+    window.__rsCourseToast = setTimeout(() => toast.classList.remove('show'), 3200);
+  };
+
+  const saveProgress = () => localStorage.setItem(storageKey, JSON.stringify([...completed]));
+  const saveOpenChapters = () => localStorage.setItem(chapterStateKey, JSON.stringify([...openChapters]));
+  const markComplete = (id, silent = false) => {
+    if (!completed.has(id)) {
+      completed.add(id);
+      saveProgress();
+      updateProgress();
+      if (!silent) showToast('Progress saved for this lesson item.');
+    } else {
+      updateProgress();
+    }
+  };
+
+  const chapterProgress = (chapter) => {
+    const done = chapter.items.filter(item => completed.has(item.id)).length;
+    return { done, total: chapter.items.length };
   };
 
   const updateProgress = () => {
-    lessonLinks.forEach(link => link.classList.toggle('done', completeLessons.has(link.dataset.lesson)));
-    const percent = Math.round((completeLessons.size / lessonLinks.length) * 100);
-    const value = $('#courseProgressValue');
-    const bar = $('#courseProgressBar');
-    if (value) value.textContent = `${percent}%`;
-    if (bar) bar.style.width = `${percent}%`;
-    localStorage.setItem('readystation-hazmat-progress', JSON.stringify([...completeLessons]));
+    const total = flatItems.length;
+    const done = completed.size;
+    const percent = Math.round((done / total) * 100) || 0;
+    if (elements.progressTop) elements.progressTop.textContent = `${percent}%`;
+    if (elements.progressSide) elements.progressSide.textContent = `${percent}%`;
+    if (elements.progressBar) elements.progressBar.style.width = `${percent}%`;
+    if (elements.completedCount) elements.completedCount.textContent = `${done} completed`;
+    if (elements.totalCount) elements.totalCount.textContent = `${total} items`;
+
+    $$('[data-outline-item]').forEach(button => {
+      const id = button.dataset.outlineItem;
+      button.classList.toggle('done', completed.has(id));
+      const status = $('.outline-status', button);
+      if (status) status.textContent = completed.has(id) ? '✓' : '';
+    });
+
+    courseData.chapters.forEach(chapter => {
+      const summary = chapterProgress(chapter);
+      const count = $(`[data-chapter-count="${chapter.id}"]`);
+      if (count) count.textContent = `${summary.done} / ${summary.total} complete`;
+    });
   };
 
-  const openLesson = (index, scrollTop = true) => {
-    currentIndex = Math.max(0, Math.min(index, lessonPanels.length - 1));
-    const id = lessonPanels[currentIndex].dataset.lessonPanel;
-    lessonPanels.forEach(panel => panel.classList.toggle('active', panel.dataset.lessonPanel === id));
-    lessonLinks.forEach(link => link.classList.toggle('active', link.dataset.lesson === id));
-    $('#prevLesson').disabled = currentIndex === 0;
-    $('#nextLesson').textContent = currentIndex === lessonPanels.length - 1 ? 'Finish course demo' : 'Next lesson';
-    if (scrollTop) $('.player-main').scrollTo({ top: 0, behavior: 'smooth' });
-    if (window.innerWidth <= 780) sidebar?.classList.remove('open');
+  const buildOutline = () => {
+    if (!elements.outline) return;
+    elements.outline.innerHTML = courseData.chapters.map(chapter => {
+      const expanded = openChapters.has(chapter.id);
+      const count = chapterProgress(chapter);
+      return `
+        <section class="outline-chapter ${expanded ? 'open' : ''}" data-chapter="${chapter.id}">
+          <button class="outline-chapter-toggle" type="button" data-chapter-toggle="${chapter.id}" aria-expanded="${expanded}">
+            <span>
+              <strong>${chapter.title}</strong>
+              ${chapter.subtitle ? `<small>${chapter.subtitle}</small>` : ''}
+            </span>
+            <span class="outline-toggle-meta">
+              <span class="outline-count" data-chapter-count="${chapter.id}">${count.done} / ${count.total} complete</span>
+              <svg class="icon outline-chevron" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+            </span>
+          </button>
+          <div class="outline-items">
+            ${chapter.items.map((item, idx) => `
+              <button class="outline-item outline-type-${item.type}" type="button" data-outline-item="${item.id}" data-item-index="${flatItems.findIndex(entry => entry.id === item.id)}">
+                <span class="outline-status"></span>
+                <span class="outline-text">
+                  <small>${item.label}</small>
+                  <strong>${item.title}</strong>
+                </span>
+                <span class="outline-badge">${item.type === 'assessment' ? (item.title.toLowerCase().includes('quiz') ? 'Quiz' : 'Test') : 'Section'}</span>
+              </button>
+            `).join('')}
+          </div>
+        </section>`;
+    }).join('');
   };
 
-  lessonLinks.forEach((link, index) => link.addEventListener('click', () => openLesson(index)));
-  $('#prevLesson')?.addEventListener('click', () => openLesson(currentIndex - 1));
-  $('#nextLesson')?.addEventListener('click', () => {
-    const currentId = lessonPanels[currentIndex].dataset.lessonPanel;
-    completeLessons.add(currentId);
-    updateProgress();
-    if (currentIndex < lessonPanels.length - 1) {
-      openLesson(currentIndex + 1);
-      showToast('Lesson marked complete. Your progress has been saved on this device.');
-    } else {
-      showToast('Course demo completed. Great work—your progress is saved locally.');
+  const blockMarkup = (block) => `
+    <section class="lesson-card">
+      <h3>${block.title}</h3>
+      ${block.body}
+    </section>`;
+
+  const quickCheckMarkup = (activity) => `
+    <section class="lesson-card interactive-card" data-activity="quickCheck">
+      <div class="interactive-head">
+        <span class="eyebrow">Learning checkpoint</span>
+        <h3>${activity.prompt}</h3>
+      </div>
+      <div class="option-list">
+        ${activity.options.map((option, idx) => `<button class="quiz-option" type="button" data-correct="${option.correct}" data-index="${idx}"><span class="quiz-letter">${String.fromCharCode(65 + idx)}</span>${option.text}</button>`).join('')}
+      </div>
+      <p class="quiz-feedback" aria-live="polite"></p>
+    </section>`;
+
+  const matchingMarkup = (activity) => `
+    <section class="lesson-card interactive-card" data-activity="matching">
+      <div class="interactive-head">
+        <span class="eyebrow">Matching activity</span>
+        <h3>${activity.prompt}</h3>
+      </div>
+      <div class="match-layout">
+        <div class="match-column-title">${activity.leftTitle}</div>
+        <div class="match-column-title">${activity.rightTitle}</div>
+        <div class="match-board" data-match-board>
+          <div class="match-column">
+            ${activity.pairs.map((pair, idx) => `<button class="match-item" data-side="left" data-match="${idx}" type="button">${pair.left}</button>`).join('')}
+          </div>
+          <div class="match-column">
+            ${activity.pairs.map((pair, idx) => `<button class="match-item" data-side="right" data-match="${idx}" type="button">${pair.right}</button>`).sort(() => Math.random() - 0.5).join('')}
+          </div>
+        </div>
+      </div>
+      <p class="match-feedback" aria-live="polite"></p>
+    </section>`;
+
+  const dragSortMarkup = (activity) => `
+    <section class="lesson-card interactive-card" data-activity="dragSort">
+      <div class="interactive-head">
+        <span class="eyebrow">Drag and drop</span>
+        <h3>${activity.prompt}</h3>
+      </div>
+      <div class="drag-chip-bank">
+        ${activity.items.map((item, idx) => `<button class="drag-chip" id="chip-${currentIndex}-${idx}" draggable="true" data-group="${item.group}" type="button">${item.text}</button>`).join('')}
+      </div>
+      <div class="drag-grid">
+        ${activity.groups.map(group => `<div class="drop-zone" data-accept="${group.id}"><strong>${group.title}</strong></div>`).join('')}
+      </div>
+      <p class="drag-feedback" aria-live="polite"></p>
+    </section>`;
+
+  const assessmentMarkup = (item) => `
+    <section class="lesson-card assessment-card">
+      <div class="interactive-head">
+        <span class="eyebrow">${item.title.toLowerCase().includes('quiz') ? 'Chapter quiz' : 'Chapter test'}</span>
+        <h3>${item.title}</h3>
+        <p>${item.description}</p>
+      </div>
+      ${item.gradingNote ? `<div class="assessment-note"><strong>Grading note:</strong> ${item.gradingNote}</div>` : ''}
+      <form class="assessment-form" data-assessment-id="${item.id}">
+        <div class="assessment-status-bar">
+          <span data-assessment-counter>Question 1 of ${item.questions.length}</span>
+          <span data-assessment-answered>0 answered</span>
+        </div>
+        <div class="assessment-navigator" aria-label="Question navigator">
+          ${item.questions.map((question, index) => `<button type="button" data-assessment-jump="${index}" aria-label="Go to question ${index + 1}">${index + 1}</button>`).join('')}
+        </div>
+        <div class="assessment-question-stage">
+          ${item.questions.map((question, index) => `
+            <fieldset class="assessment-question ${index === 0 ? 'active' : ''}" data-question-index="${index}">
+              <legend><span class="question-number">${index + 1}</span>${question.q}</legend>
+              <div class="assessment-options">
+                ${question.options.map((option, optIndex) => `
+                  <label class="assessment-option">
+                    <input type="radio" name="${item.id}-${index}" value="${optIndex}">
+                    <span><strong>${String.fromCharCode(65 + optIndex)}.</strong> ${option}</span>
+                  </label>`).join('')}
+              </div>
+              <p class="question-feedback" aria-live="polite"></p>
+            </fieldset>`).join('')}
+        </div>
+        <div class="assessment-step-actions">
+          <button type="button" class="btn btn-ghost" data-assessment-prev>Previous question</button>
+          <button type="button" class="btn btn-secondary" data-assessment-next>Next question</button>
+        </div>
+        <div class="assessment-actions">
+          <button type="submit" class="btn btn-primary">Submit ${item.title.toLowerCase().includes('quiz') ? 'quiz' : 'test'}</button>
+          <button type="button" class="btn btn-ghost" data-reset-assessment="${item.id}">Reset answers</button>
+        </div>
+        <div class="assessment-summary" aria-live="polite"></div>
+      </form>
+    </section>`;
+
+  const renderItem = (index) => {
+    currentIndex = Math.max(0, Math.min(index, flatItems.length - 1));
+    const item = flatItems[currentIndex];
+    if (!item || !elements.container) return;
+
+    elements.breadcrumb.innerHTML = `
+      <span>ReadyStation LMS</span>
+      <span>/</span>
+      <span>${item.chapterHeading}</span>
+      <span>/</span>
+      <span>${item.title}</span>`;
+
+    const media = item.image ? `
+      <section class="lesson-hero-card">
+        <img src="${item.image}" alt="Supporting firefighter training visual">
+      </section>` : '';
+
+    let activity = '';
+    if (item.type === 'lesson' && item.activity) {
+      if (item.activity.type === 'quickCheck') activity = quickCheckMarkup(item.activity);
+      if (item.activity.type === 'matching') activity = matchingMarkup(item.activity);
+      if (item.activity.type === 'dragSort') activity = dragSortMarkup(item.activity);
     }
-  });
-  menuButton?.addEventListener('click', () => sidebar?.classList.toggle('open'));
 
-  // Multiple-choice checkpoints
-  $$('.quiz-option[data-correct]').forEach(option => {
-    option.addEventListener('click', () => {
-      const quiz = option.closest('[data-quiz]');
-      const feedback = $('.quiz-feedback', quiz);
-      $$('.quiz-option', quiz).forEach(button => button.classList.remove('correct', 'wrong'));
-      const correct = option.dataset.correct === 'true';
-      option.classList.add(correct ? 'correct' : 'wrong');
-      feedback.textContent = correct ? quiz.dataset.correctMessage : quiz.dataset.wrongMessage;
-      feedback.style.color = correct ? 'var(--green-600)' : 'var(--danger)';
-      if (correct) completeLessons.add(lessonPanels[currentIndex].dataset.lessonPanel);
-      updateProgress();
-    });
-  });
+    const footer = item.type === 'lesson' ? `
+      <section class="lesson-card lesson-complete-card">
+        <h3>Ready to continue?</h3>
+        <p>Use the button below to mark this item complete, or move to the next item when you are done reviewing the material.</p>
+        <button class="btn btn-secondary" type="button" data-mark-complete="${item.id}">Mark this item complete</button>
+      </section>` : '';
 
-  // Drag and drop activities
-  $$('.drag-chip[draggable="true"]').forEach(chip => {
-    chip.addEventListener('dragstart', event => {
-      event.dataTransfer.setData('text/plain', chip.id);
-      event.dataTransfer.effectAllowed = 'move';
-    });
-  });
-  $$('.drop-zone[data-accept]').forEach(zone => {
-    zone.addEventListener('dragover', event => {
-      event.preventDefault();
-      zone.classList.add('drag-over');
-    });
-    zone.addEventListener('dragleave', () => zone.classList.remove('drag-over'));
-    zone.addEventListener('drop', event => {
-      event.preventDefault();
-      zone.classList.remove('drag-over');
-      const chip = document.getElementById(event.dataTransfer.getData('text/plain'));
-      if (!chip) return;
-      zone.appendChild(chip);
-      const activity = zone.closest('[data-drag-activity]');
-      const feedback = $('.drag-feedback', activity);
-      const chips = $$('.drag-chip', activity);
-      const allPlaced = chips.every(item => item.closest('.drop-zone'));
-      if (allPlaced) {
-        const allCorrect = chips.every(item => item.dataset.group === item.closest('.drop-zone')?.dataset.accept);
-        feedback.textContent = allCorrect
-          ? 'Correct. The clues have been placed in the appropriate observation groups.'
-          : 'Some items are in the wrong group. Move them and check again.';
-        feedback.style.color = allCorrect ? 'var(--green-600)' : 'var(--danger)';
-        if (allCorrect) {
-          completeLessons.add(lessonPanels[currentIndex].dataset.lessonPanel);
-          updateProgress();
-        }
-      }
-    });
-  });
+    const body = item.type === 'assessment'
+      ? assessmentMarkup(item)
+      : `${item.blocks.map(blockMarkup).join('')}${activity}${footer}`;
 
-  // Click-to-match activity
-  $$('[data-match-board]').forEach(board => {
-    let selectedLeft = null;
-    const check = () => {
-      const unmatched = $$('.match-item:not(.matched)', board).length;
-      if (unmatched === 0) {
-        const feedback = $('.match-feedback', board.parentElement);
-        feedback.textContent = 'All pairs matched. You can now distinguish the purpose of each resource.';
-        feedback.style.color = 'var(--green-600)';
-        completeLessons.add(lessonPanels[currentIndex].dataset.lessonPanel);
-        updateProgress();
-      }
-    };
-    $$('.match-item[data-side="left"]', board).forEach(item => {
-      item.addEventListener('click', () => {
-        if (item.classList.contains('matched')) return;
-        $$('.match-item.selected', board).forEach(selected => selected.classList.remove('selected'));
-        selectedLeft = item;
-        item.classList.add('selected');
+    elements.container.innerHTML = `
+      <article class="lesson-panel active">
+        <header class="lesson-heading">
+          <span class="eyebrow">${item.chapterHeading}</span>
+          <h1>${item.title}</h1>
+          <p>${item.description || ''}</p>
+          <div class="lesson-meta-row">
+            <span class="lesson-meta-chip">${item.label}</span>
+            <span class="lesson-meta-chip">${item.type === 'assessment' ? 'Assessment' : 'Interactive section'}</span>
+            ${completed.has(item.id) ? '<span class="lesson-meta-chip success">Completed</span>' : '<span class="lesson-meta-chip">Not yet completed</span>'}
+          </div>
+        </header>
+        ${media}
+        ${body}
+      </article>`;
+
+    $$('[data-outline-item]').forEach(button => button.classList.toggle('active', Number(button.dataset.itemIndex) === currentIndex));
+    const activeOutlineItem = $(`[data-item-index="${currentIndex}"]`, elements.outline);
+    activeOutlineItem?.scrollIntoView({ block: 'nearest' });
+    elements.prev.disabled = currentIndex === 0;
+    elements.next.textContent = currentIndex === flatItems.length - 1 ? 'Finish course' : 'Next item';
+    elements.main.scrollTo({ top: 0, behavior: 'smooth' });
+    hydrateCurrentItem(item);
+    closeSidebar();
+  };
+
+  const hydrateCurrentItem = (item) => {
+    $$('.quiz-option', elements.container).forEach(button => {
+      button.addEventListener('click', () => {
+        const card = button.closest('[data-activity="quickCheck"]');
+        const feedback = $('.quiz-feedback', card);
+        const isCorrect = button.dataset.correct === 'true';
+        $$('.quiz-option', card).forEach(option => option.classList.remove('correct', 'wrong'));
+        button.classList.add(isCorrect ? 'correct' : 'wrong');
+        feedback.textContent = isCorrect ? item.activity.correctMessage : item.activity.wrongMessage;
+        feedback.style.color = isCorrect ? 'var(--green-600)' : 'var(--danger)';
+        if (isCorrect) markComplete(item.id, true);
       });
     });
-    $$('.match-item[data-side="right"]', board).forEach(item => {
-      item.addEventListener('click', () => {
-        if (!selectedLeft || item.classList.contains('matched')) return;
-        if (selectedLeft.dataset.match === item.dataset.match) {
-          selectedLeft.classList.remove('selected');
-          selectedLeft.classList.add('matched');
-          item.classList.add('matched');
-          selectedLeft = null;
-          check();
-        } else {
-          item.animate([{ transform: 'translateX(0)' }, { transform: 'translateX(-6px)' }, { transform: 'translateX(6px)' }, { transform: 'translateX(0)' }], { duration: 280 });
+
+    // Matching activity
+    $$('[data-match-board]', elements.container).forEach(board => {
+      let selectedLeft = null;
+      const feedback = $('.match-feedback', board.parentElement.parentElement);
+      const checkFinished = () => {
+        if ($$('.match-item:not(.matched)', board).length === 0) {
+          feedback.textContent = item.activity.successMessage || 'All matches completed.';
+          feedback.style.color = 'var(--green-600)';
+          markComplete(item.id, true);
+        }
+      };
+      $$('.match-item[data-side="left"]', board).forEach(entry => {
+        entry.addEventListener('click', () => {
+          if (entry.classList.contains('matched')) return;
+          $$('.match-item.selected', board).forEach(el => el.classList.remove('selected'));
+          selectedLeft = entry;
+          entry.classList.add('selected');
+        });
+      });
+      $$('.match-item[data-side="right"]', board).forEach(entry => {
+        entry.addEventListener('click', () => {
+          if (!selectedLeft || entry.classList.contains('matched')) return;
+          if (selectedLeft.dataset.match === entry.dataset.match) {
+            selectedLeft.classList.remove('selected');
+            selectedLeft.classList.add('matched');
+            entry.classList.add('matched');
+            selectedLeft = null;
+            checkFinished();
+          } else {
+            entry.classList.add('shake');
+            setTimeout(() => entry.classList.remove('shake'), 300);
+          }
+        });
+      });
+    });
+
+    // Drag and drop activity
+    $$('.drag-chip[draggable="true"]', elements.container).forEach(chip => {
+      chip.addEventListener('dragstart', (event) => {
+        event.dataTransfer.setData('text/plain', chip.id);
+        event.dataTransfer.effectAllowed = 'move';
+      });
+    });
+    let selectedDragChip = null;
+    $$('.drag-chip', elements.container).forEach(chip => {
+      chip.addEventListener('click', () => {
+        $$('.drag-chip.selected', elements.container).forEach(entry => entry.classList.remove('selected'));
+        selectedDragChip = selectedDragChip === chip ? null : chip;
+        selectedDragChip?.classList.add('selected');
+      });
+    });
+    $$('.drop-zone[data-accept]', elements.container).forEach(zone => {
+      zone.addEventListener('dragover', (event) => {
+        event.preventDefault();
+        zone.classList.add('drag-over');
+      });
+      zone.addEventListener('dragleave', () => zone.classList.remove('drag-over'));
+      zone.addEventListener('click', () => {
+        if (!selectedDragChip) return;
+        zone.appendChild(selectedDragChip);
+        selectedDragChip.classList.remove('selected');
+        selectedDragChip = null;
+        const feedback = $('.drag-feedback', elements.container);
+        const chips = $$('.drag-chip', elements.container);
+        const allPlaced = chips.every(entry => entry.closest('.drop-zone'));
+        if (allPlaced) {
+          const allCorrect = chips.every(entry => entry.dataset.group === entry.closest('.drop-zone')?.dataset.accept);
+          feedback.textContent = allCorrect ? (item.activity.successMessage || 'Activity complete.') : 'Some cards are in the wrong area. Select a card, then select a different group to move it.';
+          feedback.style.color = allCorrect ? 'var(--green-600)' : 'var(--danger)';
+          if (allCorrect) markComplete(item.id, true);
+        }
+      });
+      zone.addEventListener('drop', (event) => {
+        event.preventDefault();
+        zone.classList.remove('drag-over');
+        const chip = document.getElementById(event.dataTransfer.getData('text/plain'));
+        if (!chip) return;
+        zone.appendChild(chip);
+        const feedback = $('.drag-feedback', elements.container);
+        const chips = $$('.drag-chip', elements.container);
+        const allPlaced = chips.every(entry => entry.closest('.drop-zone'));
+        if (allPlaced) {
+          const allCorrect = chips.every(entry => entry.dataset.group === entry.closest('.drop-zone')?.dataset.accept);
+          feedback.textContent = allCorrect ? (item.activity.successMessage || 'Activity complete.') : 'Some cards are in the wrong area. Drag them again to correct the groupings.';
+          feedback.style.color = allCorrect ? 'var(--green-600)' : 'var(--danger)';
+          if (allCorrect) markComplete(item.id, true);
         }
       });
     });
-  });
 
+    // Manual completion button
+    $$('[data-mark-complete]', elements.container).forEach(button => {
+      button.addEventListener('click', () => markComplete(button.dataset.markComplete));
+    });
+
+    // Assessments
+    $$('form[data-assessment-id]', elements.container).forEach(form => {
+      const itemId = form.dataset.assessmentId;
+      const assessment = flatItems.find(entry => entry.id === itemId);
+      const questions = $$('.assessment-question', form);
+      const navButtons = $$('[data-assessment-jump]', form);
+      const counter = $('[data-assessment-counter]', form);
+      const answeredLabel = $('[data-assessment-answered]', form);
+      const previousQuestion = $('[data-assessment-prev]', form);
+      const nextQuestion = $('[data-assessment-next]', form);
+      let activeQuestion = 0;
+      let submitted = false;
+
+      const updateAnswered = () => {
+        let answered = 0;
+        assessment.questions.forEach((question, index) => {
+          const selected = $(`input[name="${itemId}-${index}"]:checked`, form);
+          navButtons[index]?.classList.toggle('answered', Boolean(selected));
+          if (selected) answered += 1;
+        });
+        if (answeredLabel) answeredLabel.textContent = `${answered} answered`;
+        return answered;
+      };
+
+      const showQuestion = (index, scroll = true) => {
+        activeQuestion = Math.max(0, Math.min(index, questions.length - 1));
+        questions.forEach((question, questionIndex) => question.classList.toggle('active', questionIndex === activeQuestion));
+        navButtons.forEach((button, buttonIndex) => button.classList.toggle('active', buttonIndex === activeQuestion));
+        if (counter) counter.textContent = `Question ${activeQuestion + 1} of ${questions.length}`;
+        if (previousQuestion) previousQuestion.disabled = activeQuestion === 0;
+        if (nextQuestion) nextQuestion.textContent = activeQuestion === questions.length - 1 ? 'Review first question' : 'Next question';
+        if (scroll) form.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      };
+
+      navButtons.forEach(button => button.addEventListener('click', () => showQuestion(Number(button.dataset.assessmentJump))));
+      previousQuestion?.addEventListener('click', () => showQuestion(activeQuestion - 1));
+      nextQuestion?.addEventListener('click', () => showQuestion(activeQuestion === questions.length - 1 ? 0 : activeQuestion + 1));
+      $$('input[type="radio"]', form).forEach(input => input.addEventListener('change', () => updateAnswered()));
+
+      form.addEventListener('submit', (event) => {
+        event.preventDefault();
+        let score = 0;
+        let answered = 0;
+        assessment.questions.forEach((question, index) => {
+          const selected = $(`input[name="${itemId}-${index}"]:checked`, form);
+          const fieldset = form.querySelector(`[data-question-index="${index}"]`);
+          const feedback = $('.question-feedback', fieldset);
+          const options = $$(`input[name="${itemId}-${index}"]`, form);
+          options.forEach(input => input.closest('label').classList.remove('correct', 'wrong'));
+          navButtons[index]?.classList.remove('correct', 'wrong');
+          if (selected) {
+            answered += 1;
+            const selectedIndex = Number(selected.value);
+            const correct = selectedIndex === question.correct;
+            if (correct) score += 1;
+            selected.closest('label').classList.add(correct ? 'correct' : 'wrong');
+            const correctOption = options[question.correct];
+            correctOption?.closest('label')?.classList.add('correct');
+            feedback.textContent = question.explanation;
+            feedback.style.color = correct ? 'var(--green-600)' : 'var(--danger)';
+            navButtons[index]?.classList.add(correct ? 'correct' : 'wrong');
+          } else {
+            feedback.textContent = 'Select an answer to evaluate this question.';
+            feedback.style.color = 'var(--danger)';
+            navButtons[index]?.classList.add('wrong');
+          }
+        });
+        submitted = true;
+        const summary = $('.assessment-summary', form);
+        const percent = Math.round((score / assessment.questions.length) * 100);
+        summary.innerHTML = `<strong>Score:</strong> ${score} / ${assessment.questions.length} (${percent}%)<br><span>${answered === assessment.questions.length ? 'Assessment submitted and reviewed. Use the question navigator to inspect each answer.' : `${assessment.questions.length - answered} question(s) remain unanswered. Use the red question numbers to review them.`}</span>`;
+        if (answered === assessment.questions.length) markComplete(itemId, true);
+        updateAnswered();
+        showQuestion(activeQuestion, false);
+        showToast(`${assessment.title} submitted. Score: ${score} / ${assessment.questions.length}.`);
+      });
+
+      $$('[data-reset-assessment]', form).forEach(button => {
+        button.addEventListener('click', () => {
+          form.reset();
+          submitted = false;
+          $('.assessment-summary', form).textContent = '';
+          $$('.question-feedback', form).forEach(node => node.textContent = '');
+          $$('.assessment-option', form).forEach(node => node.classList.remove('correct', 'wrong'));
+          navButtons.forEach(node => node.classList.remove('answered', 'correct', 'wrong'));
+          updateAnswered();
+          showQuestion(0);
+        });
+      });
+
+      updateAnswered();
+      showQuestion(0, false);
+    });
+  };
+
+  const isCompactPlayer = () => window.innerWidth <= 1080;
+  const closeSidebar = () => {
+    if (!isCompactPlayer()) return;
+    elements.sidebar?.classList.remove('open');
+    elements.overlay?.classList.remove('show');
+    elements.menu?.setAttribute('aria-expanded', 'false');
+  };
+  const openSidebar = () => {
+    if (!isCompactPlayer()) return;
+    elements.sidebar?.classList.add('open');
+    elements.overlay?.classList.add('show');
+    elements.menu?.setAttribute('aria-expanded', 'true');
+  };
+  const toggleSidebar = () => {
+    if (isCompactPlayer()) {
+      if (elements.sidebar?.classList.contains('open')) closeSidebar();
+      else openSidebar();
+      return;
+    }
+    const collapsed = document.body.classList.toggle('sidebar-collapsed');
+    elements.menu?.setAttribute('aria-expanded', String(!collapsed));
+  };
+
+  const bindGlobalEvents = () => {
+    elements.menu?.addEventListener('click', toggleSidebar);
+    elements.sidebarClose?.addEventListener('click', closeSidebar);
+    elements.overlay?.addEventListener('click', closeSidebar);
+
+    elements.outline?.addEventListener('click', (event) => {
+      const chapterButton = event.target.closest('[data-chapter-toggle]');
+      if (chapterButton) {
+        const chapterId = chapterButton.dataset.chapterToggle;
+        const chapterSection = $(`[data-chapter="${chapterId}"]`);
+        chapterSection?.classList.toggle('open');
+        const expanded = chapterSection?.classList.contains('open');
+        chapterButton.setAttribute('aria-expanded', String(expanded));
+        if (expanded) openChapters.add(chapterId); else openChapters.delete(chapterId);
+        saveOpenChapters();
+        return;
+      }
+      const itemButton = event.target.closest('[data-item-index]');
+      if (itemButton) renderItem(Number(itemButton.dataset.itemIndex));
+    });
+
+    elements.prev?.addEventListener('click', () => renderItem(currentIndex - 1));
+    elements.next?.addEventListener('click', () => {
+      const current = flatItems[currentIndex];
+      if (current) markComplete(current.id, true);
+      if (currentIndex < flatItems.length - 1) renderItem(currentIndex + 1);
+      else showToast('You reached the end of the ReadyStation course demo.');
+    });
+
+    window.addEventListener('resize', () => {
+      if (window.innerWidth > 1024) {
+        elements.overlay?.classList.remove('show');
+        elements.sidebar?.classList.remove('open');
+        elements.menu?.setAttribute('aria-expanded', 'false');
+      }
+    });
+  };
+
+  buildOutline();
+  bindGlobalEvents();
   updateProgress();
-  openLesson(0, false);
+  renderItem(0);
 })();

@@ -1,447 +1,88 @@
 <!doctype html>
-<html lang="en">
-
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Interactive online training for firefighters and emergency-response professionals.">
-  <meta name="theme-color" content="#17433F">
-  <link rel="icon" href="assets/images/favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="assets/css/readystation.css">
-  <title>ReadyStation LMS | Professional Firefighter Training</title>
-</head>
-
-<body><a class="skip-link" href="#main">Skip to content</a>
-  <header class="site-header">
-    <div class="container nav-wrap">
-      <a class="brand" href="index.html" aria-label="ReadyStation LMS home"><img src="assets/images/logo.svg"
-          alt="ReadyStation LMS"></a>
-      <nav class="main-nav" aria-label="Primary navigation"><a href="index.html" data-nav="index.html">Home</a><a
-          href="courses.html" data-nav="courses.html,hazmat-awareness.html,hazmat-course.html">Courses</a><a
-          href="about-us.html" data-nav="about-us.html">About</a><a href="contact.html"
-          data-nav="contact.html">Contact</a></nav>
-      <div class="nav-actions">
-        <a class="btn btn-ghost btn-sm" href="login.html">Log in</a>
-        <a class="btn btn-primary btn-sm" href="register.html">Create account</a>
-        <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false"><span></span></button>
-      </div>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Interactive online training for firefighters and emergency-response professionals."><meta name="theme-color" content="#17433F">
+<link rel="icon" href="assets/images/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/css/readystation.css">
+<title>ReadyStation LMS | Professional Firefighter Training</title></head><body><a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header">
+  <div class="container nav-wrap">
+    <a class="brand" href="index.html" aria-label="ReadyStation LMS home"><img src="assets/images/logo.svg" alt="ReadyStation LMS"></a>
+    <nav class="main-nav" aria-label="Primary navigation"><a href="index.html" data-nav="index.html">Home</a><a href="courses.html" data-nav="courses.html,hazmat-awareness.html,hazmat-course.html">Courses</a><a href="about-us.html" data-nav="about-us.html">About</a><a href="contact.html" data-nav="contact.html">Contact</a></nav>
+    <div class="nav-actions">
+      <a class="btn btn-ghost btn-sm" href="login.html">Log in</a>
+      <a class="btn btn-primary btn-sm" href="register.html">Create account</a>
+      <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false"><span></span></button>
     </div>
-    <div class="mobile-panel" aria-label="Mobile navigation">
-      <a href="index.html" data-nav="index.html">Home</a><a href="courses.html"
-        data-nav="courses.html,hazmat-awareness.html,hazmat-course.html">Courses</a><a href="about-us.html"
-        data-nav="about-us.html">About</a><a href="contact.html" data-nav="contact.html">Contact</a>
-      <div class="mobile-actions"><a class="btn btn-ghost btn-sm" href="login.html">Log in</a><a
-          class="btn btn-primary btn-sm" href="register.html">Create account</a></div>
-    </div>
-  </header>
-  <main id="main">
-    <section class="hero">
-      <div class="container hero-grid">
-        <div class="hero-copy" data-reveal><span class="eyebrow">Fire-service learning, reimagined</span>
-          <h1>Train ready.<br><span>Respond smarter.</span></h1>
-          <p>ReadyStation is a web-based LMS built for firefighter professional development—combining clear instruction,
-            practical scenarios, quizzes, and hands-on learning checkpoints.</p>
-          <div class="hero-actions"><a class="btn btn-primary" href="courses.html">Explore free courses <svg
-                class="icon" viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M5 12h14M13 6l6 6-6 6" />
-              </svg></a><a class="btn btn-ghost" href="hazmat-course.html">Open course demo <svg class="icon"
-                viewBox="0 0 24 24" aria-hidden="true">
-                <circle cx="12" cy="12" r="9" />
-                <path d="m10 8 6 4-6 4z" />
-              </svg></a></div>
-          <div class="hero-proof">
-            <div class="avatar-stack" aria-hidden="true"><span>FF</span><span>IC</span><span>HM</span><span>DO</span>
-            </div><span>Built around the way emergency-response professionals learn: focused, practical, and
-              scenario-driven.</span>
-          </div>
-        </div>
-        <div class="hero-visual" data-reveal><img src="assets/images/hero-training.svg"
-            alt="ReadyStation firefighter training dashboard illustration">
-          <div class="hero-badge"><span class="badge-icon"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z" />
-                <path d="m9 12 2 2 4-5" />
-              </svg></span><span><strong>Professional training</strong><small>Structured for operational
-                readiness</small></span></div>
-        </div>
-      </div>
-    </section>
-    <section class="trust-strip">
-      <div class="container trust-grid">
-        <p class="trust-title">A demo LMS designed around the fire-service training environment.</p>
-        <div class="trust-item"><span class="mark"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M3 12h4l2-7 4 14 2-7h6" />
-            </svg></span>Interactive checkpoints</div>
-        <div class="trust-item"><span class="mark"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z" />
-              <path d="m9 12 2 2 4-5" />
-            </svg></span>Safety-first content</div>
-        <div class="trust-item"><span class="mark"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
-              <rect x="3" y="3" width="7" height="7" rx="1" />
-              <rect x="14" y="3" width="7" height="7" rx="1" />
-              <rect x="3" y="14" width="7" height="7" rx="1" />
-              <rect x="14" y="14" width="7" height="7" rx="1" />
-            </svg></span>Progress tracking</div>
-        <div class="trust-item"><span class="mark"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
-              <circle cx="12" cy="8" r="5" />
-              <path d="m8.5 12-1.5 9 5-3 5 3-1.5-9" />
-            </svg></span>Professional pathways</div>
-      </div>
-    </section>
+  </div>
+  <div class="mobile-panel" aria-label="Mobile navigation">
+    <a href="index.html" data-nav="index.html">Home</a><a href="courses.html" data-nav="courses.html,hazmat-awareness.html,hazmat-course.html">Courses</a><a href="about-us.html" data-nav="about-us.html">About</a><a href="contact.html" data-nav="contact.html">Contact</a>
+    <div class="mobile-actions"><a class="btn btn-ghost btn-sm" href="login.html">Log in</a><a class="btn btn-primary btn-sm" href="register.html">Create account</a></div>
+  </div>
+</header>
+<main id="main">
+<section class="hero"><div class="container hero-grid">
+  <div class="hero-copy" data-reveal><span class="eyebrow">Fire-service learning, reimagined</span><h1>Train ready.<br><span>Respond smarter.</span></h1><p>ReadyStation is a web-based LMS built for firefighter professional development—combining clear instruction, practical scenarios, quizzes, and hands-on learning checkpoints.</p>
+  <div class="hero-actions"><a class="btn btn-primary" href="courses.html">Explore free courses <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a><a class="btn btn-ghost" href="hazmat-course.html">Open course demo <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m10 8 6 4-6 4z"/></svg></a></div>
+  <div class="hero-proof"><div class="avatar-stack" aria-hidden="true"><span>FF</span><span>IC</span><span>HM</span><span>DO</span></div><span>Built around the way emergency-response professionals learn: focused, practical, and scenario-driven.</span></div></div>
+  <div class="hero-visual" data-reveal><img src="assets/images/home-hero-firefighters.png" alt="Firefighters planning training operations inside a station"><div class="hero-badge"><span class="badge-icon"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/><path d="m9 12 2 2 4-5"/></svg></span><span><strong>Professional training</strong><small>Structured for operational readiness</small></span></div></div>
+</div></section>
+<section class="trust-strip"><div class="container trust-grid"><p class="trust-title">A demo LMS designed around the fire-service training environment.</p>
+<div class="trust-item"><span class="mark"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12h4l2-7 4 14 2-7h6"/></svg></span>Interactive checkpoints</div><div class="trust-item"><span class="mark"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/><path d="m9 12 2 2 4-5"/></svg></span>Safety-first content</div><div class="trust-item"><span class="mark"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></span>Progress tracking</div><div class="trust-item"><span class="mark"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="5"/><path d="m8.5 12-1.5 9 5-3 5 3-1.5-9"/></svg></span>Professional pathways</div></div></section>
 
-    <section class="section">
-      <div class="container">
-        <div class="section-heading" data-reveal><span class="eyebrow">Training pathways</span>
-          <h2>Purpose-built learning for the work firefighters do.</h2>
-          <p>Browse structured programs across hazardous materials, instruction, prevention, and apparatus operations.
-          </p>
-        </div>
-        <div class="grid four-col">
-          <div class="category-card" data-reveal>
-            <div class="category-icon"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z" />
-                <path d="m9 12 2 2 4-5" />
-              </svg></div>
-            <h3>Hazardous Materials</h3>
-            <p>Recognition, initial actions, resources, and operational support.</p><span class="count">2 courses</span>
-          </div>
-          <div class="category-card" data-reveal>
-            <div class="category-icon"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
-                <path
-                  d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" />
-              </svg></div>
-            <h3>Instruction & Leadership</h3>
-            <p>Develop effective instructors and confident fire-service leaders.</p><span class="count">1 course</span>
-          </div>
-          <div class="category-card" data-reveal>
-            <div class="category-icon"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
-                <circle cx="11" cy="11" r="7" />
-                <path d="m20 20-4-4" />
-              </svg></div>
-            <h3>Inspection & Prevention</h3>
-            <p>Support code awareness, risk reduction, and documentation.</p><span class="count">1 course</span>
-          </div>
-          <div class="category-card" data-reveal>
-            <div class="category-icon"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M3 12h4l2-7 4 14 2-7h6" />
-              </svg></div>
-            <h3>Driver Operator</h3>
-            <p>Strengthen apparatus safety, systems knowledge, and operations.</p><span class="count">2 courses</span>
-          </div>
-        </div>
-      </div>
-    </section>
+<section class="section"><div class="container"><div class="section-heading" data-reveal><span class="eyebrow">Training pathways</span><h2>Purpose-built learning for the work firefighters do.</h2><p>Browse structured programs across hazardous materials, instruction, prevention, and apparatus operations.</p></div>
+<div class="grid four-col">
+<div class="category-card" data-reveal><div class="category-icon"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/><path d="m9 12 2 2 4-5"/></svg></div><h3>Hazardous Materials</h3><p>Recognition, initial actions, resources, and operational support.</p><span class="count">2 courses</span></div>
+<div class="category-card" data-reveal><div class="category-icon"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></div><h3>Instruction & Leadership</h3><p>Develop effective instructors and confident fire-service leaders.</p><span class="count">1 course</span></div>
+<div class="category-card" data-reveal><div class="category-icon"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg></div><h3>Inspection & Prevention</h3><p>Support code awareness, risk reduction, and documentation.</p><span class="count">1 course</span></div>
+<div class="category-card" data-reveal><div class="category-icon"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12h4l2-7 4 14 2-7h6"/></svg></div><h3>Driver Operator</h3><p>Strengthen apparatus safety, systems knowledge, and operations.</p><span class="count">2 courses</span></div>
+</div></div></section>
 
-    <section class="section bg-mist">
-      <div class="container">
-        <div class="section-heading" data-reveal><span class="eyebrow">Featured free courses</span>
-          <h2>Start with practical, job-relevant training.</h2>
-          <p>Every course in the demo catalog is free, with structured lessons and interactive learning checks.</p>
-        </div>
-        <div class="course-grid">
-          <article class="course-card" data-category="hazmat" data-reveal>
-            <div class="course-cover"><img src="assets/images/course-hazmat.svg"
-                alt="HazMat Awareness course cover"><span class="course-pill">100% Free</span></div>
-            <div class="course-body">
-              <div class="course-meta"><span><svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
-                    <path
-                      d="M4 5.5A2.5 2.5 0 0 1 6.5 3H11v16H6.5A2.5 2.5 0 0 0 4 21.5zM20 5.5A2.5 2.5 0 0 0 17.5 3H13v16h4.5a2.5 2.5 0 0 1 2.5 2.5z" />
-                  </svg> 16 lessons</span><span><svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
-                    <circle cx="12" cy="12" r="9" />
-                    <path d="M12 7v5l3 2" />
-                  </svg> 4–5 hours</span></div>
-              <h3><a href="hazmat-awareness.html">HazMat Awareness</a></h3>
-              <p>Recognize hazardous materials, identify safe actions, and use initial-response information resources.
-              </p>
-              <div class="course-footer"><span class="free-tag">Free</span><a class="btn btn-ghost btn-sm"
-                  href="hazmat-awareness.html">View course <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
-                    <path d="M5 12h14M13 6l6 6-6 6" />
-                  </svg></a></div>
-            </div>
-          </article>
-          <article class="course-card" data-category="hazmat" data-reveal>
-            <div class="course-cover"><img src="assets/images/course-operations.svg"
-                alt="HazMat Operations course cover"><span class="course-pill">100% Free</span></div>
-            <div class="course-body">
-              <div class="course-meta"><span><svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
-                    <path
-                      d="M4 5.5A2.5 2.5 0 0 1 6.5 3H11v16H6.5A2.5 2.5 0 0 0 4 21.5zM20 5.5A2.5 2.5 0 0 0 17.5 3H13v16h4.5a2.5 2.5 0 0 1 2.5 2.5z" />
-                  </svg> 14 lessons</span><span><svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
-                    <circle cx="12" cy="12" r="9" />
-                    <path d="M12 7v5l3 2" />
-                  </svg> 6 hours</span></div>
-              <h3><a href="courses.html">HazMat Operations</a></h3>
-              <p>Build operations-level response knowledge for defensive control, decontamination, and scene support.
-              </p>
-              <div class="course-footer"><span class="free-tag">Free</span><a class="btn btn-ghost btn-sm"
-                  href="courses.html">View course <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
-                    <path d="M5 12h14M13 6l6 6-6 6" />
-                  </svg></a></div>
-            </div>
-          </article>
-          <article class="course-card" data-category="leadership" data-reveal>
-            <div class="course-cover"><img src="assets/images/course-instructor.svg"
-                alt="Fire Instructor 1 course cover"><span class="course-pill">100% Free</span></div>
-            <div class="course-body">
-              <div class="course-meta"><span><svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
-                    <path
-                      d="M4 5.5A2.5 2.5 0 0 1 6.5 3H11v16H6.5A2.5 2.5 0 0 0 4 21.5zM20 5.5A2.5 2.5 0 0 0 17.5 3H13v16h4.5a2.5 2.5 0 0 1 2.5 2.5z" />
-                  </svg> 12 lessons</span><span><svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
-                    <circle cx="12" cy="12" r="9" />
-                    <path d="M12 7v5l3 2" />
-                  </svg> 5 hours</span></div>
-              <h3><a href="courses.html">Fire Instructor 1</a></h3>
-              <p>Plan, present, and evaluate structured fire-service instruction for adult learners.</p>
-              <div class="course-footer"><span class="free-tag">Free</span><a class="btn btn-ghost btn-sm"
-                  href="courses.html">View course <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
-                    <path d="M5 12h14M13 6l6 6-6 6" />
-                  </svg></a></div>
-            </div>
-          </article>
-        </div>
-        <div style="margin-top:32px;text-align:center"><a class="btn btn-secondary" href="courses.html">Browse all
-            courses <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M5 12h14M13 6l6 6-6 6" />
-            </svg></a></div>
-      </div>
-    </section>
+<section class="section bg-mist"><div class="container"><div class="section-heading" data-reveal><span class="eyebrow">Featured free courses</span><h2>Start with practical, job-relevant training.</h2><p>Every course in the demo catalog is free, with structured lessons and interactive learning checks.</p></div><div class="course-grid"><article class="course-card" data-category="hazmat" data-reveal>
+      <div class="course-cover"><img src="assets/images/course-hazmat.svg" alt="HazMat Awareness course cover"><span class="course-pill">100% Free</span></div>
+      <div class="course-body"><div class="course-meta"><span><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H11v16H6.5A2.5 2.5 0 0 0 4 21.5zM20 5.5A2.5 2.5 0 0 0 17.5 3H13v16h4.5a2.5 2.5 0 0 1 2.5 2.5z"/></svg> 16 lessons</span><span><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg> 4–5 hours</span></div>
+      <h3><a href="hazmat-awareness.html">HazMat Awareness</a></h3><p>Recognize hazardous materials, identify safe actions, and use initial-response information resources.</p>
+      <div class="course-footer"><span class="free-tag">Free</span><a class="btn btn-ghost btn-sm" href="hazmat-awareness.html">View course <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div></div></article><article class="course-card" data-category="hazmat" data-reveal>
+      <div class="course-cover"><img src="assets/images/course-operations.svg" alt="HazMat Operations course cover"><span class="course-pill">100% Free</span></div>
+      <div class="course-body"><div class="course-meta"><span><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H11v16H6.5A2.5 2.5 0 0 0 4 21.5zM20 5.5A2.5 2.5 0 0 0 17.5 3H13v16h4.5a2.5 2.5 0 0 1 2.5 2.5z"/></svg> 14 lessons</span><span><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg> 6 hours</span></div>
+      <h3><a href="courses.html">HazMat Operations</a></h3><p>Build operations-level response knowledge for defensive control, decontamination, and scene support.</p>
+      <div class="course-footer"><span class="free-tag">Free</span><a class="btn btn-ghost btn-sm" href="courses.html">View course <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div></div></article><article class="course-card" data-category="leadership" data-reveal>
+      <div class="course-cover"><img src="assets/images/course-instructor.svg" alt="Fire Instructor 1 course cover"><span class="course-pill">100% Free</span></div>
+      <div class="course-body"><div class="course-meta"><span><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H11v16H6.5A2.5 2.5 0 0 0 4 21.5zM20 5.5A2.5 2.5 0 0 0 17.5 3H13v16h4.5a2.5 2.5 0 0 1 2.5 2.5z"/></svg> 12 lessons</span><span><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg> 5 hours</span></div>
+      <h3><a href="courses.html">Fire Instructor 1</a></h3><p>Plan, present, and evaluate structured fire-service instruction for adult learners.</p>
+      <div class="course-footer"><span class="free-tag">Free</span><a class="btn btn-ghost btn-sm" href="courses.html">View course <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div></div></article></div><div style="margin-top:32px;text-align:center"><a class="btn btn-secondary" href="courses.html">Browse all courses <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div></div></section>
 
-    <section class="section">
-      <div class="container two-col grid">
-        <div class="about-visual" data-reveal>
-          <div class="station-diagram">
-            <div class="diagram-node"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
-                <path
-                  d="M4 5.5A2.5 2.5 0 0 1 6.5 3H11v16H6.5A2.5 2.5 0 0 0 4 21.5zM20 5.5A2.5 2.5 0 0 0 17.5 3H13v16h4.5a2.5 2.5 0 0 1 2.5 2.5z" />
-              </svg></div>
-            <div class="diagram-node"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
-                <circle cx="12" cy="12" r="9" />
-                <path d="m10 8 6 4-6 4z" />
-              </svg></div>
-            <div class="diagram-node"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M3 12h4l2-7 4 14 2-7h6" />
-              </svg></div>
-            <div class="diagram-node"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
-                <circle cx="12" cy="8" r="5" />
-                <path d="m8.5 12-1.5 9 5-3 5 3-1.5-9" />
-              </svg></div>
-            <div class="diagram-core">LEARN<br>APPLY<br>VERIFY</div>
-          </div>
-        </div>
-        <div class="about-copy" data-reveal><span class="eyebrow">More than a reading site</span>
-          <h2>Learning that asks the firefighter to participate.</h2>
-          <p>ReadyStation breaks complex topics into focused instruction, then reinforces understanding through
-            decisions, matching activities, drag-and-drop exercises, and scenario questions.</p>
-          <ul class="check-list">
-            <li><span class="check">✓</span><span><strong>Short focused lessons</strong><br>Information is structured
-                for clarity and quick review.</span></li>
-            <li><span class="check">✓</span><span><strong>Immediate feedback</strong><br>Learners understand why a
-                response is safe or unsafe.</span></li>
-            <li><span class="check">✓</span><span><strong>Visible progress</strong><br>Completion is stored locally in
-                this demo course player.</span></li>
-          </ul><a class="btn btn-primary" style="margin-top:28px" href="hazmat-course.html">Try HazMat Awareness <svg
-              class="icon" viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M5 12h14M13 6l6 6-6 6" />
-            </svg></a>
-        </div>
-      </div>
-    </section>
+<section class="section"><div class="container two-col grid"><div class="about-visual photo-panel" data-reveal><img src="assets/images/hazmat-training-photo.png" alt="Firefighters reviewing hazmat materials and placards during training"><div class="hero-badge hero-badge-inline"><span class="badge-icon"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/><path d="m9 12 2 2 4-5"/></svg></span><span><strong>Scenario-focused lessons</strong><small>Visual training moments that keep learners engaged</small></span></div></div><div class="about-copy" data-reveal><span class="eyebrow">More than a reading site</span><h2>Learning that asks the firefighter to participate.</h2><p>ReadyStation breaks complex topics into focused instruction, then reinforces understanding through decisions, matching activities, drag-and-drop exercises, and scenario questions.</p><ul class="check-list"><li><span class="check">✓</span><span><strong>Short focused lessons</strong><br>Information is structured for clarity and quick review.</span></li><li><span class="check">✓</span><span><strong>Immediate feedback</strong><br>Learners understand why a response is safe or unsafe.</span></li><li><span class="check">✓</span><span><strong>Visible progress</strong><br>Completion is stored locally in this demo course player.</span></li></ul><a class="btn btn-primary" style="margin-top:28px" href="hazmat-course.html">Try HazMat Awareness <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div></div></section>
 
-    <section class="section bg-dark">
-      <div class="container">
-        <div class="section-heading center" data-reveal><span class="eyebrow" style="color:var(--cream)">How
-            ReadyStation works</span>
-          <h2>From first concept to field-ready thinking.</h2>
-          <p>Each learning sequence follows a consistent cycle designed to build understanding and reinforce safe
-            decision-making.</p>
-        </div>
-        <div class="grid three-col">
-          <div class="feature-card" data-reveal><span class="feature-no">01 / LEARN</span>
-            <h3>See the essential information.</h3>
-            <p>Clear explanations, key terms, and operational boundaries establish the foundation.</p>
-            <div class="feature-icon"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
-                <path
-                  d="M4 5.5A2.5 2.5 0 0 1 6.5 3H11v16H6.5A2.5 2.5 0 0 0 4 21.5zM20 5.5A2.5 2.5 0 0 0 17.5 3H13v16h4.5a2.5 2.5 0 0 1 2.5 2.5z" />
-              </svg></div>
-          </div>
-          <div class="feature-card" data-reveal><span class="feature-no">02 / APPLY</span>
-            <h3>Make a decision.</h3>
-            <p>Scenario prompts and sorting activities require the learner to use what they just studied.</p>
-            <div class="feature-icon"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M3 12h4l2-7 4 14 2-7h6" />
-              </svg></div>
-          </div>
-          <div class="feature-card" data-reveal><span class="feature-no">03 / VERIFY</span>
-            <h3>Receive useful feedback.</h3>
-            <p>Immediate explanations reinforce correct actions and identify unsafe assumptions.</p>
-            <div class="feature-icon"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
-                <path d="m5 12 4 4L19 6" />
-              </svg></div>
-          </div>
-        </div>
-      </div>
-    </section>
+<section class="section bg-dark"><div class="container"><div class="section-heading center" data-reveal><span class="eyebrow" style="color:var(--cream)">How ReadyStation works</span><h2>From first concept to field-ready thinking.</h2><p>Each learning sequence follows a consistent cycle designed to build understanding and reinforce safe decision-making.</p></div><div class="grid three-col">
+<div class="feature-card" data-reveal><span class="feature-no">01 / LEARN</span><h3>See the essential information.</h3><p>Clear explanations, key terms, and operational boundaries establish the foundation.</p><div class="feature-icon"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H11v16H6.5A2.5 2.5 0 0 0 4 21.5zM20 5.5A2.5 2.5 0 0 0 17.5 3H13v16h4.5a2.5 2.5 0 0 1 2.5 2.5z"/></svg></div></div>
+<div class="feature-card" data-reveal><span class="feature-no">02 / APPLY</span><h3>Make a decision.</h3><p>Scenario prompts and sorting activities require the learner to use what they just studied.</p><div class="feature-icon"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12h4l2-7 4 14 2-7h6"/></svg></div></div>
+<div class="feature-card" data-reveal><span class="feature-no">03 / VERIFY</span><h3>Receive useful feedback.</h3><p>Immediate explanations reinforce correct actions and identify unsafe assumptions.</p><div class="feature-icon"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 4 4L19 6"/></svg></div></div>
+</div></div></section>
 
-    <section class="section">
-      <div class="container">
-        <div class="section-heading" data-reveal><span class="eyebrow">Interactive preview</span>
-          <h2>A learning checkpoint, directly in the lesson.</h2>
-          <p>This small preview shows how ReadyStation converts course content into decisions—not passive scrolling.</p>
-        </div>
-        <div class="demo-panel" data-reveal>
-          <aside class="demo-sidebar">
-            <div class="demo-progress"><strong><span>Course progress</span><span>25%</span></strong>
-              <div class="progress-track"><span style="width:25%"></span></div>
-            </div>
-            <div class="demo-nav-item done"><span class="demo-dot"></span><span>Defining hazardous materials</span>
-            </div>
-            <div class="demo-nav-item active"><span class="demo-dot"></span><span>Roles and responsibilities</span>
-            </div>
-            <div class="demo-nav-item"><span class="demo-dot"></span><span>Seven clues to hazmat</span></div>
-            <div class="demo-nav-item"><span class="demo-dot"></span><span>Using the ERG</span></div>
-          </aside>
-          <div class="demo-content">
-            <div class="demo-topline"><span class="demo-label">HazMat Awareness · Checkpoint</span><span
-                class="level-tag">Awareness level</span></div>
-            <h3>Choose the safest initial action.</h3>
-            <p>You arrive at a transport incident and observe a damaged container with an unknown product. What is the
-              appropriate awareness-level response?</p>
-            <div class="checkpoint">
-              <h4>Make your decision</h4>
-              <p>Select one answer. You will receive immediate feedback.</p>
-              <div class="choice-grid"><button class="choice" data-answer="wrong">Approach the container and read the
-                  label up close.</button><button class="choice" data-answer="correct">Maintain distance, recognize
-                  available clues, isolate the area, and request trained resources.</button><button class="choice"
-                  data-answer="wrong">Move the container away from traffic.</button><button class="choice"
-                  data-answer="wrong">Use a monitoring device to identify the product.</button></div>
-              <div class="check-feedback" aria-live="polite"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+<section class="section"><div class="container"><div class="section-heading" data-reveal><span class="eyebrow">Interactive preview</span><h2>A learning checkpoint, directly in the lesson.</h2><p>This small preview shows how ReadyStation converts course content into decisions—not passive scrolling.</p></div><div class="demo-panel" data-reveal><aside class="demo-sidebar"><div class="demo-progress"><strong><span>Course progress</span><span>25%</span></strong><div class="progress-track"><span style="width:25%"></span></div></div><div class="demo-nav-item done"><span class="demo-dot"></span><span>Defining hazardous materials</span></div><div class="demo-nav-item active"><span class="demo-dot"></span><span>Roles and responsibilities</span></div><div class="demo-nav-item"><span class="demo-dot"></span><span>Seven clues to hazmat</span></div><div class="demo-nav-item"><span class="demo-dot"></span><span>Using the ERG</span></div></aside><div class="demo-content"><div class="demo-topline"><span class="demo-label">HazMat Awareness · Checkpoint</span><span class="level-tag">Awareness level</span></div><h3>Choose the safest initial action.</h3><p>You arrive at a transport incident and observe a damaged container with an unknown product. What is the appropriate awareness-level response?</p><div class="checkpoint"><h4>Make your decision</h4><p>Select one answer. You will receive immediate feedback.</p><div class="choice-grid"><button class="choice" data-answer="wrong">Approach the container and read the label up close.</button><button class="choice" data-answer="correct">Maintain distance, recognize available clues, isolate the area, and request trained resources.</button><button class="choice" data-answer="wrong">Move the container away from traffic.</button><button class="choice" data-answer="wrong">Use a monitoring device to identify the product.</button></div><div class="check-feedback" aria-live="polite"></div></div></div></div></div></section>
 
-    <section class="section-sm bg-mist">
-      <div class="container stats-grid">
-        <div class="stat-card" data-reveal><strong>6</strong><span>professional course pathways</span></div>
-        <div class="stat-card" data-reveal><strong>100%</strong><span>free courses in this demo</span></div>
-        <div class="stat-card" data-reveal><strong>16</strong><span>HazMat Awareness lesson topics</span></div>
-        <div class="stat-card" data-reveal><strong>3</strong><span>interaction types in the demo course</span></div>
-      </div>
-    </section>
+<section class="section-sm bg-mist"><div class="container stats-grid"><div class="stat-card" data-reveal><strong>6</strong><span>professional course pathways</span></div><div class="stat-card" data-reveal><strong>100%</strong><span>free courses in this demo</span></div><div class="stat-card" data-reveal><strong>16</strong><span>HazMat Awareness lesson topics</span></div><div class="stat-card" data-reveal><strong>3</strong><span>interaction types in the demo course</span></div></div></section>
 
-    <section class="section">
-      <div class="container">
-        <div class="section-heading center" data-reveal><span class="eyebrow">Learner experience</span>
-          <h2>Built for professionals who value clarity.</h2>
-        </div>
-        <div class="testimonial-grid">
-          <div class="testimonial-card" data-reveal>
-            <blockquote>“The lesson structure keeps the focus on what matters, then checks whether the learner can apply
-              it.”</blockquote>
-            <div class="testimonial-person"><span class="person-mark">TC</span><span><strong>Training
-                  Captain</strong><span>Demo learner profile</span></span></div>
-          </div>
-          <div class="testimonial-card" data-reveal>
-            <blockquote>“The activities make technical material easier to remember than a long page of uninterrupted
-              text.”</blockquote>
-            <div class="testimonial-person"><span
-                class="person-mark">FF</span><span><strong>Firefighter</strong><span>Demo learner profile</span></span>
-            </div>
-          </div>
-          <div class="testimonial-card" data-reveal>
-            <blockquote>“The responsive player makes it practical to review modules from a station computer, tablet, or
-              phone.”</blockquote>
-            <div class="testimonial-person"><span class="person-mark">DO</span><span><strong>Driver
-                  Operator</strong><span>Demo learner profile</span></span></div>
-          </div>
-        </div>
-      </div>
-    </section>
+<section class="section"><div class="container"><div class="section-heading center" data-reveal><span class="eyebrow">Learner experience</span><h2>Built for professionals who value clarity.</h2></div><div class="testimonial-grid"><div class="testimonial-card" data-reveal><blockquote>“The lesson structure keeps the focus on what matters, then checks whether the learner can apply it.”</blockquote><div class="testimonial-person"><span class="person-mark">TC</span><span><strong>Training Captain</strong><span>Demo learner profile</span></span></div></div><div class="testimonial-card" data-reveal><blockquote>“The activities make technical material easier to remember than a long page of uninterrupted text.”</blockquote><div class="testimonial-person"><span class="person-mark">FF</span><span><strong>Firefighter</strong><span>Demo learner profile</span></span></div></div><div class="testimonial-card" data-reveal><blockquote>“The responsive player makes it practical to review modules from a station computer, tablet, or phone.”</blockquote><div class="testimonial-person"><span class="person-mark">DO</span><span><strong>Driver Operator</strong><span>Demo learner profile</span></span></div></div></div></div></section>
 
-    <section class="section bg-mist">
-      <div class="container">
-        <div class="section-heading center" data-reveal><span class="eyebrow">Frequently asked questions</span>
-          <h2>What this ReadyStation demo includes.</h2>
-        </div>
-        <div class="faq-list">
-          <div class="faq-item open"><button class="faq-question" aria-expanded="true"><span>Are the courses
-                free?</span><span>+</span></button>
-            <div class="faq-answer">
-              <div>
-                <p>Yes. Every course displayed in the current demo catalog is marked free.</p>
-              </div>
-            </div>
-          </div>
-          <div class="faq-item"><button class="faq-question" aria-expanded="false"><span>Do login and registration
-                work?</span><span>+</span></button>
-            <div class="faq-answer">
-              <div>
-                <p>The forms and interface are ready as a demo, but authentication and a learner database have not yet
-                  been connected.</p>
-              </div>
-            </div>
-          </div>
-          <div class="faq-item"><button class="faq-question" aria-expanded="false"><span>Does the HazMat course track
-                progress?</span><span>+</span></button>
-            <div class="faq-answer">
-              <div>
-                <p>The demo course stores completed lessons in the learner’s browser. A production version can connect
-                  progress to individual user accounts.</p>
-              </div>
-            </div>
-          </div>
-          <div class="faq-item"><button class="faq-question" aria-expanded="false"><span>Is the site
-                responsive?</span><span>+</span></button>
-            <div class="faq-answer">
-              <div>
-                <p>Yes. The homepage, catalog, course details, forms, and course player adapt to desktop, tablet, and
-                  mobile screens.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+<section class="section bg-mist"><div class="container"><div class="section-heading center" data-reveal><span class="eyebrow">Frequently asked questions</span><h2>What this ReadyStation demo includes.</h2></div><div class="faq-list">
+<div class="faq-item open"><button class="faq-question" aria-expanded="true"><span>Are the courses free?</span><span>+</span></button><div class="faq-answer"><div><p>Yes. Every course displayed in the current demo catalog is marked free.</p></div></div></div>
+<div class="faq-item"><button class="faq-question" aria-expanded="false"><span>Do login and registration work?</span><span>+</span></button><div class="faq-answer"><div><p>The forms and interface are ready as a demo, but authentication and a learner database have not yet been connected.</p></div></div></div>
+<div class="faq-item"><button class="faq-question" aria-expanded="false"><span>Does the HazMat course track progress?</span><span>+</span></button><div class="faq-answer"><div><p>The demo course stores completed lessons in the learner’s browser. A production version can connect progress to individual user accounts.</p></div></div></div>
+<div class="faq-item"><button class="faq-question" aria-expanded="false"><span>Is the site responsive?</span><span>+</span></button><div class="faq-answer"><div><p>Yes. The homepage, catalog, course details, forms, and course player adapt to desktop, tablet, and mobile screens.</p></div></div></div>
+</div></div></section>
 
-    <section class="section">
-      <div class="container">
-        <div class="cta-shell" data-reveal>
-          <div>
-            <h2>Enter the ReadyStation.</h2>
-            <p>Preview a professional, interactive HazMat Awareness lesson and experience the direction of the new LMS.
-            </p>
-          </div><a class="btn btn-cream" href="hazmat-course.html">Launch course demo <svg class="icon"
-              viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M5 12h14M13 6l6 6-6 6" />
-            </svg></a>
-        </div>
-      </div>
-    </section>
-  </main>
-  <footer class="site-footer">
-    <div class="container footer-grid">
-      <div class="footer-brand"><img src="assets/images/logo.svg" alt="ReadyStation LMS">
-        <p>Professional, scenario-based online learning for firefighters, emergency responders, and fire-service
-          organizations.</p>
-      </div>
-      <div class="footer-col">
-        <h3>Platform</h3><a href="courses.html">All courses</a><a href="hazmat-awareness.html">HazMat Awareness</a><a
-          href="login.html">Learner login</a><a href="register.html">Create account</a>
-      </div>
-      <div class="footer-col">
-        <h3>Company</h3><a href="about-us.html">About ReadyStation</a><a href="contact.html">Contact</a><a
-          href="privacy-policy.html">Privacy policy</a><a href="terms-conditions.html">Terms</a>
-      </div>
-      <div class="footer-col">
-        <h3>Demo status</h3><a href="contact.html">Request implementation</a><a href="contact.html">Ask about
-          integrations</a><a href="contact.html">Training support</a>
-      </div>
-    </div>
-    <div class="container footer-bottom"><span>© <span data-current-year></span> ReadyStation LMS. Demo
-        website.</span><span>Built for firefighter professional development.</span></div>
-  </footer>
-  <div class="toast" role="status" aria-live="polite"></div>
-  <script src="assets/js/readystation.js"></script>
-</body>
-
-</html>
+<section class="section"><div class="container"><div class="cta-shell" data-reveal><div><h2>Enter the ReadyStation.</h2><p>Preview a professional, interactive HazMat Awareness lesson and experience the direction of the new LMS.</p></div><a class="btn btn-cream" href="hazmat-course.html">Launch course demo <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div></div></section>
+</main>
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div class="footer-brand"><img src="assets/images/logo.svg" alt="ReadyStation LMS"><p>Professional, scenario-based online learning for firefighters, emergency responders, and fire-service organizations.</p></div>
+    <div class="footer-col"><h3>Platform</h3><a href="courses.html">All courses</a><a href="hazmat-awareness.html">HazMat Awareness</a><a href="login.html">Learner login</a><a href="register.html">Create account</a></div>
+    <div class="footer-col"><h3>Company</h3><a href="about-us.html">About ReadyStation</a><a href="contact.html">Contact</a><a href="privacy-policy.html">Privacy policy</a><a href="terms-conditions.html">Terms</a></div>
+    <div class="footer-col"><h3>Demo status</h3><a href="contact.html">Request implementation</a><a href="contact.html">Ask about integrations</a><a href="contact.html">Training support</a></div>
+  </div>
+  <div class="container footer-bottom"><span>© <span data-current-year></span> ReadyStation LMS. Demo website.</span><span>Built for firefighter professional development.</span></div>
+</footer>
+<div class="toast" role="status" aria-live="polite"></div>
+<script src="assets/js/readystation.js"></script></body></html>
