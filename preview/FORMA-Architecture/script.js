@@ -32,6 +32,11 @@
   const progressBar = document.querySelector(".hero-progress-track i");
   const progressValue = document.querySelector(".hero-progress-value");
   const beats = [...document.querySelectorAll(".story-beat")];
+  const interiorSection = document.querySelector(".interior-explorer");
+  const interiorTrack = document.querySelector(".interior-track");
+  const interiorCards = [...document.querySelectorAll(".interior-card")];
+  const interiorLine = document.querySelector(".interior-line i");
+  const interiorCurrent = document.querySelector(".interior-current");
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   let desiredVideoTime = 0;
   let videoDuration = 16;
@@ -74,6 +79,21 @@
     progressValue.textContent = String(Math.round(currentProgress * 100)).padStart(2, "0");
     video.style.transform = `scale(${(1.018 + currentProgress * 0.032).toFixed(4)}) translate3d(0, ${(-currentProgress * 0.7).toFixed(2)}%, 0)`;
     beats.forEach((beat) => updateBeat(beat, currentProgress));
+
+    if (interiorSection && interiorTrack) {
+      const interiorTravel = Math.max(1, interiorSection.offsetHeight - window.innerHeight);
+      const interiorProgress = clamp((window.scrollY - interiorSection.offsetTop) / interiorTravel);
+      const maxTrackTravel = Math.max(0, interiorTrack.scrollWidth - window.innerWidth + window.innerWidth * 0.08);
+      interiorTrack.style.transform = `translate3d(${(-interiorProgress * maxTrackTravel).toFixed(2)}px, 0, 0)`;
+      interiorLine.style.transform = `scaleX(${interiorProgress})`;
+      interiorCurrent.textContent = String(Math.min(6, Math.floor(interiorProgress * 6) + 1)).padStart(2, "0");
+
+      interiorCards.forEach((card) => {
+        const rect = card.getBoundingClientRect();
+        const offset = clamp((rect.left + rect.width / 2 - window.innerWidth / 2) / window.innerWidth, -1, 1);
+        card.style.setProperty("--interior-parallax", `${(-offset * 3.8).toFixed(2)}%`);
+      });
+    }
 
     document.querySelectorAll(".parallax-media").forEach((media) => {
       const rect = media.parentElement.getBoundingClientRect();
@@ -131,6 +151,11 @@
     cursorY = event.clientY;
     document.body.classList.add("has-pointer");
     cursorDot.style.transform = `translate3d(${cursorX}px, ${cursorY}px, 0) translate(-50%, -50%)`;
+  });
+
+  window.addEventListener("pointerout", (event) => {
+    if (event.relatedTarget) return;
+    document.body.classList.remove("has-pointer", "cursor-active");
   });
 
   const animateCursor = () => {
