@@ -10,7 +10,7 @@
   <link rel="icon" type="image/svg+xml" href="assets/logo.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Lora:wght@400;500;600;700&family=Merriweather:wght@400;700&family=Montserrat:wght@400;500;600;700;800&family=Playfair+Display:wght@400;600;700;800&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 
   <link rel="stylesheet" href="styles.css" />
   <script defer src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
@@ -174,6 +174,29 @@
         </div>
 
         <p class="fine-print">Without SMTP settings, the included Node server runs in safe demo mode and records the campaign without sending real email.</p>
+      </form>
+    </section>
+  </div>
+
+  <div class="modal-backdrop hidden" id="templateModal" role="dialog" aria-modal="true" aria-labelledby="templateTitle">
+    <section class="modal compact-modal">
+      <div class="modal-header">
+        <div>
+          <span class="eyebrow">REUSABLE DESIGN</span>
+          <h2 id="templateTitle">Save as a template</h2>
+        </div>
+        <button class="icon-button" data-close-modal="templateModal" aria-label="Close template dialog">×</button>
+      </div>
+      <form id="templateForm" class="send-form">
+        <label>
+          Template name
+          <input id="templateNameInput" type="text" maxlength="60" placeholder="My newsletter template" required />
+        </label>
+        <p class="fine-print">The current blocks, content, fonts, images, links, colors, and layout will be saved in this browser.</p>
+        <div class="modal-actions">
+          <button type="button" class="soft-button" data-close-modal="templateModal">Cancel</button>
+          <button type="submit" class="primary-button">Create template</button>
+        </div>
       </form>
     </section>
   </div>

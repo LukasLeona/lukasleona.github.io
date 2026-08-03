@@ -13,6 +13,43 @@
     muted: "#6D8189",
   };
 
+  const FONT_OPTIONS = [
+    ["Poppins", "Poppins"],
+    ["Inter", "Inter"],
+    ["Montserrat", "Montserrat"],
+    ["Playfair Display", "Playfair Display"],
+    ["Lora", "Lora"],
+    ["Merriweather", "Merriweather"],
+    ["Arial", "Arial"],
+    ["Georgia", "Georgia"],
+    ["Verdana", "Verdana"],
+  ];
+
+  const PALETTE_PRESETS = {
+    layoutletter: {
+      name: "LayoutLetter",
+      colors: ["#DB1A1A", "#FFF6F6", "#8CC7C4", "#2C687B", "#193845", "#FFFFFF"],
+    },
+    ocean: {
+      name: "Ocean editorial",
+      colors: ["#075985", "#E0F2FE", "#38BDF8", "#0F172A", "#475569", "#FFFFFF"],
+    },
+    sunset: {
+      name: "Warm sunset",
+      colors: ["#C2410C", "#FFF7ED", "#FB923C", "#7C2D12", "#431407", "#FFFFFF"],
+    },
+    forest: {
+      name: "Forest studio",
+      colors: ["#166534", "#F0FDF4", "#86EFAC", "#14532D", "#1F2937", "#FFFFFF"],
+    },
+    mono: {
+      name: "Modern mono",
+      colors: ["#111827", "#F9FAFB", "#D1D5DB", "#374151", "#111827", "#FFFFFF"],
+    },
+  };
+
+  let copiedBlock = null;
+
   const templates = {
     creator: {
       id: "creator",
@@ -237,6 +274,89 @@
         },
       ],
     },
+    digest: {
+      id: "digest",
+      name: "Editorial Digest",
+      description: "A refined weekly roundup for articles, links, and recommendations.",
+      accent: "light",
+      blocks: [
+        {
+          id: uid(), type: "logo", src: "", alt: "Your brand", brandText: "THE WEEKLY BRIEF",
+          width: 190, align: "center", url: "#", padding: 28, background: "#FFFFFF",
+        },
+        {
+          id: uid(), type: "divider", color: "#D8E3E6", width: 90, thickness: 1,
+          padding: 0, background: "#FFFFFF",
+        },
+        {
+          id: uid(), type: "hero", eyebrow: "ISSUE 24 · AUGUST 2026", title: "Ideas for a more thoughtful week",
+          text: "A concise collection of useful reads, creative inspiration, and one idea to try today.",
+          buttonLabel: "Read this week's edition", url: "#", align: "left", background: "#FFF6F6",
+          color: "#193845", accentColor: "#DB1A1A", padding: 42, fontFamily: "Playfair Display",
+        },
+        {
+          id: uid(), type: "list", title: "Inside this issue", items: "The case for slower work\nA practical guide to better briefs\nFive things worth bookmarking",
+          listStyle: "numbered", color: "#193845", accentColor: "#DB1A1A", fontFamily: "Poppins",
+          fontSize: 15, padding: 34, background: "#FFFFFF",
+        },
+        {
+          id: uid(), type: "quote", quote: "Good newsletters feel less like broadcasts and more like letters worth opening.",
+          attribution: "— LayoutLetter editorial team", color: "#2C687B", fontFamily: "Lora", fontSize: 24,
+          align: "center", padding: 38, background: "#EAF6F5",
+        },
+      ],
+    },
+    welcome: {
+      id: "welcome",
+      name: "Welcome Series",
+      description: "A friendly onboarding email that introduces your brand and next steps.",
+      accent: "teal",
+      blocks: [
+        {
+          id: uid(), type: "hero", eyebrow: "WELCOME TO THE COMMUNITY", title: "We’re so glad you’re here.",
+          text: "You now have a front-row seat to new ideas, practical resources, and updates created for you.",
+          buttonLabel: "Visit our website", url: "#", align: "center", background: "#2C687B",
+          color: "#FFFFFF", accentColor: "#8CC7C4", padding: 48, fontFamily: "Poppins",
+        },
+        {
+          id: uid(), type: "callout", title: "Here’s what happens next", text: "Look out for a short note every Tuesday. Add us to your contacts so the good stuff always lands in your inbox.",
+          accentColor: "#DB1A1A", color: "#193845", padding: 32, radius: 16, background: "#FFF6F6",
+        },
+        {
+          id: uid(), type: "list", title: "Start here", items: "Tell us what you want to learn\nBrowse the resource library\nFollow along on social",
+          listStyle: "check", color: "#193845", accentColor: "#2C687B", fontFamily: "Poppins",
+          fontSize: 15, padding: 34, background: "#FFFFFF",
+        },
+        {
+          id: uid(), type: "social", items: [
+            { icon: "◎", label: "Instagram", url: "https://instagram.com" },
+            { icon: "in", label: "LinkedIn", url: "https://linkedin.com" },
+            { icon: "↗", label: "Website", url: "https://example.com" },
+          ], color: "#2C687B", align: "center", padding: 28, background: "#FFF6F6",
+        },
+      ],
+    },
+    shop: {
+      id: "shop",
+      name: "Product Spotlight",
+      description: "A clean shop update for new arrivals, offers, and featured products.",
+      accent: "red",
+      blocks: [
+        {
+          id: uid(), type: "heading", content: "A small upgrade. A big difference.", fontSize: 42,
+          color: "#193845", align: "center", padding: 42, background: "#FFF6F6", fontFamily: "Playfair Display",
+        },
+        {
+          id: uid(), type: "product", src: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=1000&q=80",
+          title: "The Everyday Essential", description: "Thoughtfully designed, made to last, and ready for wherever the day takes you.",
+          price: "$89", buttonLabel: "Shop now", url: "#", padding: 30, background: "#FFFFFF",
+        },
+        {
+          id: uid(), type: "callout", title: "Subscriber perk", text: "Use code LETTER15 for 15% off through Sunday.",
+          accentColor: "#DB1A1A", color: "#193845", padding: 28, radius: 14, background: "#FFF1F1",
+        },
+      ],
+    },
   };
 
   const defaultContacts = [
@@ -283,6 +403,11 @@
   state.history = [];
   state.future = [];
   state.draggedBlockId = null;
+  state.customTemplates = Array.isArray(state.customTemplates) ? state.customTemplates : [];
+  state.activePalette = PALETTE_PRESETS[state.activePalette] ? state.activePalette : "layoutletter";
+  state.brandColors = Array.isArray(state.brandColors) && state.brandColors.length
+    ? state.brandColors
+    : [...PALETTE_PRESETS[state.activePalette].colors];
   state.importStats = state.importStats || {
     total: state.contacts.length,
     valid: state.contacts.filter((c) => c.status === "valid").length,
@@ -344,6 +469,9 @@
 
     document.getElementById("sendForm").addEventListener("submit", handleSendCampaign);
     document.getElementById("sendTestButton").addEventListener("click", handleSendTest);
+    document.getElementById("templateForm").addEventListener("submit", handleSaveTemplateSubmit);
+    document.addEventListener("copy", handleBuilderCopy);
+    document.addEventListener("paste", handleBuilderPaste);
 
     document.querySelectorAll(".modal-backdrop").forEach((backdrop) => {
       backdrop.addEventListener("click", (event) => {
@@ -361,6 +489,28 @@
         event.preventDefault();
         saveState();
         showToast("Saved", "Your LayoutLetter workspace is saved in this browser.");
+      }
+
+      if (state.view !== "builder" || isEditableTarget(event.target)) return;
+
+      if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "z") {
+        event.preventDefault();
+        event.shiftKey ? redo() : undo();
+      }
+
+      if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "y") {
+        event.preventDefault();
+        redo();
+      }
+
+      if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "d" && state.selectedBlockId) {
+        event.preventDefault();
+        duplicateBlock(state.selectedBlockId);
+      }
+
+      if ((event.key === "Delete" || event.key === "Backspace") && state.selectedBlockId) {
+        event.preventDefault();
+        deleteBlock(state.selectedBlockId);
       }
     });
   }
@@ -568,24 +718,46 @@
           <h3>Content blocks</h3>
           <p class="panel-note">Drag a block into the canvas or click to add it.</p>
           <div class="block-library">
-            ${blockTool("heading", "H", "Heading")}
-            ${blockTool("text", "Aa", "Text")}
-            ${blockTool("image", "▧", "Image")}
-            ${blockTool("button", "↗", "Button")}
-            ${blockTool("divider", "—", "Divider")}
-            ${blockTool("spacer", "↕", "Spacer")}
-            ${blockTool("social", "◎", "Social")}
-            ${blockTool("columns", "▥", "Columns")}
+            ${blockTool("heading", "H", "Heading", "Text")}
+            ${blockTool("text", "Aa", "Paragraph", "Text")}
+            ${blockTool("richtext", "¶", "Rich text", "Text")}
+            ${blockTool("quote", "“", "Quote", "Text")}
+            ${blockTool("list", "☷", "List", "Text")}
+            ${blockTool("image", "▧", "Image", "Media")}
+            ${blockTool("logo", "◇", "Logo", "Media")}
+            ${blockTool("gallery", "▦", "Gallery", "Media")}
+            ${blockTool("hero", "✦", "Hero", "Layout")}
+            ${blockTool("columns", "▥", "Columns", "Layout")}
+            ${blockTool("callout", "!", "Callout", "Layout")}
+            ${blockTool("product", "$", "Product", "Layout")}
+            ${blockTool("button", "↗", "Button", "Actions")}
+            ${blockTool("social", "◎", "Social links", "Actions")}
+            ${blockTool("divider", "—", "Divider", "Structure")}
+            ${blockTool("spacer", "↕", "Spacer", "Structure")}
           </div>
 
-          <div style="margin-top:22px">
+          <div class="builder-section">
+            <h3>Paste a newsletter</h3>
+            <p class="panel-note">Paste from Gmail, Outlook, Docs, or another editor. Formatting and images are preserved.</p>
+            <div id="newsletterPasteArea" class="paste-newsletter-zone" contenteditable="true" role="textbox" tabindex="0" aria-label="Paste formatted newsletter here">Click here, then press Ctrl+V</div>
+          </div>
+
+          <div class="builder-section">
             <h3>Brand palette</h3>
-            <p class="panel-note">Your requested LayoutLetter colors.</p>
-            <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:9px">
-              ${paletteSwatch(palette.red, "Red")}
-              ${paletteSwatch(palette.blush, "Blush")}
-              ${paletteSwatch(palette.teal, "Teal")}
-              ${paletteSwatch(palette.darkTeal, "Dark teal")}
+            <p class="panel-note">Choose a palette, then apply any swatch to the selected block.</p>
+            <select id="palettePreset" class="compact-select" aria-label="Brand palette preset">
+              ${Object.entries(PALETTE_PRESETS).map(([id, preset]) => `<option value="${id}" ${id === state.activePalette ? "selected" : ""}>${escapeHtml(preset.name)}</option>`).join("")}
+            </select>
+            <select id="paletteTarget" class="compact-select" aria-label="Apply palette color to">
+              <option value="accent">Text or accent</option>
+              <option value="background">Background</option>
+            </select>
+            <div class="palette-grid">
+              ${state.brandColors.map((color) => paletteSwatch(color, color)).join("")}
+            </div>
+            <div class="custom-color-row">
+              <input id="customPaletteColor" type="color" value="#DB1A1A" aria-label="Custom brand color" />
+              <button class="soft-button compact" id="addPaletteColorButton" type="button">Add color</button>
             </div>
           </div>
         </aside>
@@ -610,12 +782,14 @@
                 <button class="segment ${state.canvasSize === "mobile" ? "active" : ""}" data-canvas-size="mobile">Mobile</button>
               </div>
               <button class="soft-button compact" id="previewButton">Preview</button>
+              <button class="soft-button compact" id="saveTemplateButton">Save template</button>
+              <button class="soft-button compact" id="exportHtmlButton">Export HTML</button>
               <button class="primary-button" id="openSendButton">Send</button>
             </div>
           </div>
 
           <div class="canvas-stage">
-            <div id="emailCanvas" class="email-canvas ${state.canvasSize === "mobile" ? "mobile" : ""}">
+            <div id="emailCanvas" class="email-canvas ${state.canvasSize === "mobile" ? "mobile" : ""}" tabindex="0" aria-label="Newsletter canvas. Paste formatted content or images here.">
               ${renderEditorBlocks()}
             </div>
           </div>
@@ -637,10 +811,10 @@
     `;
   }
 
-  function blockTool(type, icon, label) {
+  function blockTool(type, icon, label, group = "Block") {
     return `
       <button class="block-tool" type="button" draggable="true" data-block-type="${type}">
-        <span>${icon}</span><span>${label}</span>
+        <span>${icon}</span><span>${label}</span><small>${group}</small>
       </button>
     `;
   }
@@ -650,7 +824,8 @@
       <button
         type="button"
         title="${escapeAttr(label)} ${escapeAttr(color)}"
-        data-copy-color="${escapeAttr(color)}"
+        data-apply-color="${escapeAttr(color)}"
+        aria-label="Apply ${escapeAttr(label)}"
         style="height:34px;border:0;border-radius:11px;background:${escapeAttr(color)};box-shadow:var(--raised-sm);cursor:pointer"
       ></button>
     `;
@@ -697,7 +872,7 @@
       case "heading":
         return `
           <div style="background:${background};padding:${padding}px;text-align:${align}">
-            <div style="margin:0;color:${escapeAttr(block.color || palette.darkTeal)};font-family:Poppins,Arial,sans-serif;font-size:${clampNumber(block.fontSize, 16, 72, 34)}px;font-weight:800;line-height:1.15;letter-spacing:-1px">
+            <div style="margin:0;color:${escapeAttr(block.color || palette.darkTeal)};font-family:${escapeAttr(fontStack(block.fontFamily))};font-size:${clampNumber(block.fontSize, 16, 72, 34)}px;font-weight:800;line-height:1.15;letter-spacing:-1px">
               ${nl2br(block.content || "Your heading")}
             </div>
           </div>
@@ -706,20 +881,94 @@
       case "text":
         return `
           <div style="background:${background};padding:${padding}px;text-align:${align}">
-            <div style="margin:0;color:${escapeAttr(block.color || palette.ink)};font-family:Poppins,Arial,sans-serif;font-size:${clampNumber(block.fontSize, 10, 28, 15)}px;line-height:1.7">
+            <div style="margin:0;color:${escapeAttr(block.color || palette.ink)};font-family:${escapeAttr(fontStack(block.fontFamily))};font-size:${clampNumber(block.fontSize, 10, 28, 15)}px;line-height:1.7">
               ${nl2br(block.content || "Add your message here.")}
             </div>
           </div>
         `;
 
+      case "richtext":
+        return `
+          <div class="rich-email-content" style="background:${background};padding:${padding}px;color:${escapeAttr(block.color || palette.ink)};font-family:${escapeAttr(fontStack(block.fontFamily))};font-size:${clampNumber(block.fontSize, 10, 28, 15)}px;line-height:1.65">
+            ${sanitizeHtml(block.html || "<p>Paste or write formatted content here.</p>")}
+          </div>
+        `;
+
+      case "hero":
+        return `
+          <div style="background:${background};padding:${padding}px;text-align:${align};color:${escapeAttr(block.color || palette.ink)};font-family:${escapeAttr(fontStack(block.fontFamily))}">
+            <div style="margin-bottom:12px;color:${escapeAttr(block.accentColor || palette.red)};font-size:11px;font-weight:800;letter-spacing:1.6px;text-transform:uppercase">${escapeHtml(block.eyebrow || "YOUR STORY STARTS HERE")}</div>
+            <div style="font-size:${clampNumber(block.fontSize, 28, 64, 44)}px;font-weight:800;line-height:1.08;letter-spacing:-1.4px">${nl2br(block.title || "A bold newsletter hero")}</div>
+            <div style="max-width:540px;margin:${align === "center" ? "16px auto 0" : "16px 0 0"};font-size:15px;line-height:1.7;opacity:.88">${nl2br(block.text || "Introduce the main idea and give readers a reason to continue.")}</div>
+            ${block.buttonLabel ? `<a href="${escapeAttr(sanitizeUrl(block.url || "#"))}" style="display:inline-block;margin-top:22px;padding:13px 21px;border-radius:12px;background:${escapeAttr(block.accentColor || palette.red)};color:#FFFFFF;font-family:${escapeAttr(fontStack(block.fontFamily))};font-size:13px;font-weight:800;text-decoration:none">${escapeHtml(block.buttonLabel)}</a>` : ""}
+          </div>
+        `;
+
+      case "quote":
+        return `
+          <div style="background:${background};padding:${padding}px;text-align:${align};color:${escapeAttr(block.color || palette.darkTeal)};font-family:${escapeAttr(fontStack(block.fontFamily || "Lora"))}">
+            <div style="font-size:${clampNumber(block.fontSize, 16, 42, 24)}px;font-weight:700;line-height:1.45">“${escapeHtml(block.quote || "A memorable idea belongs here.")}”</div>
+            <div style="margin-top:13px;font-family:${escapeAttr(fontStack("Poppins"))};font-size:11px;font-weight:700;letter-spacing:.5px;opacity:.72">${escapeHtml(block.attribution || "— Your name")}</div>
+          </div>
+        `;
+
+      case "list": {
+        const items = String(block.items || "First useful point\nSecond useful point\nThird useful point").split(/\n+/).filter(Boolean);
+        const listStyle = block.listStyle || "bullet";
+        return `
+          <div style="background:${background};padding:${padding}px;color:${escapeAttr(block.color || palette.ink)};font-family:${escapeAttr(fontStack(block.fontFamily))};font-size:${clampNumber(block.fontSize, 11, 24, 15)}px;line-height:1.6">
+            ${block.title ? `<div style="margin-bottom:14px;color:${escapeAttr(block.color || palette.darkTeal)};font-size:20px;font-weight:800">${escapeHtml(block.title)}</div>` : ""}
+            ${items.map((item, index) => `<div style="display:flex;gap:11px;margin:9px 0"><span style="display:inline-grid;min-width:24px;height:24px;place-items:center;border-radius:99px;background:${escapeAttr(block.accentColor || palette.teal)};color:${escapeAttr(contrastText(block.accentColor || palette.teal))};font-size:11px;font-weight:800">${listStyle === "numbered" ? index + 1 : listStyle === "check" ? "✓" : "•"}</span><span>${escapeHtml(item.trim())}</span></div>`).join("")}
+          </div>
+        `;
+      }
+
       case "image":
         return `
           <div style="background:${background};padding:${padding}px">
-            <img
-              src="${escapeAttr(block.src || placeholderImage())}"
-              alt="${escapeAttr(block.alt || "")}"
-              style="display:block;width:100%;height:${clampNumber(block.height, 100, 650, 280)}px;object-fit:cover;border-radius:${clampNumber(block.radius, 0, 50, 0)}px"
-            />
+            ${renderLinkedImage(block)}
+          </div>
+        `;
+
+      case "logo": {
+        const logoContent = block.src
+          ? `<img src="${escapeAttr(sanitizeUrl(block.src))}" alt="${escapeAttr(block.alt || "Brand logo")}" style="display:inline-block;width:${clampNumber(block.width, 60, 420, 180)}px;max-width:100%;height:auto" />`
+          : `<span style="display:inline-block;color:${escapeAttr(block.color || palette.darkTeal)};font-family:${escapeAttr(fontStack(block.fontFamily))};font-size:20px;font-weight:800;letter-spacing:1px">${escapeHtml(block.brandText || "YOUR BRAND")}</span>`;
+        return `<div style="background:${background};padding:${padding}px;text-align:${align}">${block.url ? `<a href="${escapeAttr(sanitizeUrl(block.url))}" style="text-decoration:none">${logoContent}</a>` : logoContent}</div>`;
+      }
+
+      case "gallery":
+        return `
+          <div style="background:${background};padding:${padding}px">
+            <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0"><tr>
+              <td width="50%" valign="top" style="padding-right:${clampNumber(block.gap, 0, 32, 10) / 2}px">${renderGalleryImage(block.src1, block.link1, block.alt1, block.height, block.radius)}</td>
+              <td width="50%" valign="top" style="padding-left:${clampNumber(block.gap, 0, 32, 10) / 2}px">${renderGalleryImage(block.src2, block.link2, block.alt2, block.height, block.radius)}</td>
+            </tr></table>
+          </div>
+        `;
+
+      case "callout":
+        return `
+          <div style="background:${background};padding:${padding}px;color:${escapeAttr(block.color || palette.ink)};font-family:${escapeAttr(fontStack(block.fontFamily))}">
+            <div style="border-left:5px solid ${escapeAttr(block.accentColor || palette.red)};border-radius:${clampNumber(block.radius, 0, 32, 12)}px;padding:20px 22px;background:${escapeAttr(block.cardColor || "#FFFFFF")}">
+              <div style="font-size:18px;font-weight:800;line-height:1.3">${escapeHtml(block.title || "Important update")}</div>
+              <div style="margin-top:7px;font-size:14px;line-height:1.65">${nl2br(block.text || "Highlight an announcement, offer, reminder, or key takeaway.")}</div>
+            </div>
+          </div>
+        `;
+
+      case "product":
+        return `
+          <div style="background:${background};padding:${padding}px;font-family:${escapeAttr(fontStack(block.fontFamily))}">
+            <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0"><tr>
+              <td width="44%" valign="middle" style="padding-right:22px"><img src="${escapeAttr(sanitizeUrl(block.src || placeholderImage()))}" alt="${escapeAttr(block.alt || block.title || "Product")}" style="display:block;width:100%;height:${clampNumber(block.height, 140, 420, 230)}px;object-fit:cover;border-radius:${clampNumber(block.radius, 0, 40, 14)}px" /></td>
+              <td width="56%" valign="middle" style="color:${escapeAttr(block.color || palette.ink)}">
+                <div style="font-size:23px;font-weight:800;line-height:1.2">${escapeHtml(block.title || "Featured product")}</div>
+                <div style="margin-top:8px;font-size:14px;line-height:1.6">${escapeHtml(block.description || "Describe what makes this product or offer worth exploring.")}</div>
+                <div style="margin-top:12px;color:${escapeAttr(block.accentColor || palette.red)};font-size:17px;font-weight:800">${escapeHtml(block.price || "$49")}</div>
+                <a href="${escapeAttr(sanitizeUrl(block.url || "#"))}" style="display:inline-block;margin-top:16px;padding:11px 18px;border-radius:10px;background:${escapeAttr(block.accentColor || palette.red)};color:#FFFFFF;font-size:12px;font-weight:800;text-decoration:none">${escapeHtml(block.buttonLabel || "Shop now")}</a>
+              </td>
+            </tr></table>
           </div>
         `;
 
@@ -728,7 +977,7 @@
           <div style="background:${background};padding:${padding}px;text-align:${align}">
             <a
               href="${escapeAttr(block.url || "#")}"
-              style="display:inline-block;padding:13px 22px;border-radius:${clampNumber(block.radius, 0, 99, 12)}px;background:${escapeAttr(block.buttonColor || palette.red)};color:${escapeAttr(block.textColor || "#FFFFFF")};font-family:Poppins,Arial,sans-serif;font-size:14px;font-weight:700;text-decoration:none"
+              style="display:inline-block;padding:13px 22px;border-radius:${clampNumber(block.radius, 0, 99, 12)}px;background:${escapeAttr(block.buttonColor || palette.red)};color:${escapeAttr(block.textColor || "#FFFFFF")};font-family:${escapeAttr(fontStack(block.fontFamily))};font-size:14px;font-weight:700;text-decoration:none"
             >${escapeHtml(block.label || "Button")}</a>
           </div>
         `;
@@ -745,8 +994,8 @@
 
       case "social":
         return `
-          <div style="background:${background};padding:${padding}px;text-align:${align};color:${escapeAttr(block.color || palette.darkTeal)};font-family:Poppins,Arial,sans-serif;font-size:13px;font-weight:700">
-            ${escapeHtml(block.content || "Instagram  ·  LinkedIn  ·  Website")}
+          <div style="background:${background};padding:${padding}px;text-align:${align};color:${escapeAttr(block.color || palette.darkTeal)};font-family:${escapeAttr(fontStack(block.fontFamily))};font-size:13px;font-weight:700">
+            ${renderSocialLinks(block)}
           </div>
         `;
 
@@ -756,12 +1005,12 @@
             <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0">
               <tr>
                 <td width="50%" valign="top" style="padding:0 10px 0 0">
-                  <div style="color:${palette.darkTeal};font-family:Poppins,Arial,sans-serif;font-size:17px;font-weight:800">${escapeHtml(block.leftTitle || "First column")}</div>
-                  <div style="margin-top:7px;color:${palette.ink};font-family:Poppins,Arial,sans-serif;font-size:13px;line-height:1.6">${escapeHtml(block.leftText || "Add supporting content here.")}</div>
+                  <div style="color:${escapeAttr(block.color || palette.darkTeal)};font-family:${escapeAttr(fontStack(block.fontFamily))};font-size:17px;font-weight:800">${escapeHtml(block.leftTitle || "First column")}</div>
+                  <div style="margin-top:7px;color:${escapeAttr(block.textColor || palette.ink)};font-family:${escapeAttr(fontStack(block.fontFamily))};font-size:13px;line-height:1.6">${escapeHtml(block.leftText || "Add supporting content here.")}</div>
                 </td>
                 <td width="50%" valign="top" style="padding:0 0 0 10px">
-                  <div style="color:${palette.darkTeal};font-family:Poppins,Arial,sans-serif;font-size:17px;font-weight:800">${escapeHtml(block.rightTitle || "Second column")}</div>
-                  <div style="margin-top:7px;color:${palette.ink};font-family:Poppins,Arial,sans-serif;font-size:13px;line-height:1.6">${escapeHtml(block.rightText || "Add supporting content here.")}</div>
+                  <div style="color:${escapeAttr(block.color || palette.darkTeal)};font-family:${escapeAttr(fontStack(block.fontFamily))};font-size:17px;font-weight:800">${escapeHtml(block.rightTitle || "Second column")}</div>
+                  <div style="margin-top:7px;color:${escapeAttr(block.textColor || palette.ink)};font-family:${escapeAttr(fontStack(block.fontFamily))};font-size:13px;line-height:1.6">${escapeHtml(block.rightText || "Add supporting content here.")}</div>
                 </td>
               </tr>
             </table>
@@ -771,6 +1020,74 @@
       default:
         return "";
     }
+  }
+
+  function renderLinkedImage(block) {
+    const image = `<img src="${escapeAttr(sanitizeUrl(block.src || placeholderImage()))}" alt="${escapeAttr(block.alt || "")}" style="display:block;width:100%;height:${clampNumber(block.height, 100, 650, 280)}px;object-fit:${escapeAttr(block.fit || "cover")};border-radius:${clampNumber(block.radius, 0, 50, 0)}px" />`;
+    return block.url
+      ? `<a href="${escapeAttr(sanitizeUrl(block.url))}" target="_blank" style="display:block;text-decoration:none">${image}</a>`
+      : image;
+  }
+
+  function renderGalleryImage(src, link, alt, height, radius) {
+    const image = `<img src="${escapeAttr(sanitizeUrl(src || placeholderImage()))}" alt="${escapeAttr(alt || "Gallery image")}" style="display:block;width:100%;height:${clampNumber(height, 100, 440, 220)}px;object-fit:cover;border-radius:${clampNumber(radius, 0, 40, 12)}px" />`;
+    return link ? `<a href="${escapeAttr(sanitizeUrl(link))}" style="display:block">${image}</a>` : image;
+  }
+
+  function getSocialItems(block) {
+    if (Array.isArray(block.items) && block.items.length) return block.items;
+    const labels = String(block.content || "Instagram · LinkedIn · Website")
+      .split(/\s*[·|]\s*/)
+      .filter(Boolean);
+    return labels.map((label, index) => ({
+      icon: ["◎", "in", "↗"][index] || "•",
+      label,
+      url: "#",
+    }));
+  }
+
+  function renderSocialLinks(block) {
+    return getSocialItems(block)
+      .map((item) => `
+        <a href="${escapeAttr(sanitizeUrl(item.url || "#"))}" style="display:inline-flex;align-items:center;gap:6px;margin:5px 8px;color:${escapeAttr(block.color || palette.darkTeal)};text-decoration:none">
+          <span style="display:inline-grid;width:28px;height:28px;place-items:center;border:1px solid currentColor;border-radius:99px;font-size:10px;font-weight:800">${escapeHtml(item.icon || "•")}</span>
+          <span>${escapeHtml(item.label || "Social")}</span>
+        </a>
+      `)
+      .join("");
+  }
+
+  function fontStack(fontName = "Poppins") {
+    const stacks = {
+      Poppins: "Poppins, Arial, sans-serif",
+      Inter: "Inter, Arial, sans-serif",
+      Montserrat: "Montserrat, Arial, sans-serif",
+      "Playfair Display": "'Playfair Display', Georgia, serif",
+      Lora: "Lora, Georgia, serif",
+      Merriweather: "Merriweather, Georgia, serif",
+      Arial: "Arial, Helvetica, sans-serif",
+      Georgia: "Georgia, 'Times New Roman', serif",
+      Verdana: "Verdana, Geneva, sans-serif",
+    };
+    return stacks[fontName] || stacks.Poppins;
+  }
+
+  function sanitizeUrl(value) {
+    const url = String(value || "").trim();
+    if (!url) return "";
+    if (/^(https?:|mailto:|tel:|#|\/)/i.test(url)) return url;
+    if (/^data:image\/(png|jpe?g|gif|webp|svg\+xml);/i.test(url)) return url;
+    return "#";
+  }
+
+  function contrastText(color) {
+    const match = String(color || "").match(/^#([0-9a-f]{6})$/i);
+    if (!match) return "#FFFFFF";
+    const value = parseInt(match[1], 16);
+    const red = (value >> 16) & 255;
+    const green = (value >> 8) & 255;
+    const blue = value & 255;
+    return red * 0.299 + green * 0.587 + blue * 0.114 > 165 ? "#193845" : "#FFFFFF";
   }
 
   function renderPropertiesPanel() {
@@ -786,7 +1103,7 @@
       `;
     }
 
-    const common = ["heading", "text", "image", "button", "divider", "social", "columns"].includes(block.type)
+    const common = ["heading", "text", "richtext", "image", "logo", "gallery", "hero", "quote", "list", "callout", "product", "button", "divider", "social", "columns"].includes(block.type)
       ? `
         ${numberField("Padding", "padding", block.padding ?? 28, 0, 80)}
         ${colorField("Background", "background", block.background || "#FFFFFF")}
@@ -798,6 +1115,7 @@
     if (block.type === "heading" || block.type === "text") {
       specific = `
         ${textAreaField("Content", "content", block.content || "")}
+        ${selectField("Font", "fontFamily", block.fontFamily || "Poppins", FONT_OPTIONS)}
         ${numberField("Font size", "fontSize", block.fontSize || (block.type === "heading" ? 34 : 15), block.type === "heading" ? 16 : 10, block.type === "heading" ? 72 : 28)}
         ${selectField("Alignment", "align", block.align || "left", [
           ["left", "Left"],
@@ -810,10 +1128,121 @@
 
     if (block.type === "image") {
       specific = `
+        ${imageUploadField("Choose image from computer", "src")}
         ${textField("Image URL", "src", block.src || "")}
+        ${textField("Image hyperlink", "url", block.url || "")}
         ${textField("Alt text", "alt", block.alt || "")}
         ${numberField("Image height", "height", block.height || 280, 100, 650)}
         ${numberField("Corner radius", "radius", block.radius || 0, 0, 50)}
+        ${selectField("Image fit", "fit", block.fit || "cover", [
+          ["cover", "Crop to fill"],
+          ["contain", "Show full image"],
+        ])}
+      `;
+    }
+
+    if (block.type === "richtext") {
+      specific = `
+        <div class="property-help">Formatted content pasted into the canvas is safely cleaned before it is saved. You can also edit the HTML below.</div>
+        ${textAreaField("Formatted HTML", "html", block.html || "")}
+        ${selectField("Font", "fontFamily", block.fontFamily || "Poppins", FONT_OPTIONS)}
+        ${numberField("Font size", "fontSize", block.fontSize || 15, 10, 28)}
+        ${colorField("Text color", "color", block.color || palette.ink)}
+      `;
+    }
+
+    if (block.type === "hero") {
+      specific = `
+        ${textField("Eyebrow", "eyebrow", block.eyebrow || "")}
+        ${textAreaField("Headline", "title", block.title || "")}
+        ${textAreaField("Supporting text", "text", block.text || "")}
+        ${textField("Button text", "buttonLabel", block.buttonLabel || "")}
+        ${textField("Button URL", "url", block.url || "#")}
+        ${selectField("Font", "fontFamily", block.fontFamily || "Poppins", FONT_OPTIONS)}
+        ${numberField("Headline size", "fontSize", block.fontSize || 44, 28, 64)}
+        ${selectField("Alignment", "align", block.align || "left", [["left", "Left"], ["center", "Center"], ["right", "Right"]])}
+        ${colorField("Text color", "color", block.color || palette.ink)}
+        ${colorField("Accent color", "accentColor", block.accentColor || palette.red)}
+      `;
+    }
+
+    if (block.type === "quote") {
+      specific = `
+        ${textAreaField("Quote", "quote", block.quote || "")}
+        ${textField("Attribution", "attribution", block.attribution || "")}
+        ${selectField("Font", "fontFamily", block.fontFamily || "Lora", FONT_OPTIONS)}
+        ${numberField("Font size", "fontSize", block.fontSize || 24, 16, 42)}
+        ${selectField("Alignment", "align", block.align || "center", [["left", "Left"], ["center", "Center"], ["right", "Right"]])}
+        ${colorField("Text color", "color", block.color || palette.darkTeal)}
+      `;
+    }
+
+    if (block.type === "list") {
+      specific = `
+        ${textField("List heading", "title", block.title || "")}
+        ${textAreaField("Items (one per line)", "items", block.items || "")}
+        ${selectField("List style", "listStyle", block.listStyle || "bullet", [["bullet", "Bullets"], ["numbered", "Numbers"], ["check", "Checks"]])}
+        ${selectField("Font", "fontFamily", block.fontFamily || "Poppins", FONT_OPTIONS)}
+        ${numberField("Font size", "fontSize", block.fontSize || 15, 11, 24)}
+        ${colorField("Text color", "color", block.color || palette.ink)}
+        ${colorField("Marker color", "accentColor", block.accentColor || palette.teal)}
+      `;
+    }
+
+    if (block.type === "logo") {
+      specific = `
+        ${imageUploadField("Upload logo", "src")}
+        ${textField("Logo image URL", "src", block.src || "")}
+        ${textField("Text logo (used when image is empty)", "brandText", block.brandText || "YOUR BRAND")}
+        ${textField("Logo hyperlink", "url", block.url || "")}
+        ${textField("Alt text", "alt", block.alt || "")}
+        ${numberField("Logo width", "width", block.width || 180, 60, 420)}
+        ${selectField("Alignment", "align", block.align || "center", [["left", "Left"], ["center", "Center"], ["right", "Right"]])}
+        ${selectField("Text logo font", "fontFamily", block.fontFamily || "Poppins", FONT_OPTIONS)}
+        ${colorField("Text logo color", "color", block.color || palette.darkTeal)}
+      `;
+    }
+
+    if (block.type === "gallery") {
+      specific = `
+        ${imageUploadField("Upload left image", "src1")}
+        ${textField("Left image URL", "src1", block.src1 || "")}
+        ${textField("Left hyperlink", "link1", block.link1 || "")}
+        ${imageUploadField("Upload right image", "src2")}
+        ${textField("Right image URL", "src2", block.src2 || "")}
+        ${textField("Right hyperlink", "link2", block.link2 || "")}
+        ${numberField("Image height", "height", block.height || 220, 100, 440)}
+        ${numberField("Gap", "gap", block.gap || 10, 0, 32)}
+        ${numberField("Corner radius", "radius", block.radius || 12, 0, 40)}
+      `;
+    }
+
+    if (block.type === "callout") {
+      specific = `
+        ${textField("Heading", "title", block.title || "")}
+        ${textAreaField("Message", "text", block.text || "")}
+        ${selectField("Font", "fontFamily", block.fontFamily || "Poppins", FONT_OPTIONS)}
+        ${colorField("Text color", "color", block.color || palette.ink)}
+        ${colorField("Accent color", "accentColor", block.accentColor || palette.red)}
+        ${colorField("Card color", "cardColor", block.cardColor || "#FFFFFF")}
+        ${numberField("Corner radius", "radius", block.radius || 12, 0, 32)}
+      `;
+    }
+
+    if (block.type === "product") {
+      specific = `
+        ${imageUploadField("Upload product image", "src")}
+        ${textField("Image URL", "src", block.src || "")}
+        ${textField("Product name", "title", block.title || "")}
+        ${textAreaField("Description", "description", block.description || "")}
+        ${textField("Price", "price", block.price || "")}
+        ${textField("Button text", "buttonLabel", block.buttonLabel || "")}
+        ${textField("Button URL", "url", block.url || "#")}
+        ${selectField("Font", "fontFamily", block.fontFamily || "Poppins", FONT_OPTIONS)}
+        ${colorField("Text color", "color", block.color || palette.ink)}
+        ${colorField("Accent color", "accentColor", block.accentColor || palette.red)}
+        ${numberField("Image height", "height", block.height || 230, 140, 420)}
+        ${numberField("Image radius", "radius", block.radius || 14, 0, 40)}
       `;
     }
 
@@ -821,6 +1250,7 @@
       specific = `
         ${textField("Button text", "label", block.label || "Button")}
         ${textField("Destination URL", "url", block.url || "#")}
+        ${selectField("Font", "fontFamily", block.fontFamily || "Poppins", FONT_OPTIONS)}
         ${selectField("Alignment", "align", block.align || "left", [
           ["left", "Left"],
           ["center", "Center"],
@@ -849,12 +1279,14 @@
 
     if (block.type === "social") {
       specific = `
-        ${textField("Social links text", "content", block.content || "")}
+        ${renderSocialEditor(block)}
+        <button type="button" class="soft-button compact" data-add-social>Add social link</button>
         ${selectField("Alignment", "align", block.align || "center", [
           ["left", "Left"],
           ["center", "Center"],
           ["right", "Right"],
         ])}
+        ${selectField("Font", "fontFamily", block.fontFamily || "Poppins", FONT_OPTIONS)}
         ${colorField("Text color", "color", block.color || palette.darkTeal)}
       `;
     }
@@ -865,6 +1297,9 @@
         ${textAreaField("Left content", "leftText", block.leftText || "")}
         ${textField("Right heading", "rightTitle", block.rightTitle || "")}
         ${textAreaField("Right content", "rightText", block.rightText || "")}
+        ${selectField("Font", "fontFamily", block.fontFamily || "Poppins", FONT_OPTIONS)}
+        ${colorField("Heading color", "color", block.color || palette.darkTeal)}
+        ${colorField("Text color", "textColor", block.textColor || palette.ink)}
       `;
     }
 
@@ -884,6 +1319,30 @@
       <label>${escapeHtml(label)}
         <textarea data-property="${property}">${escapeHtml(value)}</textarea>
       </label>
+    `;
+  }
+
+  function imageUploadField(label, property) {
+    return `
+      <label class="file-property-control">${escapeHtml(label)}
+        <input type="file" accept="image/*" data-image-property="${escapeAttr(property)}" />
+        <span class="file-property-button">Choose local file</span>
+      </label>
+    `;
+  }
+
+  function renderSocialEditor(block) {
+    return `
+      <div class="social-link-editor">
+        ${getSocialItems(block).map((item, index) => `
+          <div class="social-link-row">
+            <input type="text" value="${escapeAttr(item.icon || "")}" data-social-index="${index}" data-social-key="icon" aria-label="Social icon" placeholder="Icon" />
+            <input type="text" value="${escapeAttr(item.label || "")}" data-social-index="${index}" data-social-key="label" aria-label="Social label" placeholder="Label" />
+            <input type="url" value="${escapeAttr(item.url || "")}" data-social-index="${index}" data-social-key="url" aria-label="Social URL" placeholder="https://" />
+            <button type="button" class="danger-button" data-remove-social="${index}" aria-label="Remove ${escapeAttr(item.label || "social link")}">×</button>
+          </div>
+        `).join("")}
+      </div>
     `;
   }
 
@@ -940,15 +1399,41 @@
       });
     });
 
-    appView.querySelectorAll("[data-copy-color]").forEach((swatch) => {
-      swatch.addEventListener("click", async () => {
-        try {
-          await navigator.clipboard.writeText(swatch.dataset.copyColor);
-          showToast("Color copied", swatch.dataset.copyColor);
-        } catch {
-          showToast("Palette color", swatch.dataset.copyColor);
-        }
-      });
+    appView.querySelectorAll("[data-apply-color]").forEach((swatch) => {
+      swatch.addEventListener("click", () => applyPaletteColor(swatch.dataset.applyColor));
+    });
+
+    document.getElementById("palettePreset").addEventListener("change", (event) => {
+      const preset = PALETTE_PRESETS[event.target.value];
+      if (!preset) return;
+      state.activePalette = event.target.value;
+      state.brandColors = [...preset.colors];
+      saveState();
+      renderCurrentView();
+      showToast("Palette updated", `${preset.name} is ready to use.`);
+    });
+
+    document.getElementById("addPaletteColorButton").addEventListener("click", () => {
+      const color = document.getElementById("customPaletteColor").value;
+      if (!state.brandColors.includes(color)) state.brandColors.push(color);
+      state.brandColors = state.brandColors.slice(-10);
+      saveState();
+      renderCurrentView();
+      showToast("Brand color added", color);
+    });
+
+    const pasteArea = document.getElementById("newsletterPasteArea");
+    pasteArea.addEventListener("focus", () => {
+      if (pasteArea.textContent.includes("Ctrl+V")) pasteArea.textContent = "";
+    });
+    pasteArea.addEventListener("blur", () => {
+      if (!pasteArea.textContent.trim()) pasteArea.textContent = "Click here, then press Ctrl+V";
+    });
+    pasteArea.addEventListener("paste", async (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      await importClipboardData(event.clipboardData);
+      pasteArea.textContent = "Click here, then press Ctrl+V";
     });
 
     canvas.addEventListener("dragover", (event) => {
@@ -956,8 +1441,13 @@
       event.dataTransfer.dropEffect = state.draggedBlockId ? "move" : "copy";
     });
 
-    canvas.addEventListener("drop", (event) => {
+    canvas.addEventListener("drop", async (event) => {
       event.preventDefault();
+      const imageFiles = [...event.dataTransfer.files].filter((file) => file.type.startsWith("image/"));
+      if (imageFiles.length) {
+        await addImageFiles(imageFiles, getDropIndex(canvas, event.clientY));
+        return;
+      }
       const type = event.dataTransfer.getData("text/block-type");
       const movingId = event.dataTransfer.getData("text/block-id");
       const index = getDropIndex(canvas, event.clientY);
@@ -1010,6 +1500,8 @@
 
     propertiesPanel.addEventListener("input", handlePropertyChange);
     propertiesPanel.addEventListener("change", handlePropertyChange);
+    propertiesPanel.addEventListener("change", handlePropertyPanelChange);
+    propertiesPanel.addEventListener("click", handlePropertyPanelClick);
 
     const deleteSelectedButton = document.getElementById("deleteSelectedButton");
     if (deleteSelectedButton) {
@@ -1025,17 +1517,32 @@
     });
 
     document.getElementById("previewButton").addEventListener("click", openPreview);
+    document.getElementById("saveTemplateButton").addEventListener("click", saveCurrentAsTemplate);
+    document.getElementById("exportHtmlButton").addEventListener("click", exportNewsletterHtml);
     document.getElementById("openSendButton").addEventListener("click", openSendModal);
     document.getElementById("undoButton").addEventListener("click", undo);
     document.getElementById("redoButton").addEventListener("click", redo);
   }
 
   function handlePropertyChange(event) {
+    const socialInput = event.target.closest("[data-social-index]");
     const input = event.target.closest("[data-property]");
-    if (!input || !state.selectedBlockId) return;
+    if ((!input && !socialInput) || !state.selectedBlockId) return;
 
     const block = state.blocks.find((item) => item.id === state.selectedBlockId);
     if (!block) return;
+
+    if (socialInput) {
+      if (!Array.isArray(block.items)) block.items = getSocialItems(block);
+      const item = block.items[Number(socialInput.dataset.socialIndex)];
+      if (!item) return;
+      item[socialInput.dataset.socialKey] = socialInput.value;
+      const canvas = document.getElementById("emailCanvas");
+      const blockElement = canvas?.querySelector(`[data-block-id="${cssEscape(block.id)}"] .email-content`);
+      if (blockElement) blockElement.innerHTML = renderBlockContent(block);
+      scheduleSaveIndicator();
+      return;
+    }
 
     if (!input.dataset.historyCaptured) {
       snapshotBeforeChange();
@@ -1050,7 +1557,7 @@
     }
 
     const property = input.dataset.property;
-    const numberProperties = ["padding", "fontSize", "height", "radius", "width", "thickness"];
+    const numberProperties = ["padding", "fontSize", "height", "radius", "width", "thickness", "gap"];
     block[property] = numberProperties.includes(property) ? Number(input.value) : input.value;
 
     // Synchronize paired color inputs.
@@ -1066,6 +1573,256 @@
     const blockElement = canvas?.querySelector(`[data-block-id="${cssEscape(block.id)}"] .email-content`);
     if (blockElement) blockElement.innerHTML = renderBlockContent(block);
     scheduleSaveIndicator();
+  }
+
+  async function handlePropertyPanelChange(event) {
+    const fileInput = event.target.closest("[data-image-property]");
+    if (!fileInput || !fileInput.files?.[0] || !state.selectedBlockId) return;
+    const block = state.blocks.find((item) => item.id === state.selectedBlockId);
+    if (!block) return;
+
+    try {
+      const dataUrl = await prepareImageFile(fileInput.files[0]);
+      snapshotBeforeChange();
+      block[fileInput.dataset.imageProperty] = dataUrl;
+      if (!block.alt) block.alt = fileNameToAlt(fileInput.files[0].name);
+      commitBuilderChange();
+      showToast("Image added", `${fileInput.files[0].name} is now in your newsletter.`);
+    } catch (error) {
+      showToast("Image could not be added", error.message || "Choose a valid image file.", "error");
+    }
+  }
+
+  function handlePropertyPanelClick(event) {
+    const addButton = event.target.closest("[data-add-social]");
+    const removeButton = event.target.closest("[data-remove-social]");
+    if ((!addButton && !removeButton) || !state.selectedBlockId) return;
+
+    const block = state.blocks.find((item) => item.id === state.selectedBlockId);
+    if (!block || block.type !== "social") return;
+    snapshotBeforeChange();
+    block.items = getSocialItems(block).map((item) => ({ ...item }));
+
+    if (addButton) {
+      block.items.push({ icon: "↗", label: "New link", url: "https://" });
+    } else {
+      block.items.splice(Number(removeButton.dataset.removeSocial), 1);
+    }
+
+    commitBuilderChange();
+  }
+
+  function applyPaletteColor(color) {
+    const block = state.blocks.find((item) => item.id === state.selectedBlockId);
+    if (!block) {
+      navigator.clipboard?.writeText(color).catch(() => {});
+      showToast("Color copied", `${color} — select a block to apply it directly.`);
+      return;
+    }
+
+    const target = document.getElementById("paletteTarget")?.value || "accent";
+    snapshotBeforeChange();
+    if (target === "background") {
+      block.background = color;
+    } else if (block.type === "button") {
+      block.buttonColor = color;
+    } else if (["hero", "list", "callout", "product"].includes(block.type)) {
+      block.accentColor = color;
+    } else if (block.type === "divider") {
+      block.color = color;
+    } else if (block.type === "image" || block.type === "gallery") {
+      block.background = color;
+    } else {
+      block.color = color;
+    }
+    commitBuilderChange();
+    showToast("Color applied", `${color} was applied to the selected block.`);
+  }
+
+  function handleBuilderCopy(event) {
+    if (state.view !== "builder" || isEditableTarget(event.target) || !state.selectedBlockId) return;
+    const block = state.blocks.find((item) => item.id === state.selectedBlockId);
+    if (!block || !event.clipboardData) return;
+    copiedBlock = deepClone(block);
+    event.preventDefault();
+    event.clipboardData.setData("text/plain", `LAYOUTLETTER_BLOCK:${JSON.stringify(copiedBlock)}`);
+    showToast("Block copied", "Press Ctrl+V anywhere on the canvas to paste it.");
+  }
+
+  async function handleBuilderPaste(event) {
+    if (state.view !== "builder" || isEditableTarget(event.target) || !event.clipboardData) return;
+    event.preventDefault();
+    await importClipboardData(event.clipboardData);
+  }
+
+  async function importClipboardData(clipboardData) {
+    const images = [...(clipboardData.items || [])]
+      .filter((item) => item.kind === "file" && item.type.startsWith("image/"))
+      .map((item) => item.getAsFile())
+      .filter(Boolean);
+
+    if (images.length) {
+      await addImageFiles(images);
+      return;
+    }
+
+    const plainText = clipboardData.getData("text/plain") || "";
+    if (plainText.startsWith("LAYOUTLETTER_BLOCK:")) {
+      try {
+        const pasted = JSON.parse(plainText.slice("LAYOUTLETTER_BLOCK:".length));
+        snapshotBeforeChange();
+        pasted.id = uid();
+        state.blocks.push(pasted);
+        state.selectedBlockId = pasted.id;
+        commitBuilderChange();
+        showToast("Block pasted", `${capitalize(pasted.type)} was added to the canvas.`);
+        return;
+      } catch {
+        // Continue to normal text paste if the clipboard marker is incomplete.
+      }
+    }
+
+    if (!plainText && copiedBlock) {
+      snapshotBeforeChange();
+      const pasted = { ...deepClone(copiedBlock), id: uid() };
+      state.blocks.push(pasted);
+      state.selectedBlockId = pasted.id;
+      commitBuilderChange();
+      return;
+    }
+
+    const html = clipboardData.getData("text/html");
+    if (html && stripHtml(html).trim()) {
+      addRichTextBlock(sanitizeHtml(html), "Formatted newsletter pasted");
+      return;
+    }
+
+    if (plainText.trim()) {
+      const paragraphs = plainText
+        .trim()
+        .split(/\n{2,}/)
+        .map((paragraph) => `<p>${escapeHtml(paragraph).replace(/\n/g, "<br>")}</p>`)
+        .join("");
+      addRichTextBlock(paragraphs, "Text pasted");
+      return;
+    }
+
+    showToast("Nothing to paste", "Copy a block, image, formatted email, or text first.", "error");
+  }
+
+  function addRichTextBlock(html, toastTitle) {
+    snapshotBeforeChange();
+    const block = createBlock("richtext");
+    block.html = html;
+    state.blocks.push(block);
+    state.selectedBlockId = block.id;
+    commitBuilderChange();
+    showToast(toastTitle, "The content is now an editable rich-content block.");
+  }
+
+  async function addImageFiles(files, index = state.blocks.length) {
+    const validFiles = files.filter((file) => file?.type?.startsWith("image/"));
+    if (!validFiles.length) return;
+    try {
+      const sources = await Promise.all(validFiles.map(prepareImageFile));
+      snapshotBeforeChange();
+      const blocks = sources.map((src, fileIndex) => ({
+        ...createBlock("image"),
+        src,
+        alt: fileNameToAlt(validFiles[fileIndex].name),
+      }));
+      state.blocks.splice(index, 0, ...blocks);
+      state.selectedBlockId = blocks[blocks.length - 1].id;
+      commitBuilderChange();
+      showToast("Images added", `${blocks.length} local image${blocks.length === 1 ? "" : "s"} added to the canvas.`);
+    } catch (error) {
+      showToast("Image could not be added", error.message || "Choose a valid image file.", "error");
+    }
+  }
+
+  async function prepareImageFile(file) {
+    if (!file || !file.type.startsWith("image/")) throw new Error("The selected file is not an image.");
+    if (file.type === "image/gif" || file.type === "image/svg+xml") return readFileAsDataUrl(file);
+
+    const original = await readFileAsDataUrl(file);
+    const image = await loadImage(original);
+    const maxDimension = 1600;
+    const scale = Math.min(1, maxDimension / Math.max(image.naturalWidth, image.naturalHeight));
+    const canvas = document.createElement("canvas");
+    canvas.width = Math.max(1, Math.round(image.naturalWidth * scale));
+    canvas.height = Math.max(1, Math.round(image.naturalHeight * scale));
+    canvas.getContext("2d").drawImage(image, 0, 0, canvas.width, canvas.height);
+    const mime = file.type === "image/png" ? "image/png" : "image/jpeg";
+    return canvas.toDataURL(mime, mime === "image/jpeg" ? 0.86 : undefined);
+  }
+
+  function readFileAsDataUrl(file) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = () => reject(new Error("The image file could not be read."));
+      reader.readAsDataURL(file);
+    });
+  }
+
+  function loadImage(src) {
+    return new Promise((resolve, reject) => {
+      const image = new Image();
+      image.onload = () => resolve(image);
+      image.onerror = () => reject(new Error("The image file could not be decoded."));
+      image.src = src;
+    });
+  }
+
+  function fileNameToAlt(name) {
+    return String(name || "Newsletter image")
+      .replace(/\.[^.]+$/, "")
+      .replace(/[-_]+/g, " ")
+      .trim();
+  }
+
+  function isEditableTarget(target) {
+    return Boolean(target?.closest?.("input, textarea, select, [contenteditable='true']"));
+  }
+
+  function saveCurrentAsTemplate() {
+    if (!state.blocks.length) {
+      showToast("Nothing to save", "Add at least one block before creating a template.", "error");
+      return;
+    }
+    const suggested = state.campaignName && state.campaignName !== "Untitled campaign" ? state.campaignName : "My newsletter template";
+    document.getElementById("templateNameInput").value = suggested;
+    openModal("templateModal");
+    setTimeout(() => document.getElementById("templateNameInput").focus(), 0);
+  }
+
+  function handleSaveTemplateSubmit(event) {
+    event.preventDefault();
+    const name = document.getElementById("templateNameInput").value.trim();
+    if (!name) return;
+    state.customTemplates.unshift({
+      id: `custom_${uid()}`,
+      name,
+      description: "A reusable template saved from your builder.",
+      accent: "custom",
+      custom: true,
+      createdAt: new Date().toISOString(),
+      blocks: state.blocks.map((block) => ({ ...deepClone(block), id: uid() })),
+    });
+    saveState();
+    closeModal("templateModal");
+    showToast("Template created", `${name} is now available in the Templates tab.`);
+  }
+
+  function exportNewsletterHtml() {
+    const blob = new Blob([generateEmailDocument()], { type: "text/html;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `${slugify(state.campaignName || "newsletter")}.html`;
+    link.click();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+    showToast("HTML exported", "Your newsletter is ready to upload or share.");
   }
 
   function addBlock(type) {
@@ -1144,6 +1901,8 @@
 
     propertiesPanel.addEventListener("input", handlePropertyChange);
     propertiesPanel.addEventListener("change", handlePropertyChange);
+    propertiesPanel.addEventListener("change", handlePropertyPanelChange);
+    propertiesPanel.addEventListener("click", handlePropertyPanelClick);
   }
 
   function createBlock(type) {
@@ -1161,6 +1920,7 @@
         fontSize: 34,
         color: palette.darkTeal,
         align: "left",
+        fontFamily: "Poppins",
       },
       text: {
         ...base,
@@ -1168,13 +1928,108 @@
         fontSize: 15,
         color: palette.ink,
         align: "left",
+        fontFamily: "Poppins",
+      },
+      richtext: {
+        ...base,
+        html: "<p><strong>Paste formatted content</strong> or edit this rich text in block settings.</p>",
+        fontSize: 15,
+        color: palette.ink,
+        fontFamily: "Poppins",
+      },
+      hero: {
+        ...base,
+        eyebrow: "FEATURED STORY",
+        title: "Give your main idea room to shine.",
+        text: "Use this section for a launch, announcement, lead story, or welcome message.",
+        buttonLabel: "Learn more",
+        url: "#",
+        align: "left",
+        fontSize: 44,
+        color: palette.ink,
+        accentColor: palette.red,
+        fontFamily: "Poppins",
+        padding: 44,
+        background: palette.blush,
+      },
+      quote: {
+        ...base,
+        quote: "A memorable idea belongs here.",
+        attribution: "— Your name",
+        fontSize: 24,
+        color: palette.darkTeal,
+        align: "center",
+        fontFamily: "Lora",
+        background: "#EAF6F5",
+        padding: 38,
+      },
+      list: {
+        ...base,
+        title: "Key takeaways",
+        items: "First useful point\nSecond useful point\nThird useful point",
+        listStyle: "check",
+        fontSize: 15,
+        color: palette.ink,
+        accentColor: palette.teal,
+        fontFamily: "Poppins",
       },
       image: {
         ...base,
         src: placeholderImage(),
         alt: "Newsletter image",
+        url: "",
         height: 280,
         radius: 16,
+        fit: "cover",
+      },
+      logo: {
+        ...base,
+        src: "",
+        alt: "Brand logo",
+        brandText: "YOUR BRAND",
+        url: "#",
+        width: 180,
+        align: "center",
+        color: palette.darkTeal,
+        fontFamily: "Poppins",
+      },
+      gallery: {
+        ...base,
+        src1: placeholderImage(),
+        src2: placeholderImage(),
+        link1: "",
+        link2: "",
+        alt1: "Left gallery image",
+        alt2: "Right gallery image",
+        height: 220,
+        gap: 10,
+        radius: 12,
+      },
+      callout: {
+        ...base,
+        title: "Important update",
+        text: "Highlight an announcement, offer, reminder, or key takeaway.",
+        color: palette.ink,
+        accentColor: palette.red,
+        cardColor: "#FFFFFF",
+        radius: 12,
+        fontFamily: "Poppins",
+        background: palette.blush,
+      },
+      product: {
+        ...base,
+        src: placeholderImage(),
+        alt: "Featured product",
+        title: "Featured product",
+        description: "Describe what makes this product or offer worth exploring.",
+        price: "$49",
+        buttonLabel: "Shop now",
+        url: "#",
+        height: 230,
+        radius: 14,
+        color: palette.ink,
+        accentColor: palette.red,
+        fontFamily: "Poppins",
       },
       button: {
         ...base,
@@ -1184,6 +2039,7 @@
         textColor: "#FFFFFF",
         align: "left",
         radius: 12,
+        fontFamily: "Poppins",
       },
       divider: {
         ...base,
@@ -1199,9 +2055,14 @@
       },
       social: {
         ...base,
-        content: "Instagram  ·  LinkedIn  ·  Website",
+        items: [
+          { icon: "◎", label: "Instagram", url: "https://instagram.com" },
+          { icon: "in", label: "LinkedIn", url: "https://linkedin.com" },
+          { icon: "↗", label: "Website", url: "https://example.com" },
+        ],
         color: palette.darkTeal,
         align: "center",
+        fontFamily: "Poppins",
       },
       columns: {
         ...base,
@@ -1209,6 +2070,9 @@
         leftText: "Share a useful detail or benefit here.",
         rightTitle: "Second idea",
         rightText: "Add another concise supporting point.",
+        color: palette.darkTeal,
+        textColor: palette.ink,
+        fontFamily: "Poppins",
       },
     };
 
@@ -1277,17 +2141,19 @@
 
   /* Templates */
   function renderTemplates() {
+    const availableTemplates = getAllTemplates();
     return `
       <section class="section-heading">
         <div>
           <span class="eyebrow">READY-TO-USE DESIGNS</span>
           <h2>Start polished, then make it yours.</h2>
-          <p>Each template uses email-safe blocks that can be rearranged and customized inside the LayoutLetter builder.</p>
+          <p>Every card below shows the template’s real content and layout. Preview it full-size or open it in the builder.</p>
         </div>
+        <span class="template-count">${availableTemplates.length} templates</span>
       </section>
 
       <section class="template-grid">
-        ${Object.values(templates).map(renderTemplateCard).join("")}
+        ${availableTemplates.map(renderTemplateCard).join("")}
       </section>
     `;
   }
@@ -1296,31 +2162,30 @@
     return `
       <article class="template-card">
         <div class="template-preview">
-          <div class="template-paper">
-            <div class="tp-hero ${template.accent === "red" ? "red" : template.accent === "light" ? "light" : ""}"></div>
-            <div class="tp-body">
-              <div class="tp-line head"></div>
-              <div class="tp-line"></div>
-              <div class="tp-line short"></div>
-              <div class="tp-button"></div>
-            </div>
+          <div class="template-live-preview">
+            ${template.blocks.map(renderBlockContent).join("")}
           </div>
+          ${template.custom ? `<span class="custom-template-badge">Your template</span>` : ""}
         </div>
         <div class="template-card__body">
           <div>
             <h3>${escapeHtml(template.name)}</h3>
             <p>${escapeHtml(template.description)}</p>
           </div>
-          <button class="primary-button" data-template-id="${template.id}">Use</button>
+          <div class="template-card__actions">
+            <button class="soft-button compact" data-preview-template="${template.id}">Preview</button>
+            <button class="primary-button" data-use-template="${template.id}">Use</button>
+            ${template.custom ? `<button class="danger-button" data-delete-template="${template.id}">Delete</button>` : ""}
+          </div>
         </div>
       </article>
     `;
   }
 
   function bindTemplates() {
-    appView.querySelectorAll("[data-template-id]").forEach((button) => {
+    appView.querySelectorAll("[data-use-template]").forEach((button) => {
       button.addEventListener("click", () => {
-        const template = templates[button.dataset.templateId];
+        const template = findTemplate(button.dataset.useTemplate);
         if (!template) return;
         state.blocks = cloneTemplateBlocks(template.id);
         state.campaignName = template.name;
@@ -1331,10 +2196,42 @@
         showToast("Template loaded", `${template.name} is ready to customize.`);
       });
     });
+
+    appView.querySelectorAll("[data-preview-template]").forEach((button) => {
+      button.addEventListener("click", () => {
+        const template = findTemplate(button.dataset.previewTemplate);
+        if (!template) return;
+        const frame = document.getElementById("modalPreviewFrame");
+        frame.innerHTML = `<div style="width:100%;background:#FFFFFF">${template.blocks.map(renderBlockContent).join("")}${renderRequiredFooter()}</div>`;
+        document.getElementById("previewTitle").textContent = template.name;
+        openModal("previewModal");
+      });
+    });
+
+    appView.querySelectorAll("[data-delete-template]").forEach((button) => {
+      button.addEventListener("click", () => {
+        const template = findTemplate(button.dataset.deleteTemplate);
+        if (!template?.custom) return;
+        if (!window.confirm(`Delete the saved template “${template.name}”?`)) return;
+        state.customTemplates = state.customTemplates.filter((item) => item.id !== template.id);
+        saveState();
+        renderCurrentView();
+        showToast("Template deleted", `${template.name} was removed.`);
+      });
+    });
   }
 
   function cloneTemplateBlocks(templateId) {
-    return templates[templateId].blocks.map((block) => ({ ...deepClone(block), id: uid() }));
+    const template = findTemplate(templateId);
+    return template ? template.blocks.map((block) => ({ ...deepClone(block), id: uid() })) : [];
+  }
+
+  function getAllTemplates() {
+    return [...state.customTemplates, ...Object.values(templates)];
+  }
+
+  function findTemplate(templateId) {
+    return templates[templateId] || state.customTemplates.find((template) => template.id === templateId);
   }
 
   /* Audience */
@@ -1774,6 +2671,7 @@
   function openPreview() {
     const frame = document.getElementById("modalPreviewFrame");
     frame.innerHTML = renderEmailBody();
+    document.getElementById("previewTitle").textContent = state.campaignName || "Newsletter preview";
     frame.classList.remove("mobile");
     frame.classList.add("desktop");
     document.querySelectorAll("[data-preview-size]").forEach((button) => {
@@ -1968,6 +2866,9 @@
       canvasSize: "desktop",
       contacts: defaultContacts,
       campaigns: defaultCampaigns,
+      customTemplates: [],
+      activePalette: "layoutletter",
+      brandColors: [...PALETTE_PRESETS.layoutletter.colors],
       importStats: null,
     };
 
@@ -1999,6 +2900,9 @@
       canvasSize: state.canvasSize,
       contacts: state.contacts,
       campaigns: state.campaigns,
+      customTemplates: state.customTemplates,
+      activePalette: state.activePalette,
+      brandColors: state.brandColors,
       importStats: state.importStats,
     };
     localStorage.setItem(STORAGE_KEY, JSON.stringify(serializable));
@@ -2077,6 +2981,53 @@
 
   function escapeAttr(value) {
     return escapeHtml(value).replace(/`/g, "&#096;");
+  }
+
+  function sanitizeHtml(value) {
+    const parser = new DOMParser();
+    const documentFragment = parser.parseFromString(String(value || ""), "text/html");
+    documentFragment.querySelectorAll("script, style, iframe, object, embed, form, input, button, textarea, select, link, meta, base").forEach((node) => node.remove());
+    documentFragment.querySelectorAll("*").forEach((element) => {
+      [...element.attributes].forEach((attribute) => {
+        const name = attribute.name.toLowerCase();
+        const attributeValue = attribute.value;
+        if (name.startsWith("on") || name === "srcdoc" || name === "contenteditable") {
+          element.removeAttribute(attribute.name);
+        } else if (name === "href" || name === "src") {
+          const safeValue = sanitizeUrl(attributeValue);
+          if (safeValue && safeValue !== "#") element.setAttribute(attribute.name, safeValue);
+          else if (attributeValue.trim() === "#") element.setAttribute(attribute.name, "#");
+          else element.removeAttribute(attribute.name);
+        } else if (name === "style") {
+          const safeStyle = attributeValue
+            .replace(/url\s*\([^)]*\)/gi, "")
+            .replace(/expression\s*\([^)]*\)/gi, "")
+            .replace(/(?:position\s*:\s*fixed|behavior\s*:|javascript:)/gi, "");
+          element.setAttribute("style", safeStyle);
+        }
+      });
+      if (element.tagName === "A") {
+        element.setAttribute("target", "_blank");
+        element.setAttribute("rel", "noopener noreferrer");
+      }
+      if (element.tagName === "IMG") {
+        element.setAttribute("style", `${element.getAttribute("style") || ""};max-width:100%;height:auto`);
+      }
+    });
+    return documentFragment.body.innerHTML;
+  }
+
+  function stripHtml(value) {
+    const parser = new DOMParser();
+    return parser.parseFromString(String(value || ""), "text/html").body.textContent || "";
+  }
+
+  function slugify(value) {
+    return String(value || "newsletter")
+      .toLowerCase()
+      .trim()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-+|-+$/g, "") || "newsletter";
   }
 
   function nl2br(value) {

@@ -10,10 +10,17 @@ A responsive neumorphic newsletter-builder prototype using the requested palette
 
 ## Included
 
-- Drag-and-drop newsletter builder
-- Editable text, heading, image, button, divider, spacer, social, and two-column blocks
+- Drag-and-drop newsletter builder with keyboard undo/redo, duplicate, delete, copy, and paste shortcuts
+- Sixteen editable content blocks: heading, paragraph, rich text, quote, list, image, logo, gallery, hero, columns, callout, product, button, social links, divider, and spacer
+- Local image upload, image clipboard paste, drag-and-drop images, automatic large-image resizing, alt text, and image hyperlinks
+- Formatted newsletter paste from email clients and document editors with safe HTML cleanup
+- Nine font choices with email-safe fallback stacks
+- Palette presets, reusable brand colors, and direct color application to selected blocks
+- Social icon labels and destination links
 - Desktop and mobile preview
-- Three ready-made templates
+- Six ready-made templates with real-content previews in the Templates tab
+- Save any current newsletter as a reusable custom template
+- Export finished newsletter HTML
 - Manual audience entry
 - CSV and Excel import with email-column detection
 - Duplicate and invalid-email handling
