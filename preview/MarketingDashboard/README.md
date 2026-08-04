@@ -6,7 +6,7 @@ The Manila posting clock evaluates all seven platform activity models every seco
 
 The daily content planner lets you select a date, platform, content format, campaign topic, and one to four posts. It plots the selected day by hour, compares weekdays and platforms, and spaces multiple posts across distinct high-opportunity windows. The main recommendation always uses the exact peak hour shown in its activity chart.
 
-`automation.html` is an interactive preview of the assisted publishing workflow. It accepts local image or video previews and a caption, builds a multi-platform draft queue, and exports that queue as CSV. Social-account connections and automatic publishing are clearly marked as in development; the preview never uploads or publishes content.
+`automation.html` is an interactive preview of the assisted publishing workflow. It accepts up to ten local images or videos as one ordered gallery post, supports drag-and-drop and button-based reordering, renders platform-aware carousel and collage previews for Facebook, Instagram, X, TikTok, Threads, YouTube, and LinkedIn, and switches between desktop and mobile layouts. Each app can use the dashboard peak, a custom date and time, or a post-now choice before the multi-platform CSV draft queue is prepared. Social-account connections and automatic publishing are clearly marked as in development; the preview never uploads or publishes content.
 
 ## Run it
 

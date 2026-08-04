@@ -61,8 +61,9 @@
           <input id="mediaInput" type="file" accept="image/*,video/*" multiple>
           <span class="upload-icon"><i class="fa-solid fa-cloud-arrow-up"></i></span>
           <strong>Choose images, videos, or reels</strong>
-          <small>or drag and drop them here · up to 8 files</small>
+          <small>or drag and drop them here · up to 10 files</small>
         </label>
+        <div class="media-order-heading"><span>Media order</span><small><i class="fa-solid fa-grip-vertical"></i> Drag items or use the arrow buttons · first item is the cover</small></div>
         <div class="media-preview-grid" id="mediaPreview" aria-live="polite">
           <div class="empty-media"><i class="fa-regular fa-images"></i><span>Your previews will appear here</span></div>
         </div>
@@ -74,8 +75,8 @@
             <small><span id="captionCount">0</span> / 2,200</small>
           </label>
           <label class="form-field">
-            <span>Campaign name</span>
-            <input id="campaignInput" type="text" maxlength="80" placeholder="August launch">
+            <span>Brand / campaign name</span>
+            <input id="campaignInput" type="text" maxlength="80" placeholder="Your brand">
           </label>
           <label class="form-field">
             <span>Content format</span>
@@ -117,12 +118,6 @@
 
         <div class="field-grid settings-fields">
           <label class="form-field">
-            <span>Target age</span>
-            <select id="automationAge">
-              <option value="all">All ages</option><option>18–29</option><option>30–49</option><option>50–64</option><option>65+</option>
-            </select>
-          </label>
-          <label class="form-field">
             <span>Start scheduling</span>
             <input id="startDate" type="date">
           </label>
@@ -132,17 +127,53 @@
               <option value="Asia/Manila">Asia / Manila</option><option value="America/New_York">US / Eastern</option><option value="America/Los_Angeles">US / Pacific</option><option value="Europe/London">Europe / London</option><option value="Australia/Sydney">Australia / Sydney</option>
             </select>
           </label>
-          <label class="form-field">
-            <span>Schedule mode</span>
-            <select id="scheduleMode">
-              <option value="balanced">Balanced reach</option><option value="earliest">Earliest strong window</option><option value="peak">Peak windows only</option>
-            </select>
-          </label>
         </div>
 
-        <button class="build-schedule-button" id="buildSchedule" type="button"><span><i class="fa-solid fa-wand-magic-sparkles"></i> Build smart schedule</span><i class="fa-solid fa-arrow-right"></i></button>
+        <div class="platform-schedule-box">
+          <div class="platform-schedule-heading"><div><span>Per-app schedule</span><small>Use the dashboard peak, choose a custom time, or post now</small></div><i class="fa-solid fa-chart-line" aria-hidden="true"></i></div>
+          <div class="platform-schedule-list" id="platformScheduleList" aria-live="polite"></div>
+        </div>
+
+        <button class="build-schedule-button" id="buildSchedule" type="button" title="Prepare the publishing queue preview"><span><i class="fa-solid fa-paper-plane"></i> Publish</span><i class="fa-solid fa-arrow-right"></i></button>
         <button class="connect-button" type="button" disabled><i class="fa-solid fa-link"></i> Connect social accounts <span>Coming soon</span></button>
       </article>
+
+      <aside class="automation-panel preview-panel" aria-labelledby="postPreviewTitle">
+        <div class="automation-panel-heading preview-heading">
+          <div><span>03</span><h2 id="postPreviewTitle">Post preview</h2></div>
+          <small><i></i> Updates live</small>
+        </div>
+
+        <div class="preview-toolbar">
+          <label>
+            <span>Preview as</span>
+            <select id="previewPlatform" aria-label="Social media preview platform">
+              <option value="facebook">Facebook Feed</option>
+              <option value="instagram">Instagram Feed</option>
+              <option value="x">X Post</option>
+              <option value="tiktok">TikTok Post</option>
+              <option value="threads">Threads Post</option>
+              <option value="youtube">YouTube Community</option>
+              <option value="linkedin">LinkedIn Feed</option>
+            </select>
+          </label>
+          <div class="device-toggle" role="group" aria-label="Preview device">
+            <button class="active" type="button" data-device="desktop" aria-pressed="true" title="Desktop preview"><i class="fa-solid fa-desktop"></i></button>
+            <button type="button" data-device="mobile" aria-pressed="false" title="Mobile preview"><i class="fa-solid fa-mobile-screen-button"></i></button>
+          </div>
+        </div>
+
+        <div class="preview-stage" id="previewStage">
+          <div class="social-preview" id="socialPreview" aria-live="polite"></div>
+        </div>
+
+        <div class="preview-schedule">
+          <span class="preview-schedule-icon"><i class="fa-regular fa-clock"></i></span>
+          <div><small>Recommended schedule</small><strong id="previewScheduleTime">Calculating dashboard peak…</strong></div>
+          <span class="dashboard-model-badge">Dashboard model</span>
+        </div>
+        <p class="preview-disclaimer" id="previewDisclaimer"><i class="fa-solid fa-circle-info"></i> This visual preview is an approximation. Final formatting can vary by platform.</p>
+      </aside>
     </section>
 
     <section class="queue-section" aria-labelledby="queueTitle">
@@ -157,7 +188,7 @@
         <i></i><div class="locked"><span><i class="fa-solid fa-lock"></i></span><strong>Publish</strong><small>In development</small></div>
       </div>
       <div class="queue-list" id="queueList" aria-live="polite">
-        <div class="queue-empty"><span><i class="fa-regular fa-calendar-check"></i></span><h3>No schedule yet</h3><p>Add content, choose your platforms, then build a smart schedule.</p></div>
+        <div class="queue-empty"><span><i class="fa-regular fa-calendar-check"></i></span><h3>No publishing queue yet</h3><p>Add content, choose your platforms and timing, then select Publish.</p></div>
       </div>
     </section>
   </main>
