@@ -1,0 +1,382 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Signal Desk turns current social-platform research and live open-web signals into a practical posting plan.">
+  <meta name="theme-color" content="#f3f1eb">
+  <meta property="og:title" content="Signal Desk — Social media intelligence">
+  <meta property="og:description" content="Live audience signals, age-fit insights, and smarter posting windows in one practical dashboard.">
+  <meta property="og:image" content="og.png">
+  <title>Signal Desk — Social Media Intelligence</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js" defer></script>
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to dashboard</a>
+
+  <header class="topbar">
+    <a class="brand" href="#overview" aria-label="Signal Desk home">
+      <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+      <span>Signal Desk</span>
+    </a>
+    <nav class="topnav" aria-label="Dashboard sections">
+      <a class="active" href="#overview">Overview</a>
+      <a href="#day-planner">Planner</a>
+      <a href="#pulse">Live pulse</a>
+      <a href="#sources">Sources</a>
+      <a class="automation-nav-link" href="automation.html">Automation <span>Preview</span></a>
+    </nav>
+    <div class="topbar-actions">
+      <a class="automation-shortcut" href="automation.html"><i class="fa-solid fa-wand-magic-sparkles" aria-hidden="true"></i><span>Automation</span></a>
+      <div class="live-badge" id="connectionBadge" title="Checking live sources">
+        <span class="pulse-dot"></span>
+        <span id="connectionText">Connecting</span>
+      </div>
+      <button class="icon-button" id="refreshButton" type="button" aria-label="Refresh live data" title="Refresh live data">
+        <span aria-hidden="true">↻</span>
+      </button>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero shell cockpit-head" id="overview">
+      <div class="dashboard-title">
+        <div class="eyebrow"><span></span> Social intelligence desk</div>
+        <h1>Know the audience. <em>Catch the moment.</em></h1>
+        <p class="cockpit-summary" id="briefLead">Your strongest starting point is being calculated.</p>
+        <div class="quick-brief" aria-label="Current strategy summary">
+          <span>Audience <strong id="briefAudience">18–29</strong></span>
+          <span>Best fit <strong id="briefPlatform">—</strong></span>
+          <span>Next post <strong id="briefTime">—</strong></span>
+        </div>
+      </div>
+
+      <article class="manila-clock signal-quiet" id="manilaClockCard" aria-live="polite">
+        <div class="clock-face">
+          <div class="clock-label"><span class="clock-dot"></span> Manila posting clock <strong id="postingSignal">Scanning</strong></div>
+          <div class="clock-time-row"><time id="manilaClock">--:--:--</time><span id="manilaPeriod">--</span></div>
+          <p id="manilaDate">Asia / Manila</p>
+        </div>
+        <div class="clock-opportunity">
+          <div class="clock-opportunity-top">
+            <span>Best opportunity now</span>
+            <button class="alert-button" id="alertButton" type="button">Enable alerts</button>
+          </div>
+          <strong id="clockPlatform">Checking all platforms</strong>
+          <p id="clockMessage">Reading today’s traffic model…</p>
+          <div class="clock-platforms" id="clockPlatformChips" aria-label="Current opportunity by platform"></div>
+        </div>
+      </article>
+
+      <div class="control-strip" aria-label="Dashboard filters">
+        <label>
+          <span>Target age</span>
+          <select id="ageSelect">
+            <option value="all">All ages</option>
+            <option value="0">18–29</option>
+            <option value="1">30–49</option>
+            <option value="2">50–64</option>
+            <option value="3">65+</option>
+          </select>
+        </label>
+        <label>
+          <span>Campaign goal</span>
+          <select id="goalSelect">
+            <option value="awareness">Brand awareness</option>
+            <option value="engagement">Engagement</option>
+            <option value="traffic">Website traffic</option>
+            <option value="conversion">Conversions</option>
+          </select>
+        </label>
+        <label>
+          <span>Audience timezone</span>
+          <select id="timezoneSelect">
+            <option value="auto">Auto-detect</option>
+            <option value="Asia/Manila">Asia / Manila</option>
+            <option value="America/New_York">US / Eastern</option>
+            <option value="America/Los_Angeles">US / Pacific</option>
+            <option value="Europe/London">Europe / London</option>
+            <option value="Australia/Sydney">Australia / Sydney</option>
+          </select>
+        </label>
+        <label>
+          <span>Live trends market</span>
+          <select id="marketSelect">
+            <option value="PH">Philippines</option>
+            <option value="US">United States</option>
+            <option value="GB">United Kingdom</option>
+            <option value="AU">Australia</option>
+            <option value="SG">Singapore</option>
+            <option value="CA">Canada</option>
+          </select>
+        </label>
+      </div>
+    </section>
+
+    <section class="section shell platform-section" aria-labelledby="landscapeTitle">
+      <div class="section-heading compact-heading">
+        <div>
+          <p class="kicker">The landscape</p>
+          <h2 id="landscapeTitle">Seven networks. One clear view.</h2>
+        </div>
+        <p class="section-note">Select a platform to update the planner. Metrics keep their original definitions.</p>
+      </div>
+      <div class="platform-grid" id="platformGrid" aria-label="Platform audience cards"></div>
+      <div class="metric-caveat">
+        <span aria-hidden="true">i</span>
+        <p><strong>Read the labels, not just the number.</strong> “Monthly active,” “daily visitors,” and “monthly reach” are different measures. This dashboard keeps the original metric visible instead of presenting unlike figures as identical.</p>
+      </div>
+    </section>
+
+    <section class="section shell planner-section" id="planner" aria-labelledby="plannerTitle">
+      <div class="section-heading planner-heading compact-heading">
+        <div>
+          <p class="kicker">Audience rhythm</p>
+          <h2 id="plannerTitle">Plan for attention, not guesswork.</h2>
+        </div>
+        <div class="selected-platform" id="selectedPlatformPill">Facebook</div>
+      </div>
+
+      <div class="planner-grid">
+        <article class="panel activity-panel">
+          <div class="panel-heading">
+            <div>
+              <span class="panel-label">Estimated audience activity</span>
+              <h3 id="activityTitle">Facebook · ages 18–29</h3>
+            </div>
+            <div class="legend"><span></span> Activity index</div>
+          </div>
+          <div class="chart-wrap">
+            <canvas id="activityChart" aria-label="Estimated hourly audience activity chart" role="img"></canvas>
+          </div>
+          <div class="day-night-grid">
+            <div class="period-card day">
+              <span class="period-icon" aria-hidden="true">☼</span>
+              <div><small>Daytime · 6 AM–6 PM</small><strong id="dayScore">—</strong></div>
+              <span class="period-tag" id="dayTag">—</span>
+            </div>
+            <div class="period-card night">
+              <span class="period-icon" aria-hidden="true">◐</span>
+              <div><small>Nighttime · 6 PM–6 AM</small><strong id="nightScore">—</strong></div>
+              <span class="period-tag" id="nightTag">—</span>
+            </div>
+          </div>
+          <p class="model-note">Activity is a transparent planning model combining published platform windows with age-based daily routines. It is not private platform traffic.</p>
+        </article>
+
+        <article class="panel recommendation-panel">
+          <div class="panel-heading">
+            <div>
+              <span class="panel-label">Recommended move</span>
+              <h3 id="recommendationTitle">Your next best window</h3>
+            </div>
+            <span class="confidence" id="confidenceBadge">Research baseline</span>
+          </div>
+          <div class="next-window" aria-live="polite">
+            <span id="nextDay">Tuesday</span>
+            <strong id="nextTime">9:00 AM</strong>
+            <small id="nextTimezone">Audience local time</small>
+          </div>
+          <p class="recommendation-copy" id="recommendationCopy">—</p>
+          <div class="content-prompt">
+            <span>Content angle</span>
+            <strong id="contentAngle">—</strong>
+          </div>
+          <button class="primary-button" id="exportButton" type="button">
+            <span>Export 7-day plan</span><span aria-hidden="true">↓</span>
+          </button>
+        </article>
+      </div>
+
+      <article class="panel heatmap-panel">
+        <div class="panel-heading">
+          <div>
+            <span class="panel-label">Weekly opportunity map</span>
+            <h3>When your audience is most reachable</h3>
+          </div>
+          <div class="heat-legend"><span>Quiet</span><i></i><i></i><i></i><i></i><i></i><span>Peak</span></div>
+        </div>
+        <div class="heatmap-scroll">
+          <div class="heatmap" id="heatmap" role="img" aria-label="Weekly hourly opportunity heatmap"></div>
+        </div>
+      </article>
+    </section>
+
+    <section class="section shell day-planner-section" id="day-planner" aria-labelledby="dayPlannerTitle">
+      <div class="section-heading">
+        <div>
+          <p class="kicker">Daily content planner</p>
+          <h2 id="dayPlannerTitle">Turn one day into a smarter schedule.</h2>
+        </div>
+        <div class="planner-live-pill"><span></span> Manila model updates live</div>
+      </div>
+
+      <div class="day-planner-controls" aria-label="Daily posting planner controls">
+        <label>
+          <span>Posting date</span>
+          <input id="plannerDate" type="date">
+        </label>
+        <label>
+          <span>Platform</span>
+          <select id="plannerPlatform"></select>
+        </label>
+        <label>
+          <span>Content format</span>
+          <select id="plannerContentType">
+            <option value="general">General post</option>
+            <option value="shortVideo">Short video / Reel</option>
+            <option value="image">Image / Carousel</option>
+            <option value="article">Article / Link</option>
+            <option value="longVideo">Long-form video</option>
+            <option value="announcement">Announcement / Live update</option>
+          </select>
+        </label>
+        <label>
+          <span>Campaign or topic</span>
+          <input id="plannerTopic" type="text" maxlength="60" placeholder="e.g. Product launch">
+        </label>
+        <label class="post-count-control">
+          <span>Posts that day <output id="plannerCountOutput">2</output></span>
+          <input id="plannerCount" type="range" min="1" max="4" step="1" value="2">
+        </label>
+      </div>
+
+      <div class="day-planner-grid">
+        <article class="panel planner-graph-panel">
+          <div class="panel-heading">
+            <div>
+              <span class="panel-label">Opportunity by hour</span>
+              <h3 id="plannerGraphTitle">Your modeled posting day</h3>
+            </div>
+            <div class="planner-graph-legend"><i></i> Recommended slots</div>
+          </div>
+          <div class="planner-chart-wrap">
+            <canvas id="dayPlannerChart" aria-label="Hourly content posting opportunity chart" role="img"></canvas>
+          </div>
+          <div class="weekday-strength" id="weekdayStrength" aria-label="Best posting days for this content"></div>
+        </article>
+
+        <article class="panel schedule-panel">
+          <div class="panel-heading">
+            <div>
+              <span class="panel-label">Personalized schedule</span>
+              <h3 id="scheduleTitle">Two posts, spaced for reach</h3>
+            </div>
+            <button class="copy-plan-button" id="copyDayPlan" type="button">Copy plan</button>
+          </div>
+          <div class="scheduled-posts" id="scheduledPosts"></div>
+          <p class="schedule-note">Times are separated to reduce audience fatigue and give every post its own attention window.</p>
+        </article>
+      </div>
+
+      <div class="platform-window-compare" id="platformWindowCompare" aria-label="Best platform windows for the selected day"></div>
+    </section>
+
+    <section class="section shell" aria-labelledby="fitTitle">
+      <div class="section-heading">
+        <div>
+          <p class="kicker">Audience fit</p>
+          <h2 id="fitTitle">Meet your market where it already is.</h2>
+        </div>
+        <p class="section-note">Platform adoption is from Pew’s 2025 U.S. adult survey; LinkedIn uses Pew’s 2024 age benchmark because the 2025 age table did not include it.</p>
+      </div>
+      <div class="fit-layout">
+        <article class="panel fit-panel">
+          <div id="fitBars" class="fit-bars"></div>
+        </article>
+        <article class="panel insight-panel">
+          <span class="panel-label">Strategy note</span>
+          <p class="insight-quote" id="strategyNote">“—”</p>
+          <div class="insight-footer">
+            <div><small>Primary channel</small><strong id="primaryChannel">—</strong></div>
+            <div><small>Support channel</small><strong id="supportChannel">—</strong></div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section live-section" id="pulse" aria-labelledby="pulseTitle">
+      <div class="shell">
+        <div class="section-heading light">
+          <div>
+            <p class="kicker">Live pulse</p>
+            <h2 id="pulseTitle">What the open web is noticing now.</h2>
+          </div>
+          <p class="section-note" id="lastUpdated">Connecting to live sources…</p>
+        </div>
+        <div class="live-grid">
+          <article class="dark-panel trends-panel">
+            <div class="panel-heading">
+              <div>
+                <span class="panel-label">Search momentum</span>
+                <h3 id="trendsMarketTitle">Trending in the Philippines</h3>
+              </div>
+              <span class="source-chip">Google Trends</span>
+            </div>
+            <ol class="trends-list" id="trendsList">
+              <li class="skeleton-row"></li><li class="skeleton-row"></li><li class="skeleton-row"></li><li class="skeleton-row"></li>
+            </ol>
+          </article>
+          <article class="dark-panel attention-panel">
+            <div class="panel-heading">
+              <div>
+                <span class="panel-label">Platform attention</span>
+                <h3>Wikipedia interest · latest full day</h3>
+              </div>
+              <span class="source-chip">Wikimedia</span>
+            </div>
+            <div class="attention-list" id="attentionList">
+              <div class="skeleton-row"></div><div class="skeleton-row"></div><div class="skeleton-row"></div><div class="skeleton-row"></div>
+            </div>
+            <p class="dark-note">Page views are an independent signal of public curiosity—not visits inside each social app.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section shell" id="sources" aria-labelledby="sourcesTitle">
+      <div class="section-heading">
+        <div>
+          <p class="kicker">Method & sources</p>
+          <h2 id="sourcesTitle">Useful because it’s honest.</h2>
+        </div>
+        <p class="section-note">Every number keeps its definition, publication date, and source. Generic posting times are clearly labeled as a research baseline.</p>
+      </div>
+      <div class="method-grid">
+        <article class="method-card">
+          <span>01</span><h3>Platform scale</h3>
+          <p>Uses the newest defensible public disclosure found for each network. The metric label stays attached.</p>
+        </article>
+        <article class="method-card">
+          <span>02</span><h3>Age targeting</h3>
+          <p>Uses Pew Research Center’s 2025 U.S. adult adoption survey. Treat it as a benchmark, not a global demographic census.</p>
+        </article>
+        <article class="method-card">
+          <span>03</span><h3>Posting windows</h3>
+          <p>Starts with large-sample 2025–2026 studies, then applies a clearly labeled age-routine adjustment in audience local time.</p>
+        </article>
+        <article class="method-card">
+          <span>04</span><h3>Live signals</h3>
+          <p>Refreshes current Google search trends and recent Wikipedia page views through public, keyless internet endpoints.</p>
+        </article>
+      </div>
+      <div class="source-list" id="sourceList"></div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="shell footer-inner">
+      <div><strong>Signal Desk</strong><span>Social media intelligence for practical marketing decisions.</span></div>
+      <p>Built for direction, not false precision. <span id="footerYear"></span></p>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+</body>
+</html>

@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Preview Signal Desk's assisted social media scheduling workflow.">
+  <meta name="theme-color" content="#f3f1eb">
+  <title>Automation Preview — Signal Desk</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="automation.css">
+  <script src="automation.js" defer></script>
+</head>
+<body class="automation-page">
+  <a class="skip-link" href="#automationMain">Skip to automation workspace</a>
+
+  <header class="topbar automation-topbar">
+    <a class="brand" href="index.html" aria-label="Signal Desk dashboard">
+      <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+      <span>Signal Desk</span>
+    </a>
+    <nav class="topnav" aria-label="Primary navigation">
+      <a href="index.html">Dashboard</a>
+      <a class="active automation-nav-link" href="automation.html">Automation <span>Preview</span></a>
+    </nav>
+    <div class="topbar-actions">
+      <span class="preview-status"><i></i> In development</span>
+    </div>
+  </header>
+
+  <main id="automationMain" class="automation-shell">
+    <section class="automation-hero">
+      <div>
+        <p class="kicker">Assisted publishing workspace</p>
+        <h1>Drop the content.<br><em>Shape the schedule.</em></h1>
+        <p>Prepare images, videos, reels, and captions in one place. Signal Desk will suggest a platform-by-platform posting queue around the best audience windows.</p>
+      </div>
+      <div class="signal-orbit" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+    </section>
+
+    <aside class="progress-notice" role="status" aria-live="polite">
+      <span class="notice-icon"><i class="fa-solid fa-wand-magic-sparkles"></i></span>
+      <div>
+        <strong>Automation is currently in progress</strong>
+        <p>You can build and export a smart draft queue now. Social account connections and automatic publishing are not active yet, so nothing will be posted from this preview.</p>
+      </div>
+      <span class="notice-pill">No auto-publishing</span>
+    </aside>
+
+    <section class="automation-grid" aria-label="Automation builder">
+      <article class="automation-panel composer-panel">
+        <div class="automation-panel-heading">
+          <div><span>01</span><h2>Add your content</h2></div>
+          <small>Stored only in this browser session</small>
+        </div>
+
+        <label class="upload-zone" id="uploadZone" for="mediaInput">
+          <input id="mediaInput" type="file" accept="image/*,video/*" multiple>
+          <span class="upload-icon"><i class="fa-solid fa-cloud-arrow-up"></i></span>
+          <strong>Choose images, videos, or reels</strong>
+          <small>or drag and drop them here · up to 8 files</small>
+        </label>
+        <div class="media-preview-grid" id="mediaPreview" aria-live="polite">
+          <div class="empty-media"><i class="fa-regular fa-images"></i><span>Your previews will appear here</span></div>
+        </div>
+
+        <div class="field-grid">
+          <label class="form-field full-field">
+            <span>Caption</span>
+            <textarea id="captionInput" maxlength="2200" rows="5" placeholder="Write or paste the caption you want to publish..."></textarea>
+            <small><span id="captionCount">0</span> / 2,200</small>
+          </label>
+          <label class="form-field">
+            <span>Campaign name</span>
+            <input id="campaignInput" type="text" maxlength="80" placeholder="August launch">
+          </label>
+          <label class="form-field">
+            <span>Content format</span>
+            <select id="formatInput">
+              <option value="auto">Detect automatically</option>
+              <option value="image">Image / carousel</option>
+              <option value="shortVideo">Reel / short video</option>
+              <option value="longVideo">Long-form video</option>
+              <option value="article">Article / link</option>
+              <option value="announcement">Announcement</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="hashtag-box">
+          <div><span>Caption helpers</span><small>Click to add</small></div>
+          <div class="hashtag-list" id="hashtagList">
+            <button type="button">#NewPost</button><button type="button">#BehindTheScenes</button><button type="button">#Community</button><button type="button">#Update</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="automation-panel settings-panel">
+        <div class="automation-panel-heading">
+          <div><span>02</span><h2>Choose the audience</h2></div>
+          <small>Planner inputs</small>
+        </div>
+
+        <fieldset class="platform-picker">
+          <legend>Publish to</legend>
+          <label style="--brand:#287be0"><input type="checkbox" name="platform" value="facebook" checked><span><i class="fa-brands fa-facebook-f"></i>Facebook</span></label>
+          <label style="--brand:#d55388"><input type="checkbox" name="platform" value="instagram" checked><span><i class="fa-brands fa-instagram"></i>Instagram</span></label>
+          <label style="--brand:#202523"><input type="checkbox" name="platform" value="x"><span><i class="fa-brands fa-x-twitter"></i>X</span></label>
+          <label style="--brand:#ef466f"><input type="checkbox" name="platform" value="tiktok" checked><span><i class="fa-brands fa-tiktok"></i>TikTok</span></label>
+          <label style="--brand:#7359c7"><input type="checkbox" name="platform" value="threads"><span><i class="fa-brands fa-threads"></i>Threads</span></label>
+          <label style="--brand:#ea4138"><input type="checkbox" name="platform" value="youtube"><span><i class="fa-brands fa-youtube"></i>YouTube</span></label>
+          <label style="--brand:#0a66c2"><input type="checkbox" name="platform" value="linkedin"><span><i class="fa-brands fa-linkedin-in"></i>LinkedIn</span></label>
+        </fieldset>
+
+        <div class="field-grid settings-fields">
+          <label class="form-field">
+            <span>Target age</span>
+            <select id="automationAge">
+              <option value="all">All ages</option><option>18–29</option><option>30–49</option><option>50–64</option><option>65+</option>
+            </select>
+          </label>
+          <label class="form-field">
+            <span>Start scheduling</span>
+            <input id="startDate" type="date">
+          </label>
+          <label class="form-field">
+            <span>Audience timezone</span>
+            <select id="automationTimezone">
+              <option value="Asia/Manila">Asia / Manila</option><option value="America/New_York">US / Eastern</option><option value="America/Los_Angeles">US / Pacific</option><option value="Europe/London">Europe / London</option><option value="Australia/Sydney">Australia / Sydney</option>
+            </select>
+          </label>
+          <label class="form-field">
+            <span>Schedule mode</span>
+            <select id="scheduleMode">
+              <option value="balanced">Balanced reach</option><option value="earliest">Earliest strong window</option><option value="peak">Peak windows only</option>
+            </select>
+          </label>
+        </div>
+
+        <button class="build-schedule-button" id="buildSchedule" type="button"><span><i class="fa-solid fa-wand-magic-sparkles"></i> Build smart schedule</span><i class="fa-solid fa-arrow-right"></i></button>
+        <button class="connect-button" type="button" disabled><i class="fa-solid fa-link"></i> Connect social accounts <span>Coming soon</span></button>
+      </article>
+    </section>
+
+    <section class="queue-section" aria-labelledby="queueTitle">
+      <div class="queue-heading">
+        <div><p class="kicker">Smart queue preview</p><h2 id="queueTitle">Your recommended publishing order</h2></div>
+        <div class="queue-actions"><span id="queueSummary">Waiting for content</span><button id="exportQueue" type="button" disabled><i class="fa-solid fa-download"></i> Export draft</button></div>
+      </div>
+      <div class="workflow-strip" aria-label="Automation workflow">
+        <div id="workflowContent"><span>1</span><strong>Content</strong><small>Upload locally</small></div>
+        <i></i><div id="workflowScore"><span>2</span><strong>Score</strong><small>Find best windows</small></div>
+        <i></i><div id="workflowQueue"><span>3</span><strong>Queue</strong><small>Review the draft</small></div>
+        <i></i><div class="locked"><span><i class="fa-solid fa-lock"></i></span><strong>Publish</strong><small>In development</small></div>
+      </div>
+      <div class="queue-list" id="queueList" aria-live="polite">
+        <div class="queue-empty"><span><i class="fa-regular fa-calendar-check"></i></span><h3>No schedule yet</h3><p>Add content, choose your platforms, then build a smart schedule.</p></div>
+      </div>
+    </section>
+  </main>
+
+  <div class="automation-toast" id="automationToast" role="status" aria-live="polite"></div>
+</body>
+</html>
