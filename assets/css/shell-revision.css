@@ -758,6 +758,163 @@ html[data-theme="light"] .left-side::before {
   }
 }
 
+/* =========================================================
+   WEB PROJECT LIVE PREVIEWS
+========================================================= */
+
+#portfolio .project-live-preview {
+  position: absolute;
+  inset: 0;
+  z-index: 7;
+  overflow: hidden;
+  opacity: 0;
+  background: #15161a;
+  transform: scale(1.018);
+  transform-origin: center;
+  pointer-events: none;
+  transition: opacity .5s ease, transform .7s cubic-bezier(.2,.8,.2,1);
+}
+
+#portfolio .is-live-preview-loading .project-live-preview {
+  opacity: .12;
+}
+
+#portfolio .is-live-preview-ready .project-live-preview {
+  opacity: 1;
+  transform: scale(1);
+}
+
+#portfolio .project-live-preview::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, transparent 68%, rgba(8,9,12,.24));
+  pointer-events: none;
+}
+
+#portfolio .project-live-preview-frame {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 400%;
+  height: 400%;
+  border: 0;
+  background: #15161a;
+  transform: scale(.25);
+  transform-origin: top left;
+  pointer-events: none;
+}
+
+#portfolio .project-live-preview-badge {
+  position: absolute;
+  right: 9px;
+  bottom: 9px;
+  z-index: 2;
+  display: inline-flex;
+  padding: 5px 8px;
+  align-items: center;
+  gap: 5px;
+  border: 1px solid rgba(255,255,255,.16);
+  border-radius: 999px;
+  color: #f7f7f8;
+  background: rgba(15,16,19,.76);
+  box-shadow: 0 7px 20px rgba(0,0,0,.24);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  font-size: 7px;
+  font-weight: 800;
+  letter-spacing: .75px;
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity .3s ease .15s, transform .3s ease .15s;
+}
+
+#portfolio .is-live-preview-ready .project-live-preview-badge {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+#portfolio .project-live-preview-badge i {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #72e38d;
+  box-shadow: 0 0 8px rgba(114,227,141,.75);
+}
+
+#portfolio .portfolio-v2-card:hover .is-live-preview-ready .project-live-preview {
+  transform: scale(1.018);
+}
+
+/* Fallback artwork shown briefly while each live page loads. */
+#portfolio .project-art-forma {
+  --art-accent: #d9b477;
+  --art-accent-2: #8ea49b;
+  --art-bg-1: #23211f;
+  --art-bg-2: #121313;
+}
+
+#portfolio .forma-art-frame {
+  position: absolute;
+  right: 23%;
+  bottom: 25px;
+  width: 116px;
+  height: 94px;
+  border-right: 1px solid rgba(217,180,119,.55);
+  border-bottom: 1px solid rgba(217,180,119,.55);
+  transform: skewY(-8deg);
+}
+
+#portfolio .forma-art-frame i {
+  position: absolute;
+  right: 0;
+  left: 0;
+  height: 1px;
+  background: rgba(217,180,119,.36);
+}
+
+#portfolio .forma-art-frame i:nth-child(1) { top: 22px; }
+#portfolio .forma-art-frame i:nth-child(2) { top: 48px; }
+#portfolio .forma-art-frame i:nth-child(3) { top: 72px; }
+
+#portfolio .project-art-amore {
+  --art-accent: #d8a89e;
+  --art-accent-2: #b5a56e;
+  --art-bg-1: #4a3734;
+  --art-bg-2: #211c1a;
+}
+
+#portfolio .amore-art-blooms {
+  position: absolute;
+  right: 23%;
+  bottom: 34px;
+  width: 92px;
+  height: 92px;
+}
+
+#portfolio .amore-art-blooms i {
+  position: absolute;
+  border: 1px solid rgba(216,168,158,.62);
+  border-radius: 50% 50% 48% 52%;
+}
+
+#portfolio .amore-art-blooms i:nth-child(1) { inset: 5px 30px 43px 8px; transform: rotate(24deg); }
+#portfolio .amore-art-blooms i:nth-child(2) { inset: 30px 6px 10px 35px; transform: rotate(-18deg); }
+#portfolio .amore-art-blooms i:nth-child(3) { inset: 22px 27px 24px 22px; border-color: rgba(181,165,110,.75); }
+
+/* Raise the assistant slightly while keeping it aligned with the rail. */
+@media (min-width: 992px) {
+  .global-chatbot {
+    bottom: calc(10% + 28px) !important;
+  }
+}
+
+@media (max-width: 991px) {
+  .global-chatbot {
+    bottom: 28px !important;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .star-field-canvas {
     opacity: .7;
@@ -765,5 +922,10 @@ html[data-theme="light"] .left-side::before {
 
   #color-switcher.direct-theme-switcher .theme-mode-stars::after {
     animation: none !important;
+  }
+
+  #portfolio .project-live-preview,
+  #portfolio .project-live-preview-badge {
+    transition: none !important;
   }
 }

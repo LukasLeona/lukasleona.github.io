@@ -3770,6 +3770,12 @@ function interactivePortfolio() {
   };
 
 
+  Object.assign(projects, {
+    forma:{category:"WEB • ARCHITECTURE • MOTION",title:"FORMA — Architecture Studio",summary:"A cinematic architecture-studio experience where a residence assembles through scroll, supported by material-led storytelling and selected work.",contribution:["Scroll-led architectural storytelling","Video-scrubbed hero experience","Responsive gallery and studio presentation","Motion and interaction design"],stack:["HTML","CSS","JavaScript","Video","Motion"],links:[{label:"Open Project",url:"preview/FORMA-Architecture/index.html",external:true}]},
+    amore:{category:"WEB • WEDDING INVITATION",title:"Terra Amore — Wedding Invitation",summary:"An editorial wedding invitation with ceremony details, RSVP, gallery moments, and a warm coastal visual story.",contribution:["Invitation experience design","Responsive ceremony and RSVP flow","Editorial gallery presentation","Custom motion and interaction details"],stack:["HTML","CSS","JavaScript","Responsive UI"],links:[{label:"Open Invitation",url:"preview/WeddingSite/Amore/index.html",external:true}]}
+  });
+
+
 
   /* =====================================================
      QUICK VIEW DRAWER

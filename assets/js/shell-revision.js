@@ -353,9 +353,122 @@
     });
   }
 
+  function createPortfolioLivePreviews() {
+    var portfolio = document.getElementById("portfolio");
+    if (!portfolio) return;
+
+    var loadedMedia = [];
+    var visibility = new WeakMap();
+    var maxLoaded = 4;
+
+    function removeFromLoaded(media) {
+      loadedMedia = loadedMedia.filter(function (item) { return item !== media; });
+    }
+
+    function unloadPreview(media) {
+      var frame = media.querySelector(".project-live-preview-frame");
+      if (!frame || frame.dataset.previewActive !== "true") return;
+
+      delete frame.dataset.previewActive;
+      frame.src = "about:blank";
+      media.classList.remove("is-live-preview-loading", "is-live-preview-ready");
+      removeFromLoaded(media);
+    }
+
+    function trimLoaded(currentMedia) {
+      while (loadedMedia.length > maxLoaded) {
+        var candidate = loadedMedia.find(function (media) {
+          return media !== currentMedia && visibility.get(media) !== true;
+        });
+
+        if (!candidate) break;
+        unloadPreview(candidate);
+      }
+    }
+
+    function activatePreview(media) {
+      var frame = media.querySelector(".project-live-preview-frame");
+      if (!frame || frame.dataset.previewActive === "true") return;
+
+      frame.dataset.previewActive = "true";
+      media.classList.add("is-live-preview-loading");
+      media.classList.remove("is-live-preview-ready");
+      frame.src = frame.dataset.previewSrc;
+      loadedMedia.push(media);
+      trimLoaded(media);
+    }
+
+    var previewMedia = [];
+
+    portfolio.querySelectorAll(".portfolio-item.web .portfolio-v2-card").forEach(function (card) {
+      var link = card.querySelector(".portfolio-card-icon-link");
+      var media = card.querySelector(".portfolio-v2-media.project-art-web");
+      var screen = media ? media.querySelector(".project-art-screen") : null;
+      if (!link || !media || !screen || screen.querySelector(".project-live-preview")) return;
+
+      var rawHref = link.getAttribute("href") || "";
+      if (!rawHref || /^(?:https?:|mailto:|tel:|javascript:|#)/i.test(rawHref)) return;
+
+      var previewUrl = rawHref.replace(/^\/+/, "");
+      var title = card.querySelector("h3");
+      var wrapper = document.createElement("div");
+      var frame = document.createElement("iframe");
+      var badge = document.createElement("span");
+
+      wrapper.className = "project-live-preview";
+      frame.className = "project-live-preview-frame";
+      frame.dataset.previewSrc = previewUrl;
+      frame.loading = "lazy";
+      frame.tabIndex = -1;
+      frame.setAttribute("aria-hidden", "true");
+      frame.setAttribute("scrolling", "no");
+      frame.setAttribute("sandbox", "allow-scripts allow-same-origin allow-forms allow-popups");
+      frame.title = "Live preview of " + (title ? title.textContent.trim() : "project website");
+
+      badge.className = "project-live-preview-badge";
+      badge.innerHTML = '<i aria-hidden="true"></i><span>LIVE PREVIEW</span>';
+
+      frame.addEventListener("load", function () {
+        if (frame.dataset.previewActive !== "true") return;
+        media.classList.remove("is-live-preview-loading");
+        media.classList.add("is-live-preview-ready");
+      });
+
+      wrapper.appendChild(frame);
+      wrapper.appendChild(badge);
+      screen.appendChild(wrapper);
+      media.classList.add("has-live-preview");
+      previewMedia.push(media);
+    });
+
+    if (!previewMedia.length) return;
+
+    if ("IntersectionObserver" in window) {
+      var observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          visibility.set(entry.target, entry.isIntersecting);
+          if (entry.isIntersecting) activatePreview(entry.target);
+        });
+      }, {
+        root: null,
+        rootMargin: "180px 0px",
+        threshold: .08
+      });
+
+      previewMedia.forEach(function (media) { observer.observe(media); });
+    } else {
+      previewMedia.forEach(function (media) {
+        media.addEventListener("mouseenter", function () { activatePreview(media); }, { once: true });
+        media.addEventListener("focusin", function () { activatePreview(media); }, { once: true });
+        media.addEventListener("touchstart", function () { activatePreview(media); }, { once: true, passive: true });
+      });
+    }
+  }
+
   function initialize() {
     prepareShell();
     createStarField();
+    createPortfolioLivePreviews();
   }
 
   if (document.readyState === "loading") {
