@@ -1819,6 +1819,50 @@ function portfolioChatbot() {
   let teaserHideTimer = null;
   let teaserLoopTimer = null;
   let isReplying = false;
+  let aiUnavailable = false;
+  let recognition = null;
+  let isListening = false;
+  let voiceMode = false;
+  let voiceDisclosureShown = false;
+
+  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+  const aiEndpointMeta = document.querySelector('meta[name="luke-chatbot-api"]');
+  const aiEndpoint =
+    window.LUKE_CHATBOT_API_URL ||
+    (aiEndpointMeta ? aiEndpointMeta.getAttribute("content") : "") ||
+    "/api/chat";
+  const conversationHistory = [];
+
+  input.maxLength = 350;
+
+  function homeSection(section) {
+    const fileName = window.location.pathname.split("/").pop().toLowerCase();
+    const onHomePage = !fileName || fileName === "index.html";
+    return (onHomePage ? "" : "index.html") + section;
+  }
+
+  function normalizeQuestion(value) {
+    return value
+      .toLowerCase()
+      .replace(/[’']/g, "")
+      .replace(/[^a-z0-9₱$]+/g, " ")
+      .replace(/\s+/g, " ")
+      .trim();
+  }
+
+  function includesAny(text, phrases) {
+    return phrases.some(function (phrase) {
+      return text.includes(phrase);
+    });
+  }
+
+  function rememberMessage(role, content) {
+    conversationHistory.push({ role: role, content: content });
+
+    if (conversationHistory.length > 8) {
+      conversationHistory.splice(0, conversationHistory.length - 8);
+    }
+  }
 
   const teaserMessages = [
     "Need help exploring?",
@@ -1885,6 +1929,206 @@ function portfolioChatbot() {
         messages.scrollTop = messages.scrollHeight;
       }, 220);
     }
+  }
+
+  function getPreferredVoice() {
+    if (!window.speechSynthesis) {
+      return null;
+    }
+
+    const voices = window.speechSynthesis.getVoices();
+
+    return voices.find(function (voice) {
+      return /^en-PH/i.test(voice.lang);
+    }) || voices.find(function (voice) {
+      return /^en-/i.test(voice.lang) && /natural|google|microsoft/i.test(voice.name);
+    }) || voices.find(function (voice) {
+      return /^en-/i.test(voice.lang);
+    }) || null;
+  }
+
+  function speakReply(text) {
+    if (!voiceMode || !window.speechSynthesis || !text) {
+      return;
+    }
+
+    window.speechSynthesis.cancel();
+
+    const utterance = new SpeechSynthesisUtterance(text);
+    const voice = getPreferredVoice();
+
+    if (voice) {
+      utterance.voice = voice;
+      utterance.lang = voice.lang;
+    } else {
+      utterance.lang = "en-PH";
+    }
+
+    utterance.rate = 1.02;
+    utterance.pitch = 1;
+    window.speechSynthesis.speak(utterance);
+  }
+
+  function installVoiceControls() {
+    const sendButton = form.querySelector(".chatbot-send");
+    const header = panel.querySelector(".chatbot-header");
+
+    if (!sendButton || form.querySelector(".chatbot-voice-button")) {
+      return;
+    }
+
+    const voiceButton = document.createElement("button");
+    voiceButton.type = "button";
+    voiceButton.className = "chatbot-voice-button";
+    voiceButton.setAttribute("aria-label", "Speak a question");
+    voiceButton.setAttribute("aria-pressed", "false");
+    voiceButton.innerHTML = '<i class="bi bi-mic-fill" aria-hidden="true"></i>';
+    form.insertBefore(voiceButton, sendButton);
+
+    let soundButton = null;
+
+    function updateVoiceControls() {
+      voiceButton.classList.toggle("is-listening", isListening);
+      voiceButton.classList.toggle("is-active", voiceMode);
+      voiceButton.setAttribute("aria-pressed", isListening ? "true" : "false");
+      voiceButton.setAttribute(
+        "aria-label",
+        isListening ? "Stop listening" : "Speak a question"
+      );
+
+      if (soundButton) {
+        soundButton.classList.toggle("is-active", voiceMode);
+        soundButton.setAttribute("aria-pressed", voiceMode ? "true" : "false");
+        soundButton.setAttribute(
+          "aria-label",
+          voiceMode ? "Turn off spoken replies" : "Turn on spoken replies"
+        );
+        soundButton.innerHTML = voiceMode
+          ? '<i class="bi bi-volume-up-fill" aria-hidden="true"></i>'
+          : '<i class="bi bi-volume-mute-fill" aria-hidden="true"></i>';
+      }
+    }
+
+    function discloseVoice() {
+      if (voiceDisclosureShown) {
+        return;
+      }
+
+      voiceDisclosureShown = true;
+      addMessage("Voice mode is on. Spoken replies use a computer-generated voice.", "bot", "bot-system-message");
+    }
+
+    if (header && closeButton) {
+      const headerActions = document.createElement("div");
+      headerActions.className = "chatbot-header-actions";
+
+      soundButton = document.createElement("button");
+      soundButton.type = "button";
+      soundButton.className = "chatbot-sound-button";
+      soundButton.setAttribute("aria-pressed", "false");
+
+      header.insertBefore(headerActions, closeButton);
+      headerActions.appendChild(soundButton);
+      headerActions.appendChild(closeButton);
+
+      soundButton.addEventListener("click", function () {
+        voiceMode = !voiceMode;
+
+        if (voiceMode) {
+          discloseVoice();
+        } else if (window.speechSynthesis) {
+          window.speechSynthesis.cancel();
+        }
+
+        updateVoiceControls();
+      });
+    }
+
+    if (!SpeechRecognition) {
+      voiceButton.classList.add("is-unsupported");
+      voiceButton.title = "Voice input is not supported by this browser";
+      voiceButton.addEventListener("click", function () {
+        addMessage(
+          "Voice input is not available in this browser yet, but you can still type your question.",
+          "bot",
+          "bot-system-message"
+        );
+      });
+      updateVoiceControls();
+      return;
+    }
+
+    recognition = new SpeechRecognition();
+    recognition.lang = "en-PH";
+    recognition.continuous = false;
+    recognition.interimResults = true;
+
+    recognition.addEventListener("start", function () {
+      isListening = true;
+      voiceMode = true;
+      input.placeholder = "Listening…";
+      discloseVoice();
+      updateVoiceControls();
+    });
+
+    recognition.addEventListener("result", function (event) {
+      let transcript = "";
+      let finalTranscript = "";
+
+      for (let i = event.resultIndex; i < event.results.length; i += 1) {
+        transcript += event.results[i][0].transcript;
+
+        if (event.results[i].isFinal) {
+          finalTranscript += event.results[i][0].transcript;
+        }
+      }
+
+      input.value = transcript.trim();
+
+      if (finalTranscript.trim()) {
+        window.setTimeout(function () {
+          submitQuestion(finalTranscript);
+        }, 120);
+      }
+    });
+
+    recognition.addEventListener("end", function () {
+      isListening = false;
+      input.placeholder = "Ask about Luke's work...";
+      updateVoiceControls();
+    });
+
+    recognition.addEventListener("error", function (event) {
+      isListening = false;
+      input.placeholder = "Ask about Luke's work...";
+      updateVoiceControls();
+
+      if (event.error === "not-allowed" || event.error === "service-not-allowed") {
+        addMessage(
+          "Microphone access was blocked. Allow microphone permission or type your question instead.",
+          "bot",
+          "bot-system-message"
+        );
+      }
+    });
+
+    voiceButton.addEventListener("click", function () {
+      if (isListening) {
+        recognition.stop();
+        return;
+      }
+
+      setChatOpen(true);
+
+      try {
+        recognition.start();
+      } catch (error) {
+        isListening = false;
+        updateVoiceControls();
+      }
+    });
+
+    updateVoiceControls();
   }
 
   function scrollMessages() {
@@ -1960,7 +2204,120 @@ function portfolioChatbot() {
   }
 
   function getBotReply(question) {
-    const text = question.toLowerCase().trim();
+    const text = normalizeQuestion(question);
+
+    if (
+      includesAny(text, [
+        "who is luke",
+        "who luke is",
+        "tell me about luke",
+        "about luke",
+        "introduce luke"
+      ])
+    ) {
+      return {
+        messages: [
+          "Luke Mark Leona is a Philippines-based web developer and digital partner who also works in data analytics, SEO, automation, design, and technical support.",
+          "He combines practical development experience with business-focused problem solving."
+        ],
+        action: {
+          label: "Meet Luke",
+          href: homeSection("#about")
+        }
+      };
+    }
+
+    if (
+      text.includes("coffee") ||
+      includesAny(text, ["date with luke", "luke single", "is he single"])
+    ) {
+      return {
+        messages: [
+          "Luke is single and coffee-friendly. ☕ His professional rate starts at $6 per hour—so if that still sounds like a good coffee date, why not send him a message?"
+        ],
+        action: {
+          label: "Ask Luke over coffee",
+          href: homeSection("#contact")
+        }
+      };
+    }
+
+    if (
+      includesAny(text, [
+        "website cost",
+        "website price",
+        "website rate",
+        "cost for a website",
+        "cost of a website",
+        "how much website",
+        "how much each website",
+        "price of site",
+        "web design cost",
+        "web development cost",
+        "budget for website",
+        "₱"
+      ]) ||
+      ((text.includes("cost") || text.includes("price") || text.includes("rate")) &&
+        (text.includes("website") || text.includes("site")))
+    ) {
+      return {
+        messages: [
+          "Luke’s website projects generally range from ₱3,000 to ₱10,000, depending on the number of pages, design complexity, forms, integrations, content, and turnaround time.",
+          "Share the type of website you need and Luke can give you a clearer estimate."
+        ],
+        action: {
+          label: "Request a website quote",
+          href: homeSection("#contact")
+        }
+      };
+    }
+
+    if (
+      includesAny(text, [
+        "hourly rate",
+        "rate per hour",
+        "per hour",
+        "how much to hire luke",
+        "luke rate",
+        "luke charge"
+      ])
+    ) {
+      return {
+        messages: [
+          "Luke’s professional rate starts at $6 per hour. A fixed project quote may be more suitable for websites or clearly defined deliverables.",
+          "Send the scope, timeline, and budget through the Contact form for a precise quote."
+        ],
+        action: {
+          label: "Discuss your project",
+          href: homeSection("#contact")
+        }
+      };
+    }
+
+    if (
+      includesAny(text, [
+        "web development",
+        "web developer",
+        "develop website",
+        "build website",
+        "make website",
+        "create website",
+        "frontend",
+        "front end",
+        "wordpress"
+      ])
+    ) {
+      return {
+        messages: [
+          "Luke can design and build responsive portfolio, business, landing-page, travel, construction, and event websites.",
+          "His web work covers frontend development, UI implementation, mobile responsiveness, forms, basic integrations, performance, maintenance, and SEO foundations."
+        ],
+        action: {
+          label: "View web projects",
+          href: homeSection("#portfolio")
+        }
+      };
+    }
 
     if (
       text.includes("hello") ||
@@ -1971,7 +2328,7 @@ function portfolioChatbot() {
       return {
         messages: [
           "Hi! Great to meet you. 👋",
-          "I can help you explore Luke’s projects, capabilities, experience, or contact options."
+          "I can help you explore Luke’s projects, capabilities, rates, experience, or contact options."
         ]
       };
     }
@@ -1989,7 +2346,7 @@ function portfolioChatbot() {
         ],
         action: {
           label: "Explore all projects",
-          href: "#portfolio"
+          href: homeSection("#portfolio")
         }
       };
     }
@@ -2053,6 +2410,7 @@ function portfolioChatbot() {
     if (
       text.includes("build") ||
       text.includes("capabilit") ||
+      text.includes("capable") ||
       text.includes("service") ||
       text.includes("offer") ||
       text.includes("help me")
@@ -2064,7 +2422,7 @@ function portfolioChatbot() {
         ],
         action: {
           label: "Explore capabilities",
-          href: "#resume"
+          href: homeSection("#resume")
         }
       };
     }
@@ -2082,7 +2440,7 @@ function portfolioChatbot() {
         ],
         action: {
           label: "See the interactive resume",
-          href: "#resume"
+          href: homeSection("#resume")
         }
       };
     }
@@ -2100,7 +2458,7 @@ function portfolioChatbot() {
         ],
         action: {
           label: "View data projects",
-          href: "#portfolio"
+          href: homeSection("#portfolio")
         }
       };
     }
@@ -2117,7 +2475,7 @@ function portfolioChatbot() {
         ],
         action: {
           label: "Open automation demo",
-          href: "#resume"
+          href: homeSection("#resume")
         }
       };
     }
@@ -2134,7 +2492,7 @@ function portfolioChatbot() {
         ],
         action: {
           label: "See experience",
-          href: "#resume"
+          href: homeSection("#resume")
         }
       };
     }
@@ -2154,7 +2512,7 @@ function portfolioChatbot() {
         ],
         action: {
           label: "Contact Luke",
-          href: "#contact"
+          href: homeSection("#contact")
         }
       };
     }
@@ -2166,7 +2524,7 @@ function portfolioChatbot() {
         ],
         action: {
           label: "Open resume section",
-          href: "#resume"
+          href: homeSection("#resume")
         }
       };
     }
@@ -2184,17 +2542,91 @@ function portfolioChatbot() {
         ],
         action: {
           label: "Explore the portfolio",
-          href: "#portfolio"
+          href: homeSection("#portfolio")
         }
       };
     }
 
+    return null;
+  }
+
+  function getSafeFallbackReply() {
     return {
       messages: [
-        "I’m not fully sure about that one yet. 🤖",
-        "Try asking about Luke’s projects, web work, data experience, capabilities, availability, or how to contact him."
-      ]
+        "Luke’s assistant can help with his services, project rates, web and data capabilities, portfolio, availability, and contact details.",
+        "For anything more specific, send Luke a note and he can answer personally."
+      ],
+      action: {
+        label: "Contact Luke",
+        href: homeSection("#contact")
+      }
     };
+  }
+
+  async function getGeneratedReply(question) {
+    if (
+      aiUnavailable ||
+      !window.fetch ||
+      !aiEndpoint ||
+      window.location.protocol === "file:"
+    ) {
+      return null;
+    }
+
+    const controller = window.AbortController ? new AbortController() : null;
+    const timeout = window.setTimeout(function () {
+      if (controller) {
+        controller.abort();
+      }
+    }, 8000);
+
+    try {
+      const response = await window.fetch(aiEndpoint, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          message: question,
+          history: conversationHistory.slice(0, -1),
+          page: window.location.pathname.split("/").pop() || "index.html"
+        }),
+        signal: controller ? controller.signal : undefined
+      });
+
+      if (!response.ok) {
+        if (response.status === 404 || response.status === 405) {
+          aiUnavailable = true;
+        }
+
+        return null;
+      }
+
+      const data = await response.json();
+      const reply = typeof data.reply === "string" ? data.reply.trim() : "";
+
+      if (!reply) {
+        return null;
+      }
+
+      const generatedReply = {
+        messages: [reply.slice(0, 600)],
+        generated: true
+      };
+
+      if (/contact|quote|hire|message luke|coffee/i.test(reply)) {
+        generatedReply.action = {
+          label: "Contact Luke",
+          href: homeSection("#contact")
+        };
+      }
+
+      return generatedReply;
+    } catch (error) {
+      return null;
+    } finally {
+      window.clearTimeout(timeout);
+    }
   }
 
   function deliverReply(reply) {
@@ -2212,16 +2644,18 @@ function portfolioChatbot() {
     if (reply.action) {
       window.setTimeout(function () {
         addAction(reply.action);
+        speakReply(responseMessages.join(" "));
         isReplying = false;
       }, delay + 80);
     } else {
       window.setTimeout(function () {
+        speakReply(responseMessages.join(" "));
         isReplying = false;
       }, delay);
     }
   }
 
-  function submitQuestion(question) {
+  async function submitQuestion(question) {
     const cleanQuestion = question.trim();
 
     if (!cleanQuestion || isReplying) {
@@ -2230,14 +2664,28 @@ function portfolioChatbot() {
 
     isReplying = true;
     addMessage(cleanQuestion, "user");
+    rememberMessage("user", cleanQuestion);
     input.value = "";
 
     const typing = addTypingIndicator();
+    const startedAt = Date.now();
+    let reply = getBotReply(cleanQuestion);
+
+    if (!reply) {
+      reply = await getGeneratedReply(cleanQuestion);
+    }
+
+    if (!reply) {
+      reply = getSafeFallbackReply();
+    }
+
+    const remainingDelay = Math.max(0, 520 - (Date.now() - startedAt));
 
     window.setTimeout(function () {
       typing.remove();
-      deliverReply(getBotReply(cleanQuestion));
-    }, 650);
+      rememberMessage("assistant", (reply.messages || []).join(" "));
+      deliverReply(reply);
+    }, remainingDelay);
   }
 
   toggle.addEventListener("click", function (event) {
@@ -2285,6 +2733,7 @@ function portfolioChatbot() {
     });
   });
 
+  installVoiceControls();
   startTeaserLoop();
 
 }
