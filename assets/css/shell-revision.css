@@ -1054,3 +1054,246 @@ html[data-theme="light"] .chat-message.bot-system-message .chat-message-bubble {
     transition: none !important;
   }
 }
+
+/* =========================================================
+   LUMO IDENTITY AND LIVE SIGNAL
+========================================================= */
+
+.chatbot-mini-robot.lumo-brand-icon {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  flex: 0 0 42px;
+  width: 42px;
+  height: 42px;
+  border-color: rgba(235, 176, 32, .58);
+  border-radius: 14px;
+  background:
+    radial-gradient(circle at 50% 50%, rgba(235, 176, 32, .18), transparent 58%),
+    linear-gradient(145deg, rgba(24, 25, 29, .96), rgba(43, 44, 49, .94));
+  box-shadow: inset 0 0 18px rgba(235, 176, 32, .08), 0 8px 22px rgba(0, 0, 0, .2);
+  font-size: 0;
+}
+
+.lumo-brand-core {
+  position: absolute;
+  inset: 9px;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(255, 214, 107, .88);
+  border-radius: 10px;
+  background: linear-gradient(145deg, #f4bd33, #c98b00);
+  color: #202124;
+  box-shadow: 0 0 16px rgba(235, 176, 32, .3);
+  font-size: 14px;
+  font-weight: 900;
+  line-height: 1;
+  margin: 0 !important;
+}
+
+.lumo-brand-orbit {
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  left: 50%;
+  width: 38px;
+  height: 16px;
+  border: 1px solid rgba(235, 176, 32, .34);
+  border-radius: 50%;
+  transform: translate(-50%, -50%) rotate(22deg);
+  animation: lumoOrbit 5.6s linear infinite;
+  margin: 0 !important;
+}
+
+.lumo-brand-orbit-two {
+  width: 16px;
+  height: 38px;
+  border-color: rgba(212, 219, 234, .22);
+  animation-duration: 7.5s;
+  animation-direction: reverse;
+}
+
+.lumo-message-avatar {
+  position: relative;
+  overflow: hidden;
+  border-color: rgba(235, 176, 32, .48) !important;
+  background:
+    radial-gradient(circle at 50% 40%, rgba(255, 214, 107, .24), transparent 62%),
+    #25262a !important;
+  color: #ebb020;
+  font-size: 0 !important;
+  box-shadow: inset 0 0 12px rgba(235, 176, 32, .08);
+}
+
+.lumo-message-avatar > span {
+  display: grid;
+  place-items: center;
+  width: 18px;
+  height: 18px;
+  border: 1px solid rgba(235, 176, 32, .7);
+  border-radius: 6px;
+  font-size: 10px;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.lumo-teaser-avatar {
+  display: grid;
+  place-items: center;
+  width: 18px;
+  height: 18px;
+  border: 1px solid rgba(235, 176, 32, .7);
+  border-radius: 6px;
+  color: #ebb020;
+  font-size: 10px !important;
+  font-weight: 900;
+}
+
+.global-chatbot .chatbot-panel {
+  height: min(560px, calc(100dvh - 78px));
+}
+
+.lumo-visualizer {
+  position: relative;
+  flex: 0 0 88px;
+  min-height: 88px;
+  padding: 8px 15px 7px;
+  overflow: hidden;
+  border-bottom: 1px solid rgba(255, 255, 255, .065);
+  background:
+    radial-gradient(ellipse at 50% 82%, rgba(235, 176, 32, .11), transparent 57%),
+    linear-gradient(180deg, rgba(18, 19, 23, .98), rgba(27, 28, 32, .96));
+}
+
+.lumo-visualizer::before,
+.lumo-visualizer::after {
+  content: "";
+  position: absolute;
+  top: 38px;
+  width: 5px;
+  height: 1px;
+  background: rgba(235, 176, 32, .48);
+  box-shadow: 0 0 8px rgba(235, 176, 32, .38);
+}
+
+.lumo-visualizer::before { left: 9px; }
+.lumo-visualizer::after { right: 9px; }
+
+.lumo-visualizer-meta {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 18px;
+  color: #747984;
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: 1.25px;
+}
+
+.lumo-visualizer-meta > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.lumo-visualizer-meta i {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #43d17a;
+  box-shadow: 0 0 7px rgba(67, 209, 122, .52);
+}
+
+.lumo-visualizer-state {
+  color: #9ba0aa;
+  font-size: 8px;
+  letter-spacing: 1.35px;
+}
+
+.lumo-wave-canvas {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: 100%;
+  height: 56px;
+}
+
+.lumo-visualizer[data-state="listening"] .lumo-visualizer-state,
+.lumo-visualizer[data-state="speaking"] .lumo-visualizer-state {
+  color: #ebb020;
+}
+
+.lumo-visualizer[data-state="thinking"] .lumo-visualizer-meta i {
+  background: #ebb020;
+  box-shadow: 0 0 8px rgba(235, 176, 32, .65);
+  animation: lumoSignalBlink .85s ease-in-out infinite;
+}
+
+.lumo-visualizer[data-state="speaking"] {
+  background:
+    radial-gradient(ellipse at 50% 82%, rgba(235, 176, 32, .18), transparent 62%),
+    linear-gradient(180deg, rgba(18, 19, 23, .98), rgba(27, 28, 32, .96));
+}
+
+html[data-theme="light"] .chatbot-mini-robot.lumo-brand-icon,
+html[data-theme="light"] .lumo-message-avatar {
+  background:
+    radial-gradient(circle at 50% 44%, rgba(213, 157, 20, .14), transparent 62%),
+    #f4f5f7 !important;
+  box-shadow: inset 0 0 12px rgba(151, 103, 0, .07);
+}
+
+html[data-theme="light"] .lumo-visualizer {
+  border-bottom-color: rgba(31, 35, 43, .08);
+  background:
+    radial-gradient(ellipse at 50% 82%, rgba(213, 157, 20, .13), transparent 60%),
+    linear-gradient(180deg, #f8f9fa, #eef0f3);
+}
+
+html[data-theme="light"] .lumo-visualizer-meta,
+html[data-theme="light"] .lumo-visualizer-state {
+  color: #737984;
+}
+
+@keyframes lumoOrbit {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+@keyframes lumoSignalBlink {
+  0%, 100% { opacity: .38; transform: scale(.82); }
+  50% { opacity: 1; transform: scale(1.14); }
+}
+
+@media (max-width: 991px) {
+  .global-chatbot .chatbot-panel {
+    height: min(600px, calc(100dvh - 108px));
+  }
+}
+
+@media (max-width: 420px) {
+  .lumo-visualizer {
+    flex-basis: 80px;
+    min-height: 80px;
+    padding-right: 12px;
+    padding-left: 12px;
+  }
+
+  .lumo-wave-canvas {
+    height: 49px;
+  }
+
+  .chatbot-header-profile span {
+    font-size: 10px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lumo-brand-orbit,
+  .lumo-visualizer-meta i {
+    animation: none !important;
+  }
+}

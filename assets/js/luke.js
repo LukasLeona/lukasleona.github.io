@@ -1824,6 +1824,13 @@ function portfolioChatbot() {
   let isListening = false;
   let voiceMode = false;
   let voiceDisclosureShown = false;
+  let lumoVisualizer = null;
+  let lumoVisualizerLabel = null;
+  let lumoVisualizerFrame = null;
+  let lumoVisualizerState = "idle";
+  let lumoVisualizerEnergy = 0.12;
+  let lumoVisualizerTargetEnergy = 0.12;
+  let lumoTextAnimationTimer = null;
 
   const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
   const aiEndpointMeta = document.querySelector('meta[name="luke-chatbot-api"]');
@@ -1864,10 +1871,212 @@ function portfolioChatbot() {
     }
   }
 
+  function installLumoBranding() {
+    const header = panel.querySelector(".chatbot-header");
+    const profile = panel.querySelector(".chatbot-header-profile");
+    const title = profile ? profile.querySelector("strong") : null;
+    const profileIcon = profile ? profile.querySelector(".chatbot-mini-robot") : null;
+
+    if (title) {
+      title.textContent = "Lumo";
+    }
+
+    if (title && title.parentElement) {
+      const status = title.parentElement.querySelector("span");
+
+      if (status) {
+        status.innerHTML = '<span class="chat-online-indicator"></span> Luke\'s AI assistant';
+      }
+    }
+
+    if (profileIcon) {
+      profileIcon.classList.add("lumo-brand-icon");
+      profileIcon.setAttribute("aria-label", "Lumo");
+      profileIcon.innerHTML =
+        '<span class="lumo-brand-orbit lumo-brand-orbit-one"></span>' +
+        '<span class="lumo-brand-orbit lumo-brand-orbit-two"></span>' +
+        '<span class="lumo-brand-core">L</span>';
+    }
+
+    panel.querySelectorAll(".bot-message .chat-message-avatar:not(.chat-message-avatar-spacer)")
+      .forEach(function (avatar) {
+        avatar.classList.add("lumo-message-avatar");
+        avatar.innerHTML = '<span aria-hidden="true">L</span>';
+        avatar.setAttribute("aria-label", "Lumo");
+      });
+
+    if (teaser) {
+      const teaserAvatar = teaser.querySelector(".chatbot-teaser-avatar");
+
+      if (teaserAvatar) {
+        teaserAvatar.classList.add("lumo-teaser-avatar");
+        teaserAvatar.textContent = "L";
+      }
+    }
+
+    if (!header || panel.querySelector(".lumo-visualizer")) {
+      return;
+    }
+
+    const visualizer = document.createElement("div");
+    visualizer.className = "lumo-visualizer";
+    visualizer.setAttribute("role", "img");
+    visualizer.setAttribute("aria-label", "Lumo voice activity: ready");
+    visualizer.innerHTML =
+      '<div class="lumo-visualizer-meta">' +
+      '<span><i></i> LUMO SIGNAL</span>' +
+      '<strong class="lumo-visualizer-state">READY</strong>' +
+      '</div>' +
+      '<canvas class="lumo-wave-canvas" aria-hidden="true"></canvas>';
+
+    header.insertAdjacentElement("afterend", visualizer);
+    lumoVisualizer = visualizer.querySelector(".lumo-wave-canvas");
+    lumoVisualizerLabel = visualizer.querySelector(".lumo-visualizer-state");
+
+    startLumoVisualizer();
+  }
+
+  function getLumoStateSettings() {
+    const settings = {
+      idle: { label: "READY", energy: 0.12, speed: 0.00055 },
+      listening: { label: "LISTENING", energy: 0.48, speed: 0.00155 },
+      thinking: { label: "THINKING", energy: 0.29, speed: 0.0011 },
+      speaking: { label: "SPEAKING", energy: 0.58, speed: 0.00185 }
+    };
+
+    return settings[lumoVisualizerState] || settings.idle;
+  }
+
+  function setLumoVisualizerState(state, energy) {
+    const wrapper = lumoVisualizer ? lumoVisualizer.closest(".lumo-visualizer") : null;
+    const allowedStates = ["idle", "listening", "thinking", "speaking"];
+
+    lumoVisualizerState = allowedStates.includes(state) ? state : "idle";
+
+    const settings = getLumoStateSettings();
+    lumoVisualizerTargetEnergy = typeof energy === "number"
+      ? Math.max(0.08, Math.min(0.95, energy))
+      : settings.energy;
+
+    if (wrapper) {
+      wrapper.setAttribute("data-state", lumoVisualizerState);
+      wrapper.setAttribute(
+        "aria-label",
+        "Lumo voice activity: " + settings.label.toLowerCase()
+      );
+    }
+
+    if (lumoVisualizerLabel) {
+      lumoVisualizerLabel.textContent = settings.label;
+    }
+  }
+
+  function drawLumoVisualizer(timestamp) {
+    if (!lumoVisualizer) {
+      return;
+    }
+
+    const context = lumoVisualizer.getContext("2d");
+
+    if (!context) {
+      return;
+    }
+
+    const width = Math.max(1, lumoVisualizer.clientWidth);
+    const height = Math.max(1, lumoVisualizer.clientHeight);
+    const pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
+
+    if (
+      lumoVisualizer.width !== Math.floor(width * pixelRatio) ||
+      lumoVisualizer.height !== Math.floor(height * pixelRatio)
+    ) {
+      lumoVisualizer.width = Math.floor(width * pixelRatio);
+      lumoVisualizer.height = Math.floor(height * pixelRatio);
+    }
+
+    context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
+    context.clearRect(0, 0, width, height);
+
+    const settings = getLumoStateSettings();
+    const baseEnergy = settings.energy;
+    const pulse = lumoVisualizerState === "idle"
+      ? Math.sin(timestamp * 0.0012) * 0.025
+      : Math.sin(timestamp * 0.0065) * 0.07;
+
+    lumoVisualizerTargetEnergy += (baseEnergy - lumoVisualizerTargetEnergy) * 0.018;
+    lumoVisualizerEnergy +=
+      (lumoVisualizerTargetEnergy + pulse - lumoVisualizerEnergy) * 0.09;
+
+    const isLight = document.documentElement.getAttribute("data-theme") === "light";
+    const colors = isLight
+      ? ["rgba(151, 103, 0, .92)", "rgba(213, 157, 20, .52)", "rgba(98, 104, 116, .27)"]
+      : ["rgba(255, 206, 79, .96)", "rgba(235, 176, 32, .56)", "rgba(214, 220, 233, .27)"];
+    const centerY = height * 0.52;
+
+    colors.forEach(function (color, waveIndex) {
+      context.beginPath();
+      context.lineCap = "round";
+      context.lineJoin = "round";
+      context.lineWidth = waveIndex === 0 ? 2 : 1.35;
+      context.strokeStyle = color;
+
+      for (let x = 0; x <= width; x += 2) {
+        const progress = x / width;
+        const envelope = Math.pow(Math.sin(Math.PI * progress), 1.18);
+        const frequency = 2.1 + waveIndex * 0.7;
+        const phase = timestamp * settings.speed * (1 + waveIndex * 0.14) + waveIndex * 1.8;
+        const modulation = 0.66 + 0.34 * Math.sin(progress * Math.PI * 5 - phase * 0.72);
+        const amplitude = height * (0.31 - waveIndex * 0.045) * lumoVisualizerEnergy;
+        const y = centerY +
+          Math.sin(progress * Math.PI * 2 * frequency + phase) *
+          amplitude * envelope * modulation;
+
+        if (x === 0) {
+          context.moveTo(x, y);
+        } else {
+          context.lineTo(x, y);
+        }
+      }
+
+      context.stroke();
+    });
+
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      lumoVisualizerFrame = null;
+      return;
+    }
+
+    lumoVisualizerFrame = window.requestAnimationFrame(drawLumoVisualizer);
+  }
+
+  function startLumoVisualizer() {
+    if (!lumoVisualizer || lumoVisualizerFrame) {
+      return;
+    }
+
+    setLumoVisualizerState("idle");
+    lumoVisualizerFrame = window.requestAnimationFrame(drawLumoVisualizer);
+  }
+
+  function animateLumoTextResponse(text) {
+    window.clearTimeout(lumoTextAnimationTimer);
+
+    const punctuationEnergy = (text.match(/[!?]/g) || []).length * 0.035;
+    const energy = Math.min(0.78, 0.48 + punctuationEnergy);
+    const duration = Math.min(4200, Math.max(1350, text.length * 24));
+
+    setLumoVisualizerState("speaking", energy);
+    lumoTextAnimationTimer = window.setTimeout(function () {
+      if (!window.speechSynthesis || !window.speechSynthesis.speaking) {
+        setLumoVisualizerState("idle");
+      }
+    }, duration);
+  }
+
   const teaserMessages = [
-    "Need help exploring?",
+    "Hi, I’m Lumo!",
     "I can recommend a project.",
-    "Ask what Luke can build.",
+    "Ask me what Luke can build.",
     "Web, data, or automation?",
     "Let’s find the right section.",
     "Ready to start a project?"
@@ -1928,6 +2137,18 @@ function portfolioChatbot() {
         input.focus();
         messages.scrollTop = messages.scrollHeight;
       }, 220);
+    } else {
+      window.clearTimeout(lumoTextAnimationTimer);
+
+      if (window.speechSynthesis) {
+        window.speechSynthesis.cancel();
+      }
+
+      if (recognition && isListening) {
+        recognition.stop();
+      }
+
+      setLumoVisualizerState("idle");
     }
   }
 
@@ -1966,6 +2187,25 @@ function portfolioChatbot() {
 
     utterance.rate = 1.02;
     utterance.pitch = 1;
+    utterance.addEventListener("start", function () {
+      window.clearTimeout(lumoTextAnimationTimer);
+      setLumoVisualizerState("speaking", 0.58);
+    });
+    utterance.addEventListener("boundary", function (event) {
+      const phrase = text.slice(event.charIndex, event.charIndex + 24);
+      const emphasis = /[!?]/.test(phrase) ? 0.16 : /[,.;:]/.test(phrase) ? -0.05 : 0.04;
+      const wordLength = (phrase.split(/\s+/)[0] || "").length;
+      setLumoVisualizerState(
+        "speaking",
+        Math.min(0.9, 0.5 + emphasis + wordLength * 0.018)
+      );
+    });
+    utterance.addEventListener("end", function () {
+      setLumoVisualizerState("idle");
+    });
+    utterance.addEventListener("error", function () {
+      setLumoVisualizerState("idle");
+    });
     window.speechSynthesis.speak(utterance);
   }
 
@@ -2015,7 +2255,7 @@ function portfolioChatbot() {
       }
 
       voiceDisclosureShown = true;
-      addMessage("Voice mode is on. Spoken replies use a computer-generated voice.", "bot", "bot-system-message");
+      addMessage("I’m in voice mode now. My spoken replies use a computer-generated voice.", "bot", "bot-system-message");
     }
 
     if (header && closeButton) {
@@ -2049,7 +2289,7 @@ function portfolioChatbot() {
       voiceButton.title = "Voice input is not supported by this browser";
       voiceButton.addEventListener("click", function () {
         addMessage(
-          "Voice input is not available in this browser yet, but you can still type your question.",
+          "I can’t listen through this browser yet, but you can still type your question.",
           "bot",
           "bot-system-message"
         );
@@ -2068,6 +2308,7 @@ function portfolioChatbot() {
       voiceMode = true;
       input.placeholder = "Listening…";
       discloseVoice();
+      setLumoVisualizerState("listening");
       updateVoiceControls();
     });
 
@@ -2084,6 +2325,10 @@ function portfolioChatbot() {
       }
 
       input.value = transcript.trim();
+      setLumoVisualizerState(
+        "listening",
+        Math.min(0.86, 0.42 + transcript.trim().length * 0.008)
+      );
 
       if (finalTranscript.trim()) {
         window.setTimeout(function () {
@@ -2095,17 +2340,19 @@ function portfolioChatbot() {
     recognition.addEventListener("end", function () {
       isListening = false;
       input.placeholder = "Ask about Luke's work...";
+      setLumoVisualizerState(isReplying ? "thinking" : "idle");
       updateVoiceControls();
     });
 
     recognition.addEventListener("error", function (event) {
       isListening = false;
       input.placeholder = "Ask about Luke's work...";
+      setLumoVisualizerState("idle");
       updateVoiceControls();
 
       if (event.error === "not-allowed" || event.error === "service-not-allowed") {
         addMessage(
-          "Microphone access was blocked. Allow microphone permission or type your question instead.",
+          "I couldn’t access your microphone. Allow microphone permission or type your question instead.",
           "bot",
           "bot-system-message"
         );
@@ -2144,9 +2391,9 @@ function portfolioChatbot() {
 
     if (type !== "user") {
       const avatar = document.createElement("div");
-      avatar.className = "chat-message-avatar";
-      avatar.textContent = "🤖";
-      avatar.setAttribute("aria-hidden", "true");
+      avatar.className = "chat-message-avatar lumo-message-avatar";
+      avatar.innerHTML = '<span aria-hidden="true">L</span>';
+      avatar.setAttribute("aria-label", "Lumo");
       message.appendChild(avatar);
     }
 
@@ -2162,15 +2409,22 @@ function portfolioChatbot() {
   }
 
   function addTypingIndicator() {
+    window.clearTimeout(lumoTextAnimationTimer);
+
+    if (window.speechSynthesis && window.speechSynthesis.speaking) {
+      window.speechSynthesis.cancel();
+    }
+
     const typing = document.createElement("div");
     typing.className = "chat-message bot-message chatbot-typing-message";
     typing.innerHTML =
-      '<div class="chat-message-avatar" aria-hidden="true">🤖</div>' +
-      '<div class="chat-message-bubble chatbot-typing" aria-label="Luke\'s assistant is typing">' +
+      '<div class="chat-message-avatar lumo-message-avatar" aria-label="Lumo"><span aria-hidden="true">L</span></div>' +
+      '<div class="chat-message-bubble chatbot-typing" aria-label="Lumo is thinking">' +
       '<span></span><span></span><span></span></div>';
 
     messages.appendChild(typing);
     scrollMessages();
+    setLumoVisualizerState("thinking");
 
     return typing;
   }
@@ -2327,7 +2581,7 @@ function portfolioChatbot() {
     ) {
       return {
         messages: [
-          "Hi! Great to meet you. 👋",
+          "Hi! I’m Lumo, Luke’s AI assistant. Great to meet you. 👋",
           "I can help you explore Luke’s projects, capabilities, rates, experience, or contact options."
         ]
       };
@@ -2553,8 +2807,8 @@ function portfolioChatbot() {
   function getSafeFallbackReply() {
     return {
       messages: [
-        "Luke’s assistant can help with his services, project rates, web and data capabilities, portfolio, availability, and contact details.",
-        "For anything more specific, send Luke a note and he can answer personally."
+        "I can help you with Luke’s services, project rates, web and data capabilities, portfolio, availability, and contact details.",
+        "If you need something more specific, I can point you to Luke’s Contact form so he can answer personally."
       ],
       action: {
         label: "Contact Luke",
@@ -2644,12 +2898,20 @@ function portfolioChatbot() {
     if (reply.action) {
       window.setTimeout(function () {
         addAction(reply.action);
-        speakReply(responseMessages.join(" "));
+        if (voiceMode) {
+          speakReply(responseMessages.join(" "));
+        } else {
+          animateLumoTextResponse(responseMessages.join(" "));
+        }
         isReplying = false;
       }, delay + 80);
     } else {
       window.setTimeout(function () {
-        speakReply(responseMessages.join(" "));
+        if (voiceMode) {
+          speakReply(responseMessages.join(" "));
+        } else {
+          animateLumoTextResponse(responseMessages.join(" "));
+        }
         isReplying = false;
       }, delay);
     }
@@ -2733,6 +2995,7 @@ function portfolioChatbot() {
     });
   });
 
+  installLumoBranding();
   installVoiceControls();
   startTeaserLoop();
 

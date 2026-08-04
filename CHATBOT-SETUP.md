@@ -1,4 +1,4 @@
-# Luke portfolio assistant setup
+# Lumo — Luke's AI assistant setup
 
 The verified local answers and browser voice mode work without an API key. Generated answers use the server-side function at `api/chat.js`.
 
