@@ -294,3 +294,84 @@
   .automation-footer-inner > div { display: block; }
   .automation-footer-inner span { display: block; margin-top: 4px; }
 }
+
+/* Mobile publishing workspace */
+@media (max-width: 420px) {
+  .automation-page { max-width: 100%; overflow-x: hidden; }
+  .automation-topbar { grid-template-columns: minmax(0, 1fr) auto; gap: 7px; padding-inline: 12px; }
+  .automation-topbar .preview-status { font-size: 9px; white-space: nowrap; }
+  .automation-topbar .topnav { width: 100%; min-width: 0; }
+  .automation-topbar .topnav a { min-height: 38px; display: inline-flex; align-items: center; justify-content: center; padding-inline: 12px; }
+
+  .automation-shell { width: calc(100% - 24px); padding: 28px 0 66px; }
+  .automation-hero { min-height: auto; padding: 24px 0 30px; }
+  .automation-hero h1 { font-size: clamp(34px, 10.5vw, 42px); line-height: .96; }
+  .automation-hero p:not(.kicker) { margin-top: 17px; font-size: 14px; line-height: 1.6; }
+
+  .progress-notice { grid-template-columns: 37px minmax(0, 1fr); gap: 12px; padding: 14px; border-radius: 16px; }
+  .notice-icon { width: 37px; height: 37px; border-radius: 12px; }
+  .progress-notice strong { font-size: 14px; }
+  .progress-notice p { font-size: 10px; }
+
+  .automation-grid { min-width: 0; }
+  .automation-panel, .queue-section { min-width: 0; border-radius: 17px; }
+  .automation-panel { padding: 14px; }
+  .automation-panel-heading { gap: 10px; margin-bottom: 15px; }
+  .automation-panel h2 { font-size: 17px; }
+  .upload-zone { min-height: 150px; padding: 14px; text-align: center; }
+  .upload-zone strong { font-size: 11px; }
+  .media-order-heading { display: block; }
+  .media-order-heading small { display: block; max-width: none; margin-top: 4px; text-align: left; line-height: 1.4; }
+  .media-list-item { grid-template-columns: 14px 42px minmax(0, 1fr); gap: 7px; padding: 9px; }
+  .media-list-actions { grid-column: 3; justify-content: flex-end; }
+  .media-list-actions button { width: 32px; height: 32px; }
+
+  .field-grid { min-width: 0; }
+  .form-field input, .form-field select { height: 44px; font-size: 12px; }
+  .form-field textarea { font-size: 12px; }
+  .platform-picker { grid-template-columns: 1fr 1fr; }
+  .platform-picker label span { min-height: 44px; gap: 6px; padding: 8px; font-size: 9px; }
+  .platform-picker label span i { flex: 0 0 auto; }
+
+  .platform-schedule-heading { align-items: flex-start; }
+  .schedule-row-main { grid-template-columns: 27px minmax(0, 1fr); }
+  .schedule-mode-field { margin-left: 0; }
+  .schedule-mode-field select { height: 38px; font-size: 9px; }
+  .schedule-time-editor { grid-template-columns: 1fr 1fr; margin-left: 0; }
+  .schedule-time-editor input { height: 38px; font-size: 10px; }
+  .schedule-peak { grid-column: 1 / -1; }
+  .build-schedule-button, .connect-button { min-height: 48px; }
+
+  .preview-panel { padding: 12px; }
+  .preview-toolbar { align-items: end; gap: 7px; }
+  .preview-toolbar select { height: 40px; font-size: 10px; }
+  .device-toggle button { width: 40px; height: 38px; }
+  .preview-stage { min-height: 390px; padding: 10px 6px; }
+  .preview-media, .preview-media img, .preview-media video, .preview-media-placeholder { min-height: 245px; }
+  .multi-media-grid { height: 270px; }
+  .x-card .preview-media, .threads-card .preview-media { margin-left: 45px; }
+  .x-card .social-caption, .threads-card .social-caption { padding-left: 45px; }
+  .x-card .social-stats { padding-left: 45px; }
+  .x-card .social-actions, .threads-card .social-actions { margin-left: 36px; }
+  .tiktok-card .preview-media, .tiktok-card .preview-media img, .tiktok-card .preview-media video, .tiktok-card .preview-media-placeholder { min-height: 455px; }
+  .preview-schedule { grid-template-columns: 30px minmax(0, 1fr); }
+
+  .queue-section { padding: 17px; }
+  .queue-heading h2 { font-size: 21px; }
+  .queue-actions { flex-wrap: wrap; }
+  .queue-actions button { min-height: 40px; }
+  .workflow-strip { gap: 6px; padding: 9px; }
+  .workflow-strip > div { grid-template-columns: 27px minmax(0, 1fr); column-gap: 6px; }
+  .workflow-strip > div > span { width: 27px; height: 27px; }
+  .queue-item { grid-template-columns: 32px minmax(0, 1fr) auto; gap: 8px; padding: 10px; }
+  .queue-platform { width: 32px; height: 32px; }
+  .queue-score { min-width: 40px; }
+  .automation-footer-inner { width: calc(100% - 24px); text-align: center; line-height: 1.5; }
+}
+
+@media (max-width: 340px) {
+  .automation-topbar .preview-status { font-size: 8px; }
+  .platform-picker { grid-template-columns: 1fr; }
+  .preview-toolbar { align-items: stretch; }
+  .device-toggle button { width: 36px; }
+}

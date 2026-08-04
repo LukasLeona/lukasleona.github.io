@@ -524,3 +524,123 @@ footer { margin-top: 110px; padding: 34px 0; border-top: 1px solid var(--line); 
   .platform-window-compare { grid-template-columns: 1fr 1fr; }
   .platform-window:last-child { grid-column: 1 / -1; }
 }
+
+/* Mobile usability and narrow-screen containment */
+@media (max-width: 420px) {
+  html, body { max-width: 100%; overflow-x: hidden; }
+  .shell { width: calc(100% - 24px); }
+
+  .topbar { grid-template-columns: minmax(0, 1fr) auto; gap: 8px; padding-inline: 12px; }
+  .brand { min-width: 0; gap: 8px; font-size: 15px; }
+  .brand-mark { flex: 0 0 auto; transform: scale(.9); transform-origin: left center; }
+  .topbar-actions { gap: 7px; }
+  .automation-shortcut { min-height: 36px; padding: 7px 9px; }
+
+  .cockpit-head { padding-top: 10px; }
+  .dashboard-title { padding: 14px; }
+  .dashboard-title h1 { font-size: clamp(23px, 7.4vw, 28px); }
+  .cockpit-summary { font-size: 11px; line-height: 1.45; }
+  .quick-brief { gap: 7px 12px; font-size: 8px; line-height: 1.4; }
+
+  .manila-clock { padding: 14px; }
+  #manilaClock { font-size: clamp(29px, 9vw, 35px); }
+  .clock-opportunity-top { align-items: flex-start; }
+  .alert-button { min-height: 32px; padding-inline: 10px; }
+  #clockPlatform { font-size: 18px; }
+  #clockMessage { font-size: 10px; }
+  .clock-chip { padding: 4px 6px; font-size: 7px; }
+
+  .cockpit-head .control-strip label { min-width: 0; min-height: 57px; padding: 9px 12px; }
+  .cockpit-head .control-strip label span { font-size: 8px; }
+  .cockpit-head .control-strip select { min-width: 0; padding-right: 22px; font-size: 11px; background-position: calc(100% - 11px) 52%, calc(100% - 6px) 52%; }
+
+  .platform-section, .planner-section { padding-top: 32px; }
+  .compact-heading h2 { font-size: 19px; }
+  .compact-heading .section-note { font-size: 10px; }
+  .platform-grid {
+    width: 100%;
+    min-width: 0;
+    grid-template-columns: none;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(236px, 82vw);
+    gap: 9px;
+    padding: 2px 1px 10px;
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    scroll-snap-type: inline mandatory;
+    scrollbar-width: thin;
+  }
+  .platform-card {
+    width: 100%;
+    min-width: 0;
+    min-height: 142px;
+    padding: 13px;
+    scroll-snap-align: start;
+  }
+  .platform-name { font-size: 11px; }
+  .platform-icon { width: 27px; height: 27px; font-size: 11px; }
+  .audience-number { margin-top: 14px; font-size: 31px; }
+  .audience-metric { max-width: calc(100% - 6px); white-space: normal; font-size: 9px; line-height: 1.25; }
+  .platform-card-bottom { left: 13px; right: 13px; bottom: 10px; }
+  .best-window { padding: 4px 7px; font-size: 8px; }
+
+  .planner-grid, .planner-grid > *, .day-planner-grid, .day-planner-grid > *, .fit-layout, .fit-layout > * { min-width: 0; }
+  .panel, .planner-grid .panel, .dark-panel { min-width: 0; padding: 17px; }
+  .planner-grid .panel { min-height: 0; }
+  .planner-grid .activity-panel { min-height: 365px; }
+  .planner-grid .recommendation-panel { min-height: 350px !important; }
+  .panel-heading { flex-wrap: wrap; gap: 8px 12px; }
+  .planner-grid .panel-label, .heatmap-panel .panel-label { font-size: 8px; }
+  .planner-grid .panel h3, .heatmap-panel h3 { font-size: 15px; }
+  .legend { font-size: 8px; }
+  .chart-wrap, .planner-chart-wrap { width: 100%; max-width: 100%; overflow: hidden; }
+  .chart-wrap canvas, .planner-chart-wrap canvas { max-width: 100% !important; }
+  .chart-wrap { height: 185px; }
+  .model-note { display: block; font-size: 9px; }
+  .period-card { min-width: 0; padding: 9px; }
+  .period-card strong { font-size: 17px; }
+  .next-window strong { font-size: 38px; }
+  .recommendation-copy { font-size: 11px; }
+  .content-prompt strong { font-size: 10px; }
+  .primary-button { min-height: 44px; font-size: 11px; }
+  .heatmap-panel { padding: 15px; }
+  .heatmap-scroll { width: 100%; max-width: 100%; overscroll-behavior-inline: contain; }
+
+  .day-planner-section { padding-top: 66px; }
+  .planner-live-pill { max-width: 100%; width: fit-content; font-size: 8px; }
+  .day-planner-controls label { min-height: 62px; padding: 12px 13px; }
+  .day-planner-controls label > span { font-size: 9px; }
+  .day-planner-controls input[type="date"], .day-planner-controls input[type="text"], .day-planner-controls select { min-height: 30px; font-size: 13px; }
+  .planner-chart-wrap { height: 195px; }
+  .weekday-strength { gap: 3px; padding-inline: 2px; }
+  .weekday-column { padding-inline: 1px; }
+  .scheduled-post { grid-template-columns: 25px minmax(0, 1fr) auto; gap: 8px; }
+  .post-details strong { font-size: 20px; }
+  .platform-window-compare { grid-template-columns: 1fr; }
+  .platform-window, .platform-window:last-child { grid-column: auto; min-height: 50px; }
+
+  .fit-row { grid-template-columns: 82px minmax(0, 1fr) 38px; gap: 8px; }
+  .fit-platform { min-width: 0; font-size: 10px; }
+  .insight-quote { font-size: 21px; }
+  .live-section { margin-top: 72px; padding: 64px 0; }
+  .dark-panel { min-height: auto; }
+  .dark-panel .panel-heading { display: block; }
+  .source-chip { display: inline-block; margin-top: 9px; }
+  .trend-item { grid-template-columns: 24px minmax(0, 1fr) auto; gap: 8px; }
+  .trend-volume { max-width: 74px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .attention-row { grid-template-columns: 72px minmax(0, 1fr) 58px; gap: 8px; }
+  .source-row { min-width: 0; }
+  .source-title, .source-detail { overflow-wrap: anywhere; }
+  footer { margin-top: 72px; }
+  .footer-inner { text-align: center; }
+  .footer-inner p { line-height: 1.5; }
+}
+
+@media (max-width: 340px) {
+  .automation-shortcut span { display: none; }
+  .automation-shortcut { width: 36px; justify-content: center; padding-inline: 0; }
+  .cockpit-head .control-strip { grid-template-columns: 1fr; }
+  .cockpit-head .control-strip label { border-right: 0; }
+  .cockpit-head .control-strip label:last-child { border-bottom: 0; }
+  .platform-grid { grid-auto-columns: minmax(224px, 86vw); }
+}
