@@ -884,6 +884,31 @@ html[data-theme="light"] .left-side::before {
   --art-bg-2: #211c1a;
 }
 
+#portfolio .project-art-signaldesk {
+  --art-accent: #c9f45c;
+  --art-accent-2: #ff775d;
+  --art-bg-1: #173c31;
+  --art-bg-2: #0d211b;
+}
+
+#portfolio .signaldesk-art-screen {
+  padding: 0;
+  background: #f2f0e9;
+}
+
+#portfolio .signaldesk-art-screen img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  object-position: center;
+  transition: transform .55s cubic-bezier(.2,.8,.2,1);
+}
+
+#portfolio .portfolio-v2-card:hover .signaldesk-art-screen img {
+  transform: scale(1.035);
+}
+
 #portfolio .amore-art-blooms {
   position: absolute;
   right: 23%;
