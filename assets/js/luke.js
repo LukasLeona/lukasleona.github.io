@@ -5629,7 +5629,7 @@ function interactiveBlog() {
       ) {
 
         resultLabel.textContent =
-          "Showing all 4 insights";
+          "Showing all 5 insights";
 
       } else {
 
@@ -5637,6 +5637,9 @@ function interactiveBlog() {
 
           web:
             "web & digital strategy",
+
+          marketing:
+            "marketing & audience data",
 
           data:
             "data & analytics",
