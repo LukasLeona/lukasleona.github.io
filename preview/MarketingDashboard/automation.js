@@ -20,6 +20,7 @@ const $ = selector => document.querySelector(selector);
 const $$ = selector => [...document.querySelectorAll(selector)];
 
 document.addEventListener("DOMContentLoaded", () => {
+  $("#automationFooterYear").textContent = new Date().getFullYear();
   setInitialDate();
   bindUpload();
   bindComposer();
