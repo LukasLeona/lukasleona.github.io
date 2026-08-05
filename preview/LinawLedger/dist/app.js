@@ -58,6 +58,25 @@
   const agencyByKey = new Map(data.agencies.map((item) => [entityKey(item.department, item.name), item]));
   const mapData = window.PH_PROVINCES;
   const expenseColors = ["#126a61", "#d6a43a", "#e27258", "#7b78b8", "#79cdb9", "#778582"];
+  const allocationMarks = {
+    "Department of Education (DepEd)": { src: "assets/logos/deped.svg", label: "DepEd" },
+    "Department of Public Works and Highways (DPWH)": { src: "assets/logos/dpwh.svg", label: "DPWH" },
+    "Department of the Interior and Local Government (DILG)": { src: "assets/logos/dilg.png", label: "DILG" },
+    "Department of National Defense (DND)": { src: "assets/logos/dnd.svg", label: "DND" },
+    "Department of Health (DOH)": { src: "assets/logos/doh.svg", label: "DOH" },
+    "Department of Social Welfare and Development (DSWD)": { src: "assets/logos/dswd.png", label: "DSWD" },
+    "Department of Agriculture (DA)": { src: "assets/logos/da.jpg", label: "DA" },
+    "Department of Transportation (DOTr)": { src: "assets/logos/dotr.svg", label: "DOTr" },
+  };
+  const allocationBadges = {
+    "State Universities and Colleges (SUCs)": "SUCs",
+    "Other Executive Offices (OEOs)": "OEOs",
+    "Automatic Appropriations": "AUTO",
+    "New General Appropriations": "NGA",
+    "Budgetary Support to Government Corporations": "BSGC",
+    "Allocations to Local Government Units (ALGU)": "ALGU",
+    "Special Purpose Funds": "SPF",
+  };
   const priorityOffices = [
     { name: "Office of the President (OP)", abbr: "OP", role: "Executive leadership and presidential operations", featured: true, accent: "#d6a43a" },
     { name: "Department of Education (DepEd)", abbr: "DepEd", role: "Basic education and attached agencies", featured: true, accent: "#79cdb9" },
@@ -224,12 +243,37 @@
       .sort((a, b) => b.amount_thousand_pesos - a.amount_thousand_pesos)
       .slice(0, 10);
     const max = entries[0]?.amount_thousand_pesos || 1;
-    elements.topAllocationChart.innerHTML = entries.map((item, index) => `
-      <button class="allocation-bar" type="button" data-chart-department="${escapeHtml(item.name)}" aria-label="Open ${escapeHtml(item.name)}, ${formatThousands(item.amount_thousand_pesos)}">
-        <span class="allocation-bar-label"><i>${String(index + 1).padStart(2, "0")}</i><span title="${escapeHtml(item.name)}">${escapeHtml(item.name)}</span></span>
-        <span class="allocation-track" aria-hidden="true"><i style="--bar-width:${((item.amount_thousand_pesos / max) * 100).toFixed(2)}%"></i></span>
-        <strong>${formatThousands(item.amount_thousand_pesos)}</strong>
-      </button>`).join("");
+    const gridTicks = [1, 0.75, 0.5, 0.25, 0];
+    elements.topAllocationChart.innerHTML = `
+      <div class="allocation-chart-stage" style="--chart-count:${entries.length}">
+        <div class="allocation-grid-lines" aria-hidden="true">
+          ${gridTicks.map((ratio) => `<span><em>${formatThousands(max * ratio)}</em></span>`).join("")}
+        </div>
+        <div class="allocation-columns">
+          ${entries.map((item, index) => {
+            const mark = allocationMarks[item.name];
+            const badge = allocationBadges[item.name] || item.name.match(/\(([^)]+)\)/)?.[1] || "GOV";
+            const height = Math.max(3.5, (item.amount_thousand_pesos / max) * 100).toFixed(2);
+            const color = [1, 4, 7].includes(index) ? "#d6a43a" : "#2b9b88";
+            const value = formatThousands(item.amount_thousand_pesos);
+            const share = formatPercent(item.amount_thousand_pesos, data.meta.total_thousand_pesos);
+            return `
+              <button class="allocation-column" type="button" data-chart-department="${escapeHtml(item.name)}" style="--bar-height:${height}%;--bar-color:${color}" aria-label="${escapeHtml(item.name)}: ${value}, ${share} of the national budget. Open allocation details.">
+                <span class="allocation-tooltip" aria-hidden="true">
+                  <small>Rank ${String(index + 1).padStart(2, "0")} · ${share} of national budget</small>
+                  <strong>${escapeHtml(item.name)}</strong>
+                  <em>${value}</em>
+                  <span>Open allocation details <b aria-hidden="true">→</b></span>
+                </span>
+                <span class="allocation-column-rail" aria-hidden="true"><i></i></span>
+                <span class="allocation-logo${mark ? " has-image" : " is-badge"}" aria-hidden="true">
+                  ${mark ? `<img src="${mark.src}" alt="" loading="lazy">` : `<b>${escapeHtml(badge)}</b>`}
+                </span>
+                <span class="allocation-rank" aria-hidden="true">${String(index + 1).padStart(2, "0")}</span>
+              </button>`;
+          }).join("")}
+        </div>
+      </div>`;
   }
 
   function renderExpenseChart() {
@@ -660,7 +704,11 @@
   }
 
   function renderSources() {
-    elements.sourceList.innerHTML = data.sources.map((source) => `
+    const historySources = (window.LINAW_HISTORY?.sources || []).map((source) => ({
+      ...source,
+      use: `Historical trend source for FY ${source.year}`,
+    }));
+    elements.sourceList.innerHTML = [...data.sources, ...historySources].map((source) => `
       <a class="source-item" href="${escapeHtml(source.url)}" target="_blank" rel="noreferrer">
         <strong>${escapeHtml(source.label)}</strong>
         <p>${escapeHtml(source.use)}</p>

@@ -17,10 +17,12 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=20260805">
+  <link rel="stylesheet" href="styles.css?v=20260805-3">
   <script src="data/budget-data.js" defer></script>
+  <script src="data/historical-budget.js" defer></script>
   <script src="data/philippines-provinces.js" defer></script>
-  <script src="app.js?v=20260805" defer></script>
+  <script src="app.js?v=20260805-3" defer></script>
+  <script src="history.js?v=20260805-3" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to budget explorer</a>
@@ -40,6 +42,7 @@
       </a>
       <nav class="main-nav" aria-label="Main navigation">
         <a href="#highlights">Highlights</a>
+        <a href="#trends">5-year trends</a>
         <a href="#departments">Departments</a>
         <a href="#regions">Regions</a>
         <a href="#agencies">Agencies</a>
@@ -148,7 +151,7 @@
               </div>
             </div>
             <div class="top-allocation-chart" id="topAllocationChart" aria-label="Largest FY 2026 allocations bar chart"></div>
-            <p class="chart-footnote">Bars use the same scale. “Include funds” adds automatic appropriations and special-purpose groupings.</p>
+            <p class="chart-footnote">Bars share one scale. Hover or focus a logo to reveal the office and allocation; select it to open details. Category badges are used where no single department seal applies. “Include funds” adds automatic appropriations and special-purpose groupings.</p>
           </article>
 
           <article class="chart-card expense-chart-card">
@@ -170,6 +173,71 @@
           <p>Includes the Office of the President and the priority sectors identified in DBM’s 2026 People’s Enacted Budget. Cards use the matching GAA department grouping.</p>
         </div>
         <div class="priority-grid" id="priorityGrid"></div>
+      </div>
+    </section>
+
+    <section class="section history-section" id="trends">
+      <div class="shell">
+        <div class="section-heading history-heading">
+          <div>
+            <p class="kicker">Five enacted budgets, one clear view</p>
+            <h2>See how allocations changed from 2022 to 2026.</h2>
+          </div>
+          <p>Choose a department or region, then add a second line for context. The graph uses enacted DBM budget workbooks and keeps untagged nationwide amounts separate from region-coded entries.</p>
+        </div>
+
+        <article class="history-explorer">
+          <div class="history-toolbar">
+            <div class="history-mode">
+              <span>Compare by</span>
+              <div class="segmented-control" id="historyType" aria-label="Historical comparison type">
+                <button class="active" type="button" data-history-type="departments" aria-pressed="true">Department</button>
+                <button type="button" data-history-type="regions" aria-pressed="false">Region</button>
+              </div>
+            </div>
+            <div class="history-selectors">
+              <label>
+                <span>Primary series</span>
+                <select id="historyPrimary" aria-label="Primary historical series"></select>
+              </label>
+              <label>
+                <span>Compare with</span>
+                <select id="historyCompare" aria-label="Comparison historical series"></select>
+              </label>
+            </div>
+          </div>
+
+          <div class="history-summary" id="historySummary" aria-live="polite"></div>
+
+          <div class="history-chart-panel">
+            <div class="history-chart-head">
+              <div class="history-legend" id="historyLegend"></div>
+              <span>Nominal Philippine pesos · billions</span>
+            </div>
+            <div class="history-chart-scroller">
+              <div class="history-chart" id="historyChart" role="img" aria-label="Five-year enacted budget comparison line chart"></div>
+            </div>
+            <div class="history-tooltip" id="historyTooltip" role="status" aria-live="polite" hidden></div>
+          </div>
+
+          <div class="history-lower-grid">
+            <div class="history-table-wrap">
+              <div class="history-table-head"><strong>Year-by-year values</strong><span>Rounded plotted figures</span></div>
+              <table>
+                <caption class="sr-only">Historical enacted appropriation values for the selected series</caption>
+                <thead id="historyTableHead"></thead>
+                <tbody id="historyTableBody"></tbody>
+              </table>
+            </div>
+            <aside class="history-method">
+              <span>How to read this</span>
+              <h3>Compare direction, then check context.</h3>
+              <p>Figures are nominal, so inflation is not removed. A rise can also reflect transferred programs or a department reorganization.</p>
+              <p id="historyMethodDetail">For regions, rows carrying a UACS region code are counted and untagged nationwide rows are excluded. Operational codes can place central-office entries under NCR.</p>
+              <a href="#sources">See data sources and method <span aria-hidden="true">→</span></a>
+            </aside>
+          </div>
+        </article>
       </div>
     </section>
 
@@ -372,6 +440,7 @@
         <div class="source-list" id="sourceList"></div>
         <div class="method-card">
           <span>Method note</span>
+          <p>Five-year trend lines use the FY 2022–2026 enacted GAA workbooks. Region trends count rows carrying a UACS region code and exclude untagged nationwide rows; operational coding can concentrate central-office entries under NCR.</p>
           <p>Agency and expense figures are aggregated from DBM’s FY 2026 GAA-by-object Excel file. Regional totals come from the 2026 People’s Enacted Budget because operational office codes are not equivalent to geographic allocations. The map uses simplified MIT-licensed province boundaries reclassified to PSA’s current 18-region structure.</p>
           <small>Amounts are shown in Philippine pesos. Minor differences can result from rounding.</small>
         </div>
