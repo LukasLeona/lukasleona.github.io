@@ -22,7 +22,7 @@
   <script src="data/historical-budget.js" defer></script>
   <script src="data/philippines-provinces.js" defer></script>
   <script src="app.js?v=20260805-3" defer></script>
-  <script src="history.js?v=20260805-3" defer></script>
+  <script src="history.js?v=20260805-4" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to budget explorer</a>
@@ -181,28 +181,24 @@
         <div class="section-heading history-heading">
           <div>
             <p class="kicker">Five enacted budgets, one clear view</p>
-            <h2>See how allocations changed from 2022 to 2026.</h2>
+            <h2>Follow one public allocation across five enacted budgets.</h2>
           </div>
-          <p>Choose a department or region, then add a second line for context. The graph uses enacted DBM budget workbooks and keeps untagged nationwide amounts separate from region-coded entries.</p>
+          <p>Select one department, office, or region to see its own year-by-year path. The view focuses on change over time—not a race between unrelated institutions.</p>
         </div>
 
         <article class="history-explorer">
           <div class="history-toolbar">
             <div class="history-mode">
-              <span>Compare by</span>
+              <span>Explore by</span>
               <div class="segmented-control" id="historyType" aria-label="Historical comparison type">
-                <button class="active" type="button" data-history-type="departments" aria-pressed="true">Department</button>
+                <button class="active" type="button" data-history-type="departments" aria-pressed="true">Department / office</button>
                 <button type="button" data-history-type="regions" aria-pressed="false">Region</button>
               </div>
             </div>
             <div class="history-selectors">
               <label>
-                <span>Primary series</span>
-                <select id="historyPrimary" aria-label="Primary historical series"></select>
-              </label>
-              <label>
-                <span>Compare with</span>
-                <select id="historyCompare" aria-label="Comparison historical series"></select>
+                <span>Choose one allocation</span>
+                <select id="historyPrimary" aria-label="Historical allocation to view"></select>
               </label>
             </div>
           </div>
@@ -215,7 +211,7 @@
               <span>Nominal Philippine pesos · billions</span>
             </div>
             <div class="history-chart-scroller">
-              <div class="history-chart" id="historyChart" role="img" aria-label="Five-year enacted budget comparison line chart"></div>
+              <div class="history-chart" id="historyChart" role="img" aria-label="Five-year enacted allocation trend line chart"></div>
             </div>
             <div class="history-tooltip" id="historyTooltip" role="status" aria-live="polite" hidden></div>
           </div>
@@ -231,7 +227,7 @@
             </div>
             <aside class="history-method">
               <span>How to read this</span>
-              <h3>Compare direction, then check context.</h3>
+              <h3>Read the trend, not a race.</h3>
               <p>Figures are nominal, so inflation is not removed. A rise can also reflect transferred programs or a department reorganization.</p>
               <p id="historyMethodDetail">For regions, rows carrying a UACS region code are counted and untagged nationwide rows are excluded. Operational codes can place central-office entries under NCR.</p>
               <a href="#sources">See data sources and method <span aria-hidden="true">→</span></a>

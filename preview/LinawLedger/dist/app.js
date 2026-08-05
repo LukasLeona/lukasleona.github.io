@@ -508,8 +508,9 @@
 
     elements.departmentDetail.innerHTML = `
       <div class="detail-top">
-        <div class="detail-breadcrumb"><span>FY 2026 GAA</span><span aria-hidden="true">›</span><span>${escapeHtml(kindLabel(department.kind))}</span></div>
+        <div class="detail-breadcrumb"><span class="detail-fy">FY 2026 GAA</span><span class="detail-chevron" aria-hidden="true">→</span><span class="detail-kind">${escapeHtml(kindLabel(department.kind))}</span></div>
         <h3>${escapeHtml(department.name)}</h3>
+        <p class="detail-intro">A structured view of this enacted spending authority—by expense class, attached agency, and major program entry.</p>
         <div class="detail-total">
           <div><small>Authorized allocation</small><strong>${formatThousands(department.amount_thousand_pesos, 2)}</strong></div>
           <span class="share-pill">${formatPercent(department.amount_thousand_pesos * 1000, totalPesos, 2)} of national budget</span>
@@ -543,8 +544,9 @@
 
     elements.departmentDetail.innerHTML = `
       <div class="detail-top">
-        <div class="detail-breadcrumb"><span>${escapeHtml(agency.department)}</span><span aria-hidden="true">›</span><span>Agency</span></div>
+        <div class="detail-breadcrumb"><span class="detail-fy">FY 2026 GAA</span><span class="detail-chevron" aria-hidden="true">→</span><span class="detail-kind">Agency</span></div>
         <h3>${escapeHtml(agency.name)}</h3>
+        <p class="detail-intro">An operating-unit view within ${escapeHtml(agency.department)}, showing its expense mix and largest listed program entries.</p>
         <div class="detail-total">
           <div><small>Authorized allocation</small><strong>${formatThousands(agency.amount_thousand_pesos, 2)}</strong></div>
           <span class="share-pill">${department ? formatPercent(agency.amount_thousand_pesos, department.amount_thousand_pesos, 2) : "—"} of parent</span>
@@ -568,8 +570,9 @@
     state.selectedDepartment = program.department;
     elements.departmentDetail.innerHTML = `
       <div class="detail-top">
-        <div class="detail-breadcrumb"><span>${escapeHtml(program.department)}</span><span aria-hidden="true">›</span><span>${escapeHtml(program.agency)}</span></div>
+        <div class="detail-breadcrumb"><span class="detail-fy">FY 2026 GAA</span><span class="detail-chevron" aria-hidden="true">→</span><span class="detail-kind">Program entry</span></div>
         <h3>${escapeHtml(program.name)}</h3>
+        <p class="detail-intro">Listed under ${escapeHtml(program.agency)} within ${escapeHtml(program.department)}.</p>
         <div class="detail-total">
           <div><small>Authorized program entry</small><strong>${formatThousands(program.amount_thousand_pesos, 2)}</strong></div>
         </div>
