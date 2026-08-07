@@ -1979,7 +1979,8 @@ h2 em {
   }
 
   .destination-card,
-  .destination-card--feature {
+  .destination-card--feature,
+  .destination-card--feature.destination-card--reverse {
     grid-template-columns: 1fr;
     min-height: 0;
   }
