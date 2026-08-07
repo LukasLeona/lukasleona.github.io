@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="LayoutForge - interactive website simulator and visual configurator." />
+  <title>LayoutForge — Website Simulator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=Manrope:wght@400;500;600;700&family=Montserrat:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="page-shell">
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="LayoutForge home">
+        <span class="brand-mark">LF</span>
+        <span class="brand-text">
+          <strong>LayoutForge</strong>
+          <small>Website Simulator</small>
+        </span>
+      </a>
+
+      <div class="topbar-actions">
+        <button class="ghost-btn" id="resetBtn" type="button">Reset</button>
+        <button class="ghost-btn" id="shuffleBtn" type="button">Shuffle Design</button>
+        <button class="primary-btn compact" id="buildBtnTop" type="button">Build Website</button>
+      </div>
+    </header>
+
+    <main class="builder-layout">
+      <aside class="controls-panel" aria-label="Website builder controls">
+        <div class="panel-intro">
+          <p class="eyebrow">Interactive configurator</p>
+          <h1>Build a website your way.</h1>
+          <p>Choose each section, apply your font and palette, then generate the finished concept.</p>
+        </div>
+
+        <section class="control-group">
+          <div class="group-heading">
+            <div>
+              <span class="step-number">01</span>
+              <h2>Choose a hero</h2>
+            </div>
+            <span class="selection-status" id="heroStatus">Hero 01</span>
+          </div>
+          <div class="option-grid option-grid-3" id="heroOptions"></div>
+        </section>
+
+        <section class="control-group">
+          <div class="group-heading">
+            <div>
+              <span class="step-number">02</span>
+              <h2>Body section 1</h2>
+            </div>
+            <span class="selection-status" id="body1Status">About Split</span>
+          </div>
+          <div class="option-grid option-grid-3" id="body1Options"></div>
+        </section>
+
+        <section class="control-group">
+          <div class="group-heading">
+            <div>
+              <span class="step-number">03</span>
+              <h2>Body section 2</h2>
+            </div>
+            <span class="selection-status" id="body2Status">Projects Grid</span>
+          </div>
+          <div class="option-grid option-grid-3" id="body2Options"></div>
+        </section>
+
+        <section class="control-group">
+          <div class="group-heading">
+            <div>
+              <span class="step-number">04</span>
+              <h2>Choose a footer</h2>
+            </div>
+            <span class="selection-status" id="footerStatus">Minimal</span>
+          </div>
+          <div class="option-grid option-grid-3" id="footerOptions"></div>
+        </section>
+
+        <section class="control-group split-controls">
+          <div class="field-block">
+            <div class="group-heading compact-heading">
+              <div>
+                <span class="step-number">05</span>
+                <h2>Typography</h2>
+              </div>
+            </div>
+            <label for="fontSelect">Font family</label>
+            <select id="fontSelect">
+              <option value="Poppins">Poppins</option>
+              <option value="Manrope">Manrope</option>
+              <option value="Montserrat">Montserrat</option>
+              <option value="Inter">Inter</option>
+              <option value="DM Sans">DM Sans</option>
+            </select>
+            <div class="font-sample" id="fontSample">
+              <strong>Build something remarkable.</strong>
+              <span>Preview your selected typeface here.</span>
+            </div>
+          </div>
+
+          <div class="field-block">
+            <div class="group-heading compact-heading">
+              <div>
+                <span class="step-number">06</span>
+                <h2>Color palette</h2>
+              </div>
+            </div>
+            <p class="field-helper">Choose one of 10 curated three-color systems.</p>
+            <div class="palette-grid" id="paletteOptions"></div>
+          </div>
+        </section>
+
+        <div class="sticky-build">
+          <div>
+            <span>Current combination</span>
+            <strong id="combinationCount">1 of 12,150 possibilities</strong>
+          </div>
+          <button class="primary-btn" id="buildBtn" type="button">
+            <span>Build Website</span>
+            <span aria-hidden="true">↗</span>
+          </button>
+        </div>
+      </aside>
+
+      <section class="preview-panel">
+        <div class="preview-toolbar">
+          <div>
+            <span class="live-dot"></span>
+            <strong>Live Preview</strong>
+            <small id="previewMeta">Poppins · Electric Lime</small>
+          </div>
+
+          <div class="device-switcher" role="group" aria-label="Preview size">
+            <button class="device-btn active" type="button" data-device="desktop" aria-label="Desktop preview">Desktop</button>
+            <button class="device-btn" type="button" data-device="tablet" aria-label="Tablet preview">Tablet</button>
+            <button class="device-btn" type="button" data-device="mobile" aria-label="Mobile preview">Mobile</button>
+          </div>
+        </div>
+
+        <div class="preview-stage">
+          <div class="browser-frame device-desktop" id="browserFrame">
+            <div class="browser-bar">
+              <div class="browser-dots"><i></i><i></i><i></i></div>
+              <div class="browser-address">layoutforge.local/generated-site</div>
+              <div class="browser-action">•••</div>
+            </div>
+            <div class="site-preview" id="sitePreview" aria-live="polite"></div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div class="generation-overlay" id="generationOverlay" aria-hidden="true">
+    <div class="generation-card">
+      <div class="loader-orbit"><span></span></div>
+      <p class="eyebrow">LayoutForge Engine</p>
+      <h2>Building your website…</h2>
+      <div class="generation-list" id="generationList">
+        <div data-step="0"><span class="status-icon"></span><span>Assembling selected sections</span></div>
+        <div data-step="1"><span class="status-icon"></span><span>Applying typography system</span></div>
+        <div data-step="2"><span class="status-icon"></span><span>Mapping color palette</span></div>
+        <div data-step="3"><span class="status-icon"></span><span>Optimizing responsive layout</span></div>
+        <div data-step="4"><span class="status-icon"></span><span>Finalizing website concept</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="result-modal" id="resultModal" aria-hidden="true">
+    <div class="result-shell">
+      <div class="result-header">
+        <div>
+          <p class="eyebrow">Generated concept</p>
+          <h2>Your website is ready.</h2>
+          <p id="resultSummary">A custom website concept generated from your selections.</p>
+        </div>
+        <div class="result-actions">
+          <button class="ghost-btn" id="editBtn" type="button">Edit Design</button>
+          <button class="primary-btn compact" id="generateAgainBtn" type="button">Generate Another</button>
+          <button class="icon-btn" id="closeResultBtn" type="button" aria-label="Close preview">×</button>
+        </div>
+      </div>
+      <div class="result-canvas">
+        <div class="result-browser">
+          <div class="browser-bar">
+            <div class="browser-dots"><i></i><i></i><i></i></div>
+            <div class="browser-address" id="resultAddress">northco.layoutforge.site</div>
+            <div class="browser-action">•••</div>
+          </div>
+          <div class="site-preview result-preview" id="resultPreview"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
