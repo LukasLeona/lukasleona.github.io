@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#17382d">
+  <meta name="description" content="Discover Canyon Ranch, a premium residential community in Carmona, Cavite, with thoughtfully designed homes, green spaces, and elevated everyday living.">
+  <title>Canyon Ranch | Elevated Living in Carmona</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="assets/css/styles.css">
+  <script defer src="assets/js/main.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header" aria-label="Primary navigation">
+    <div class="nav-shell">
+      <a class="brand" href="index.html" aria-label="Canyon Ranch home">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span class="brand-name">Canyon Ranch<span class="brand-place">Carmona · Cavite</span></span>
+      </a>
+      <nav class="nav-links" aria-label="Main menu">
+        <a class="nav-link" href="index.html">Overview</a>
+        <a class="nav-link" href="residences.html">Residences</a>
+        <a class="nav-link" href="amenities.html">Amenities</a>
+        <a class="nav-link" href="location.html">Location</a>
+        <a class="nav-link" href="contact.html">Contact</a>
+      </nav>
+      <div class="nav-actions">
+        <a class="nav-visit" href="contact.html" data-open-visit>Book a private visit</a>
+        <button class="menu-toggle" type="button" aria-label="Toggle menu" aria-expanded="false"><span></span><span></span></button>
+      </div>
+    </div>
+  </header>
+
+  <div class="sound-gate" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="sound-gate-title">
+    <div class="sound-gate-inner">
+      <span class="brand-mark" aria-hidden="true"></span>
+      <h2 id="sound-gate-title">Welcome to<br>Canyon Ranch</h2>
+      <p>Your browser needs one tap before it can play the film with sound.</p>
+      <div class="sound-gate-actions">
+        <button class="btn btn--light" type="button" data-enter-sound>Enter with sound</button>
+        <button class="btn btn--outline" type="button" data-enter-silent>Continue silently</button>
+      </div>
+    </div>
+  </div>
+
+  <main id="main">
+    <section class="hero" aria-labelledby="hero-title">
+      <video class="hero-video" autoplay loop playsinline preload="auto" poster="assets/images/montana.webp">
+        <source src="assets/video/hero.mp4" type="video/mp4">
+      </video>
+      <div class="container hero-content">
+        <div class="hero-copy">
+          <div class="hero-kicker">Private hillside living in Carmona</div>
+          <h1 class="display-xl hero-title" id="hero-title">Come home to <em>higher ground.</em></h1>
+          <div class="hero-bottom">
+            <p>A considered residential community where contemporary homes, quiet landscapes, and connected city living find their balance.</p>
+            <a class="hero-scroll" href="#welcome"><span class="scroll-line" aria-hidden="true"></span>Explore Canyon Ranch</a>
+          </div>
+        </div>
+      </div>
+      <button class="sound-control" type="button" aria-label="Mute hero sound" aria-pressed="true">
+        <span class="sound-bars" aria-hidden="true"><i></i><i></i><i></i></span>
+        <em class="sound-label">Sound on</em>
+      </button>
+    </section>
+
+    <section class="section" id="welcome">
+      <div class="container intro-grid">
+        <aside class="intro-note reveal">
+          <p class="eyebrow">The community</p>
+          <p class="muted">Canyon Ranch is envisioned as a low-density address shaped by the green ridges and easy pace of southern Cavite.</p>
+        </aside>
+        <div class="intro-main">
+          <h2 class="display-lg reveal">Space to exhale.<br>A place to <em class="serif-italic">belong.</em></h2>
+          <div class="intro-support">
+            <p class="lead reveal">Thoughtful streetscapes, generous green pockets, and architecture made for tropical light create a neighborhood that feels settled from day one.</p>
+            <div class="reveal reveal-delay">
+              <p class="muted">From quiet mornings on the veranda to effortless weekends with family, each detail supports a more grounded way of living—within reach of the south’s key business, learning, and leisure destinations.</p>
+              <a class="btn btn--text" href="amenities.html">Discover the lifestyle</a>
+            </div>
+          </div>
+          <div class="metric-row reveal">
+            <div class="metric"><strong>5</strong><span>Signature home concepts</span></div>
+            <div class="metric"><strong>24/7</strong><span>Gated community security</span></div>
+            <div class="metric"><strong>1</strong><span>Elevated Carmona address</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--cream" id="homes">
+      <div class="container">
+        <div class="section-head">
+          <div class="reveal">
+            <p class="eyebrow">The residences</p>
+            <h2 class="display-lg">A home for every<br><em class="serif-italic">chapter.</em></h2>
+          </div>
+          <div class="reveal reveal-delay">
+            <p class="muted">Five architectural expressions, each created for modern tropical living and the different ways families grow.</p>
+            <a class="btn btn--text" href="residences.html">View full collection</a>
+          </div>
+        </div>
+
+        <div class="homes-toolbar reveal">
+          <div class="filter-pills" aria-label="Filter residences">
+            <button class="filter-pill active" type="button" data-filter="all">All homes</button>
+            <button class="filter-pill" type="button" data-filter="single">Single level</button>
+            <button class="filter-pill" type="button" data-filter="family">Family</button>
+            <button class="filter-pill" type="button" data-filter="estate">Estate</button>
+          </div>
+          <span class="homes-count" data-homes-count>5 residences</span>
+        </div>
+
+        <div class="homes-grid">
+          <article class="home-card reveal" data-home-card="single">
+            <a href="residences.html#sierra" aria-label="Explore The Sierra">
+              <div class="home-media"><img src="assets/images/sierra.webp" alt="The Sierra single-storey modern tropical bungalow" loading="lazy" data-parallax=".045"><span class="home-tag">Single-storey</span></div>
+              <div class="home-info"><div><h3 class="home-name">The Sierra</h3><div class="home-specs"><span>3 bedrooms</span><span>2.5 baths</span><span>2-car port</span></div></div><span class="home-arrow" aria-hidden="true">↗</span></div>
+            </a>
+          </article>
+          <article class="home-card reveal reveal-delay" data-home-card="family">
+            <a href="residences.html#alto" aria-label="Explore The Alto">
+              <div class="home-media"><img src="assets/images/alto.webp" alt="The Alto two-storey contemporary family villa" loading="lazy" data-parallax=".05"><span class="home-tag">Family villa</span></div>
+              <div class="home-info"><div><h3 class="home-name">The Alto</h3><div class="home-specs"><span>4 bedrooms</span><span>3.5 baths</span><span>2-car garage</span></div></div><span class="home-arrow" aria-hidden="true">↗</span></div>
+            </a>
+          </article>
+          <article class="home-card reveal" data-home-card="family">
+            <a href="residences.html#verde" aria-label="Explore The Verde">
+              <div class="home-media"><img src="assets/images/verde.webp" alt="The Verde garden courtyard residence" loading="lazy" data-parallax=".045"><span class="home-tag">Garden residence</span></div>
+              <div class="home-info"><div><h3 class="home-name">The Verde</h3><div class="home-specs"><span>4 bedrooms</span><span>4 baths</span><span>Courtyard garden</span></div></div><span class="home-arrow" aria-hidden="true">↗</span></div>
+            </a>
+          </article>
+          <article class="home-card reveal reveal-delay" data-home-card="estate">
+            <a href="residences.html#cielo" aria-label="Explore The Cielo">
+              <div class="home-media"><img src="assets/images/cielo.webp" alt="The Cielo grand multigenerational residence at blue hour" loading="lazy" data-parallax=".055"><span class="home-tag">Grand residence</span></div>
+              <div class="home-info"><div><h3 class="home-name">The Cielo</h3><div class="home-specs"><span>5 bedrooms</span><span>5.5 baths</span><span>3-car garage</span></div></div><span class="home-arrow" aria-hidden="true">↗</span></div>
+            </a>
+          </article>
+          <article class="home-card reveal" data-home-card="estate">
+            <a href="residences.html#montana" aria-label="Explore The Montaña">
+              <div class="home-media"><img src="assets/images/montana.webp" alt="The Montaña exclusive hillside estate at sunset" loading="lazy" data-parallax=".05"><span class="home-tag">Hillside estate</span></div>
+              <div class="home-info"><div><h3 class="home-name">The Montaña</h3><div class="home-specs"><span>5 bedrooms</span><span>6 baths</span><span>Pool-ready</span></div></div><span class="home-arrow" aria-hidden="true">↗</span></div>
+            </a>
+          </article>
+        </div>
+        <p class="disclaimer">Home images and specifications are design studies for presentation and may be refined. Final plans, finishes, lot dimensions, and availability are subject to confirmation.</p>
+      </div>
+    </section>
+
+    <section class="story-grid" aria-label="Arrive differently">
+      <div class="story-video">
+        <video muted loop playsinline preload="metadata" data-scroll-video poster="assets/images/alto.webp">
+          <source src="assets/video/body.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="story-panel">
+        <div class="reveal">
+          <p class="eyebrow">Everyday arrival</p>
+          <h2 class="display-md">The feeling of being <em class="serif-italic">home.</em></h2>
+          <p class="muted">A calm sequence of landscaped streets, private frontages, and warm architectural details welcomes you back.</p>
+        </div>
+        <ul class="story-list reveal reveal-delay">
+          <li>Layered security <span>Peace of mind</span></li>
+          <li>Tree-lined streets <span>Daily ease</span></li>
+          <li>Tropical architecture <span>Made for place</span></li>
+          <li>Fiber-ready homes <span>Always connected</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="section" id="amenities">
+      <div class="container amenities-showcase">
+        <div class="reveal">
+          <p class="eyebrow">Life beyond your door</p>
+          <h2 class="display-md">Designed for the <em class="serif-italic">in-between</em> moments.</h2>
+          <p class="lead muted">The best communities make room for the spontaneous: a morning swim, a long walk, an easy gathering, a quiet hour outside.</p>
+          <ol class="amenity-list">
+            <li><strong>The Ranch House</strong><span>Club & lounge</span></li>
+            <li><strong>Vista Pool</strong><span>Leisure & laps</span></li>
+            <li><strong>Canyon Green</strong><span>Open lawn</span></li>
+            <li><strong>Trail Loop</strong><span>Walk & run</span></li>
+            <li><strong>Play Grove</strong><span>Young explorers</span></li>
+          </ol>
+          <a class="btn btn--dark" href="amenities.html">Explore amenities</a>
+        </div>
+        <div class="amenities-collage reveal reveal-delay">
+          <span class="collage-caption">A landscape-led community</span>
+          <div class="collage-main"><img src="assets/images/montana.webp" alt="Hillside estate surrounded by landscaped open space" loading="lazy" data-parallax=".07"></div>
+          <div class="collage-small"><img src="assets/images/verde.webp" alt="Tropical garden architecture" loading="lazy" data-parallax=".04"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="location-band" id="location">
+      <div class="location-grid">
+        <div class="location-copy">
+          <div class="reveal">
+            <p class="eyebrow">Carmona, Cavite</p>
+            <h2 class="display-md">Close to momentum.<br><em class="serif-italic">Closer to nature.</em></h2>
+            <p class="lead muted">Set in Carmona’s green southern corridor, Canyon Ranch offers everyday access to workplaces, schools, retail, and weekend destinations across Cavite, Laguna, and Metro Manila.</p>
+            <ul class="drive-times">
+              <li><strong>Southwoods interchange</strong><span>Approx. 15 min</span></li>
+              <li><strong>Nuvali district</strong><span>Approx. 25 min</span></li>
+              <li><strong>Alabang</strong><span>Approx. 35 min</span></li>
+              <li><strong>NAIA via expressways</strong><span>Approx. 45 min</span></li>
+            </ul>
+            <a class="btn btn--dark" href="location.html">Explore the location</a>
+            <p class="disclaimer">Indicative drive times vary with route, traffic, and road conditions.</p>
+          </div>
+        </div>
+        <div class="map-art" aria-label="Stylized location map">
+          <span class="map-label map-label--one">Metro Manila</span><span class="map-label map-label--two">Laguna</span><span class="map-label map-label--three">Tagaytay</span><span class="map-label map-label--four">Cavite</span>
+          <div class="map-pin"><span>Canyon Ranch</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-head">
+          <div class="reveal"><p class="eyebrow">Your way home</p><h2 class="display-md">A clear path from<br>first visit to <em class="serif-italic">move-in.</em></h2></div>
+          <p class="muted reveal reveal-delay">Our property advisors guide you through home selection, lot matching, reservation, documentation, and turnover.</p>
+        </div>
+        <div class="journey-grid reveal">
+          <article class="journey-step"><small>01</small><h3>Private visit</h3><p>Tour the community and share what matters most to your household.</p></article>
+          <article class="journey-step"><small>02</small><h3>Home matching</h3><p>Compare home concepts, orientations, and available lot settings.</p></article>
+          <article class="journey-step"><small>03</small><h3>Reservation</h3><p>Review the offer, payment milestones, documents, and next steps.</p></article>
+          <article class="journey-step"><small>04</small><h3>Welcome home</h3><p>Complete your orientation and prepare for life at Canyon Ranch.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta-cinematic">
+      <video class="video-cover" muted loop playsinline preload="metadata" data-scroll-video poster="assets/images/cielo.webp"><source src="assets/video/cta.mp4" type="video/mp4"></video>
+      <div class="container cta-content reveal">
+        <p class="eyebrow">Your next chapter</p>
+        <h2 class="display-lg">See Canyon Ranch<br>for <em class="serif-italic">yourself.</em></h2>
+        <p class="lead">Walk the streets, compare the residences, and experience the quieter side of connected living.</p>
+        <div class="cta-actions"><a class="btn btn--light" href="contact.html" data-open-visit>Book a private visit</a><a class="btn btn--outline" href="residences.html">Explore residences</a></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand"><a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true"></span><span class="brand-name">Canyon Ranch<span class="brand-place">Carmona · Cavite</span></span></a><p>A premium, landscape-led residential community created for families seeking more room, more calm, and more connection in the south.</p></div>
+        <div class="footer-col"><h4>Explore</h4><a href="residences.html">Residences</a><a href="amenities.html">Amenities</a><a href="location.html">Location</a></div>
+        <div class="footer-col"><h4>Visit</h4><a href="contact.html">Book a tour</a><a href="contact.html">Request details</a><a href="mailto:hello@canyonranch.ph">Email an advisor</a></div>
+        <div class="footer-col"><h4>Connect</h4><a href="tel:+63285550188">+63 2 8555 0188</a><a href="mailto:hello@canyonranch.ph">hello@canyonranch.ph</a><a href="contact.html">Sales gallery</a></div>
+      </div>
+      <div class="footer-bottom"><span>© <span data-year></span> Canyon Ranch. Presentation website.</span><span>Images, plans, dimensions, amenities, and travel times are illustrative and subject to final development information.</span></div>
+    </div>
+  </footer>
+
+  <div class="modal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="visit-title">
+    <div class="modal-panel">
+      <button class="modal-close" type="button" aria-label="Close visit form" data-close-modal>×</button>
+      <p class="eyebrow">Private appointment</p><h2 id="visit-title">Come see the<br><em class="serif-italic">possibility.</em></h2><p>Share your preferred date and a property advisor will help arrange your Canyon Ranch visit.</p>
+      <form class="form-grid" data-inquiry-form>
+        <div class="field"><label for="modal-name">Full name</label><input id="modal-name" name="name" type="text" autocomplete="name" required></div>
+        <div class="field"><label for="modal-phone">Mobile number</label><input id="modal-phone" name="phone" type="tel" autocomplete="tel" required></div>
+        <div class="field"><label for="modal-email">Email</label><input id="modal-email" name="email" type="email" autocomplete="email" required></div>
+        <div class="field"><label for="modal-date">Preferred visit</label><input id="modal-date" name="date" type="date"></div>
+        <div class="field field--full"><label for="modal-interest">Residence interest</label><select id="modal-interest" name="interest"><option>Not sure yet</option><option>The Sierra</option><option>The Alto</option><option>The Verde</option><option>The Cielo</option><option>The Montaña</option></select></div>
+        <label class="form-consent"><input type="checkbox" required><span>I agree to be contacted about Canyon Ranch and understand that submitting opens my email app with these details.</span></label>
+        <div class="field--full"><button class="btn btn--dark" type="submit">Prepare visit request</button><div class="form-status" role="status"></div></div>
+      </form>
+    </div>
+  </div>
+</body>
+</html>
