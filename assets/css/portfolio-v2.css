@@ -3777,6 +3777,7 @@ and
   border-bottom: 1px solid color-mix(in srgb, var(--art-accent) 20%, transparent);
 }
 
+#portfolio .project-art-canyon { --art-accent:#c6a66a; --art-accent-2:#88a77d; --art-bg-1:#302b22; --art-bg-2:#171816; }
 #portfolio .project-art-fire { --art-accent:#ff784f; --art-accent-2:#ffc157; --art-bg-1:#321d1c; --art-bg-2:#171719; }
 #portfolio .project-art-iskolar { --art-accent:#6ca6ff; --art-accent-2:#9f83ff; --art-bg-1:#1b2540; --art-bg-2:#15171f; }
 #portfolio .project-art-response { --art-accent:#53d7c4; --art-accent-2:#ff7b78; --art-bg-1:#15312f; --art-bg-2:#15191b; }
@@ -4139,4 +4140,85 @@ and
 
 @media (prefers-reduced-motion: reduce) {
   #portfolio .project-art-coffee * { animation: none !important; }
+}
+
+/* =========================================================
+   LAYOUTFORGE PORTFOLIO PREVIEW FIX
+   Keep the card aligned with every other web project while
+   rendering the embedded simulator from a desktop viewport.
+========================================================= */
+
+#portfolio .project-art-layoutforge {
+  --art-accent: #d8ff35;
+  --art-accent-2: #f1eadb;
+  --art-bg-1: #2a2c31;
+  --art-bg-2: #18191d;
+}
+
+/* Use the exact same browser dimensions as the other project cards. */
+#portfolio .project-art-layoutforge .layoutforge-live-browser {
+  width: 91%;
+  height: 235px;
+  margin: 5px auto 0;
+}
+
+/* Keep the LIVE badge compact so it does not change the browser bar layout. */
+#portfolio .project-art-layoutforge .project-art-browserbar small {
+  max-width: 62%;
+}
+
+#portfolio .project-art-layoutforge .project-art-browserbar b {
+  flex: 0 0 auto;
+  margin-left: 3px;
+  padding: 3px 6px;
+  border-radius: 999px;
+  background: var(--art-accent);
+  color: #1c1d20;
+  font-size: 7px;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: .45px;
+}
+
+/* Remove the normal project-art padding from the iframe canvas. */
+#portfolio .project-art-layoutforge .layoutforge-live-screen {
+  position: relative;
+  height: calc(100% - 34px);
+  padding: 0 !important;
+  overflow: hidden;
+  background: #f5f2e9 !important;
+  isolation: isolate;
+}
+
+/*
+ * The card is only ~400px wide. Rendering an iframe at 100% width made
+ * LayoutForge hit its responsive/mobile breakpoints. Give the iframe a
+ * 4x virtual viewport and scale it back to 25%, so the preview displays
+ * the real desktop composition while still fitting the standard card.
+ */
+#portfolio .project-art-layoutforge .layoutforge-live-screen iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 400%;
+  height: 400%;
+  margin: 0;
+  border: 0;
+  display: block;
+  background: #f5f2e9;
+  transform: scale(.25);
+  transform-origin: top left;
+  pointer-events: none;
+}
+
+/* Preserve the shared project-card proportions on smaller screens. */
+@media (max-width: 767px) {
+  #portfolio .project-art-layoutforge .layoutforge-live-browser {
+    width: 96%;
+    height: 194px;
+  }
+
+  #portfolio .project-art-layoutforge .project-art-browserbar small {
+    max-width: 54%;
+  }
 }

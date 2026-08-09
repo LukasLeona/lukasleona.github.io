@@ -8681,3 +8681,151 @@ and
     letter-spacing: 1px;
   }
 }
+
+
+/* =========================================================
+   2026 MOBILE LUMO + LAYOUTFORGE RESPONSIVE FIX
+   Mobile only: left-origin messages, timed promo dismissal,
+   and an always-reachable simulator close control.
+========================================================= */
+
+.layoutforge-promo-mobile-close,
+.layoutforge-mobile-close {
+  display: none;
+}
+
+@media (max-width: 991px) {
+
+  /* Lumo lives on the left on mobile, so teaser motion should also originate
+     from the left instead of visually flying in from the right. */
+  .global-chatbot .chatbot-teaser {
+    left: 57px !important;
+    right: auto !important;
+    transform-origin: left bottom !important;
+  }
+
+  .global-chatbot .chatbot-teaser:not(.show) {
+    transform: translateX(-8px) scale(.92) !important;
+  }
+
+  .global-chatbot .chatbot-teaser.show {
+    transform: translateX(0) scale(1) !important;
+    animation: chatbotTeaserPopMobileLeft .35s ease !important;
+  }
+
+  .global-chatbot .chatbot-teaser::after {
+    left: -6px !important;
+    right: auto !important;
+  }
+
+  @keyframes chatbotTeaserPopMobileLeft {
+    0% {
+      transform: translateX(-8px) scale(.85);
+    }
+    70% {
+      transform: translateX(2px) scale(1.04);
+    }
+    100% {
+      transform: translateX(0) scale(1);
+    }
+  }
+
+  /* LayoutForge suggestion now sits directly above the left-side Lumo bot. */
+  .global-chatbot .layoutforge-bot-promo {
+    left: 0 !important;
+    right: auto !important;
+    bottom: 66px !important;
+    width: min(248px, calc(100vw - 36px)) !important;
+    max-width: min(248px, calc(100vw - 36px)) !important;
+    transform-origin: 18px 100% !important;
+    text-align: left !important;
+    overflow: visible !important;
+  }
+
+  .global-chatbot .layoutforge-bot-promo .layoutforge-promo-copy {
+    padding-right: 24px !important;
+  }
+
+  /* If the integration provides a bubble tail, keep it near Lumo on the left. */
+  .global-chatbot .layoutforge-bot-promo::after {
+    left: 16px !important;
+    right: auto !important;
+  }
+
+  /* User can dismiss the suggestion immediately. */
+  .layoutforge-promo-mobile-close {
+    position: absolute !important;
+    top: 6px !important;
+    right: 6px !important;
+    z-index: 20 !important;
+    width: 24px !important;
+    height: 24px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border: 1px solid rgba(255, 255, 255, .12) !important;
+    border-radius: 50% !important;
+    background: rgba(17, 18, 21, .88) !important;
+    color: #ffffff !important;
+    font-size: 11px !important;
+    line-height: 1 !important;
+    cursor: pointer !important;
+    pointer-events: auto !important;
+    touch-action: manipulation;
+  }
+
+  .layoutforge-promo-mobile-close:focus-visible {
+    outline: 2px solid #ebb020 !important;
+    outline-offset: 2px !important;
+  }
+
+  /* Added by JS after five seconds or after tapping the promo X. */
+  .global-chatbot .layoutforge-bot-promo.mobile-dismissed {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+    transform: translate3d(-10px, 6px, 0) scale(.96) !important;
+    transition:
+      opacity .24s ease,
+      transform .24s ease,
+      visibility .24s ease !important;
+  }
+
+  /* Floating exit control for the in-site LayoutForge simulator. It is a
+     direct child of the overlay so it remains reachable even when the normal
+     overlay header is hidden/condensed on phones. */
+  #layoutforgePortfolioOverlay {
+    isolation: isolate !important;
+  }
+
+  #layoutforgePortfolioOverlay .layoutforge-mobile-close {
+    position: absolute !important;
+    top: 10px !important;
+    right: 10px !important;
+    z-index: 2147483000 !important;
+    width: 36px !important;
+    height: 36px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 0 !important;
+    border: 1px solid rgba(235, 176, 32, .8) !important;
+    border-radius: 50% !important;
+    background: rgba(18, 19, 22, .94) !important;
+    color: #ebb020 !important;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, .35) !important;
+    font-size: 15px !important;
+    cursor: pointer !important;
+    pointer-events: auto !important;
+    touch-action: manipulation;
+  }
+
+  #layoutforgePortfolioOverlay .layoutforge-mobile-close:active {
+    transform: scale(.94) !important;
+  }
+
+  #layoutforgePortfolioOverlay .layoutforge-mobile-close:focus-visible {
+    outline: 2px solid #ffffff !important;
+    outline-offset: 2px !important;
+  }
+}

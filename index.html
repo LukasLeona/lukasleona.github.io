@@ -278,6 +278,9 @@
     </div>
 
     <button class="layoutforge-bot-promo" id="layoutforgeBotPromo" type="button" aria-label="Try Luke's website simulator" aria-hidden="true">
+      <span class="layoutforge-promo-mobile-close" id="layoutforgePromoMobileClose" role="button" tabindex="0" aria-label="Close LayoutForge suggestion">
+        <i class="bi bi-x-lg" aria-hidden="true"></i>
+      </span>
       <span class="layoutforge-promo-copy">
         <small>LUMO HAS AN IDEA</small>
         <strong>Don’t have any idea what your site looks like?</strong>
@@ -451,6 +454,9 @@
           <button type="button" id="layoutforgeOverlayClose" aria-label="Close website simulator"><i class="bi bi-x-lg"></i></button>
         </div>
       </div>
+      <button type="button" class="layoutforge-mobile-close" id="layoutforgeMobileClose" aria-label="Close LayoutForge preview">
+        <i class="bi bi-x-lg" aria-hidden="true"></i>
+      </button>
       <iframe id="layoutforgeSimulatorFrame" title="Luke's website vision simulator" loading="lazy" data-src="preview/layoutforge-simulator/index.html"></iframe>
     </div>
 
@@ -4301,95 +4307,57 @@
     <div class="portfolio-toolbar portfolio-filter-toolbar">
       <div class="portfolio-toolbar-label"><i class="bi bi-grid-3x3-gap"></i><span>Explore all work</span></div>
       <ul id="portfolio-filter" class="portfolio-v2-filter">
-        <li><a href="javascript:void(0)" data-filter="*" class="active"><span>All</span><small>20</small></a></li>
-        <li><a href="javascript:void(0)" data-filter=".web"><span>Web</span><small>14</small></a></li>
+        <li><a href="javascript:void(0)" data-filter="*" class="active"><span>All</span><small>21</small></a></li>
+        <li><a href="javascript:void(0)" data-filter=".web"><span>Web</span><small>16</small></a></li>
         <li><a href="javascript:void(0)" data-filter=".automation"><span>Automation</span><small>04</small></a></li>
-        <li><a href="javascript:void(0)" data-filter=".data"><span>Data</span><small>03</small></a></li>
+        <li><a href="javascript:void(0)" data-filter=".data"><span>Data</span><small>04</small></a></li>
         <li><a href="javascript:void(0)" data-filter=".content"><span>Content</span><small>02</small></a></li>
         <li><a href="javascript:void(0)" data-filter=".creative"><span>Creative</span><small>01</small></a></li>
       </ul>
     </div>
 
-    <div class="portfolio-grid-heading"><div><span class="portfolio-v2-eyebrow">PROJECT EXPLORER</span><h3>All projects</h3></div><p id="portfolioResultLabel">Showing all 20 projects</p></div>
+    <div class="portfolio-grid-heading"><div><span class="portfolio-v2-eyebrow">PROJECT EXPLORER</span><h3>All projects</h3></div><p id="portfolioResultLabel">Showing all 21 projects</p></div>
 
     <div class="portfolio-items row">
       <div class="col-md-6 portfolio-item web">
-        <article class="portfolio-v2-card">
-          <div class="portfolio-v2-media project-art project-art-web project-art-coffee" data-hover-label="OPEN EXPERIENCE ↗">
-            <div class="project-art-browser">
-              <div class="project-art-browserbar"><span></span><span></span><span></span><small>/preview/CoffeeCup/index.html</small></div>
-              <div class="project-art-screen coffee-art-screen">
-                <div class="project-art-copy"><small>WEB • 3D SCROLL</small><strong>Slow Pour</strong><i></i><i></i></div>
-                <div class="coffee-art-stage" aria-hidden="true">
-                  <span class="coffee-art-halo"></span>
-                  <span class="coffee-art-pour"></span>
-                  <div class="coffee-art-cup">
-                    <span class="coffee-art-ice coffee-art-ice-one"></span>
-                    <span class="coffee-art-ice coffee-art-ice-two"></span>
-                    <span class="coffee-art-ice coffee-art-ice-three"></span>
-                    <span class="coffee-art-espresso"></span>
-                    <span class="coffee-art-cream"></span>
-                    <span class="coffee-art-caramel"></span>
-                  </div>
-                  <span class="coffee-art-orbit"></span>
-                </div>
-                <span class="project-art-pointer">➜</span>
-              </div>
-            </div>
-            <span class="portfolio-hover-label">OPEN EXPERIENCE ↗</span>
-          </div>
-          <div class="portfolio-v2-card-content">
-            <div class="portfolio-project-index"><span>01 / WEB</span><small>3D SCROLL EXPERIENCE</small></div>
-            <h3>Slow Pour — 3D Coffee Experience</h3>
-            <p>An artistic, scroll-driven coffee landing page where the cup, ingredients, and editorial story evolve with every scroll.</p>
-            <div class="portfolio-project-tags"><span>HTML</span><span>CSS</span><span>JavaScript</span><span>Motion</span></div>
-            <div class="portfolio-card-actions">
-              <button type="button" class="portfolio-text-action portfolio-quick-view-btn" data-project="slowpour">Project Details <i class="bi bi-arrow-right"></i></button>
-              <a href="/preview/CoffeeCup/index.html" target="_blank" rel="noopener noreferrer" class="portfolio-card-icon-link" aria-label="Open project: Slow Pour 3D Coffee Experience"><i class="bi bi-arrow-up-right"></i></a>
-            </div>
-          </div>
-        </article>
-      </div>
-
-      <div class="col-md-6 portfolio-item web">
       <article class="portfolio-v2-card">
-      <div class="portfolio-v2-media project-art project-art-web project-art-lakbay" data-hover-label="OPEN PROJECT ↗">
+      <div class="portfolio-v2-media project-art project-art-web project-art-forma" data-hover-label="OPEN PROJECT ↗">
       <div class="project-art-browser">
-      <div class="project-art-browserbar"><span></span><span></span><span></span><small>lakbaybaguio.com</small></div>
-      <div class="project-art-screen"><div class="project-art-copy"><small>WEB • TRAVEL APP</small><strong>Lakbay Baguio</strong><i></i><i></i></div><div class="travel-route"><i></i><i></i><i></i></div><span aria-hidden="true" class="project-art-character"><iconify-icon icon="mdi:pine-tree"></iconify-icon></span><span class="project-art-pointer">➜</span></div>
+      <div class="project-art-browserbar"><span></span><span></span><span></span><small>preview/FORMA-Architecture/index.html</small></div>
+      <div class="project-art-screen"><div class="project-art-copy"><small>WEB • ARCHITECTURE</small><strong>FORMA</strong><i></i><i></i></div><div class="forma-art-frame" aria-hidden="true"><i></i><i></i><i></i></div><span aria-hidden="true" class="project-art-character"><iconify-icon icon="mdi:office-building-outline"></iconify-icon></span><span class="project-art-pointer">➜</span></div>
       </div>
       <span class="portfolio-hover-label">OPEN PROJECT ↗</span>
       </div>
       <div class="portfolio-v2-card-content">
-      <div class="portfolio-project-index"><span>02 / WEB</span><small>TRAVEL APP</small></div>
-      <h3>Lakbay Baguio</h3>
-      <p>A Baguio itinerary generator that helps travelers build a calmer, more personal trip plan with local discovery and conversational guidance.</p>
-      <div class="portfolio-project-tags"><span>HTML</span><span>CSS</span><span>JavaScript</span></div>
+      <div class="portfolio-project-index"><span>01 / WEB</span><small>ARCHITECTURE STUDIO</small></div>
+      <h3>FORMA — Architecture Studio</h3>
+      <p>A cinematic architecture-studio experience where a residence assembles through scroll, supported by material-led storytelling and selected work.</p>
+      <div class="portfolio-project-tags"><span>HTML</span><span>CSS</span><span>JavaScript</span><span>Motion</span></div>
       <div class="portfolio-card-actions">
-      <a aria-label="Read the Lakbay Baguio itinerary generator case study" class="portfolio-text-action" href="lakbay-baguio-itinerary-generator.html">Case Study <i class="bi bi-arrow-right"></i></a>
-      <a aria-label="Open project: Lakbay Baguio" class="portfolio-card-icon-link" href="preview/lakbaybaguio.com/index.html" rel="noopener noreferrer" target="_blank"><i class="bi bi-arrow-up-right"></i></a>
+      <button class="portfolio-text-action portfolio-quick-view-btn" data-project="forma" type="button">Project Details <i class="bi bi-arrow-right"></i></button>
+      <a aria-label="Open project: FORMA Architecture Studio" class="portfolio-card-icon-link" href="preview/FORMA-Architecture/index.html" rel="noopener noreferrer" target="_blank"><i class="bi bi-arrow-up-right"></i></a>
       </div>
       </div>
       </article>
       </div>
 
-      <div class="col-md-6 portfolio-item web automation">
+      <div class="col-md-6 portfolio-item web">
       <article class="portfolio-v2-card">
-      <div class="portfolio-v2-media project-art project-art-web project-art-letter" data-hover-label="OPEN PROJECT ↗">
+      <div class="portfolio-v2-media project-art project-art-web project-art-canyon" data-hover-label="OPEN PROJECT ↗">
       <div class="project-art-browser">
-      <div class="project-art-browserbar"><span></span><span></span><span></span><small>layoutletter.com</small></div>
-      <div class="project-art-screen"><div class="project-art-copy"><small>AUTOMATION • CREATOR TOOL</small><strong>LayoutLetter</strong><i></i><i></i></div><div class="newsletter-blocks"><i></i><i></i><i></i><i></i></div><span aria-hidden="true" class="project-art-character"><iconify-icon icon="mdi:email-edit-outline"></iconify-icon></span><span class="project-art-pointer">➜</span></div>
+      <div class="project-art-browserbar"><span></span><span></span><span></span><small>/preview/CanyonRanch/index.html</small></div>
+      <div class="project-art-screen"><div class="project-art-copy"><small>WEB • REAL ESTATE</small><strong>Canyon Ranch</strong><i></i><i></i></div><div class="building-art"><i></i><i></i><i></i></div><span aria-hidden="true" class="project-art-character"><iconify-icon icon="mdi:home-city-outline"></iconify-icon></span><span class="project-art-pointer">➜</span></div>
       </div>
       <span class="portfolio-hover-label">OPEN PROJECT ↗</span>
       </div>
       <div class="portfolio-v2-card-content">
-      <div class="portfolio-project-index"><span>03 / AUTOMATION</span><small>CREATOR TOOL</small></div>
-      <h3>LayoutLetter</h3>
-      <p>A visual newsletter builder that helps creators and businesses assemble polished campaigns faster.</p>
-      <div class="portfolio-project-tags"><span>Automation</span><span>Newsletter</span><span>Builder</span></div>
+      <div class="portfolio-project-index"><span>02 / WEB</span><small>RESIDENTIAL EXPERIENCE</small></div>
+      <h3>Canyon Ranch</h3>
+      <p>A premium residential property experience presenting the community, modern homes, and lifestyle through immersive visual storytelling.</p>
+      <div class="portfolio-project-tags"><span>HTML</span><span>CSS</span><span>JavaScript</span><span>Real Estate UX</span></div>
       <div class="portfolio-card-actions">
-      <button class="portfolio-text-action portfolio-quick-view-btn" data-project="layoutletter" type="button">Project Details <i class="bi bi-arrow-right"></i></button>
-      <a aria-label="Open project: LayoutLetter" class="portfolio-card-icon-link" href="preview/LayoutLetter.com/index.html" rel="noopener noreferrer" target="_blank"><i class="bi bi-arrow-up-right"></i></a>
+      <button class="portfolio-text-action portfolio-quick-view-btn" data-project="canyonranch" type="button">Project Details <i class="bi bi-arrow-right"></i></button>
+      <a aria-label="Open project: Canyon Ranch" class="portfolio-card-icon-link" href="/preview/CanyonRanch/index.html" rel="noopener noreferrer" target="_blank"><i class="bi bi-arrow-up-right"></i></a>
       </div>
       </div>
       </article>
@@ -4405,13 +4373,35 @@
       <span class="portfolio-hover-label">OPEN TRIPS ↗</span>
       </div>
       <div class="portfolio-v2-card-content">
-      <div class="portfolio-project-index"><span>04 / WEB</span><small>TRAVEL</small></div>
+      <div class="portfolio-project-index"><span>03 / WEB</span><small>TRAVEL</small></div>
       <h3>Cloud Chaser</h3>
       <p>A polished travel-agency experience for Philippine and Asian trips, itineraries, and trip requests.</p>
       <div class="portfolio-project-tags"><span>HTML</span><span>CSS</span><span>Travel UX</span></div>
       <div class="portfolio-card-actions">
       <button class="portfolio-text-action portfolio-quick-view-btn" data-project="cloudchaser" type="button">Project Details <i class="bi bi-arrow-right"></i></button>
       <a aria-label="Open trips: Cloud Chaser" class="portfolio-card-icon-link" href="preview/cloudchaser.com/trips.html" rel="noopener noreferrer" target="_blank"><i class="bi bi-arrow-up-right"></i></a>
+      </div>
+      </div>
+      </article>
+      </div>
+
+      <div class="col-md-6 portfolio-item web automation">
+      <article class="portfolio-v2-card">
+      <div class="portfolio-v2-media project-art project-art-web project-art-mountain" data-hover-label="OPEN PROJECT ↗">
+      <div class="project-art-browser">
+      <div class="project-art-browserbar"><span></span><span></span><span></span><small>discovermountainprovince.com</small></div>
+      <div class="project-art-screen"><div class="project-art-copy"><small>WEB • TOURISM</small><strong>Discover Mountain Province</strong><i></i><i></i></div><div class="mountain-ridge"><i></i><i></i><i></i></div><span aria-hidden="true" class="project-art-character"><iconify-icon icon="mdi:mountain"></iconify-icon></span><span class="project-art-pointer">➜</span></div>
+      </div>
+      <span class="portfolio-hover-label">OPEN PROJECT ↗</span>
+      </div>
+      <div class="portfolio-v2-card-content">
+      <div class="portfolio-project-index"><span>04 / WEB</span><small>TOURISM</small></div>
+      <h3>Discover Mountain Province</h3>
+      <p>A destination website created to make Mountain Province stories, places, and trip ideas easier to discover.</p>
+      <div class="portfolio-project-tags"><span>Tourism</span><span>Discovery</span><span>Responsive</span></div>
+      <div class="portfolio-card-actions">
+      <button class="portfolio-text-action portfolio-quick-view-btn" data-project="mountain" type="button">Project Details <i class="bi bi-arrow-right"></i></button>
+      <a aria-label="Open project: Discover Mountain Province" class="portfolio-card-icon-link" href="preview/DiscoverMountainProvince/index.html" rel="noopener noreferrer" target="_blank"><i class="bi bi-arrow-up-right"></i></a>
       </div>
       </div>
       </article>
@@ -4439,6 +4429,88 @@
       </article>
       </div>
 
+      <div class="col-md-6 portfolio-item web">
+      <article class="portfolio-v2-card">
+      <div class="portfolio-v2-media project-art project-art-web project-art-lakbay" data-hover-label="OPEN PROJECT ↗">
+      <div class="project-art-browser">
+      <div class="project-art-browserbar"><span></span><span></span><span></span><small>lakbaybaguio.com</small></div>
+      <div class="project-art-screen"><div class="project-art-copy"><small>WEB • TRAVEL APP</small><strong>Lakbay Baguio</strong><i></i><i></i></div><div class="travel-route"><i></i><i></i><i></i></div><span aria-hidden="true" class="project-art-character"><iconify-icon icon="mdi:pine-tree"></iconify-icon></span><span class="project-art-pointer">➜</span></div>
+      </div>
+      <span class="portfolio-hover-label">OPEN PROJECT ↗</span>
+      </div>
+      <div class="portfolio-v2-card-content">
+      <div class="portfolio-project-index"><span>06 / WEB</span><small>TRAVEL APP</small></div>
+      <h3>Lakbay Baguio</h3>
+      <p>A Baguio itinerary generator that helps travelers build a calmer, more personal trip plan with local discovery and conversational guidance.</p>
+      <div class="portfolio-project-tags"><span>HTML</span><span>CSS</span><span>JavaScript</span></div>
+      <div class="portfolio-card-actions">
+      <a aria-label="Read the Lakbay Baguio itinerary generator case study" class="portfolio-text-action" href="lakbay-baguio-itinerary-generator.html">Case Study <i class="bi bi-arrow-right"></i></a>
+      <a aria-label="Open project: Lakbay Baguio" class="portfolio-card-icon-link" href="preview/lakbaybaguio.com/index.html" rel="noopener noreferrer" target="_blank"><i class="bi bi-arrow-up-right"></i></a>
+      </div>
+      </div>
+      </article>
+      </div>
+
+      <div class="col-md-6 portfolio-item web">
+        <article class="portfolio-v2-card">
+          <div class="portfolio-v2-media project-art project-art-web project-art-coffee" data-hover-label="OPEN EXPERIENCE ↗">
+            <div class="project-art-browser">
+              <div class="project-art-browserbar"><span></span><span></span><span></span><small>/preview/CoffeeCup/index.html</small></div>
+              <div class="project-art-screen coffee-art-screen">
+                <div class="project-art-copy"><small>WEB • 3D SCROLL</small><strong>Slow Pour</strong><i></i><i></i></div>
+                <div class="coffee-art-stage" aria-hidden="true">
+                  <span class="coffee-art-halo"></span>
+                  <span class="coffee-art-pour"></span>
+                  <div class="coffee-art-cup">
+                    <span class="coffee-art-ice coffee-art-ice-one"></span>
+                    <span class="coffee-art-ice coffee-art-ice-two"></span>
+                    <span class="coffee-art-ice coffee-art-ice-three"></span>
+                    <span class="coffee-art-espresso"></span>
+                    <span class="coffee-art-cream"></span>
+                    <span class="coffee-art-caramel"></span>
+                  </div>
+                  <span class="coffee-art-orbit"></span>
+                </div>
+                <span class="project-art-pointer">➜</span>
+              </div>
+            </div>
+            <span class="portfolio-hover-label">OPEN EXPERIENCE ↗</span>
+          </div>
+          <div class="portfolio-v2-card-content">
+            <div class="portfolio-project-index"><span>07 / WEB</span><small>3D SCROLL EXPERIENCE</small></div>
+            <h3>Slow Pour — 3D Coffee Experience</h3>
+            <p>An artistic, scroll-driven coffee landing page where the cup, ingredients, and editorial story evolve with every scroll.</p>
+            <div class="portfolio-project-tags"><span>HTML</span><span>CSS</span><span>JavaScript</span><span>Motion</span></div>
+            <div class="portfolio-card-actions">
+              <button type="button" class="portfolio-text-action portfolio-quick-view-btn" data-project="slowpour">Project Details <i class="bi bi-arrow-right"></i></button>
+              <a href="/preview/CoffeeCup/index.html" target="_blank" rel="noopener noreferrer" class="portfolio-card-icon-link" aria-label="Open project: Slow Pour 3D Coffee Experience"><i class="bi bi-arrow-up-right"></i></a>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <div class="col-md-6 portfolio-item web automation">
+      <article class="portfolio-v2-card">
+      <div class="portfolio-v2-media project-art project-art-web project-art-letter" data-hover-label="OPEN PROJECT ↗">
+      <div class="project-art-browser">
+      <div class="project-art-browserbar"><span></span><span></span><span></span><small>layoutletter.com</small></div>
+      <div class="project-art-screen"><div class="project-art-copy"><small>AUTOMATION • CREATOR TOOL</small><strong>LayoutLetter</strong><i></i><i></i></div><div class="newsletter-blocks"><i></i><i></i><i></i><i></i></div><span aria-hidden="true" class="project-art-character"><iconify-icon icon="mdi:email-edit-outline"></iconify-icon></span><span class="project-art-pointer">➜</span></div>
+      </div>
+      <span class="portfolio-hover-label">OPEN PROJECT ↗</span>
+      </div>
+      <div class="portfolio-v2-card-content">
+      <div class="portfolio-project-index"><span>08 / AUTOMATION</span><small>CREATOR TOOL</small></div>
+      <h3>LayoutLetter</h3>
+      <p>A visual newsletter builder that helps creators and businesses assemble polished campaigns faster.</p>
+      <div class="portfolio-project-tags"><span>Automation</span><span>Newsletter</span><span>Builder</span></div>
+      <div class="portfolio-card-actions">
+      <button class="portfolio-text-action portfolio-quick-view-btn" data-project="layoutletter" type="button">Project Details <i class="bi bi-arrow-right"></i></button>
+      <a aria-label="Open project: LayoutLetter" class="portfolio-card-icon-link" href="preview/LayoutLetter.com/index.html" rel="noopener noreferrer" target="_blank"><i class="bi bi-arrow-up-right"></i></a>
+      </div>
+      </div>
+      </article>
+      </div>
+
       <div class="col-md-6 portfolio-item web automation">
       <article class="portfolio-v2-card">
       <div class="portfolio-v2-media project-art project-art-web project-art-ready" data-hover-label="OPEN PROJECT ↗">
@@ -4449,35 +4521,13 @@
       <span class="portfolio-hover-label">OPEN PROJECT ↗</span>
       </div>
       <div class="portfolio-v2-card-content">
-      <div class="portfolio-project-index"><span>06 / AUTOMATION</span><small>LMS</small></div>
+      <div class="portfolio-project-index"><span>09 / AUTOMATION</span><small>LMS</small></div>
       <h3>ReadyStation LMS</h3>
       <p>A training platform designed for first responders—built for the fireground, not the boardroom.</p>
       <div class="portfolio-project-tags"><span>LMS</span><span>First Responders</span><span>Training</span></div>
       <div class="portfolio-card-actions">
       <button class="portfolio-text-action portfolio-quick-view-btn" data-project="readystation" type="button">Project Details <i class="bi bi-arrow-right"></i></button>
       <a aria-label="Open project: ReadyStation LMS" class="portfolio-card-icon-link" href="preview/ReadyStation/index.html" rel="noopener noreferrer" target="_blank"><i class="bi bi-arrow-up-right"></i></a>
-      </div>
-      </div>
-      </article>
-      </div>
-
-      <div class="col-md-6 portfolio-item web automation">
-      <article class="portfolio-v2-card">
-      <div class="portfolio-v2-media project-art project-art-web project-art-mountain" data-hover-label="OPEN PROJECT ↗">
-      <div class="project-art-browser">
-      <div class="project-art-browserbar"><span></span><span></span><span></span><small>discovermountainprovince.com</small></div>
-      <div class="project-art-screen"><div class="project-art-copy"><small>WEB • TOURISM</small><strong>Discover Mountain Province</strong><i></i><i></i></div><div class="mountain-ridge"><i></i><i></i><i></i></div><span aria-hidden="true" class="project-art-character"><iconify-icon icon="mdi:mountain"></iconify-icon></span><span class="project-art-pointer">➜</span></div>
-      </div>
-      <span class="portfolio-hover-label">OPEN PROJECT ↗</span>
-      </div>
-      <div class="portfolio-v2-card-content">
-      <div class="portfolio-project-index"><span>07 / WEB</span><small>TOURISM</small></div>
-      <h3>Discover Mountain Province</h3>
-      <p>A destination website created to make Mountain Province stories, places, and trip ideas easier to discover.</p>
-      <div class="portfolio-project-tags"><span>Tourism</span><span>Discovery</span><span>Responsive</span></div>
-      <div class="portfolio-card-actions">
-      <button class="portfolio-text-action portfolio-quick-view-btn" data-project="mountain" type="button">Project Details <i class="bi bi-arrow-right"></i></button>
-      <a aria-label="Open project: Discover Mountain Province" class="portfolio-card-icon-link" href="preview/DiscoverMountainProvince/index.html" rel="noopener noreferrer" target="_blank"><i class="bi bi-arrow-up-right"></i></a>
       </div>
       </div>
       </article>
@@ -4493,7 +4543,7 @@
       <span class="portfolio-hover-label">VISIT LIVE ↗</span>
       </div>
       <div class="portfolio-v2-card-content">
-      <div class="portfolio-project-index"><span>08 / WEB</span><small>CORPORATE</small></div>
+      <div class="portfolio-project-index"><span>10 / WEB</span><small>CORPORATE</small></div>
       <h3>Disaster Response &amp; Training</h3>
       <p>A professional website for a disaster-response and training organization with clear service pathways.</p>
       <div class="portfolio-project-tags"><span>WordPress</span><span>Responsive</span><span>Content</span></div>
@@ -4515,7 +4565,7 @@
       <span class="portfolio-hover-label">OPEN PROJECT ↗</span>
       </div>
       <div class="portfolio-v2-card-content">
-      <div class="portfolio-project-index"><span>09 / WEB</span><small>PLATFORM</small></div>
+      <div class="portfolio-project-index"><span>11 / WEB</span><small>PLATFORM</small></div>
       <h3>IskolarLink</h3>
       <p>A student information and coordination platform that brings academic workflows into one clearer space.</p>
       <div class="portfolio-project-tags"><span>React</span><span>Platform</span><span>Workflow</span></div>
@@ -4537,35 +4587,13 @@
       <span class="portfolio-hover-label">VISIT LIVE ↗</span>
       </div>
       <div class="portfolio-v2-card-content">
-      <div class="portfolio-project-index"><span>10 / WEB</span><small>LMS</small></div>
+      <div class="portfolio-project-index"><span>12 / WEB</span><small>LMS</small></div>
       <h3>Fire &amp; Rescue Academy</h3>
       <p>A digital training platform for emergency-services education, online courses, and search visibility.</p>
       <div class="portfolio-project-tags"><span>WordPress</span><span>Tutor LMS</span><span>SEO</span></div>
       <div class="portfolio-card-actions">
       <button class="portfolio-text-action portfolio-quick-view-btn" data-project="fire" type="button">Project Details <i class="bi bi-arrow-right"></i></button>
       <a aria-label="Visit live: Fire &amp; Rescue Academy" class="portfolio-card-icon-link" href="https://fireandrescueacademy.com/" rel="noopener noreferrer" target="_blank"><i class="bi bi-arrow-up-right"></i></a>
-      </div>
-      </div>
-      </article>
-      </div>
-
-      <div class="col-md-6 portfolio-item web">
-      <article class="portfolio-v2-card">
-      <div class="portfolio-v2-media project-art project-art-web project-art-forma" data-hover-label="OPEN PROJECT ↗">
-      <div class="project-art-browser">
-      <div class="project-art-browserbar"><span></span><span></span><span></span><small>preview/FORMA-Architecture/index.html</small></div>
-      <div class="project-art-screen"><div class="project-art-copy"><small>WEB • ARCHITECTURE</small><strong>FORMA</strong><i></i><i></i></div><div class="forma-art-frame" aria-hidden="true"><i></i><i></i><i></i></div><span aria-hidden="true" class="project-art-character"><iconify-icon icon="mdi:office-building-outline"></iconify-icon></span><span class="project-art-pointer">➜</span></div>
-      </div>
-      <span class="portfolio-hover-label">OPEN PROJECT ↗</span>
-      </div>
-      <div class="portfolio-v2-card-content">
-      <div class="portfolio-project-index"><span>11 / WEB</span><small>ARCHITECTURE STUDIO</small></div>
-      <h3>FORMA — Architecture Studio</h3>
-      <p>A cinematic architecture-studio experience where a residence assembles through scroll, supported by material-led storytelling and selected work.</p>
-      <div class="portfolio-project-tags"><span>HTML</span><span>CSS</span><span>JavaScript</span><span>Motion</span></div>
-      <div class="portfolio-card-actions">
-      <button class="portfolio-text-action portfolio-quick-view-btn" data-project="forma" type="button">Project Details <i class="bi bi-arrow-right"></i></button>
-      <a aria-label="Open project: FORMA Architecture Studio" class="portfolio-card-icon-link" href="preview/FORMA-Architecture/index.html" rel="noopener noreferrer" target="_blank"><i class="bi bi-arrow-up-right"></i></a>
       </div>
       </div>
       </article>
@@ -4581,7 +4609,7 @@
       <span class="portfolio-hover-label">OPEN INVITATION ↗</span>
       </div>
       <div class="portfolio-v2-card-content">
-      <div class="portfolio-project-index"><span>12 / WEB</span><small>WEDDING INVITATION</small></div>
+      <div class="portfolio-project-index"><span>13 / WEB</span><small>WEDDING INVITATION</small></div>
       <h3>Terra Amore — Wedding Invitation</h3>
       <p>An editorial wedding invitation with ceremony details, RSVP, gallery moments, and a warm coastal visual story designed for every screen.</p>
       <div class="portfolio-project-tags"><span>HTML</span><span>CSS</span><span>JavaScript</span><span>Responsive</span></div>
@@ -4603,7 +4631,7 @@
       <span class="portfolio-hover-label">OPEN DASHBOARD ↗</span>
       </div>
       <div class="portfolio-v2-card-content">
-      <div class="portfolio-project-index"><span>13 / WEB</span><small>MARKETING INTELLIGENCE</small></div>
+      <div class="portfolio-project-index"><span>14 / WEB</span><small>MARKETING INTELLIGENCE</small></div>
       <h3>Signal Desk — Social Media Intelligence</h3>
       <p>A responsive marketing dashboard and publishing workspace for audience activity, platform trends, smart scheduling, and social post previews.</p>
       <div class="portfolio-project-tags"><span>Python</span><span>Chart.js</span><span>Live Data</span><span>Automation</span></div>
@@ -4625,7 +4653,7 @@
       <span class="portfolio-hover-label">EXPLORE THE BUDGET ↗</span>
       </div>
       <div class="portfolio-v2-card-content">
-      <div class="portfolio-project-index"><span>14 / DATA + WEB</span><small>PUBLIC FINANCE</small></div>
+      <div class="portfolio-project-index"><span>15 / DATA + WEB</span><small>PUBLIC FINANCE</small></div>
       <h3>LinawLedger — 2026 Budget Transparency</h3>
       <p>An interactive public-budget dashboard that makes the FY 2026 General Appropriations Act easier to explore by department, agency, program, expense class, region, and five-year trend.</p>
       <div class="portfolio-project-tags"><span>Data Visualization</span><span>Public Data</span><span>Responsive</span><span>JavaScript</span></div>
@@ -4647,7 +4675,7 @@
       <span class="portfolio-hover-label">EXPLORE ANALYSIS ↗</span>
       </div>
       <div class="portfolio-v2-card-content">
-      <div class="portfolio-project-index"><span>15 / DATA</span><small>EDUCATION</small></div>
+      <div class="portfolio-project-index"><span>16 / DATA</span><small>EDUCATION</small></div>
       <h3>LET Performance Trends</h3>
       <p>An interactive analysis of Philippine LET Top 10 performance, institutions, geography, and ratings.</p>
       <div class="portfolio-project-tags"><span>Python</span><span>Analytics</span><span>Visualization</span></div>
@@ -4669,7 +4697,7 @@
       <span class="portfolio-hover-label">EXPLORE ANALYSIS ↗</span>
       </div>
       <div class="portfolio-v2-card-content">
-      <div class="portfolio-project-index"><span>16 / DATA</span><small>BEHAVIOR</small></div>
+      <div class="portfolio-project-index"><span>17 / DATA</span><small>BEHAVIOR</small></div>
       <h3>Spending Behavior Analysis</h3>
       <p>Customer segmentation, purchasing relationships, and transaction forecasting in one case study.</p>
       <div class="portfolio-project-tags"><span>K-Means</span><span>Apriori</span><span>ARIMA</span></div>
@@ -4689,7 +4717,7 @@
       <span class="portfolio-hover-label">VIEW CAMPAIGN ↗</span>
       </div>
       <div class="portfolio-v2-card-content">
-      <div class="portfolio-project-index"><span>17 / CONTENT</span><small>CAMPAIGN</small></div>
+      <div class="portfolio-project-index"><span>18 / CONTENT</span><small>CAMPAIGN</small></div>
       <h3>Campaign Landing Experience</h3>
       <p>A conversion-focused campaign experience combining content structure, front-end work, and visual hierarchy.</p>
       <div class="portfolio-project-tags"><span>Campaign</span><span>Content</span><span>Front end</span></div>
@@ -4709,7 +4737,7 @@
       <span class="portfolio-hover-label">VIEW CAMPAIGN ↗</span>
       </div>
       <div class="portfolio-v2-card-content">
-      <div class="portfolio-project-index"><span>18 / CONTENT</span><small>INTERACTIVE</small></div>
+      <div class="portfolio-project-index"><span>19 / CONTENT</span><small>INTERACTIVE</small></div>
       <h3>Interactive Campaign Blog</h3>
       <p>A visual storytelling experience designed to make promotional content more engaging and explorable.</p>
       <div class="portfolio-project-tags"><span>Storytelling</span><span>Interactive</span><span>Digital</span></div>
@@ -4733,7 +4761,7 @@
 	      <span class="portfolio-hover-label">TRY SIMULATOR ↗</span>
       </div>
       <div class="portfolio-v2-card-content">
-      <div class="portfolio-project-index"><span>19 / WEB</span><small>INTERACTIVE DESIGN TOOL</small></div>
+      <div class="portfolio-project-index"><span>20 / WEB</span><small>INTERACTIVE DESIGN TOOL</small></div>
       <h3>LayoutForge Website Simulator</h3>
       <p>An interactive website vision tool for mixing layouts, typography, palettes, imagery, and motion before development begins.</p>
       <div class="portfolio-project-tags"><span>HTML</span><span>CSS</span><span>JavaScript</span><span>Responsive UI</span></div>
@@ -4748,7 +4776,7 @@
       <div class="col-12 portfolio-item creative">
       <article class="portfolio-creative-collection">
       <div class="portfolio-creative-copy">
-      <div class="portfolio-project-index"><span>20 / CREATIVE</span><small>SELECTED VISUAL + MOTION WORK</small></div>
+      <div class="portfolio-project-index"><span>21 / CREATIVE</span><small>SELECTED VISUAL + MOTION WORK</small></div>
       <h3>Creative <span>Collection</span></h3>
       <p>Campaign graphics, social assets, promotional visuals, motion pieces, and AI-assisted creative production.</p>
       <div class="portfolio-project-tags"><span>Graphic Design</span><span>Campaigns</span><span>Motion</span><span>AI Video</span></div>
@@ -4766,7 +4794,6 @@
       <div class="mfp-hide creative-video-popup" id="creativeVideoCafely"><div class="creative-video-popup-inner"><span>AI-GENERATED PROMOTIONAL VIDEO</span><h3>Cafely Promo Video</h3><video controls="" loop="" playsinline="" preload="metadata"><source src="assets/img/webdesigner/CafelyPromoVid.MP4" type="video/mp4"/>Your browser does not support video playback.</video></div></div>
       </article>
       </div>
-
     </div>
 
     <section class="portfolio-final-cta"><div><span class="portfolio-v2-eyebrow">HAVE SOMETHING IN MIND?</span><h3>Let's turn the idea into <span>something worth showing here.</span></h3><p>Websites, analytics, automation, creative work, or connected digital support—every project starts with a problem worth solving.</p></div><a href="#contact" class="portfolio-start-btn to-contact">Start a Project <i class="bi bi-arrow-right"></i></a></section>

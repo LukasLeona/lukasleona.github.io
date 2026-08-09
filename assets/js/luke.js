@@ -35,6 +35,9 @@ interactivePortfolio();
     /* Portfolio chatbot */
     portfolioChatbot();
 
+    /* Mobile LayoutForge promo + preview controls */
+    mobileLayoutForgeControls();
+
     /* Interactive Resume */
     interactiveResume();
 
@@ -1796,6 +1799,169 @@ function heroImageReveal() {
 
     }
   );
+}
+
+/*---------------------------------------------------------
+          MOBILE LAYOUTFORGE PROMO + PREVIEW CONTROLS
+---------------------------------------------------------*/
+
+function mobileLayoutForgeControls() {
+
+  "use strict";
+
+  const mobileQuery = window.matchMedia("(max-width: 991px)");
+  const promo = document.getElementById("layoutforgeBotPromo");
+  const promoClose = document.getElementById("layoutforgePromoMobileClose");
+  const overlay = document.getElementById("layoutforgePortfolioOverlay");
+  const overlayClose = document.getElementById("layoutforgeOverlayClose");
+  const mobileOverlayClose = document.getElementById("layoutforgeMobileClose");
+
+  let promoDismissTimer = null;
+  let promoWatchTimer = null;
+  let promoWasVisible = false;
+
+  function isPromoVisible() {
+    if (!promo || !mobileQuery.matches || promo.classList.contains("mobile-dismissed")) {
+      return false;
+    }
+
+    const style = window.getComputedStyle(promo);
+    const rect = promo.getBoundingClientRect();
+    const opacity = parseFloat(style.opacity || "1");
+
+    return style.display !== "none" &&
+      style.visibility !== "hidden" &&
+      opacity > 0.05 &&
+      rect.width > 0 &&
+      rect.height > 0;
+  }
+
+  function clearPromoDismissTimer() {
+    if (promoDismissTimer) {
+      window.clearTimeout(promoDismissTimer);
+      promoDismissTimer = null;
+    }
+  }
+
+  function dismissPromo() {
+    if (!promo) {
+      return;
+    }
+
+    clearPromoDismissTimer();
+    promo.classList.add("mobile-dismissed");
+    promo.setAttribute("aria-hidden", "true");
+    promoWasVisible = false;
+  }
+
+  function schedulePromoDismiss() {
+    clearPromoDismissTimer();
+
+    if (!mobileQuery.matches || !promo || promo.classList.contains("mobile-dismissed")) {
+      return;
+    }
+
+    promoDismissTimer = window.setTimeout(function () {
+      dismissPromo();
+    }, 5000);
+  }
+
+  function watchPromoVisibility() {
+    const visible = isPromoVisible();
+
+    if (visible && !promoWasVisible) {
+      schedulePromoDismiss();
+    }
+
+    if (!visible && promoWasVisible) {
+      clearPromoDismissTimer();
+    }
+
+    promoWasVisible = visible;
+  }
+
+  function stopPromoParentClick(event) {
+    event.preventDefault();
+    event.stopPropagation();
+    dismissPromo();
+  }
+
+  if (promo && promoClose) {
+    promoClose.addEventListener("click", stopPromoParentClick);
+
+    promoClose.addEventListener("keydown", function (event) {
+      if (event.key === "Enter" || event.key === " ") {
+        stopPromoParentClick(event);
+      }
+    });
+
+    // The LayoutForge integration shows this promo later, so watch its actual
+    // rendered state instead of assuming a specific external show-class name.
+    promoWatchTimer = window.setInterval(watchPromoVisibility, 250);
+    watchPromoVisibility();
+  }
+
+  function closeLayoutForgeOverlay(event) {
+    if (event) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+
+    // Reuse the existing desktop close behavior so iframe/body cleanup remains
+    // exactly the same as the existing LayoutForge integration.
+    if (overlayClose) {
+      overlayClose.click();
+    }
+
+    // Defensive fallback in case the integration script has not attached yet.
+    window.setTimeout(function () {
+      if (!overlay) {
+        return;
+      }
+
+      overlay.setAttribute("aria-hidden", "true");
+      overlay.classList.remove(
+        "active",
+        "open",
+        "show",
+        "is-open",
+        "is-visible"
+      );
+
+      document.body.classList.remove(
+        "layoutforge-open",
+        "layoutforge-overlay-open",
+        "simulator-open"
+      );
+    }, 30);
+  }
+
+  if (mobileOverlayClose) {
+    mobileOverlayClose.addEventListener("click", closeLayoutForgeOverlay);
+  }
+
+  function handleViewportChange() {
+    if (!mobileQuery.matches) {
+      clearPromoDismissTimer();
+      promoWasVisible = false;
+      return;
+    }
+
+    watchPromoVisibility();
+  }
+
+  if (typeof mobileQuery.addEventListener === "function") {
+    mobileQuery.addEventListener("change", handleViewportChange);
+  } else if (typeof mobileQuery.addListener === "function") {
+    mobileQuery.addListener(handleViewportChange);
+  }
+
+  window.addEventListener("pagehide", function () {
+    clearPromoDismissTimer();
+    if (promoWatchTimer) {
+      window.clearInterval(promoWatchTimer);
+    }
+  }, { once: true });
 }
 
 /*---------------------------------------------------------
@@ -4562,6 +4728,7 @@ function interactivePortfolio() {
 
 
   Object.assign(projects, {
+    canyonranch:{category:"WEB • REAL ESTATE",title:"Canyon Ranch",summary:"A premium residential property experience presenting the community, modern homes, and lifestyle through immersive visual storytelling.",contribution:["Residential property presentation","Immersive exterior and lifestyle storytelling","Responsive front-end experience","Interactive project exploration"],stack:["HTML","CSS","JavaScript","Responsive UI"],links:[{label:"Open Project",url:"/preview/CanyonRanch/index.html",external:true}]},
     forma:{category:"WEB • ARCHITECTURE • MOTION",title:"FORMA — Architecture Studio",summary:"A cinematic architecture-studio experience where a residence assembles through scroll, supported by material-led storytelling and selected work.",contribution:["Scroll-led architectural storytelling","Video-scrubbed hero experience","Responsive gallery and studio presentation","Motion and interaction design"],stack:["HTML","CSS","JavaScript","Video","Motion"],links:[{label:"Open Project",url:"preview/FORMA-Architecture/index.html",external:true}]},
     amore:{category:"WEB • WEDDING INVITATION",title:"Terra Amore — Wedding Invitation",summary:"An editorial wedding invitation with ceremony details, RSVP, gallery moments, and a warm coastal visual story.",contribution:["Invitation experience design","Responsive ceremony and RSVP flow","Editorial gallery presentation","Custom motion and interaction details"],stack:["HTML","CSS","JavaScript","Responsive UI"],links:[{label:"Open Invitation",url:"preview/WeddingSite/Amore/index.html",external:true}]},
     signaldesk:{category:"WEB • DATA DASHBOARD • AUTOMATION",title:"Signal Desk — Social Media Intelligence",summary:"A responsive marketing dashboard and publishing workspace that turns social-platform research, live open-web signals, audience activity, and publishing recommendations into an actionable campaign workflow.",contribution:["Responsive dashboard and multi-page interface","Live trend-signal integration","Audience activity charts and opportunity heatmaps","Multi-media post previews and per-platform scheduling"],stack:["Python","HTML","CSS","JavaScript","Chart.js"],links:[{label:"Open Dashboard",url:"preview/MarketingDashboard/index.html",external:true}]},
