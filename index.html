@@ -86,6 +86,7 @@
 
 <!-- Shared navigation, rail, switch, and star-field revision -->
 <link rel="stylesheet" href="assets/css/shell-revision.css">
+<link rel="stylesheet" href="assets/css/layoutforge-integration.css">
 <script src="assets/js/shell-revision.js"></script>
 
   <!-- Iconify - coded technology/tool logos -->
@@ -276,6 +277,19 @@
       <span id="chatbotTeaserText">Need help exploring?</span>
     </div>
 
+    <button class="layoutforge-bot-promo" id="layoutforgeBotPromo" type="button" aria-label="Try Luke's website simulator" aria-hidden="true">
+      <span class="layoutforge-promo-copy">
+        <small>LUMO HAS AN IDEA</small>
+        <strong>Don’t have any idea what your site looks like?</strong>
+        <span>Try Luke’s website simulator.</span>
+      </span>
+      <span class="layoutforge-promo-brand">
+        <img src="preview/layoutforge-simulator/assets/layoutforge-logo.svg" alt="LayoutForge logo">
+        <b>Open simulator</b>
+        <i class="bi bi-arrow-right" aria-hidden="true"></i>
+      </span>
+    </button>
+
     <div class="chatbot-panel" id="chatbotPanel" aria-hidden="true">
 
       <div class="chatbot-header">
@@ -428,6 +442,17 @@
 
   <!--  Main Start  -->
   <main id="main" class="main-2">
+
+    <div class="layoutforge-portfolio-overlay" id="layoutforgePortfolioOverlay" aria-hidden="true">
+      <div class="layoutforge-overlay-bar">
+        <div><img src="preview/layoutforge-simulator/assets/layoutforge-logo.svg" alt=""><span><strong>LayoutForge</strong><small>Website vision simulator</small></span></div>
+        <div class="layoutforge-overlay-actions">
+          <a href="preview/layoutforge-simulator/index.html" target="_blank" rel="noopener noreferrer">Open in new tab <i class="bi bi-arrow-up-right"></i></a>
+          <button type="button" id="layoutforgeOverlayClose" aria-label="Close website simulator"><i class="bi bi-x-lg"></i></button>
+        </div>
+      </div>
+      <iframe id="layoutforgeSimulatorFrame" title="Luke's website vision simulator" loading="lazy" data-src="preview/layoutforge-simulator/index.html"></iframe>
+    </div>
 
     <!--  Hero Start  -->
     <section id="hero" class="section hero w-100">
@@ -4276,8 +4301,8 @@
     <div class="portfolio-toolbar portfolio-filter-toolbar">
       <div class="portfolio-toolbar-label"><i class="bi bi-grid-3x3-gap"></i><span>Explore all work</span></div>
       <ul id="portfolio-filter" class="portfolio-v2-filter">
-        <li><a href="javascript:void(0)" data-filter="*" class="active"><span>All</span><small>18</small></a></li>
-        <li><a href="javascript:void(0)" data-filter=".web"><span>Web</span><small>13</small></a></li>
+        <li><a href="javascript:void(0)" data-filter="*" class="active"><span>All</span><small>20</small></a></li>
+        <li><a href="javascript:void(0)" data-filter=".web"><span>Web</span><small>14</small></a></li>
         <li><a href="javascript:void(0)" data-filter=".automation"><span>Automation</span><small>04</small></a></li>
         <li><a href="javascript:void(0)" data-filter=".data"><span>Data</span><small>03</small></a></li>
         <li><a href="javascript:void(0)" data-filter=".content"><span>Content</span><small>02</small></a></li>
@@ -4285,7 +4310,7 @@
       </ul>
     </div>
 
-    <div class="portfolio-grid-heading"><div><span class="portfolio-v2-eyebrow">PROJECT EXPLORER</span><h3>All projects</h3></div><p id="portfolioResultLabel">Showing all 18 projects</p></div>
+    <div class="portfolio-grid-heading"><div><span class="portfolio-v2-eyebrow">PROJECT EXPLORER</span><h3>All projects</h3></div><p id="portfolioResultLabel">Showing all 20 projects</p></div>
 
     <div class="portfolio-items row">
       <div class="col-md-6 portfolio-item web">
@@ -4696,10 +4721,32 @@
       </article>
       </div>
 
+      <div class="col-md-6 portfolio-item web">
+      <article class="portfolio-v2-card">
+      <div class="portfolio-v2-media project-art project-art-web project-art-layoutforge" data-hover-label="TRY SIMULATOR ↗">
+      <div class="layoutforge-project-visual">
+        <div class="layoutforge-project-top"><img src="preview/layoutforge-simulator/assets/layoutforge-logo.svg" alt=""><span>LAYOUTFORGE</span><small>LIVE</small></div>
+        <div class="layoutforge-project-builder"><aside><i></i><i></i><i></i><i></i></aside><main><div><span></span><span></span><span></span></div><h4>Shape your<br>website vision.</h4><p></p><button>BUILD CONCEPT</button></main></div>
+      </div>
+      <span class="portfolio-hover-label">TRY SIMULATOR ↗</span>
+      </div>
+      <div class="portfolio-v2-card-content">
+      <div class="portfolio-project-index"><span>19 / WEB</span><small>INTERACTIVE DESIGN TOOL</small></div>
+      <h3>LayoutForge Website Simulator</h3>
+      <p>An interactive website vision tool for mixing layouts, typography, palettes, imagery, and motion before development begins.</p>
+      <div class="portfolio-project-tags"><span>HTML</span><span>CSS</span><span>JavaScript</span><span>Responsive UI</span></div>
+      <div class="portfolio-card-actions">
+      <button class="portfolio-text-action portfolio-quick-view-btn" data-project="layoutforge" type="button">Project Details <i class="bi bi-arrow-right"></i></button>
+      <button aria-label="Try LayoutForge website simulator" class="portfolio-card-icon-link layoutforge-open-trigger" type="button"><i class="bi bi-arrow-up-right"></i></button>
+      </div>
+      </div>
+      </article>
+      </div>
+
       <div class="col-12 portfolio-item creative">
       <article class="portfolio-creative-collection">
       <div class="portfolio-creative-copy">
-      <div class="portfolio-project-index"><span>19 / CREATIVE</span><small>SELECTED VISUAL + MOTION WORK</small></div>
+      <div class="portfolio-project-index"><span>20 / CREATIVE</span><small>SELECTED VISUAL + MOTION WORK</small></div>
       <h3>Creative <span>Collection</span></h3>
       <p>Campaign graphics, social assets, promotional visuals, motion pieces, and AI-assisted creative production.</p>
       <div class="portfolio-project-tags"><span>Graphic Design</span><span>Campaigns</span><span>Motion</span><span>AI Video</span></div>
@@ -6279,6 +6326,7 @@
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDRemITiP7JRWpZwLhVt-T2x5MeUFE2KWs"></script>
   <!--  Luke Js  -->
   <script src="assets/js/luke.js"></script>
+  <script src="assets/js/layoutforge-integration.js"></script>
   <script defer src="https://static.cloudflareinsights.com/beacon.min.js/vcd15cbe7772f49c399c6a5babf22c1241717689176015"
     integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ=="
     data-cf-beacon='{"version":"2024.11.0","token":"398d0e35186742219fc4b15efc701f63","r":1,"server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}'

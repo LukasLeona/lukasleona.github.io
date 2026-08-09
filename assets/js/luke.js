@@ -1822,6 +1822,9 @@ function portfolioChatbot() {
   let aiUnavailable = false;
   let recognition = null;
   let isListening = false;
+  let micSessionActive = false;
+  let recognitionPausedForSpeech = false;
+  let recognitionRestartTimer = null;
   let voiceMode = false;
   let voiceDisclosureShown = false;
   let lumoVisualizer = null;
@@ -2060,17 +2063,7 @@ function portfolioChatbot() {
 
   function animateLumoTextResponse(text) {
     window.clearTimeout(lumoTextAnimationTimer);
-
-    const punctuationEnergy = (text.match(/[!?]/g) || []).length * 0.035;
-    const energy = Math.min(0.78, 0.48 + punctuationEnergy);
-    const duration = Math.min(4200, Math.max(1350, text.length * 24));
-
-    setLumoVisualizerState("speaking", energy);
-    lumoTextAnimationTimer = window.setTimeout(function () {
-      if (!window.speechSynthesis || !window.speechSynthesis.speaking) {
-        setLumoVisualizerState("idle");
-      }
-    }, duration);
+    setLumoVisualizerState("idle");
   }
 
   const teaserMessages = [
@@ -2145,6 +2138,9 @@ function portfolioChatbot() {
       }
 
       if (recognition && isListening) {
+        micSessionActive = false;
+        recognitionPausedForSpeech = false;
+        window.clearTimeout(recognitionRestartTimer);
         recognition.stop();
       }
 
@@ -2168,6 +2164,34 @@ function portfolioChatbot() {
     }) || null;
   }
 
+  function resumePersistentMic(delay) {
+    window.clearTimeout(recognitionRestartTimer);
+
+    if (
+      !recognition ||
+      !micSessionActive ||
+      isListening ||
+      recognitionPausedForSpeech ||
+      isReplying ||
+      !panel.classList.contains("show") ||
+      (window.speechSynthesis && window.speechSynthesis.speaking)
+    ) {
+      return;
+    }
+
+    recognitionRestartTimer = window.setTimeout(function () {
+      if (!micSessionActive || isListening || recognitionPausedForSpeech || isReplying) {
+        return;
+      }
+
+      try {
+        recognition.start();
+      } catch (error) {
+        // Recognition can still be winding down; its end event will retry.
+      }
+    }, typeof delay === "number" ? delay : 320);
+  }
+
   function speakReply(text) {
     if (!voiceMode || !window.speechSynthesis || !text) {
       return;
@@ -2188,6 +2212,12 @@ function portfolioChatbot() {
     utterance.rate = 1.02;
     utterance.pitch = 1;
     utterance.addEventListener("start", function () {
+      recognitionPausedForSpeech = true;
+
+      if (recognition && isListening) {
+        recognition.stop();
+      }
+
       window.clearTimeout(lumoTextAnimationTimer);
       setLumoVisualizerState("speaking", 0.58);
     });
@@ -2202,9 +2232,13 @@ function portfolioChatbot() {
     });
     utterance.addEventListener("end", function () {
       setLumoVisualizerState("idle");
+      recognitionPausedForSpeech = false;
+      resumePersistentMic(380);
     });
     utterance.addEventListener("error", function () {
       setLumoVisualizerState("idle");
+      recognitionPausedForSpeech = false;
+      resumePersistentMic(380);
     });
     window.speechSynthesis.speak(utterance);
   }
@@ -2229,11 +2263,11 @@ function portfolioChatbot() {
 
     function updateVoiceControls() {
       voiceButton.classList.toggle("is-listening", isListening);
-      voiceButton.classList.toggle("is-active", voiceMode);
-      voiceButton.setAttribute("aria-pressed", isListening ? "true" : "false");
+      voiceButton.classList.toggle("is-active", micSessionActive);
+      voiceButton.setAttribute("aria-pressed", micSessionActive ? "true" : "false");
       voiceButton.setAttribute(
         "aria-label",
-        isListening ? "Stop listening" : "Speak a question"
+        micSessionActive ? "Turn off continuous microphone" : "Turn on continuous microphone"
       );
 
       if (soundButton) {
@@ -2300,13 +2334,14 @@ function portfolioChatbot() {
 
     recognition = new SpeechRecognition();
     recognition.lang = "en-PH";
-    recognition.continuous = false;
+    recognition.continuous = true;
     recognition.interimResults = true;
 
     recognition.addEventListener("start", function () {
       isListening = true;
+      recognitionPausedForSpeech = false;
       voiceMode = true;
-      input.placeholder = "Listening…";
+      input.placeholder = "Listening… mic stays on";
       discloseVoice();
       setLumoVisualizerState("listening");
       updateVoiceControls();
@@ -2331,6 +2366,12 @@ function portfolioChatbot() {
       );
 
       if (finalTranscript.trim()) {
+        recognitionPausedForSpeech = true;
+
+        if (isListening) {
+          recognition.stop();
+        }
+
         window.setTimeout(function () {
           submitQuestion(finalTranscript);
         }, 120);
@@ -2339,40 +2380,54 @@ function portfolioChatbot() {
 
     recognition.addEventListener("end", function () {
       isListening = false;
-      input.placeholder = "Ask about Luke's work...";
+      input.placeholder = micSessionActive ? "Mic is on — speak when ready…" : "Ask about Luke's work...";
       setLumoVisualizerState(isReplying ? "thinking" : "idle");
       updateVoiceControls();
+      resumePersistentMic(420);
     });
 
     recognition.addEventListener("error", function (event) {
       isListening = false;
-      input.placeholder = "Ask about Luke's work...";
+      input.placeholder = micSessionActive ? "Mic is on — speak when ready…" : "Ask about Luke's work...";
       setLumoVisualizerState("idle");
-      updateVoiceControls();
 
       if (event.error === "not-allowed" || event.error === "service-not-allowed") {
+        micSessionActive = false;
         addMessage(
           "I couldn’t access your microphone. Allow microphone permission or type your question instead.",
           "bot",
           "bot-system-message"
         );
+      } else if (event.error !== "aborted") {
+        recognitionPausedForSpeech = false;
+        resumePersistentMic(650);
       }
+
+      updateVoiceControls();
     });
 
     voiceButton.addEventListener("click", function () {
-      if (isListening) {
-        recognition.stop();
+      if (micSessionActive) {
+        micSessionActive = false;
+        recognitionPausedForSpeech = false;
+        window.clearTimeout(recognitionRestartTimer);
+
+        if (isListening) {
+          recognition.stop();
+        }
+
+        input.placeholder = "Ask about Luke's work...";
+        setLumoVisualizerState("idle");
+        updateVoiceControls();
         return;
       }
 
+      micSessionActive = true;
+      voiceMode = true;
       setChatOpen(true);
-
-      try {
-        recognition.start();
-      } catch (error) {
-        isListening = false;
-        updateVoiceControls();
-      }
+      discloseVoice();
+      updateVoiceControls();
+      resumePersistentMic(80);
     });
 
     updateVoiceControls();
@@ -2904,6 +2959,10 @@ function portfolioChatbot() {
           animateLumoTextResponse(responseMessages.join(" "));
         }
         isReplying = false;
+        if (!voiceMode) {
+          recognitionPausedForSpeech = false;
+          resumePersistentMic(350);
+        }
       }, delay + 80);
     } else {
       window.setTimeout(function () {
@@ -2913,6 +2972,10 @@ function portfolioChatbot() {
           animateLumoTextResponse(responseMessages.join(" "));
         }
         isReplying = false;
+        if (!voiceMode) {
+          recognitionPausedForSpeech = false;
+          resumePersistentMic(350);
+        }
       }, delay);
     }
   }
@@ -4478,7 +4541,8 @@ function interactivePortfolio() {
     let:{category:"DATA • EDUCATION ANALYTICS",title:"LET Performance Trends",summary:"An interactive analysis of LET performance, institutions, geography, demographics, and examination ratings.",contribution:["Data preparation","Trend and geographic analysis","Visualization","Interactive case study"],stack:["Python","Analytics","Visualization","Statistics"],links:[{label:"Explore Analysis",url:"let-performance-analysis.html",external:false}]},
     spending:{category:"DATA • CUSTOMER BEHAVIOR",title:"Spending Behavior Analysis",summary:"Customer segmentation, purchasing relationships, and future transaction forecasting.",contribution:["Exploratory analysis","K-Means segmentation","Apriori association analysis","ARIMA forecasting"],stack:["Python","Pandas","K-Means","Apriori","ARIMA"],links:[{label:"Explore Analysis",url:"customer-spending-analysis.html",external:false}]},
     campaign1:{category:"CONTENT • CAMPAIGN",title:"Campaign Landing Experience",summary:"A conversion-focused campaign experience combining content, implementation, and visual hierarchy.",contribution:["Front-end implementation","Campaign layout","Responsive styling","Content presentation"],stack:["HTML","CSS","JavaScript","Content"],links:[{label:"View Campaign",url:"http://paidmediasandbox.3jzvudtzb5-dv13xg0776gq.p.temp-site.link/luke/mood/v2-20off/v2startup.html",external:true}]},
-    campaign2:{category:"CONTENT • INTERACTIVE",title:"Interactive Campaign Blog",summary:"A visual storytelling experience for interactive promotional content.",contribution:["Page development","Interactive behavior","Responsive styling","Campaign storytelling"],stack:["HTML","CSS","JavaScript"],links:[{label:"View Campaign",url:"https://va-0097.github.io/Mood/",external:true}]}
+    campaign2:{category:"CONTENT • INTERACTIVE",title:"Interactive Campaign Blog",summary:"A visual storytelling experience for interactive promotional content.",contribution:["Page development","Interactive behavior","Responsive styling","Campaign storytelling"],stack:["HTML","CSS","JavaScript"],links:[{label:"View Campaign",url:"https://va-0097.github.io/Mood/",external:true}]},
+    layoutforge:{category:"WEB • INTERACTIVE DESIGN TOOL",title:"LayoutForge — Website Vision Simulator",summary:"A responsive website simulator that helps visitors explore layout, imagery, typography, color, and motion before committing to development.",contribution:["Expanded hero, body, and footer layout library","Custom palette and typography controls","Plain, soft, and dynamic motion modes","Responsive desktop, tablet, and mobile preview","Portfolio-embedded simulator experience"],stack:["HTML","CSS","JavaScript","Responsive UI","Interaction Design"],links:[{label:"Try Simulator",url:"preview/layoutforge-simulator/index.html",external:true}]}
   };
 
 

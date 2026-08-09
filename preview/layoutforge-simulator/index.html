@@ -1,154 +1,120 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="LayoutForge - interactive website simulator and visual configurator." />
-  <title>LayoutForge — Website Simulator</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="LayoutForge by Luke Leona — an interactive website vision simulator.">
+  <meta name="theme-color" content="#111318">
+  <title>LayoutForge — Website Vision Simulator</title>
+  <link rel="icon" type="image/svg+xml" href="assets/layoutforge-logo.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=Manrope:wght@400;500;600;700&family=Montserrat:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Bebas+Neue&family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Libre+Franklin:wght@400;500;600;700&family=Manrope:wght@400;500;600;700&family=Montserrat:wght@400;500;600;700&family=Outfit:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=Syne:wght@400;500;600;700&family=Urbanist:wght@400;500;600;700&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div class="page-shell">
     <header class="topbar">
-      <a class="brand" href="#" aria-label="LayoutForge home">
-        <span class="brand-mark">LF</span>
-        <span class="brand-text">
-          <strong>LayoutForge</strong>
-          <small>Website Simulator</small>
-        </span>
+      <a class="brand" href="#builder" aria-label="LayoutForge home">
+        <img class="brand-logo" src="assets/layoutforge-logo.svg" alt="">
+        <span class="brand-text"><strong>LayoutForge</strong><small>by Luke Leona</small></span>
       </a>
-
+      <div class="topbar-copy"><span class="live-dot"></span> Website vision simulator</div>
       <div class="topbar-actions">
         <button class="ghost-btn" id="resetBtn" type="button">Reset</button>
-        <button class="ghost-btn" id="shuffleBtn" type="button">Shuffle Design</button>
-        <button class="primary-btn compact" id="buildBtnTop" type="button">Build Website</button>
+        <button class="ghost-btn" id="shuffleBtn" type="button">Surprise me</button>
+        <button class="primary-btn compact" id="buildBtnTop" type="button">Present concept</button>
       </div>
     </header>
 
-    <main class="builder-layout">
+    <main class="builder-layout" id="builder">
       <aside class="controls-panel" aria-label="Website builder controls">
         <div class="panel-intro">
           <p class="eyebrow">Interactive configurator</p>
-          <h1>Build a website your way.</h1>
-          <p>Choose each section, apply your font and palette, then generate the finished concept.</p>
+          <h1>Make your website vision visible.</h1>
+          <p>Mix layouts, imagery, type, color, and motion. Every choice updates the preview instantly.</p>
+          <div class="possibility-pill"><span aria-hidden="true">✦</span><strong>2,239,488+</strong> possible directions</div>
         </div>
 
         <section class="control-group">
-          <div class="group-heading">
-            <div>
-              <span class="step-number">01</span>
-              <h2>Choose a hero</h2>
-            </div>
-            <span class="selection-status" id="heroStatus">Hero 01</span>
-          </div>
+          <div class="group-heading"><div><span class="step-number">01</span><h2>Hero</h2></div><span class="selection-status" id="heroStatus">Editorial</span></div>
           <div class="option-grid option-grid-3" id="heroOptions"></div>
         </section>
 
         <section class="control-group">
-          <div class="group-heading">
-            <div>
-              <span class="step-number">02</span>
-              <h2>Body section 1</h2>
-            </div>
-            <span class="selection-status" id="body1Status">About Split</span>
-          </div>
+          <div class="group-heading"><div><span class="step-number">02</span><h2>Body section 1</h2></div><span class="selection-status" id="body1Status">Story split</span></div>
           <div class="option-grid option-grid-3" id="body1Options"></div>
         </section>
 
         <section class="control-group">
-          <div class="group-heading">
-            <div>
-              <span class="step-number">03</span>
-              <h2>Body section 2</h2>
-            </div>
-            <span class="selection-status" id="body2Status">Projects Grid</span>
-          </div>
+          <div class="group-heading"><div><span class="step-number">03</span><h2>Body section 2</h2></div><span class="selection-status" id="body2Status">Project gallery</span></div>
           <div class="option-grid option-grid-3" id="body2Options"></div>
         </section>
 
         <section class="control-group">
-          <div class="group-heading">
-            <div>
-              <span class="step-number">04</span>
-              <h2>Choose a footer</h2>
-            </div>
-            <span class="selection-status" id="footerStatus">Minimal</span>
-          </div>
+          <div class="group-heading"><div><span class="step-number">04</span><h2>Footer</h2></div><span class="selection-status" id="footerStatus">Minimal</span></div>
           <div class="option-grid option-grid-3" id="footerOptions"></div>
         </section>
 
         <section class="control-group split-controls">
           <div class="field-block">
-            <div class="group-heading compact-heading">
-              <div>
-                <span class="step-number">05</span>
-                <h2>Typography</h2>
-              </div>
-            </div>
+            <div class="group-heading compact-heading"><div><span class="step-number">05</span><h2>Typography</h2></div></div>
             <label for="fontSelect">Font family</label>
             <select id="fontSelect">
-              <option value="Poppins">Poppins</option>
-              <option value="Manrope">Manrope</option>
-              <option value="Montserrat">Montserrat</option>
-              <option value="Inter">Inter</option>
-              <option value="DM Sans">DM Sans</option>
+              <option>Poppins</option><option>Manrope</option><option>Space Grotesk</option><option>DM Sans</option>
+              <option>Inter</option><option>Montserrat</option><option>Outfit</option><option>Urbanist</option>
+              <option>Work Sans</option><option>Libre Franklin</option><option>Syne</option><option>Playfair Display</option>
+              <option>DM Serif Display</option><option>Abril Fatface</option><option>Bebas Neue</option><option>JetBrains Mono</option>
             </select>
-            <div class="font-sample" id="fontSample">
-              <strong>Build something remarkable.</strong>
-              <span>Preview your selected typeface here.</span>
-            </div>
+            <div class="font-sample" id="fontSample"><strong>Build something remarkable.</strong><span>Shape the feeling before the first line of code.</span></div>
           </div>
 
           <div class="field-block">
-            <div class="group-heading compact-heading">
-              <div>
-                <span class="step-number">06</span>
-                <h2>Color palette</h2>
-              </div>
+            <div class="group-heading compact-heading"><div><span class="step-number">06</span><h2>Motion</h2></div></div>
+            <p class="field-helper">Choose how lively the finished page should feel.</p>
+            <div class="motion-options" id="motionOptions">
+              <button type="button" data-motion="plain"><i></i><strong>Plain</strong><small>Still & focused</small></button>
+              <button type="button" class="active" data-motion="soft"><i></i><strong>Soft</strong><small>Gentle reveals</small></button>
+              <button type="button" data-motion="dynamic"><i></i><strong>Dynamic</strong><small>Expressive motion</small></button>
             </div>
-            <p class="field-helper">Choose one of 10 curated three-color systems.</p>
-            <div class="palette-grid" id="paletteOptions"></div>
+          </div>
+        </section>
+
+        <section class="control-group">
+          <div class="group-heading"><div><span class="step-number">07</span><h2>Color palette</h2></div><span class="selection-status" id="paletteStatus">Electric Lime</span></div>
+          <p class="field-helper">Start with a curated palette or make one entirely yours.</p>
+          <div class="palette-grid" id="paletteOptions"></div>
+
+          <div class="custom-palette">
+            <div><strong>Create your palette</strong><span>Choose background, text, and accent.</span></div>
+            <div class="custom-color-grid">
+              <label><span>Background</span><input type="color" id="customBg" value="#F7F4EE"><input type="text" id="customBgHex" value="#F7F4EE" maxlength="7" aria-label="Background hex color"></label>
+              <label><span>Text</span><input type="color" id="customText" value="#181716"><input type="text" id="customTextHex" value="#181716" maxlength="7" aria-label="Text hex color"></label>
+              <label><span>Accent</span><input type="color" id="customAccent" value="#FF6B35"><input type="text" id="customAccentHex" value="#FF6B35" maxlength="7" aria-label="Accent hex color"></label>
+            </div>
+            <button class="apply-palette-btn" id="applyCustomPalette" type="button">Use my colors <span aria-hidden="true">→</span></button>
           </div>
         </section>
 
         <div class="sticky-build">
-          <div>
-            <span>Current combination</span>
-            <strong id="combinationCount">1 of 12,150 possibilities</strong>
-          </div>
-          <button class="primary-btn" id="buildBtn" type="button">
-            <span>Build Website</span>
-            <span aria-hidden="true">↗</span>
-          </button>
+          <div><span>Your direction</span><strong id="combinationLabel">Editorial · Story split · Soft</strong></div>
+          <button class="primary-btn" id="buildBtn" type="button"><span>Present concept</span><span aria-hidden="true">↗</span></button>
         </div>
       </aside>
 
-      <section class="preview-panel">
+      <section class="preview-panel" aria-label="Live website preview">
         <div class="preview-toolbar">
-          <div>
-            <span class="live-dot"></span>
-            <strong>Live Preview</strong>
-            <small id="previewMeta">Poppins · Electric Lime</small>
-          </div>
-
+          <div><span class="live-dot"></span><strong>Live Preview</strong><small id="previewMeta">Poppins · Electric Lime · Soft motion</small></div>
           <div class="device-switcher" role="group" aria-label="Preview size">
-            <button class="device-btn active" type="button" data-device="desktop" aria-label="Desktop preview">Desktop</button>
-            <button class="device-btn" type="button" data-device="tablet" aria-label="Tablet preview">Tablet</button>
-            <button class="device-btn" type="button" data-device="mobile" aria-label="Mobile preview">Mobile</button>
+            <button class="device-btn active" type="button" data-device="desktop" aria-label="Desktop preview"><span aria-hidden="true">▰</span> Desktop</button>
+            <button class="device-btn" type="button" data-device="tablet" aria-label="Tablet preview"><span aria-hidden="true">▯</span> Tablet</button>
+            <button class="device-btn" type="button" data-device="mobile" aria-label="Mobile preview"><span aria-hidden="true">▯</span> Mobile</button>
           </div>
         </div>
-
         <div class="preview-stage">
           <div class="browser-frame device-desktop" id="browserFrame">
-            <div class="browser-bar">
-              <div class="browser-dots"><i></i><i></i><i></i></div>
-              <div class="browser-address">layoutforge.local/generated-site</div>
-              <div class="browser-action">•••</div>
-            </div>
-            <div class="site-preview" id="sitePreview" aria-live="polite"></div>
+            <div class="browser-bar"><div class="browser-dots"><i></i><i></i><i></i></div><div class="browser-address">yourbrand.layoutforge.site</div><div class="browser-action">•••</div></div>
+            <div class="site-preview motion-soft" id="sitePreview" aria-live="polite"></div>
           </div>
         </div>
       </section>
@@ -156,16 +122,13 @@
   </div>
 
   <div class="generation-overlay" id="generationOverlay" aria-hidden="true">
-    <div class="generation-card">
-      <div class="loader-orbit"><span></span></div>
-      <p class="eyebrow">LayoutForge Engine</p>
-      <h2>Building your website…</h2>
+    <div class="generation-card"><div class="loader-orbit"><img src="assets/layoutforge-logo.svg" alt=""></div><p class="eyebrow">LayoutForge engine</p><h2>Assembling your direction…</h2>
       <div class="generation-list" id="generationList">
-        <div data-step="0"><span class="status-icon"></span><span>Assembling selected sections</span></div>
-        <div data-step="1"><span class="status-icon"></span><span>Applying typography system</span></div>
-        <div data-step="2"><span class="status-icon"></span><span>Mapping color palette</span></div>
-        <div data-step="3"><span class="status-icon"></span><span>Optimizing responsive layout</span></div>
-        <div data-step="4"><span class="status-icon"></span><span>Finalizing website concept</span></div>
+        <div data-step="0"><span class="status-icon"></span><span>Composing selected layouts</span></div>
+        <div data-step="1"><span class="status-icon"></span><span>Placing visual content</span></div>
+        <div data-step="2"><span class="status-icon"></span><span>Applying type and color</span></div>
+        <div data-step="3"><span class="status-icon"></span><span>Tuning motion and responsive rules</span></div>
+        <div data-step="4"><span class="status-icon"></span><span>Preparing your full concept</span></div>
       </div>
     </div>
   </div>
@@ -173,29 +136,18 @@
   <div class="result-modal" id="resultModal" aria-hidden="true">
     <div class="result-shell">
       <div class="result-header">
-        <div>
-          <p class="eyebrow">Generated concept</p>
-          <h2>Your website is ready.</h2>
-          <p id="resultSummary">A custom website concept generated from your selections.</p>
-        </div>
-        <div class="result-actions">
-          <button class="ghost-btn" id="editBtn" type="button">Edit Design</button>
-          <button class="primary-btn compact" id="generateAgainBtn" type="button">Generate Another</button>
-          <button class="icon-btn" id="closeResultBtn" type="button" aria-label="Close preview">×</button>
-        </div>
+        <div><p class="eyebrow">Generated direction</p><h2>Your website vision is ready.</h2><p id="resultSummary">A responsive concept generated from your choices.</p></div>
+        <div class="result-actions"><button class="ghost-btn" id="editBtn" type="button">Keep editing</button><a class="primary-btn compact contact-link" href="../../index.html#contact" target="_top">Make it real</a><button class="icon-btn" id="closeResultBtn" type="button" aria-label="Close preview">×</button></div>
       </div>
-      <div class="result-canvas">
-        <div class="result-browser">
-          <div class="browser-bar">
-            <div class="browser-dots"><i></i><i></i><i></i></div>
-            <div class="browser-address" id="resultAddress">northco.layoutforge.site</div>
-            <div class="browser-action">•••</div>
-          </div>
-          <div class="site-preview result-preview" id="resultPreview"></div>
-        </div>
-      </div>
+      <div class="result-canvas"><div class="result-browser"><div class="browser-bar"><div class="browser-dots"><i></i><i></i><i></i></div><div class="browser-address" id="resultAddress">yourbrand.layoutforge.site</div><div class="browser-action">•••</div></div><div class="site-preview result-preview" id="resultPreview"></div></div></div>
     </div>
   </div>
+
+  <aside class="reality-cta" id="realityCta" aria-live="polite" aria-hidden="true">
+    <button class="reality-close" id="realityClose" type="button" aria-label="Dismiss message">×</button>
+    <img src="assets/layoutforge-logo.svg" alt="LayoutForge logo">
+    <div><span>Ready for the real thing?</span><strong>Planning to bring this vision to life?</strong><p>Luke can refine your idea, improve the experience, and build the responsive website behind it.</p><a href="../../index.html#contact" target="_top">Contact Luke <span aria-hidden="true">→</span></a></div>
+  </aside>
 
   <script src="script.js"></script>
 </body>
