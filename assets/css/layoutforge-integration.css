@@ -1,8 +1,46 @@
 /* LayoutForge portfolio card */
 .project-art-layoutforge {
+  cursor: pointer;
   background:
     radial-gradient(circle at 80% 22%, rgba(235, 176, 32, .18), transparent 29%),
     linear-gradient(145deg, #0f1116, #242833) !important;
+}
+
+/* The project card renders the actual simulator, scaled down like a browser thumbnail. */
+.project-art-layoutforge .layoutforge-live-browser {
+  z-index: 1;
+  transform: none !important;
+}
+
+.project-art-layoutforge .layoutforge-live-browser:hover,
+.portfolio-v2-card:hover .project-art-layoutforge .layoutforge-live-browser {
+  transform: translateY(-4px) !important;
+}
+
+.project-art-layoutforge .project-art-browserbar b {
+  margin-left: 7px;
+  padding: 3px 6px;
+  color: #17191e;
+  background: #ebb020;
+  border-radius: 999px;
+  font-size: 7px;
+  line-height: 1;
+  letter-spacing: .7px;
+}
+
+.project-art-layoutforge .layoutforge-live-screen {
+  padding: 0 !important;
+  background: #f5f2eb !important;
+}
+
+.project-art-layoutforge .layoutforge-live-screen iframe {
+  width: 1280px;
+  height: 720px;
+  display: block;
+  border: 0;
+  pointer-events: none;
+  transform: scale(.315);
+  transform-origin: 0 0;
 }
 
 .layoutforge-project-visual {
@@ -404,6 +442,11 @@ html[data-theme="light"] .lumo-visualizer[data-state="speaking"] {
 }
 
 @media (max-width: 420px) {
+
+  .project-art-layoutforge .layoutforge-live-screen iframe {
+    transform: scale(.255);
+  }
+
   .layoutforge-project-visual {
     padding: 15px;
   }

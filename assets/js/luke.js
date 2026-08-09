@@ -138,14 +138,15 @@ $window.on("popstate", function(){
 
         var $value = location.hash.replace('#', '');
         var $main = $('#main');
-        var $first = '#' + $("#main > section:first-child").attr('id');
-        var $last = '#' + $("#main > section:last-child").attr('id');
+        var $sections = $("#main > section");
+        var $first = '#' + $sections.first().attr('id');
+        var $last = '#' + $sections.last().attr('id');
         var $id = location.hash;
         var $thisId = '#' + $("#main > section.active").attr('id');
         $(".menu > li a").removeClass("active");
         if($value == ''){
             $id = $first;
-            $value = $("#main > section:first-child").attr('id');
+            $value = $sections.first().attr('id');
         }
         if ($('.left-side').hasClass("nav-open")) {
             $("body").removeClass("mobile-menu-open");
@@ -423,10 +424,12 @@ function scrollToAnchor() {
 
     //getting the anchor link in the URL and deleting the `#`
     var value = window.location.hash.replace('#', '');
-    var firstId = $("#main > section:first-child").attr('id');
-    var lastId = $("#main > section:last-child").attr('id');
+    var sections = $("#main > section");
+    var firstId = sections.first().attr('id');
+    var lastId = sections.last().attr('id');
     if (value.length == 0 || value == firstId) {
-        $("#main > section:first-child").addClass('active');
+        $("#main > section.active").removeClass('active');
+        sections.first().addClass('active');
         $('.menu > li:first-child a').addClass('active');
         $('.blog-single-page .menu > li:first-child a').removeClass('active');
         if ($('body.blog-single-page').length > 0)
@@ -437,7 +440,8 @@ function scrollToAnchor() {
             openMenu();
         }
     } else if (value == lastId) {
-        $("#main > section:last-child").addClass('active');
+        $("#main > section.active").removeClass('active');
+        sections.last().addClass('active');
         $('.menu > li:last-child a').addClass('active');
         openMenu();
     } else {
@@ -1046,8 +1050,9 @@ function sidebarMenu() {
     "use strict";
     var $menuLink = $(".menu > li a");
     var $main = $('#main');
-    var $first = '#' + $("#main > section:first-child").attr('id');
-    var $last = '#' + $("#main > section:last-child").attr('id');
+    var $sections = $("#main > section");
+    var $first = '#' + $sections.first().attr('id');
+    var $last = '#' + $sections.last().attr('id');
     $menuLink.on("click", function() {
         var func = animateRandom();
         var $id = $(this).attr('href');
@@ -1115,12 +1120,12 @@ function sidebarMenu() {
         $('.menu > li:last-child a').addClass('active');
         if($window.width()<992){
             $("#main > section.active").addClass(func[1]).removeClass("active");
-            $('#main > section:last-child').addClass('active ' + func[0]);
+            $sections.last().addClass('active ' + func[0]);
         }
         else{
 
             $("#main > section.active").removeClass("active");
-            $('#main > section:last-child').addClass('active ');
+            $sections.last().addClass('active ');
                     openMenu();
 
 
@@ -1142,7 +1147,7 @@ function sidebarMenu() {
                         closeMenu(); //decrease Menu width
                     } else {
                         openMenu(); //increase Menu width
-                        $('#main > section:last-child').css({width: '100%'});
+                        $sections.last().css({width: '100%'});
                     }
                     if($window.width()<992){
                         $(this).addClass('active');
@@ -1190,7 +1195,7 @@ function sidebarMenu() {
                         closeMenu(); //decrease Menu width
                     } else {
                         openMenu(); //increase Menu width
-                        $('#main > section:first-child').css({width: '100%'});
+                        $sections.first().css({width: '100%'});
                     }
                     if($window.width()<992){
                         $(this).addClass('active');

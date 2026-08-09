@@ -230,8 +230,14 @@
   document.addEventListener("keydown", prepareAudio, { once: true });
 
   promo.addEventListener("click", openSimulator);
-  document.querySelectorAll(".layoutforge-open-trigger").forEach(function (button) {
-    button.addEventListener("click", openSimulator);
+  document.querySelectorAll(".layoutforge-open-trigger").forEach(function (trigger) {
+    trigger.addEventListener("click", openSimulator);
+    trigger.addEventListener("keydown", function (event) {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        openSimulator();
+      }
+    });
   });
 
   overlayClose?.addEventListener("click", closeSimulator);
