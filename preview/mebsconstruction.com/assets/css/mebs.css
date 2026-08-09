@@ -482,7 +482,7 @@ body.mebs-site {
   background: var(--mebs-amber);
 }
 
-.mebs-engineer-avatar img { width: 100%; height: 100%; object-fit: cover; }
+.mebs-engineer-avatar img { width: 100%; height: 100%; object-fit: cover; object-position: center 24%; }
 .mebs-engineer-avatar-mark { display: grid; place-items: center; color: #000; font-size: 30px; font-weight: 800; }
 
 .mebs-engineer-row span { color: var(--mebs-amber); font-size: 11px; font-weight: 800; letter-spacing: .08em; }
@@ -920,6 +920,20 @@ body.mebs-site {
   font-weight: 800;
 }
 
+.mebs-image-note {
+  position: absolute;
+  right: 18px;
+  bottom: 18px;
+  padding: 7px 10px;
+  color: #fff;
+  background: rgba(0,0,0,.72);
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .02em;
+  line-height: 1;
+}
+
 .mebs-project-card-content { padding: 24px; }
 .mebs-project-card-content > div { display: flex; justify-content: space-between; gap: 16px; color: var(--mebs-earth); font-size: 11px; font-weight: 800; }
 .mebs-project-card-content > div strong { color: var(--mebs-black); }
@@ -973,6 +987,7 @@ body.mebs-site {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center 24%;
   transform: none !important;
 }
 
@@ -1249,6 +1264,129 @@ body.mebs-site {
 .mebs-site [class*="text-secoundery"] {
   color: #854836 !important;
 }
+
+/* Keep the hero motif within the MeBS amber / earth palette. The source PNG is
+   amber; color-burn in the original theme was turning it bright red. */
+.mebs-site .tp-hero-slider-shape { mix-blend-mode: normal; }
+
+.mebs-site .tp-hero-slider-active .swiper-slide-active .tp-hero-slider-shape {
+  opacity: .28;
+}
+
+.mebs-site .tp-hero-slider-shape img {
+  filter: saturate(.72) sepia(.08);
+}
+
+/* Why MeBS */
+.mebs-why-visual-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  padding-right: 34px;
+}
+
+.mebs-why-card {
+  position: relative;
+  min-height: 214px;
+  overflow: hidden;
+  margin: 0;
+  border: 1px solid rgba(0,0,0,.1);
+  border-radius: 20px;
+}
+
+.mebs-why-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.mebs-why-photo::after {
+  content: "";
+  position: absolute;
+  inset: 35% 0 0;
+  background: linear-gradient(transparent, rgba(0,0,0,.78));
+}
+
+.mebs-why-photo figcaption {
+  position: absolute;
+  z-index: 1;
+  right: 20px;
+  bottom: 18px;
+  left: 20px;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.mebs-why-metric {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 28px;
+  color: #000;
+  background: var(--mebs-amber);
+}
+
+.mebs-why-metric strong {
+  font-size: clamp(64px, 6vw, 92px);
+  font-weight: 600;
+  letter-spacing: -.07em;
+  line-height: .85;
+}
+
+.mebs-why-metric span {
+  max-width: 190px;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.45;
+}
+
+.mebs-why-detail {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 26px;
+  background: #fff;
+}
+
+.mebs-why-detail > span {
+  position: absolute;
+  top: 22px;
+  right: 24px;
+  color: var(--mebs-earth);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.mebs-why-detail h3 {
+  margin: 0 0 10px;
+  font-size: 22px;
+}
+
+.mebs-why-detail p {
+  margin: 0;
+  color: #57504c;
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.mebs-why-detail-dark {
+  color: #fff;
+  background: var(--mebs-earth);
+  border-color: var(--mebs-earth);
+}
+
+.mebs-why-detail-dark > span { color: var(--mebs-amber); }
+.mebs-why-detail-dark h3 { color: #fff; }
+.mebs-why-detail-dark p { color: rgba(255,255,255,.76); }
+
+.mebs-site .tp-choose-feature-wrap {
+  height: 100%;
+  border-bottom: 1px solid rgba(0,0,0,.1);
+}
+
+.mebs-site .tpchofeat { min-height: 111px; }
 
 /* Featured projects */
 .mebs-featured-projects-v3 { padding-bottom: 130px; }
@@ -1828,6 +1966,14 @@ body.mebs-site {
 }
 
 @media (max-width: 767px) {
+  .mebs-why-visual-grid {
+    grid-template-columns: 1fr;
+    padding-right: 0;
+    margin-bottom: 36px;
+  }
+
+  .mebs-why-card { min-height: 230px; }
+
   .mebs-featured-grid-v3,
   .mebs-guides-grid,
   .mebs-proof-metrics,
