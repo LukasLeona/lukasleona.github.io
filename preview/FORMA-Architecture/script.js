@@ -37,16 +37,65 @@
   const interiorCards = [...document.querySelectorAll(".interior-card")];
   const interiorLine = document.querySelector(".interior-line i");
   const interiorCurrent = document.querySelector(".interior-current");
+  const exteriorSection = document.querySelector(".exterior-explorer");
+  const exteriorTrack = document.querySelector(".exterior-track");
+  const exteriorCards = [...document.querySelectorAll(".exterior-card")];
+  const exteriorLine = document.querySelector(".exterior-line i");
+  const exteriorCurrent = document.querySelector(".exterior-current");
+  const exteriorWord = document.querySelector(".exterior-word");
+  const landscapeSection = document.querySelector(".landscape-section");
+  const landscapeFrames = [...document.querySelectorAll("[data-landscape-depth]")];
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const coarsePointer = window.matchMedia("(pointer: coarse)").matches;
   let desiredVideoTime = 0;
   let videoDuration = 16;
+  let videoUnlocked = false;
+  let videoUnlocking = false;
   let currentProgress = 0;
   let lastScroll = window.scrollY;
   let scrollTicking = false;
 
+  const markVideoReady = () => video.classList.add("is-ready");
+
+  const unlockVideo = () => {
+    if (videoUnlocked || videoUnlocking || video.readyState < 1) return;
+    videoUnlocking = true;
+    video.muted = true;
+    video.defaultMuted = true;
+    video.setAttribute("muted", "");
+    video.setAttribute("playsinline", "");
+
+    const playAttempt = video.play();
+    if (!playAttempt || typeof playAttempt.then !== "function") {
+      video.pause();
+      videoUnlocked = true;
+      videoUnlocking = false;
+      markVideoReady();
+      return;
+    }
+
+    playAttempt.then(() => {
+      video.pause();
+      videoUnlocked = true;
+      videoUnlocking = false;
+      const safeTime = clamp(desiredVideoTime, 0.001, Math.max(0.001, videoDuration - 0.04));
+      try { video.currentTime = safeTime; } catch (_) { /* Poster remains visible as a fallback. */ }
+      markVideoReady();
+    }).catch(() => {
+      videoUnlocking = false;
+    });
+  };
+
   video.addEventListener("loadedmetadata", () => {
     if (Number.isFinite(video.duration)) videoDuration = video.duration;
-    video.currentTime = 0.001;
+    if (!video.paused) video.pause();
+    try { video.currentTime = 0.001; } catch (_) { /* Mobile unlock retries on interaction. */ }
+    unlockVideo();
+  });
+  video.addEventListener("loadeddata", markVideoReady);
+  video.addEventListener("canplay", markVideoReady);
+  video.addEventListener("playing", () => {
+    if (!videoUnlocked && !videoUnlocking) video.pause();
   });
 
   const updateBeat = (beat, progress) => {
@@ -75,6 +124,13 @@
     const travel = Math.max(1, hero.offsetHeight - window.innerHeight);
     currentProgress = clamp((window.scrollY - heroTop) / travel);
     desiredVideoTime = currentProgress * Math.max(0.1, videoDuration - 0.04);
+    const immediateSeekGap = Math.abs(desiredVideoTime - video.currentTime);
+    if (video.readyState >= 1 && !video.seeking && immediateSeekGap > (coarsePointer ? 0.4 : 2.5)) {
+      try {
+        if (typeof video.fastSeek === "function") video.fastSeek(desiredVideoTime);
+        else video.currentTime = desiredVideoTime;
+      } catch (_) { /* The animation loop retries when decoding is ready. */ }
+    }
     progressBar.style.transform = `scaleX(${currentProgress})`;
     progressValue.textContent = String(Math.round(currentProgress * 100)).padStart(2, "0");
     video.style.transform = `scale(${(1.018 + currentProgress * 0.032).toFixed(4)}) translate3d(0, ${(-currentProgress * 0.7).toFixed(2)}%, 0)`;
@@ -95,6 +151,32 @@
       });
     }
 
+    if (exteriorSection && exteriorTrack) {
+      const exteriorTravel = Math.max(1, exteriorSection.offsetHeight - window.innerHeight);
+      const exteriorProgress = clamp((window.scrollY - exteriorSection.offsetTop) / exteriorTravel);
+      const maxTrackTravel = Math.max(0, exteriorTrack.scrollWidth - window.innerWidth + window.innerWidth * 0.08);
+      exteriorTrack.style.transform = `translate3d(${(-exteriorProgress * maxTrackTravel).toFixed(2)}px, 0, 0)`;
+      exteriorLine.style.transform = `scaleX(${exteriorProgress})`;
+      exteriorCurrent.textContent = String(Math.min(4, Math.floor(exteriorProgress * 4) + 1)).padStart(2, "0");
+      exteriorWord.style.transform = `translate3d(${(-exteriorProgress * 9).toFixed(2)}vw, 0, 0)`;
+
+      exteriorCards.forEach((card) => {
+        const rect = card.getBoundingClientRect();
+        const offset = clamp((rect.left + rect.width / 2 - window.innerWidth / 2) / window.innerWidth, -1, 1);
+        card.style.setProperty("--exterior-parallax", `${(-offset * 4.2).toFixed(2)}%`);
+      });
+    }
+
+    if (landscapeSection && landscapeFrames.length && window.innerWidth > 620) {
+      const landscapeRect = landscapeSection.getBoundingClientRect();
+      const landscapeProgress = clamp((window.innerHeight - landscapeRect.top) / (landscapeRect.height + window.innerHeight));
+      const centerProgress = landscapeProgress - 0.5;
+      landscapeFrames.forEach((frame) => {
+        const depth = Number(frame.dataset.landscapeDepth || 0);
+        frame.style.setProperty("--landscape-y", `${(-centerProgress * depth * window.innerHeight * 2.2).toFixed(2)}px`);
+      });
+    }
+
     document.querySelectorAll(".parallax-media").forEach((media) => {
       const rect = media.parentElement.getBoundingClientRect();
       if (rect.bottom < 0 || rect.top > window.innerHeight) return;
@@ -111,20 +193,25 @@
   };
 
   const scrubVideo = () => {
-    if (video.readyState >= 2) {
+    if (video.readyState >= 2 && !video.seeking) {
       const gap = desiredVideoTime - video.currentTime;
       if (Math.abs(gap) > 0.012) {
-        video.currentTime += gap * (reducedMotion ? 1 : 0.14);
+        const easing = reducedMotion ? 1 : (coarsePointer ? 0.32 : 0.14);
+        try { video.currentTime += gap * easing; } catch (_) { /* Keep the poster fallback. */ }
       }
     }
     requestAnimationFrame(scrubVideo);
   };
 
   window.addEventListener("scroll", () => {
+    unlockVideo();
     if (scrollTicking) return;
     scrollTicking = true;
     requestAnimationFrame(updateScrollScene);
   }, { passive: true });
+
+  window.addEventListener("touchstart", unlockVideo, { passive: true, once: true });
+  window.addEventListener("pointerdown", unlockVideo, { passive: true, once: true });
 
   window.addEventListener("resize", updateScrollScene);
   updateScrollScene();

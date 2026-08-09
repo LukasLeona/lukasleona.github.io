@@ -10,6 +10,7 @@ const types = {
   ".js": "text/javascript; charset=utf-8",
   ".mp4": "video/mp4",
   ".webp": "image/webp",
+  ".svg": "image/svg+xml",
   ".ttf": "font/ttf",
 };
 

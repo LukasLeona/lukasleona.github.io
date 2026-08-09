@@ -9,6 +9,7 @@
       content="Forma is a bespoke architecture studio shaping precise, enduring spaces from site to shelter."
     />
     <title>FORMA — Bespoke Architecture Studio</title>
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
     <link rel="preload" href="assets/Urbanist-Variable.ttf" as="font" type="font/ttf" crossorigin />
     <link rel="preload" href="assets/house-build-scroll.mp4" as="video" type="video/mp4" />
     <link rel="stylesheet" href="styles.css" />
@@ -27,6 +28,7 @@
         <a href="#studio">Studio</a>
         <a href="#work">Selected work</a>
         <a href="#interiors">Interiors</a>
+        <a href="#exteriors">Outside</a>
         <a href="#process">Process</a>
       </nav>
       <a class="header-cta magnetic" href="#contact">
@@ -38,10 +40,18 @@
     <main id="top">
       <section class="hero" aria-label="A house assembling as you scroll">
         <div class="hero-sticky">
+          <img
+            class="hero-poster-fallback"
+            src="assets/hero-poster.webp"
+            alt=""
+            aria-hidden="true"
+          />
           <video
             class="hero-video"
+            autoplay
             muted
             playsinline
+            webkit-playsinline
             preload="auto"
             poster="assets/hero-poster.webp"
             aria-label="A modern house assembling from its foundations"
@@ -287,6 +297,82 @@
             <span class="interior-line"><i></i></span>
             <span>06</span>
             <span class="interior-instruction">Scroll to explore</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="exterior-explorer" id="exteriors" aria-label="Explore exterior architecture">
+        <div class="exterior-sticky">
+          <div class="exterior-title">
+            <div>
+              <p class="section-index">Exterior studies · 05</p>
+              <h2>Architecture<br /><em>meets the horizon.</em></h2>
+            </div>
+            <p>
+              From first approach to last light, every elevation is composed with the land,
+              weather, and long views in mind.
+            </p>
+          </div>
+
+          <div class="exterior-word" aria-hidden="true">OUTSIDE</div>
+          <div class="exterior-track">
+            <figure class="exterior-card exterior-wide" data-tilt>
+              <div class="exterior-image"><img src="assets/exteriors/16-courtyard-facade.webp" alt="Glass courtyard residence wrapped around a mature tree at dusk" loading="lazy" decoding="async" /></div>
+              <figcaption><span>01</span><strong>Tree Court</strong><p>Glass · water · stone</p></figcaption>
+            </figure>
+            <figure class="exterior-card exterior-tall" data-tilt>
+              <div class="exterior-image"><img src="assets/exteriors/17-entrance.webp" alt="Dark oak entrance framed by concrete and grasses" loading="lazy" decoding="async" /></div>
+              <figcaption><span>02</span><strong>Threshold House</strong><p>Oak · concrete · rain</p></figcaption>
+            </figure>
+            <figure class="exterior-card exterior-wide" data-tilt>
+              <div class="exterior-image"><img src="assets/exteriors/18-hillside.webp" alt="Modern glass and limestone residence on a misty hillside" loading="lazy" decoding="async" /></div>
+              <figcaption><span>03</span><strong>Ridge House</strong><p>Limestone · steel · fog</p></figcaption>
+            </figure>
+            <figure class="exterior-card exterior-wide" data-tilt>
+              <div class="exterior-image"><img src="assets/exteriors/19-bluehour.webp" alt="Low contemporary home glowing beside meadow grass at blue hour" loading="lazy" decoding="async" /></div>
+              <figcaption><span>04</span><strong>Long Meadow</strong><p>Timber · glass · dusk</p></figcaption>
+            </figure>
+          </div>
+
+          <div class="exterior-hud" aria-hidden="true">
+            <span class="exterior-current">01</span>
+            <span class="exterior-line"><i></i></span>
+            <span>04</span>
+            <span>Scroll the elevations</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="landscape-section" id="landscape" aria-label="Landscape architecture studies">
+        <div class="landscape-heading">
+          <p class="section-index reveal-up">Landscape studies · 06</p>
+          <h2 class="reveal-lines"><span>The house ends.</span><span><em>The living ground</em> continues.</span></h2>
+          <p class="reveal-up">
+            Native planting, water, shadow, and seasonal change turn architecture into an
+            ecosystem rather than an object.
+          </p>
+        </div>
+
+        <div class="landscape-field">
+          <figure class="landscape-frame landscape-main" data-landscape-depth="0.08">
+            <img src="assets/landscape/20-terrace.webp" alt="Sculptural tree, grasses, water, and dark stone terrace" loading="lazy" decoding="async" />
+            <figcaption><span>01 / Night garden</span><strong>Wind Terrace</strong></figcaption>
+          </figure>
+          <figure class="landscape-frame landscape-path" data-landscape-depth="-0.12">
+            <img src="assets/landscape/21-woodland.webp" alt="Illuminated woodland steps through ferns toward a house" loading="lazy" decoding="async" />
+            <figcaption><span>02 / Arrival</span><strong>Fern Walk</strong></figcaption>
+          </figure>
+          <figure class="landscape-frame landscape-roof" data-landscape-depth="0.05">
+            <img src="assets/landscape/22-living-roof.webp" alt="Modern residence integrated into a meadow living roof" loading="lazy" decoding="async" />
+            <figcaption><span>03 / Ecology</span><strong>Living Roof</strong></figcaption>
+          </figure>
+          <figure class="landscape-frame landscape-water" data-landscape-depth="-0.07">
+            <img src="assets/landscape/23-rain-garden.webp" alt="Rain garden with mossy boulders, native planting, and reflecting water" loading="lazy" decoding="async" />
+            <figcaption><span>04 / Water</span><strong>Rain Court</strong></figcaption>
+          </figure>
+
+          <div class="landscape-orbit" aria-hidden="true">
+            <span>GROUND · WATER · WEATHER · TIME ·</span>
           </div>
         </div>
       </section>
