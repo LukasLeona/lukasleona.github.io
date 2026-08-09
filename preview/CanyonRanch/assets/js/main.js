@@ -13,6 +13,16 @@
   setHeaderState();
   window.addEventListener('scroll', setHeaderState, { passive: true });
 
+  const scrollProgressFill = document.querySelector('.scroll-progress i');
+  const updateScrollProgress = () => {
+    if (!scrollProgressFill) return;
+    const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+    const progress = scrollable > 0 ? Math.min(1, window.scrollY / scrollable) : 0;
+    scrollProgressFill.style.transform = `scaleX(${progress})`;
+  };
+  updateScrollProgress();
+  window.addEventListener('scroll', updateScrollProgress, { passive: true });
+
   const closeMenu = () => {
     body.classList.remove('menu-open');
     navLinks?.classList.remove('open');
@@ -95,6 +105,54 @@
       }, { threshold: [0, .28, .6] });
       heroObserver.observe(hero);
     }
+
+    const heroCopy = document.querySelector('[data-hero-copy]');
+    const heroIndex = document.querySelector('[data-hero-index]');
+    const heroKicker = document.querySelector('[data-hero-kicker]');
+    const heroLineOne = document.querySelector('[data-hero-line-one]');
+    const heroLineTwo = document.querySelector('[data-hero-line-two]');
+    const heroDescription = document.querySelector('[data-hero-description]');
+    const timelineSegments = [...document.querySelectorAll('.hero-timeline span')];
+    const heroStories = [
+      { kicker: 'Private hillside living in Carmona', one: 'Where the horizon', two: 'feels like home.', description: 'A residential community where architecture opens naturally to light, landscape, and a more considered pace.' },
+      { kicker: 'Interiors with room to breathe', one: 'Space, considered', two: 'down to the light.', description: 'Generous rooms, framed views, and quiet material choices turn everyday living into something beautifully effortless.' },
+      { kicker: 'Architecture for real family life', one: 'Designed for the life', two: 'you are building.', description: 'Flexible places to gather, retreat, work, and grow—shaped around the rhythms that make a house yours.' },
+      { kicker: 'An arrival with a sense of place', one: 'Every return', two: 'feels elevated.', description: 'From the first turn home to the last light upstairs, every detail is composed to make arrival feel different.' },
+      { kicker: 'A quieter address in the south', one: 'Come home to', two: 'higher ground.', description: 'Contemporary homes, green ridges, and connected southern living come together at Canyon Ranch.' }
+    ];
+    const storyBoundaries = [0, 8.8, 17.7, 26.8, 35.2, 46.6];
+    let activeStory = 0;
+    let storySwapTimer;
+
+    const updateHeroStory = () => {
+      const time = heroVideo.currentTime || 0;
+      let nextStory = storyBoundaries.findIndex((boundary, index) => index < storyBoundaries.length - 1 && time >= boundary && time < storyBoundaries[index + 1]);
+      if (nextStory < 0) nextStory = 0;
+
+      timelineSegments.forEach((segment, index) => {
+        const start = storyBoundaries[index];
+        const end = storyBoundaries[index + 1];
+        const value = time >= end ? 1 : time <= start ? 0 : (time - start) / (end - start);
+        segment.style.setProperty('--segment-progress', String(Math.max(0, Math.min(1, value))));
+      });
+
+      if (nextStory === activeStory) return;
+      activeStory = nextStory;
+      heroCopy?.classList.add('is-changing');
+      window.clearTimeout(storySwapTimer);
+      storySwapTimer = window.setTimeout(() => {
+        const story = heroStories[activeStory];
+        if (heroIndex) heroIndex.textContent = String(activeStory + 1).padStart(2, '0');
+        if (heroKicker) heroKicker.textContent = story.kicker;
+        if (heroLineOne) heroLineOne.textContent = story.one;
+        if (heroLineTwo) heroLineTwo.textContent = story.two;
+        if (heroDescription) heroDescription.textContent = story.description;
+        requestAnimationFrame(() => heroCopy?.classList.remove('is-changing'));
+      }, 270);
+    };
+    heroVideo.addEventListener('timeupdate', updateHeroStory);
+    heroVideo.addEventListener('seeked', updateHeroStory);
+    updateHeroStory();
   }
 
   soundButton?.addEventListener('click', () => {
@@ -175,6 +233,65 @@
       if (count) count.textContent = `${visible} ${visible === 1 ? 'residence' : 'residences'}`;
     });
   });
+
+  const residenceCarousel = document.querySelector('[data-residence-carousel]');
+  if (residenceCarousel) {
+    const cards = [...residenceCarousel.querySelectorAll('.home-card')];
+    const currentLabel = document.querySelector('[data-carousel-current]');
+    const previousButton = document.querySelector('[data-carousel-prev]');
+    const nextButton = document.querySelector('[data-carousel-next]');
+    let carouselIndex = 0;
+    let carouselTimer;
+    let carouselScrollTicking = false;
+
+    const markCurrentCard = () => {
+      cards.forEach((card, index) => card.classList.toggle('is-current', index === carouselIndex));
+      if (currentLabel) currentLabel.textContent = String(carouselIndex + 1).padStart(2, '0');
+    };
+
+    const goToResidence = (index) => {
+      carouselIndex = (index + cards.length) % cards.length;
+      const card = cards[carouselIndex];
+      residenceCarousel.scrollTo({ left: card.offsetLeft - cards[0].offsetLeft, behavior: reducedMotion ? 'auto' : 'smooth' });
+      markCurrentCard();
+    };
+
+    const syncCarouselIndex = () => {
+      const origin = cards[0].offsetLeft;
+      carouselIndex = cards.reduce((closest, card, index) => {
+        const currentDistance = Math.abs((card.offsetLeft - origin) - residenceCarousel.scrollLeft);
+        const closestDistance = Math.abs((cards[closest].offsetLeft - origin) - residenceCarousel.scrollLeft);
+        return currentDistance < closestDistance ? index : closest;
+      }, 0);
+      markCurrentCard();
+      carouselScrollTicking = false;
+    };
+
+    const stopCarousel = () => window.clearInterval(carouselTimer);
+    const startCarousel = () => {
+      stopCarousel();
+      if (!reducedMotion) carouselTimer = window.setInterval(() => goToResidence(carouselIndex + 1), 5200);
+    };
+
+    previousButton?.addEventListener('click', () => { goToResidence(carouselIndex - 1); startCarousel(); });
+    nextButton?.addEventListener('click', () => { goToResidence(carouselIndex + 1); startCarousel(); });
+    residenceCarousel.addEventListener('scroll', () => {
+      if (carouselScrollTicking) return;
+      carouselScrollTicking = true;
+      requestAnimationFrame(syncCarouselIndex);
+    }, { passive: true });
+    residenceCarousel.addEventListener('keydown', (event) => {
+      if (event.key === 'ArrowRight') { event.preventDefault(); goToResidence(carouselIndex + 1); startCarousel(); }
+      if (event.key === 'ArrowLeft') { event.preventDefault(); goToResidence(carouselIndex - 1); startCarousel(); }
+    });
+    residenceCarousel.addEventListener('pointerenter', stopCarousel);
+    residenceCarousel.addEventListener('pointerleave', startCarousel);
+    residenceCarousel.addEventListener('focusin', stopCarousel);
+    residenceCarousel.addEventListener('focusout', startCarousel);
+    document.addEventListener('visibilitychange', () => document.hidden ? stopCarousel() : startCarousel());
+    markCurrentCard();
+    startCarousel();
+  }
 
   const modal = document.querySelector('.modal');
   const modalPanel = modal?.querySelector('.modal-panel');
