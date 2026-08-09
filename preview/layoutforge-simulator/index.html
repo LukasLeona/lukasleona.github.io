@@ -42,13 +42,19 @@
         </section>
 
         <section class="control-group">
-          <div class="group-heading"><div><span class="step-number">02</span><h2>Body section 1</h2></div><span class="selection-status" id="body1Status">Story split</span></div>
-          <div class="option-grid option-grid-3" id="body1Options"></div>
+          <div class="group-heading"><div><span class="step-number">02</span><h2>Body sections</h2></div><span class="selection-status" id="bodyStatus">2 selected</span></div>
+          <p class="field-helper">Choose one or combine several sections. They appear in the order you select them.</p>
+          <div class="option-grid option-grid-3" id="bodyOptions"></div>
         </section>
 
         <section class="control-group">
-          <div class="group-heading"><div><span class="step-number">03</span><h2>Body section 2</h2></div><span class="selection-status" id="body2Status">Project gallery</span></div>
-          <div class="option-grid option-grid-3" id="body2Options"></div>
+          <div class="group-heading"><div><span class="step-number">03</span><h2>Your images</h2></div><span class="selection-status" id="imageStatus">Studio photos</span></div>
+          <p class="field-helper">Add your own photos and LayoutForge will place them throughout the preview.</p>
+          <div class="image-upload-zone">
+            <input id="imageUpload" type="file" accept="image/jpeg,image/png,image/webp,image/gif" multiple hidden>
+            <button class="image-upload-button" id="imageUploadButton" type="button"><span aria-hidden="true">+</span><strong>Add your images</strong><small>JPG, PNG, WEBP or GIF · up to 5 MB each</small></button>
+            <div class="uploaded-images" id="uploadedImages" aria-live="polite"></div>
+          </div>
         </section>
 
         <section class="control-group">
@@ -88,9 +94,9 @@
           <div class="custom-palette">
             <div><strong>Create your palette</strong><span>Choose background, text, and accent.</span></div>
             <div class="custom-color-grid">
-              <label><span>Background</span><input type="color" id="customBg" value="#F7F4EE"><input type="text" id="customBgHex" value="#F7F4EE" maxlength="7" aria-label="Background hex color"></label>
-              <label><span>Text</span><input type="color" id="customText" value="#181716"><input type="text" id="customTextHex" value="#181716" maxlength="7" aria-label="Text hex color"></label>
-              <label><span>Accent</span><input type="color" id="customAccent" value="#FF6B35"><input type="text" id="customAccentHex" value="#FF6B35" maxlength="7" aria-label="Accent hex color"></label>
+              <label><span>Background</span><button class="color-trigger" type="button" data-color-target="customBg" aria-label="Choose background color"><i id="customBgSwatch" style="background:#F7F4EE"></i><b>Choose</b></button><input type="text" id="customBgHex" value="#F7F4EE" maxlength="7" aria-label="Background hex color"></label>
+              <label><span>Text</span><button class="color-trigger" type="button" data-color-target="customText" aria-label="Choose text color"><i id="customTextSwatch" style="background:#181716"></i><b>Choose</b></button><input type="text" id="customTextHex" value="#181716" maxlength="7" aria-label="Text hex color"></label>
+              <label><span>Accent</span><button class="color-trigger" type="button" data-color-target="customAccent" aria-label="Choose accent color"><i id="customAccentSwatch" style="background:#FF6B35"></i><b>Choose</b></button><input type="text" id="customAccentHex" value="#FF6B35" maxlength="7" aria-label="Accent hex color"></label>
             </div>
             <button class="apply-palette-btn" id="applyCustomPalette" type="button">Use my colors <span aria-hidden="true">→</span></button>
           </div>
@@ -130,6 +136,16 @@
         <div data-step="3"><span class="status-icon"></span><span>Tuning motion and responsive rules</span></div>
         <div data-step="4"><span class="status-icon"></span><span>Preparing your full concept</span></div>
       </div>
+    </div>
+  </div>
+
+  <div class="color-picker-modal" id="colorPickerModal" aria-hidden="true">
+    <div class="color-picker-card" role="dialog" aria-modal="true" aria-labelledby="colorPickerTitle">
+      <div class="color-picker-head"><div><span>Custom palette</span><h2 id="colorPickerTitle">Choose a color</h2></div><button id="colorPickerClose" type="button" aria-label="Close color chooser">×</button></div>
+      <div class="color-picker-preview" id="colorPickerPreview"><span id="colorPickerPreviewHex">#F7F4EE</span></div>
+      <div class="color-swatch-grid" id="colorSwatchGrid" aria-label="Color choices"></div>
+      <label class="color-hex-field" for="colorPickerHex"><span>Or enter a hex color</span><input id="colorPickerHex" type="text" value="#F7F4EE" maxlength="7" inputmode="text"></label>
+      <div class="color-picker-actions"><button class="ghost-btn" id="colorPickerCancel" type="button">Cancel</button><button class="primary-btn compact" id="colorPickerApply" type="button">Apply color</button></div>
     </div>
   </div>
 

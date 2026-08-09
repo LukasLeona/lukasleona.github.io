@@ -23,7 +23,10 @@ const heroes = [
   { id: 3, name: "Full canvas", desc: "Immersive image" },
   { id: 4, name: "Product focus", desc: "Offer first" },
   { id: 5, name: "Showcase grid", desc: "Visual collage" },
-  { id: 6, name: "Bold statement", desc: "Type-led impact" }
+  { id: 6, name: "Bold statement", desc: "Type-led impact" },
+  { id: 7, name: "Launch countdown", desc: "Anticipation first" },
+  { id: 8, name: "Portfolio reel", desc: "Work in motion" },
+  { id: 9, name: "Personal signature", desc: "Creator-led story" }
 ];
 
 const body1s = [
@@ -50,6 +53,11 @@ const body2s = [
   { id: 9, name: "Conversion CTA", desc: "Focused close" }
 ];
 
+const bodySections = [
+  ...body1s.map((item) => ({ ...item, key: `body1-${item.id}`, source: "body1" })),
+  ...body2s.map((item) => ({ ...item, key: `body2-${item.id}`, source: "body2" }))
+];
+
 const footers = [
   { id: 1, name: "Minimal", desc: "Strong and simple" },
   { id: 2, name: "Multi-column", desc: "Structured links" },
@@ -61,14 +69,18 @@ const footers = [
 
 const fonts = ["Poppins", "Manrope", "Space Grotesk", "DM Sans", "Inter", "Montserrat", "Outfit", "Urbanist", "Work Sans", "Libre Franklin", "Syne", "Playfair Display", "DM Serif Display", "Abril Fatface", "Bebas Neue", "JetBrains Mono"];
 
-const state = { hero: 1, body1: 1, body2: 1, footer: 1, font: "Poppins", palette: 0, customColors: null, motion: "soft", device: "desktop" };
+const state = { hero: 1, bodies: ["body1-1", "body2-1"], footer: 1, font: "Poppins", palette: 0, customColors: null, motion: "soft", device: "desktop", userImages: [], previewPage: "home", showPageNotice: false, siteMenuOpen: false };
 
 const $ = (selector) => document.querySelector(selector);
 const $$ = (selector) => [...document.querySelectorAll(selector)];
-const photo = (name, alt, className = "") => `<img class="${className}" src="assets/photos/${name}" alt="${alt}" loading="lazy">`;
+let photoCursor = 0;
+function photo(name, alt, className = "") {
+  const uploaded = state.userImages.length ? state.userImages[photoCursor % state.userImages.length].src : null;
+  photoCursor += 1;
+  return `<img class="${className}" src="${uploaded || `assets/photos/${name}`}" alt="${alt}" loading="lazy">`;
+}
 const heroOptions = $("#heroOptions");
-const body1Options = $("#body1Options");
-const body2Options = $("#body2Options");
+const bodyOptions = $("#bodyOptions");
 const footerOptions = $("#footerOptions");
 const paletteOptions = $("#paletteOptions");
 const fontSelect = $("#fontSelect");
@@ -79,6 +91,8 @@ const browserFrame = $("#browserFrame");
 const generationOverlay = $("#generationOverlay");
 const resultModal = $("#resultModal");
 const generationRows = $$("#generationList > div");
+const imageUpload = $("#imageUpload");
+const uploadedImages = $("#uploadedImages");
 
 function selectedPalette() {
   return state.customColors ? { name: "Your palette", colors: state.customColors } : palettes[state.palette];
@@ -99,6 +113,24 @@ function renderOptionCards(items, target, key, type) {
     </button>`).join("");
 }
 
+function renderBodyCards() {
+  bodyOptions.innerHTML = bodySections.map((item) => {
+    const selected = state.bodies.includes(item.key);
+    return `
+      <button class="option-card ${selected ? "active" : ""}" type="button" data-body-key="${item.key}" aria-pressed="${selected}">
+        <div class="option-card-preview">${miniPreview("body", item.id)}</div>
+        <div><strong>${item.name}</strong><small>${item.desc}</small></div><span class="option-check" aria-hidden="true">✓</span>
+      </button>`;
+  }).join("");
+}
+
+function renderUploadedImages() {
+  $("#imageStatus").textContent = state.userImages.length ? `${state.userImages.length} uploaded` : "Studio photos";
+  uploadedImages.innerHTML = state.userImages.length ? `
+    <div class="uploaded-image-grid">${state.userImages.map((image, index) => `<figure><img src="${image.src}" alt="Uploaded website image"><button type="button" data-remove-image="${index}" aria-label="Remove uploaded image ${index + 1}">×</button></figure>`).join("")}</div>
+    <button class="clear-images" type="button" data-clear-images>Use studio photos instead</button>` : `<p>Your uploaded photos will replace the demo imagery. They stay in this browser session only.</p>`;
+}
+
 function renderPalettes() {
   paletteOptions.innerHTML = palettes.map((palette, index) => `
     <button class="palette-option ${!state.customColors && state.palette === index ? "active" : ""}" type="button" data-palette="${index}" aria-label="Use ${palette.name} palette" aria-pressed="${!state.customColors && state.palette === index}">
@@ -107,7 +139,9 @@ function renderPalettes() {
 }
 
 function navMarkup() {
-  return `<nav class="site-nav reveal-item"><a class="site-logo" href="#">NORTH<span>+</span>CO</a><ul><li>Work</li><li>Studio</li><li>Services</li><li>Journal</li></ul><button class="site-btn accent">Let’s talk</button><button class="site-menu" aria-label="Open menu">Menu</button></nav>`;
+  const pages = [["work", "Work"], ["studio", "Studio"], ["services", "Services"], ["journal", "Journal"]];
+  const pageButtons = pages.map(([page, label]) => `<button class="${state.previewPage === page ? "active" : ""}" type="button" data-preview-page="${page}">${label}</button>`).join("");
+  return `<nav class="site-nav reveal-item"><button class="site-logo ${state.previewPage === "home" ? "active" : ""}" type="button" data-preview-page="home">NORTH<span>+</span>CO</button><ul>${pages.map(([page, label]) => `<li><button class="${state.previewPage === page ? "active" : ""}" type="button" data-preview-page="${page}">${label}</button></li>`).join("")}</ul><a class="site-btn accent" href="../../index.html#contact" target="_top">Let’s talk</a><button class="site-menu ${state.siteMenuOpen ? "active" : ""}" type="button" data-toggle-site-menu aria-expanded="${state.siteMenuOpen}" aria-label="Open preview menu">${state.siteMenuOpen ? "Close" : "Menu"}</button>${state.siteMenuOpen ? `<div class="site-menu-drawer">${pageButtons}</div>` : ""}</nav>`;
 }
 
 function heroMarkup(id) {
@@ -116,7 +150,10 @@ function heroMarkup(id) {
   if (id === 3) return `<section class="site-hero hero-canvas">${photo("studio-architecture.jpg", "Modern hillside home", "canvas-image")}<div class="canvas-shade"></div><div class="canvas-copy"><span class="hero-kicker reveal-item">Architecture / Identity / Web</span><h2 class="reveal-item">Make the first impression impossible to forget.</h2><div class="canvas-bottom reveal-item"><p>A cinematic web direction for work that deserves space, scale, and attention.</p><button class="site-btn light">See selected work ↗</button></div></div></section>`;
   if (id === 4) return `<section class="site-hero hero-product"><div class="product-copy"><span class="hero-kicker reveal-item">A better way to launch</span><h2 class="reveal-item">One focused system for your next big idea.</h2><p class="reveal-item">Strategy, design, content, and launch support — shaped into a clear experience your audience can understand.</p><div class="hero-actions reveal-item"><button class="site-btn accent">Book a discovery call</button><button class="site-btn">See how it works</button></div><div class="product-badges reveal-item"><span>Responsive</span><span>Accessible</span><span>Fast</span></div></div><div class="product-window reveal-item"><div class="product-window-bar"><i></i><i></i><i></i></div><div class="product-ui"><span class="product-pill">LIVE EXPERIENCE</span><strong>Shape an idea.<br>See it clearly.</strong><div class="product-ui-grid"><i></i><i></i><i></i></div></div></div></section>`;
   if (id === 5) return `<section class="site-hero hero-showcase"><div class="showcase-copy"><span class="hero-kicker reveal-item">Studio portfolio / 2026</span><h2 class="reveal-item">Good design gives ideas somewhere to go.</h2><button class="site-btn accent reveal-item">Enter the archive</button></div><div class="showcase-grid reveal-item"><figure>${photo("studio-people.webp", "People by the coast")}<figcaption>People / 01</figcaption></figure><figure>${photo("studio-architecture.jpg", "Modern architecture")}<figcaption>Space / 02</figcaption></figure><figure>${photo("studio-detail.webp", "Styled event table")}<figcaption>Detail / 03</figcaption></figure></div></section>`;
-  return `<section class="site-hero hero-statement"><div class="statement-number">01—26</div><span class="hero-kicker reveal-item">Independent design and technology practice</span><h2 class="reveal-item">CLEAR<br><em>IDEAS.</em><br>BRAVE<br>EXECUTION.</h2><div class="statement-foot reveal-item"><p>Strategy, identity, digital design, and development for teams ready to move.</p><button class="circle-link" aria-label="Explore work">↘</button></div><div class="statement-ticker"><span>WEB DESIGN · BRAND SYSTEMS · CREATIVE DEVELOPMENT · </span><span>WEB DESIGN · BRAND SYSTEMS · CREATIVE DEVELOPMENT · </span></div></section>`;
+  if (id === 6) return `<section class="site-hero hero-statement"><div class="statement-number">01—26</div><span class="hero-kicker reveal-item">Independent design and technology practice</span><h2 class="reveal-item">CLEAR<br><em>IDEAS.</em><br>BRAVE<br>EXECUTION.</h2><div class="statement-foot reveal-item"><p>Strategy, identity, digital design, and development for teams ready to move.</p><button class="circle-link" aria-label="Explore work">↘</button></div><div class="statement-ticker"><span>WEB DESIGN · BRAND SYSTEMS · CREATIVE DEVELOPMENT · </span><span>WEB DESIGN · BRAND SYSTEMS · CREATIVE DEVELOPMENT · </span></div></section>`;
+  if (id === 7) return `<section class="site-hero hero-launch"><div class="launch-copy"><span class="hero-kicker reveal-item">New digital experience / arriving soon</span><h2 class="reveal-item">Something worth waiting for.</h2><p class="reveal-item">A launch-focused direction that turns anticipation into sign-ups, conversations, and early momentum.</p><form class="launch-form reveal-item"><input type="email" placeholder="Email for early access" aria-label="Email for early access"><button type="button" class="site-btn accent">Join the list</button></form></div><div class="launch-countdown reveal-item"><div><strong>18</strong><span>Days</span></div><div><strong>06</strong><span>Hours</span></div><div><strong>42</strong><span>Minutes</span></div><small>North+Co release 01</small></div></section>`;
+  if (id === 8) return `<section class="site-hero hero-reel"><div class="reel-heading"><span class="hero-kicker reveal-item">Selected work / rolling archive</span><h2 class="reveal-item">A portfolio that never stands still.</h2><button class="site-btn accent reveal-item">Play the reel</button></div><div class="reel-track reveal-item"><figure>${photo("studio-architecture.jpg", "Architecture portfolio feature")}<figcaption>FORMA / WEB</figcaption></figure><figure>${photo("studio-people.webp", "People-centered editorial project")}<figcaption>VELA / STORY</figcaption></figure><figure>${photo("studio-detail.webp", "Detailed brand experience")}<figcaption>SUNDAY / BRAND</figcaption></figure></div></section>`;
+  return `<section class="site-hero hero-signature"><div class="signature-portrait reveal-item">${photo("studio-people.webp", "Independent creative director")}<span>Luke / Creative technologist</span></div><div class="signature-copy"><span class="hero-kicker reveal-item">Independent practice · Manila</span><h2 class="reveal-item">I turn ambitious ideas into digital work that feels <em>personal.</em></h2><p class="reveal-item">Strategy, design, code, and creative curiosity—brought together by one close collaborator.</p><div class="hero-actions reveal-item"><button class="site-btn accent">See what I make</button><button class="site-btn">About the practice</button></div><div class="signature-mark reveal-item">L.</div></div></section>`;
 }
 
 function body1Markup(id) {
@@ -152,8 +189,40 @@ function footerMarkup(id) {
   return `<footer class="site-footer footer-marquee"><div class="marquee-track"><span>LET’S BUILD SOMETHING GOOD ✦ </span><span>LET’S BUILD SOMETHING GOOD ✦ </span></div><div class="marquee-bottom"><strong>NORTH+CO</strong><a href="#">hello@northandco.studio</a><div><a href="#">Instagram</a><a href="#">LinkedIn</a><a href="#">Behance</a></div><span>Manila / 2026</span></div></footer>`;
 }
 
+function pageNoticeMarkup(page) {
+  if (!state.showPageNotice) return "";
+  const label = page[0].toUpperCase() + page.slice(1);
+  return `<div class="page-customize-notice" role="dialog" aria-label="Customize the ${label} page"><button type="button" data-dismiss-page-notice aria-label="Close message">×</button><span>Preview page</span><strong>Want to customize the ${label} page?</strong><p>This page is included to complete the website preview. Message Luke to tailor its layout and content to your real business.</p><a href="../../index.html#contact" target="_top">Message Luke to customize →</a></div>`;
+}
+
+function secondaryPageMarkup(page) {
+  const headings = {
+    work: ["Selected work", "Projects designed to make the next move clearer.", "A collection of brand, web, and digital experiences shaped around real goals."],
+    studio: ["Inside the studio", "Small team energy. Full-scope digital thinking.", "A close collaborative practice connecting strategy, identity, content, and technology."],
+    services: ["Ways we can help", "The right mix of thinking, making, and momentum.", "Flexible creative support from the first strategic question through launch and growth."],
+    journal: ["Ideas and field notes", "Useful thinking for better digital work.", "Observations on brands, websites, audiences, technology, and the details that connect them."]
+  };
+  const [eyebrow, title, copy] = headings[page] || headings.work;
+  let content = "";
+  if (page === "work") content = body2Markup(1) + body2Markup(7);
+  else if (page === "studio") content = body1Markup(1) + body1Markup(5) + body1Markup(4);
+  else if (page === "services") content = body1Markup(3) + body2Markup(3) + body2Markup(4);
+  else content = body2Markup(5) + body1Markup(8) + body2Markup(2);
+  return `<main class="secondary-page"><header class="secondary-hero"><span class="hero-kicker reveal-item">${eyebrow}</span><h2 class="reveal-item">${title}</h2><p class="reveal-item">${copy}</p></header>${content}</main>${pageNoticeMarkup(page)}`;
+}
+
+function selectedBodyMarkup() {
+  return state.bodies.map((key) => {
+    const item = bodySections.find((section) => section.key === key);
+    if (!item) return "";
+    return item.source === "body1" ? body1Markup(item.id) : body2Markup(item.id);
+  }).join("");
+}
+
 function fullSiteMarkup() {
-  return navMarkup() + heroMarkup(state.hero) + body1Markup(state.body1) + body2Markup(state.body2) + footerMarkup(state.footer);
+  photoCursor = 0;
+  const pageContent = state.previewPage === "home" ? heroMarkup(state.hero) + selectedBodyMarkup() : secondaryPageMarkup(state.previewPage);
+  return navMarkup() + pageContent + footerMarkup(state.footer);
 }
 
 function applySiteTheme(element) {
@@ -173,27 +242,52 @@ function updatePreview() {
   applySiteTheme(sitePreview);
   fontSample.style.fontFamily = `"${state.font}", sans-serif`;
   $("#heroStatus").textContent = getItem(heroes, state.hero).name;
-  $("#body1Status").textContent = getItem(body1s, state.body1).name;
-  $("#body2Status").textContent = getItem(body2s, state.body2).name;
+  $("#bodyStatus").textContent = `${state.bodies.length} selected`;
   $("#footerStatus").textContent = getItem(footers, state.footer).name;
   $("#paletteStatus").textContent = selectedPalette().name;
-  $("#previewMeta").textContent = `${state.font} · ${selectedPalette().name} · ${state.motion[0].toUpperCase() + state.motion.slice(1)} motion`;
-  $("#combinationLabel").textContent = `${getItem(heroes, state.hero).name} · ${getItem(body1s, state.body1).name} · ${state.motion[0].toUpperCase() + state.motion.slice(1)}`;
+  $("#previewMeta").textContent = `${state.previewPage === "home" ? "Home" : state.previewPage[0].toUpperCase() + state.previewPage.slice(1)} · ${state.font} · ${selectedPalette().name} · ${state.motion[0].toUpperCase() + state.motion.slice(1)} motion`;
+  $("#combinationLabel").textContent = `${getItem(heroes, state.hero).name} · ${state.bodies.length} body section${state.bodies.length === 1 ? "" : "s"} · ${state.motion[0].toUpperCase() + state.motion.slice(1)}`;
   renderOptionCards(heroes, heroOptions, "hero", "hero");
-  renderOptionCards(body1s, body1Options, "body1", "body");
-  renderOptionCards(body2s, body2Options, "body2", "body");
+  renderBodyCards();
   renderOptionCards(footers, footerOptions, "footer", "footer");
   renderPalettes();
+  renderUploadedImages();
   $$("[data-motion]").forEach((button) => button.classList.toggle("active", button.dataset.motion === state.motion));
 }
 
 document.addEventListener("click", (event) => {
+  const bodyOption = event.target.closest("[data-body-key]");
+  if (bodyOption) {
+    const key = bodyOption.dataset.bodyKey;
+    if (state.bodies.includes(key)) {
+      if (state.bodies.length > 1) state.bodies = state.bodies.filter((item) => item !== key);
+    } else {
+      state.bodies = [...state.bodies, key];
+    }
+    state.previewPage = "home";
+    updatePreview();
+    return;
+  }
   const option = event.target.closest(".option-card");
-  if (option) { state[option.dataset.key] = Number(option.dataset.value); updatePreview(); return; }
+  if (option && option.dataset.key) {
+    state[option.dataset.key] = Number(option.dataset.value);
+    if (option.dataset.key === "hero") state.previewPage = "home";
+    updatePreview();
+    return;
+  }
   const palette = event.target.closest(".palette-option");
   if (palette) { state.palette = Number(palette.dataset.palette); state.customColors = null; updatePreview(); return; }
   const motion = event.target.closest("[data-motion]");
-  if (motion) { state.motion = motion.dataset.motion; updatePreview(); }
+  if (motion) { state.motion = motion.dataset.motion; updatePreview(); return; }
+  const pageLink = event.target.closest("[data-preview-page]");
+  if (pageLink) { state.previewPage = pageLink.dataset.previewPage; state.showPageNotice = state.previewPage !== "home"; state.siteMenuOpen = false; updatePreview(); return; }
+  if (event.target.closest("[data-toggle-site-menu]")) { state.siteMenuOpen = !state.siteMenuOpen; updatePreview(); return; }
+  if (event.target.closest("[data-dismiss-page-notice]")) { state.showPageNotice = false; updatePreview(); return; }
+  const removeImage = event.target.closest("[data-remove-image]");
+  if (removeImage) { state.userImages.splice(Number(removeImage.dataset.removeImage), 1); updatePreview(); return; }
+  if (event.target.closest("[data-clear-images]")) { state.userImages = []; updatePreview(); return; }
+  const colorTrigger = event.target.closest(".color-trigger");
+  if (colorTrigger) openColorPicker(colorTrigger.dataset.colorTarget);
 });
 
 fontSelect.addEventListener("change", () => { state.font = fontSelect.value; updatePreview(); });
@@ -207,18 +301,81 @@ $$('.device-btn').forEach((button) => button.addEventListener("click", () => {
 
 function validHex(value) { return /^#[0-9a-f]{6}$/i.test(value.trim()); }
 
-function syncColorPair(colorInput, hexInput) {
-  colorInput.addEventListener("input", () => { hexInput.value = colorInput.value.toUpperCase(); });
-  hexInput.addEventListener("input", () => {
-    let value = hexInput.value.trim();
-    if (!value.startsWith("#")) value = `#${value}`;
-    if (validHex(value)) colorInput.value = value;
-  });
+const colorChoices = ["#F7F4EE", "#FFFFFF", "#E9F0E9", "#EDF7F8", "#FFF3F5", "#F1F4FF", "#181716", "#111318", "#102A23", "#13233B", "#2C1720", "#241F31", "#FF6B35", "#DFFF00", "#E8464C", "#5271FF", "#9F7AEA", "#4EB8C7", "#E7B94E", "#CDA86E", "#7EA06F", "#E28DA6", "#F6C945", "#A8C66C"];
+const colorFields = {
+  customBg: { label: "background", input: $("#customBgHex"), swatch: $("#customBgSwatch") },
+  customText: { label: "text", input: $("#customTextHex"), swatch: $("#customTextSwatch") },
+  customAccent: { label: "accent", input: $("#customAccentHex"), swatch: $("#customAccentSwatch") }
+};
+const colorPickerModal = $("#colorPickerModal");
+const colorPickerHex = $("#colorPickerHex");
+let activeColorTarget = "customBg";
+
+$("#colorSwatchGrid").innerHTML = colorChoices.map((color) => `<button type="button" data-picker-color="${color}" style="--choice:${color}" aria-label="Choose ${color}"><span></span></button>`).join("");
+
+function updatePickerPreview(value) {
+  const color = validHex(value) ? value.toUpperCase() : "#F7F4EE";
+  $("#colorPickerPreview").style.background = color;
+  $("#colorPickerPreviewHex").textContent = color;
+  $$("[data-picker-color]").forEach((button) => button.classList.toggle("active", button.dataset.pickerColor === color));
 }
 
-syncColorPair($("#customBg"), $("#customBgHex"));
-syncColorPair($("#customText"), $("#customTextHex"));
-syncColorPair($("#customAccent"), $("#customAccentHex"));
+function openColorPicker(target) {
+  activeColorTarget = target;
+  const field = colorFields[target];
+  colorPickerHex.value = field.input.value;
+  $("#colorPickerTitle").textContent = `Choose ${field.label} color`;
+  updatePickerPreview(colorPickerHex.value);
+  colorPickerModal.classList.add("show");
+  colorPickerModal.setAttribute("aria-hidden", "false");
+  window.setTimeout(() => colorPickerHex.focus(), 80);
+}
+
+function closeColorPicker() {
+  colorPickerModal.classList.remove("show");
+  colorPickerModal.setAttribute("aria-hidden", "true");
+}
+
+$("#colorSwatchGrid").addEventListener("click", (event) => {
+  const choice = event.target.closest("[data-picker-color]");
+  if (!choice) return;
+  colorPickerHex.value = choice.dataset.pickerColor;
+  updatePickerPreview(colorPickerHex.value);
+});
+colorPickerHex.addEventListener("input", () => updatePickerPreview(colorPickerHex.value));
+$("#colorPickerApply").addEventListener("click", () => {
+  let value = colorPickerHex.value.trim();
+  if (!value.startsWith("#")) value = `#${value}`;
+  if (!validHex(value)) { colorPickerHex.classList.add("invalid"); return; }
+  colorPickerHex.classList.remove("invalid");
+  value = value.toUpperCase();
+  colorFields[activeColorTarget].input.value = value;
+  colorFields[activeColorTarget].swatch.style.background = value;
+  closeColorPicker();
+});
+$("#colorPickerClose").addEventListener("click", closeColorPicker);
+$("#colorPickerCancel").addEventListener("click", closeColorPicker);
+colorPickerModal.addEventListener("click", (event) => { if (event.target === colorPickerModal) closeColorPicker(); });
+
+Object.values(colorFields).forEach((field) => field.input.addEventListener("input", () => {
+  let value = field.input.value.trim();
+  if (!value.startsWith("#")) value = `#${value}`;
+  if (validHex(value)) field.swatch.style.background = value;
+}));
+
+$("#imageUploadButton").addEventListener("click", () => imageUpload.click());
+imageUpload.addEventListener("change", async () => {
+  const available = Math.max(0, 8 - state.userImages.length);
+  const files = [...imageUpload.files].filter((file) => file.type.startsWith("image/") && file.size <= 5 * 1024 * 1024).slice(0, available);
+  const images = await Promise.all(files.map((file) => new Promise((resolve) => {
+    const reader = new FileReader();
+    reader.addEventListener("load", () => resolve({ name: file.name, src: reader.result }));
+    reader.readAsDataURL(file);
+  })));
+  state.userImages = [...state.userImages, ...images];
+  imageUpload.value = "";
+  updatePreview();
+});
 
 $("#applyCustomPalette").addEventListener("click", () => {
   const inputs = [$("#customBgHex"), $("#customTextHex"), $("#customAccentHex")];
@@ -234,19 +391,20 @@ $("#applyCustomPalette").addEventListener("click", () => {
 
 function shuffleDesign() {
   state.hero = 1 + Math.floor(Math.random() * heroes.length);
-  state.body1 = 1 + Math.floor(Math.random() * body1s.length);
-  state.body2 = 1 + Math.floor(Math.random() * body2s.length);
+  state.bodies = [...bodySections].sort(() => Math.random() - .5).slice(0, 1 + Math.floor(Math.random() * 3)).map((item) => item.key);
   state.footer = 1 + Math.floor(Math.random() * footers.length);
   state.palette = Math.floor(Math.random() * palettes.length);
   state.customColors = null;
   state.font = fonts[Math.floor(Math.random() * fonts.length)];
   state.motion = ["plain", "soft", "dynamic"][Math.floor(Math.random() * 3)];
+  state.previewPage = "home";
+  state.showPageNotice = false;
   fontSelect.value = state.font;
   updatePreview();
 }
 
 function resetDesign() {
-  Object.assign(state, { hero: 1, body1: 1, body2: 1, footer: 1, font: "Poppins", palette: 0, customColors: null, motion: "soft", device: "desktop" });
+  Object.assign(state, { hero: 1, bodies: ["body1-1", "body2-1"], footer: 1, font: "Poppins", palette: 0, customColors: null, motion: "soft", device: "desktop", userImages: [], previewPage: "home", showPageNotice: false, siteMenuOpen: false });
   fontSelect.value = state.font;
   $$('.device-btn').forEach((button) => button.classList.toggle("active", button.dataset.device === "desktop"));
   browserFrame.className = "browser-frame device-desktop";
@@ -258,7 +416,7 @@ function openResult() {
   applySiteTheme(resultPreview);
   const names = ["northco", "formahouse", "atlasworks", "novastudio", "commonground", "madeclear"];
   $("#resultAddress").textContent = `${names[Math.floor(Math.random() * names.length)]}.layoutforge.site`;
-  $("#resultSummary").textContent = `${getItem(heroes, state.hero).name} · ${getItem(body1s, state.body1).name} · ${getItem(body2s, state.body2).name} · ${getItem(footers, state.footer).name} · ${state.font} · ${selectedPalette().name}`;
+  $("#resultSummary").textContent = `${getItem(heroes, state.hero).name} · ${state.bodies.length} body section${state.bodies.length === 1 ? "" : "s"} · ${getItem(footers, state.footer).name} · ${state.font} · ${selectedPalette().name}`;
   resultModal.classList.add("show");
   resultModal.setAttribute("aria-hidden", "false");
   document.body.classList.add("modal-open");
@@ -293,7 +451,11 @@ $("#buildBtnTop").addEventListener("click", runGeneration);
 $("#closeResultBtn").addEventListener("click", closeResult);
 $("#editBtn").addEventListener("click", closeResult);
 
-document.addEventListener("keydown", (event) => { if (event.key === "Escape" && resultModal.classList.contains("show")) closeResult(); });
+document.addEventListener("keydown", (event) => {
+  if (event.key !== "Escape") return;
+  if (colorPickerModal.classList.contains("show")) closeColorPicker();
+  else if (resultModal.classList.contains("show")) closeResult();
+});
 
 const realityCta = $("#realityCta");
 window.setTimeout(() => { realityCta.classList.add("show"); realityCta.setAttribute("aria-hidden", "false"); }, 10000);

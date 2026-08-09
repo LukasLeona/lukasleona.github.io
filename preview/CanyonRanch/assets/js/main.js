@@ -195,6 +195,57 @@
   }, { threshold: [0, .22, .55] });
   document.querySelectorAll('video[data-scroll-video]').forEach((video) => scrollVideoObserver.observe(video));
 
+  const cinematicCtas = document.querySelectorAll('[data-cinematic-cta]');
+  if (cinematicCtas.length) {
+    const activeCtas = new WeakSet();
+    const ctaTimers = new WeakMap();
+
+    const setCtaCopyVisible = (section, visible) => {
+      const content = section.querySelector('.cta-content');
+      section.classList.toggle('is-copy-visible', visible);
+      content?.toggleAttribute('inert', !visible);
+      content?.setAttribute('aria-hidden', String(!visible));
+    };
+
+    const resetCtaVideo = (video) => {
+      if (!video) return;
+      const reset = () => {
+        try { video.currentTime = 0; } catch {}
+        video.play().catch(() => {});
+      };
+      if (video.readyState >= 1) reset();
+      else video.addEventListener('loadedmetadata', reset, { once: true });
+    };
+
+    cinematicCtas.forEach((section) => setCtaCopyVisible(section, reducedMotion));
+
+    if (!reducedMotion) {
+      const ctaObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          const section = entry.target;
+          const video = section.querySelector('[data-cta-video]');
+          const previousTimer = ctaTimers.get(section);
+
+          if (entry.isIntersecting && entry.intersectionRatio >= .34) {
+            if (activeCtas.has(section)) return;
+            activeCtas.add(section);
+            window.clearTimeout(previousTimer);
+            setCtaCopyVisible(section, false);
+            resetCtaVideo(video);
+            const timer = window.setTimeout(() => setCtaCopyVisible(section, true), 2700);
+            ctaTimers.set(section, timer);
+          } else if (!entry.isIntersecting || entry.intersectionRatio < .18) {
+            activeCtas.delete(section);
+            window.clearTimeout(previousTimer);
+            setCtaCopyVisible(section, false);
+          }
+        });
+      }, { threshold: [0, .18, .34, .6] });
+
+      cinematicCtas.forEach((section) => ctaObserver.observe(section));
+    }
+  }
+
   if (!reducedMotion) {
     let ticking = false;
     const updateParallax = () => {
