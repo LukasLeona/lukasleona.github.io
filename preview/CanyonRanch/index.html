@@ -14,6 +14,7 @@
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
+  <div class="scroll-progress" aria-hidden="true"><i></i></div>
 
   <header class="site-header" aria-label="Primary navigation">
     <div class="nav-shell">
@@ -53,13 +54,15 @@
         <source src="assets/video/hero.mp4" type="video/mp4">
       </video>
       <div class="container hero-content">
-        <div class="hero-copy">
-          <div class="hero-kicker">Private hillside living in Carmona</div>
-          <h1 class="display-xl hero-title" id="hero-title">Come home to <em>higher ground.</em></h1>
+        <div class="hero-copy" data-hero-copy>
+          <div class="hero-phase"><span data-hero-index>01</span><i></i><span>Five perspectives on home</span></div>
+          <div class="hero-kicker" data-hero-kicker>Private hillside living in Carmona</div>
+          <h1 class="hero-title" id="hero-title" aria-live="polite"><span data-hero-line-one>Where the horizon</span><em data-hero-line-two>feels like home.</em></h1>
           <div class="hero-bottom">
-            <p>A considered residential community where contemporary homes, quiet landscapes, and connected city living find their balance.</p>
+            <p data-hero-description>A residential community where architecture opens naturally to light, landscape, and a more considered pace.</p>
             <a class="hero-scroll" href="#welcome"><span class="scroll-line" aria-hidden="true"></span>Explore Canyon Ranch</a>
           </div>
+          <div class="hero-timeline" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>
         </div>
       </div>
       <button class="sound-control" type="button" aria-label="Mute hero sound" aria-pressed="true">
@@ -92,6 +95,8 @@
       </div>
     </section>
 
+    <div class="luxury-marquee" aria-hidden="true"><div><span>Canyon Ranch</span><i></i><span>Modern tropical living</span><i></i><span>Carmona, Cavite</span><i></i><span>Room to live beautifully</span><i></i><span>Canyon Ranch</span><i></i><span>Modern tropical living</span><i></i><span>Carmona, Cavite</span><i></i><span>Room to live beautifully</span></div></div>
+
     <section class="section section--cream" id="homes">
       <div class="container">
         <div class="section-head">
@@ -105,47 +110,48 @@
           </div>
         </div>
 
-        <div class="homes-toolbar reveal">
-          <div class="filter-pills" aria-label="Filter residences">
-            <button class="filter-pill active" type="button" data-filter="all">All homes</button>
-            <button class="filter-pill" type="button" data-filter="single">Single level</button>
-            <button class="filter-pill" type="button" data-filter="family">Family</button>
-            <button class="filter-pill" type="button" data-filter="estate">Estate</button>
+        <div class="residence-carousel-head reveal">
+          <p>Swipe or use the controls to explore all five residences.</p>
+          <div class="carousel-status" aria-live="polite"><span data-carousel-current>01</span><i></i><span>05</span></div>
+          <div class="carousel-controls">
+            <button type="button" aria-label="Previous residence" data-carousel-prev>←</button>
+            <button type="button" aria-label="Next residence" data-carousel-next>→</button>
           </div>
-          <span class="homes-count" data-homes-count>5 residences</span>
         </div>
 
-        <div class="homes-grid">
-          <article class="home-card reveal" data-home-card="single">
+        <div class="homes-carousel reveal" data-residence-carousel tabindex="0" aria-label="Canyon Ranch residences">
+          <div class="homes-track">
+          <article class="home-card" data-home-card="single">
             <a href="residences.html#sierra" aria-label="Explore The Sierra">
-              <div class="home-media"><img src="assets/images/sierra.webp" alt="The Sierra single-storey modern tropical bungalow" loading="lazy" data-parallax=".045"><span class="home-tag">Single-storey</span></div>
+              <div class="home-media"><img src="assets/images/sierra.webp" alt="The Sierra single-storey modern tropical bungalow" loading="lazy"><span class="home-tag">Single-storey</span><span class="home-number">01</span></div>
               <div class="home-info"><div><h3 class="home-name">The Sierra</h3><div class="home-specs"><span>3 bedrooms</span><span>2.5 baths</span><span>2-car port</span></div></div><span class="home-arrow" aria-hidden="true">↗</span></div>
             </a>
           </article>
-          <article class="home-card reveal reveal-delay" data-home-card="family">
+          <article class="home-card" data-home-card="family">
             <a href="residences.html#alto" aria-label="Explore The Alto">
-              <div class="home-media"><img src="assets/images/alto.webp" alt="The Alto two-storey contemporary family villa" loading="lazy" data-parallax=".05"><span class="home-tag">Family villa</span></div>
+              <div class="home-media"><img src="assets/images/alto.webp" alt="The Alto two-storey contemporary family villa" loading="lazy"><span class="home-tag">Family villa</span><span class="home-number">02</span></div>
               <div class="home-info"><div><h3 class="home-name">The Alto</h3><div class="home-specs"><span>4 bedrooms</span><span>3.5 baths</span><span>2-car garage</span></div></div><span class="home-arrow" aria-hidden="true">↗</span></div>
             </a>
           </article>
-          <article class="home-card reveal" data-home-card="family">
+          <article class="home-card" data-home-card="family">
             <a href="residences.html#verde" aria-label="Explore The Verde">
-              <div class="home-media"><img src="assets/images/verde.webp" alt="The Verde garden courtyard residence" loading="lazy" data-parallax=".045"><span class="home-tag">Garden residence</span></div>
+              <div class="home-media"><img src="assets/images/verde.webp" alt="The Verde garden courtyard residence" loading="lazy"><span class="home-tag">Garden residence</span><span class="home-number">03</span></div>
               <div class="home-info"><div><h3 class="home-name">The Verde</h3><div class="home-specs"><span>4 bedrooms</span><span>4 baths</span><span>Courtyard garden</span></div></div><span class="home-arrow" aria-hidden="true">↗</span></div>
             </a>
           </article>
-          <article class="home-card reveal reveal-delay" data-home-card="estate">
+          <article class="home-card" data-home-card="estate">
             <a href="residences.html#cielo" aria-label="Explore The Cielo">
-              <div class="home-media"><img src="assets/images/cielo.webp" alt="The Cielo grand multigenerational residence at blue hour" loading="lazy" data-parallax=".055"><span class="home-tag">Grand residence</span></div>
+              <div class="home-media"><img src="assets/images/cielo.webp" alt="The Cielo grand multigenerational residence at blue hour" loading="lazy"><span class="home-tag">Grand residence</span><span class="home-number">04</span></div>
               <div class="home-info"><div><h3 class="home-name">The Cielo</h3><div class="home-specs"><span>5 bedrooms</span><span>5.5 baths</span><span>3-car garage</span></div></div><span class="home-arrow" aria-hidden="true">↗</span></div>
             </a>
           </article>
-          <article class="home-card reveal" data-home-card="estate">
+          <article class="home-card" data-home-card="estate">
             <a href="residences.html#montana" aria-label="Explore The Montaña">
-              <div class="home-media"><img src="assets/images/montana.webp" alt="The Montaña exclusive hillside estate at sunset" loading="lazy" data-parallax=".05"><span class="home-tag">Hillside estate</span></div>
+              <div class="home-media"><img src="assets/images/montana.webp" alt="The Montaña exclusive hillside estate at sunset" loading="lazy"><span class="home-tag">Hillside estate</span><span class="home-number">05</span></div>
               <div class="home-info"><div><h3 class="home-name">The Montaña</h3><div class="home-specs"><span>5 bedrooms</span><span>6 baths</span><span>Pool-ready</span></div></div><span class="home-arrow" aria-hidden="true">↗</span></div>
             </a>
           </article>
+          </div>
         </div>
         <p class="disclaimer">Home images and specifications are design studies for presentation and may be refined. Final plans, finishes, lot dimensions, and availability are subject to confirmation.</p>
       </div>
@@ -212,9 +218,16 @@
             <p class="disclaimer">Indicative drive times vary with route, traffic, and road conditions.</p>
           </div>
         </div>
-        <div class="map-art" aria-label="Stylized location map">
-          <span class="map-label map-label--one">Metro Manila</span><span class="map-label map-label--two">Laguna</span><span class="map-label map-label--three">Tagaytay</span><span class="map-label map-label--four">Cavite</span>
-          <div class="map-pin"><span>Canyon Ranch</span></div>
+        <div class="map-art" aria-label="Stylized location context map, not to scale">
+          <div class="map-terrain map-terrain--one"></div><div class="map-terrain map-terrain--two"></div>
+          <div class="map-road map-road--main"><span>SLEX</span></div><div class="map-road map-road--east"></div><div class="map-road map-road--ridge"></div>
+          <span class="map-point map-point--alabang"><i></i><b>Alabang</b><small>35 min</small></span>
+          <span class="map-point map-point--southwoods"><i></i><b>Southwoods</b><small>15 min</small></span>
+          <span class="map-point map-point--nuvali"><i></i><b>Nuvali</b><small>25 min</small></span>
+          <span class="map-point map-point--tagaytay"><i></i><b>Tagaytay</b><small>40 min</small></span>
+          <div class="map-route" aria-hidden="true"></div>
+          <div class="map-pin"><strong>CR</strong><span>Canyon Ranch<small>Carmona · Cavite</small></span></div>
+          <div class="map-key"><span>Connected south</span><small>Location context · not to scale</small></div>
         </div>
       </div>
     </section>
@@ -237,9 +250,9 @@
     <section class="cta-cinematic">
       <video class="video-cover" muted loop playsinline preload="metadata" data-scroll-video poster="assets/images/cielo.webp"><source src="assets/video/cta.mp4" type="video/mp4"></video>
       <div class="container cta-content reveal">
-        <p class="eyebrow">Your next chapter</p>
-        <h2 class="display-lg">See Canyon Ranch<br>for <em class="serif-italic">yourself.</em></h2>
-        <p class="lead">Walk the streets, compare the residences, and experience the quieter side of connected living.</p>
+        <div class="cta-sequence"><span>05</span><i></i><span>Your next chapter</span></div>
+        <h2>Come closer to<br>the life you <em class="serif-italic">imagined.</em></h2>
+        <p>Walk the streets. Step inside the residences. Experience the quiet confidence of Canyon Ranch in person.</p>
         <div class="cta-actions"><a class="btn btn--light" href="contact.html" data-open-visit>Book a private visit</a><a class="btn btn--outline" href="residences.html">Explore residences</a></div>
       </div>
     </section>
