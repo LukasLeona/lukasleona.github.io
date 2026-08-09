@@ -2132,6 +2132,9 @@ function portfolioChatbot() {
       }, 220);
     } else {
       window.clearTimeout(lumoTextAnimationTimer);
+      window.clearTimeout(recognitionRestartTimer);
+      micSessionActive = false;
+      recognitionPausedForSpeech = false;
 
       if (window.speechSynthesis) {
         window.speechSynthesis.cancel();
@@ -2142,6 +2145,13 @@ function portfolioChatbot() {
         recognitionPausedForSpeech = false;
         window.clearTimeout(recognitionRestartTimer);
         recognition.stop();
+      }
+
+      const micButton = form.querySelector(".chatbot-voice-button");
+      if (micButton) {
+        micButton.classList.remove("is-listening", "is-active");
+        micButton.setAttribute("aria-pressed", "false");
+        micButton.setAttribute("aria-label", "Turn on continuous microphone");
       }
 
       setLumoVisualizerState("idle");
@@ -2365,7 +2375,7 @@ function portfolioChatbot() {
         Math.min(0.86, 0.42 + transcript.trim().length * 0.008)
       );
 
-      if (finalTranscript.trim()) {
+      if (finalTranscript.trim() && !recognitionPausedForSpeech) {
         recognitionPausedForSpeech = true;
 
         if (isListening) {
