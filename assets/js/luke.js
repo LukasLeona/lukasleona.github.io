@@ -2171,6 +2171,7 @@ function portfolioChatbot() {
         category: category,
         progress: typeof point.progress === "number" ? point.progress : progress,
         band: point.band || 0,
+        depth: typeof point.depth === "number" ? point.depth : 0.5,
         seed: lumoParticleSeed(particles.length + 1, 7),
         size: 0.55 + lumoParticleSeed(particles.length + 1, 8) * 1.45
       });
@@ -2191,87 +2192,106 @@ function portfolioChatbot() {
     lumoFaceCanvas.style.height = height + "px";
 
     const centerX = width * 0.5;
-    const centerY = height * (width < 600 ? 0.46 : 0.48);
-    const faceWidth = Math.min(width * (width < 600 ? 0.82 : 0.48), height * 0.57);
-    const faceHeight = Math.min(height * (width < 600 ? 0.55 : 0.68), width * 0.72);
+    const centerY = height * (width < 600 ? 0.45 : 0.47);
+    const faceWidth = Math.min(width * (width < 600 ? 0.73 : 0.36), height * 0.48);
+    const faceHeight = Math.min(height * (width < 600 ? 0.52 : 0.61), width * 0.62);
     const oldParticles = lumoFaceParticles;
     const particles = [];
 
-    addLumoFaceLine(function (progress) {
-      const angle = progress * Math.PI * 2;
-      const lowerFace = Math.max(0, -Math.cos(angle));
-      const jawScale = 1 - lowerFace * 0.18;
-      return {
-        x: centerX + Math.sin(angle) * faceWidth * 0.5 * jawScale,
-        y: centerY - Math.cos(angle) * faceHeight * 0.5
-      };
-    }, 310, "outline", particles);
+    /* Dense curved point cloud: the face is a surface, not a cartoon outline. */
+    const meshRows = width < 600 ? 48 : 56;
+    const meshColumns = width < 600 ? 34 : 42;
 
-    [-1, 1].forEach(function (side) {
+    for (let row = 0; row < meshRows; row += 1) {
+      const v = -0.98 + (row / (meshRows - 1)) * 1.96;
+      const verticalCurve = Math.sqrt(Math.max(0, 1 - v * v));
+      const forehead = v < -0.32 ? 0.9 + (v + 1) * 0.13 : 1;
+      const jaw = v > 0.42 ? 1 - (v - 0.42) * 0.48 : 1;
+      const halfWidth = faceWidth * 0.5 * verticalCurve * forehead * jaw;
+
+      for (let column = 0; column < meshColumns; column += 1) {
+        const u = -1 + (column / (meshColumns - 1)) * 2;
+        const normalizedX = u * verticalCurve * forehead * jaw;
+        const eyeSide = normalizedX < 0 ? -1 : 1;
+        const eyeX = eyeSide * 0.29;
+        const insideEyeSocket = Math.pow((normalizedX - eyeX) / 0.19, 2) +
+          Math.pow((v + 0.25) / 0.105, 2) < 1;
+        const insideSpeechRegion = Math.pow(normalizedX / 0.3, 2) +
+          Math.pow((v - 0.54) / 0.09, 2) < 1;
+
+        const depth = Math.sqrt(Math.max(0, 1 - u * u)) *
+          Math.sqrt(Math.max(0, 1 - v * v));
+        const cheekLift = Math.exp(-Math.pow((Math.abs(normalizedX) - 0.38) / 0.2, 2)) *
+          Math.exp(-Math.pow((v - 0.1) / 0.3, 2));
+        const noseProjection = Math.exp(-Math.pow(normalizedX / 0.16, 2)) *
+          Math.exp(-Math.pow((v - 0.02) / 0.42, 2));
+        const rowOffset = row % 2 ? halfWidth / (meshColumns - 1) : 0;
+        const seed = lumoParticleSeed(row * meshColumns + column, 19);
+
+        const region = insideEyeSocket
+          ? "socket"
+          : insideSpeechRegion
+            ? "speech"
+            : "surface";
+        const regionDepth = insideEyeSocket
+          ? depth * 0.3
+          : insideSpeechRegion
+            ? depth * 0.72
+            : Math.min(1, depth + noseProjection * 0.12);
+
+        particles.push({
+          tx: centerX + u * halfWidth + rowOffset + (seed - 0.5) * 1.8,
+          ty: centerY + v * faceHeight * 0.5 - cheekLift * 2.5,
+          category: region,
+          progress: (u + 1) / 2,
+          band: row,
+          depth: regionDepth,
+          seed: seed,
+          size: 0.5 + regionDepth * 0.78 + seed * 0.48
+        });
+      }
+    }
+
+    /* No drawn-on facial features: depth and density alone define the face. */
+
+    /* Crown and chin streams create the dimensional data-light silhouette. */
+    for (let stream = 0; stream < 68; stream += 1) {
+      const u = -0.92 + (stream / 67) * 1.84;
+      const topY = centerY - faceHeight * 0.49 + Math.abs(u) * faceHeight * 0.08;
+      const crownLength = faceHeight * (0.04 + lumoParticleSeed(stream, 21) * 0.25);
+      const points = 2 + Math.floor(lumoParticleSeed(stream, 22) * 6);
+
       addLumoFaceLine(function (progress) {
-        const angle = progress * Math.PI;
         return {
-          x: centerX + side * faceWidth * 0.205 + (progress - 0.5) * faceWidth * 0.235,
-          y: centerY - faceHeight * 0.14 - Math.sin(angle) * faceHeight * 0.035
+          x: centerX + u * faceWidth * 0.43 + (lumoParticleSeed(stream, 23) - 0.5) * 5,
+          y: topY - progress * crownLength,
+          depth: 0.38 + progress * 0.36
         };
-      }, 72, "eye", particles);
+      }, points, "crown", particles);
+    }
 
-      addLumoFaceLine(function (progress) {
-        const angle = progress * Math.PI * 2;
-        return {
-          x: centerX + side * faceWidth * 0.205 + Math.cos(angle) * faceWidth * 0.035,
-          y: centerY - faceHeight * 0.115 + Math.sin(angle) * faceHeight * 0.042
-        };
-      }, 48, "iris", particles);
-
+    for (let stream = 0; stream < 28; stream += 1) {
+      const u = -0.7 + (stream / 27) * 1.4;
+      const chinY = centerY + faceHeight * (0.47 - Math.abs(u) * 0.04);
+      const trailLength = faceHeight * (0.06 + lumoParticleSeed(stream, 24) * 0.18);
       addLumoFaceLine(function (progress) {
         return {
-          x: centerX + side * faceWidth * 0.205 + (progress - 0.5) * faceWidth * 0.25,
-          y: centerY - faceHeight * 0.215 - Math.sin(progress * Math.PI) * faceHeight * 0.025
+          x: centerX + u * faceWidth * 0.32,
+          y: chinY + progress * trailLength,
+          depth: 0.4
         };
-      }, 44, "brow", particles);
-
-      addLumoFaceLine(function (progress) {
-        return {
-          x: centerX + side * faceWidth * (0.28 + progress * 0.08),
-          y: centerY + faceHeight * (0.01 + progress * 0.22)
-        };
-      }, 42, "cheek", particles);
-    });
-
-    addLumoFaceLine(function (progress) {
-      return {
-        x: centerX + Math.sin(progress * Math.PI * 1.4) * faceWidth * 0.025,
-        y: centerY - faceHeight * 0.08 + progress * faceHeight * 0.29
-      };
-    }, 86, "nose", particles);
-
-    addLumoFaceLine(function (progress) {
-      return {
-        x: centerX + (progress - 0.5) * faceWidth * 0.18,
-        y: centerY + faceHeight * 0.225 + Math.abs(progress - 0.5) * faceHeight * 0.025
-      };
-    }, 48, "nose", particles);
-
-    for (let row = -3; row <= 3; row += 1) {
-      addLumoFaceLine(function (progress) {
-        return {
-          x: centerX + (progress - 0.5) * faceWidth * 0.48,
-          y: centerY + faceHeight * 0.315 + row * 2.4,
-          progress: progress,
-          band: row
-        };
-      }, 54, "mouth", particles);
+      }, 3 + Math.floor(lumoParticleSeed(stream, 25) * 5), "trail", particles);
     }
 
     addLumoFaceLine(function (progress, index) {
       const angle = lumoParticleSeed(index + 1, 11) * Math.PI * 2;
-      const radius = faceWidth * (0.56 + lumoParticleSeed(index + 1, 12) * 0.3);
+      const radius = faceWidth * (0.55 + lumoParticleSeed(index + 1, 12) * 0.35);
       return {
         x: centerX + Math.cos(angle) * radius,
-        y: centerY + Math.sin(angle) * radius * 0.92
+        y: centerY + Math.sin(angle) * radius * 1.05,
+        depth: 0.15
       };
-    }, 180, "halo", particles);
+    }, 130, "halo", particles);
 
     const robotRect = toggle.getBoundingClientRect();
     const originX = robotRect.left + robotRect.width / 2;
@@ -2316,16 +2336,15 @@ function portfolioChatbot() {
       const time = timestamp * 0.001;
       const microMotion = (isSpeaking ? 2.8 : isThinking ? 1.8 : 1.05) * motionScale;
 
-      if (particle.category === "mouth") {
+      if (particle.category === "speech") {
         const envelope = Math.pow(Math.sin(Math.PI * particle.progress), 0.78);
-        const amplitude = isSpeaking ? 7 + lumoVisualizerEnergy * 28 : 1.8;
+        const amplitude = isSpeaking ? 2 + lumoVisualizerEnergy * 11 : 0.35;
         targetY += Math.sin(
-          particle.progress * Math.PI * 7.5 - timestamp * (isSpeaking ? 0.014 : 0.003) +
-          particle.band * 0.38
+          particle.progress * Math.PI * 5.5 - timestamp * (isSpeaking ? 0.012 : 0.002) +
+          particle.band * 0.17
         ) * amplitude * envelope * motionScale;
-        targetY += particle.band * (isSpeaking ? 0.55 : 0.18) * lumoVisualizerEnergy;
-      } else if (particle.category === "iris") {
-        targetX += Math.sin(time * 0.72) * 2.4 * motionScale;
+      } else if (particle.category === "crown" || particle.category === "trail") {
+        targetY += Math.sin(time * 1.1 + index * 0.28) * 2.2 * motionScale;
       } else if (particle.category === "halo") {
         const orbit = time * (0.08 + particle.seed * 0.08);
         targetX += Math.cos(orbit + index) * 7 * motionScale;
@@ -2342,17 +2361,31 @@ function portfolioChatbot() {
         Math.cos(index * 0.41 + timestamp * 0.006) * spiral;
 
       const twinkle = 0.7 + Math.sin(timestamp * 0.004 + index * 1.27) * 0.3;
-      const alpha = Math.max(0.08, gather * (particle.category === "halo" ? 0.35 : 0.62 + twinkle * 0.3));
-      const radius = particle.size * (particle.category === "mouth" && isSpeaking ? 1.28 : 1);
+      const categoryAlpha = particle.category === "halo"
+        ? 0.2
+        : particle.category === "crown" || particle.category === "trail"
+          ? 0.32 + particle.depth * 0.32
+          : particle.category === "socket"
+            ? 0.08 + particle.depth * 0.2
+            : particle.category === "speech"
+              ? (isSpeaking ? 0.46 : 0.24) + particle.depth * 0.32
+              : 0.2 + particle.depth * 0.6;
+      const alpha = Math.max(0.04, gather * categoryAlpha * (0.78 + twinkle * 0.22));
+      const isFaceSurface = ["surface", "socket", "speech"].includes(particle.category);
+      const depthScale = isFaceSurface ? 0.68 + particle.depth * 0.48 : 1;
+      const radius = particle.size * depthScale *
+        (particle.category === "speech" && isSpeaking ? 1.12 : 1);
 
       context.beginPath();
-      context.shadowBlur = particle.category === "mouth" ? 13 : 6;
-      context.shadowColor = "rgba(44, 255, 207, .7)";
-      context.fillStyle = particle.category === "mouth" || particle.category === "iris"
-        ? `rgba(196, 255, 241, ${alpha})`
-        : particle.seed > 0.42
-          ? `rgba(42, 231, 188, ${alpha})`
-          : `rgba(18, 155, 142, ${alpha * 0.82})`;
+      context.shadowBlur = particle.category === "speech" && isSpeaking
+        ? 9
+        : isFaceSurface ? 4 : 7;
+      context.shadowColor = "rgba(57, 255, 174, .72)";
+      context.fillStyle = particle.category === "speech" && isSpeaking
+        ? `rgba(151, 255, 204, ${alpha})`
+        : particle.seed > 0.36
+          ? `rgba(57, 255, 174, ${alpha})`
+          : `rgba(12, 183, 117, ${alpha * 0.82})`;
       context.arc(particle.x, particle.y, radius, 0, Math.PI * 2);
       context.fill();
     });

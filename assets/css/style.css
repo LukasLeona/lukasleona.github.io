@@ -180,8 +180,9 @@ body.lumo-face-mode-active {
   opacity: 0;
   color: #bfffee;
   background:
-    radial-gradient(circle at 50% 46%, rgba(8, 77, 70, .32), transparent 38%),
-    radial-gradient(circle at 50% 50%, #071211 0, #030807 52%, #010202 100%);
+    radial-gradient(circle at 50% 102%, rgba(47, 255, 166, .24), transparent 29%),
+    radial-gradient(circle at 50% 46%, rgba(7, 84, 52, .28), transparent 39%),
+    radial-gradient(circle at 50% 50%, #06110c 0, #020805 54%, #010201 100%);
   transition: opacity .52s ease, visibility 0s linear .52s;
   isolation: isolate;
 }
@@ -203,8 +204,8 @@ body.lumo-face-mode-active {
   z-index: 2;
   pointer-events: none;
   background:
-    linear-gradient(rgba(66, 255, 211, .018) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(66, 255, 211, .012) 1px, transparent 1px);
+    linear-gradient(rgba(68, 255, 171, .018) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(68, 255, 171, .012) 1px, transparent 1px);
   background-size: 34px 34px;
   mask-image: radial-gradient(circle at center, #000 0, transparent 74%);
 }
@@ -218,10 +219,10 @@ body.lumo-face-mode-active {
   background: conic-gradient(
     from 0deg at 50% 50%,
     transparent,
-    rgba(36, 229, 186, .025),
+    rgba(54, 255, 166, .025),
     transparent 22%,
     transparent 78%,
-    rgba(36, 229, 186, .02),
+    rgba(54, 255, 166, .02),
     transparent
   );
   animation: lumoFaceAtmosphere 18s linear infinite;
@@ -264,7 +265,7 @@ body.lumo-face-mode-active {
   display: inline-flex;
   align-items: center;
   gap: 11px;
-  color: rgba(174, 255, 236, .62);
+  color: rgba(181, 255, 216, .64);
   font-size: clamp(8px, .75vw, 11px);
   font-weight: 600;
 }
@@ -274,16 +275,16 @@ body.lumo-face-mode-active {
   height: 7px;
   flex: 0 0 auto;
   border-radius: 50%;
-  background: #32f0c2;
-  box-shadow: 0 0 0 5px rgba(50, 240, 194, .08), 0 0 18px rgba(50, 240, 194, .92);
+  background: #45ffad;
+  box-shadow: 0 0 0 5px rgba(69, 255, 173, .08), 0 0 18px rgba(69, 255, 173, .92);
   animation: lumoFaceStatusPulse 1.15s ease-in-out infinite;
 }
 
 .lumo-face-status {
-  color: #43f2c7;
+  color: #45ffad;
   font-size: clamp(8px, .8vw, 11px);
   font-weight: 700;
-  text-shadow: 0 0 12px rgba(55, 239, 197, .62);
+  text-shadow: 0 0 12px rgba(69, 255, 173, .62);
 }
 
 .lumo-face-exit {
@@ -294,14 +295,14 @@ body.lumo-face-mode-active {
   min-width: 148px;
   height: 45px;
   padding: 0 18px;
-  border: 1px solid rgba(57, 244, 202, .72);
+  border: 1px solid rgba(69, 255, 173, .72);
   border-radius: 999px;
   color: #baffee;
   background: rgba(5, 23, 20, .72);
   box-shadow:
-    inset 0 0 18px rgba(47, 231, 189, .08),
-    0 0 0 1px rgba(47, 231, 189, .08),
-    0 0 22px rgba(47, 231, 189, .16);
+    inset 0 0 18px rgba(69, 255, 173, .08),
+    0 0 0 1px rgba(69, 255, 173, .08),
+    0 0 22px rgba(69, 255, 173, .16);
   backdrop-filter: blur(12px);
   cursor: pointer;
   display: inline-flex;
@@ -319,7 +320,7 @@ body.lumo-face-mode-active {
   position: relative;
   width: 16px;
   height: 16px;
-  border: 1px solid rgba(98, 255, 219, .45);
+  border: 1px solid rgba(109, 255, 190, .45);
   border-radius: 50%;
 }
 
@@ -346,8 +347,8 @@ body.lumo-face-mode-active {
 .lumo-face-exit:focus-visible {
   outline: none;
   color: #02110e;
-  background: #43f2c7;
-  box-shadow: 0 0 18px rgba(67, 242, 199, .52), 0 0 46px rgba(67, 242, 199, .22);
+  background: #45ffad;
+  box-shadow: 0 0 18px rgba(69, 255, 173, .52), 0 0 46px rgba(69, 255, 173, .22);
   transform: translateY(-2px);
 }
 
