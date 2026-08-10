@@ -2098,7 +2098,7 @@ function portfolioChatbot() {
     visualizer.setAttribute("aria-label", "Lumo voice activity: ready");
     visualizer.innerHTML =
       '<div class="lumo-visualizer-meta">' +
-      '<span><i></i> LUMO SIGNAL</span>' +
+      '<span><i></i> LUMO PARTICLES</span>' +
       '<strong class="lumo-visualizer-state">READY</strong>' +
       '</div>' +
       '<canvas class="lumo-wave-canvas" aria-hidden="true"></canvas>';
@@ -2182,38 +2182,63 @@ function portfolioChatbot() {
       (lumoVisualizerTargetEnergy + pulse - lumoVisualizerEnergy) * 0.09;
 
     const isLight = document.documentElement.getAttribute("data-theme") === "light";
-    const colors = isLight
-      ? ["rgba(151, 103, 0, .92)", "rgba(213, 157, 20, .52)", "rgba(98, 104, 116, .27)"]
-      : ["rgba(255, 206, 79, .96)", "rgba(235, 176, 32, .56)", "rgba(214, 220, 233, .27)"];
     const centerY = height * 0.52;
+    const formationByState = {
+      idle: 0.3,
+      listening: 0.86,
+      thinking: 0.64,
+      speaking: 0.96
+    };
+    const formation = formationByState[lumoVisualizerState] || formationByState.idle;
+    const particleCount = Math.max(100, Math.min(190, Math.floor(width * 0.52)));
+    const phase = timestamp * settings.speed * 2.4;
 
-    colors.forEach(function (color, waveIndex) {
+    function particleSeed(index, salt) {
+      const value = Math.sin(index * 12.9898 + salt * 78.233) * 43758.5453;
+      return value - Math.floor(value);
+    }
+
+    context.save();
+    context.globalCompositeOperation = "lighter";
+
+    for (let index = 0; index < particleCount; index += 1) {
+      const progress = (index + 0.5) / particleCount;
+      const seedX = particleSeed(index, 1);
+      const seedY = particleSeed(index, 2);
+      const seedFill = particleSeed(index, 3) * 2 - 1;
+      const seedSize = particleSeed(index, 4);
+      const envelope = Math.pow(Math.sin(Math.PI * progress), 0.9);
+      const harmonic = 0.28 + 0.72 * Math.abs(
+        Math.sin(progress * Math.PI * 6.5 - phase + seedX * 1.7)
+      );
+      const halfHeight = height * (0.08 + lumoVisualizerEnergy * 0.37) * envelope * harmonic;
+      const targetX = progress * width;
+      const targetY = centerY + seedFill * halfHeight;
+      const scatterX = seedX * width;
+      const scatterY = height * (0.16 + seedY * 0.68);
+      const drift = Math.sin(timestamp * 0.0012 + index * 0.91) * (1.8 - formation);
+      const x = scatterX + (targetX - scatterX) * formation + drift;
+      const y = scatterY + (targetY - scatterY) * formation +
+        Math.cos(timestamp * 0.0014 + index * 0.67) * (1.35 - formation);
+      const twinkle = 0.72 + 0.28 * Math.sin(timestamp * 0.004 + index * 1.73);
+      const radius = 0.65 + seedSize * 1.05 +
+        (lumoVisualizerState === "speaking" ? twinkle * 0.35 : 0);
+      const alpha = Math.min(1, 0.28 + formation * 0.5 + twinkle * 0.18);
+      const colorMix = particleSeed(index, 5);
+
       context.beginPath();
-      context.lineCap = "round";
-      context.lineJoin = "round";
-      context.lineWidth = waveIndex === 0 ? 2 : 1.35;
-      context.strokeStyle = color;
+      context.shadowBlur = lumoVisualizerState === "idle" ? 3 : 7;
+      context.shadowColor = isLight ? "rgba(0, 126, 102, .48)" : "rgba(36, 240, 190, .62)";
+      context.fillStyle = colorMix > 0.82
+        ? `rgba(211, 255, 244, ${alpha})`
+        : colorMix > 0.38
+          ? `rgba(38, 225, 181, ${alpha})`
+          : `rgba(17, 174, 151, ${alpha * 0.9})`;
+      context.arc(x, y, radius, 0, Math.PI * 2);
+      context.fill();
+    }
 
-      for (let x = 0; x <= width; x += 2) {
-        const progress = x / width;
-        const envelope = Math.pow(Math.sin(Math.PI * progress), 1.18);
-        const frequency = 2.1 + waveIndex * 0.7;
-        const phase = timestamp * settings.speed * (1 + waveIndex * 0.14) + waveIndex * 1.8;
-        const modulation = 0.66 + 0.34 * Math.sin(progress * Math.PI * 5 - phase * 0.72);
-        const amplitude = height * (0.31 - waveIndex * 0.045) * lumoVisualizerEnergy;
-        const y = centerY +
-          Math.sin(progress * Math.PI * 2 * frequency + phase) *
-          amplitude * envelope * modulation;
-
-        if (x === 0) {
-          context.moveTo(x, y);
-        } else {
-          context.lineTo(x, y);
-        }
-      }
-
-      context.stroke();
-    });
+    context.restore();
 
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       lumoVisualizerFrame = null;
@@ -2336,13 +2361,30 @@ function portfolioChatbot() {
 
     const voices = window.speechSynthesis.getVoices();
 
+    const femaleVoiceNames = /aria|ava|emma|jenny|joanna|karen|kimberly|linda|moira|samantha|serena|susan|tessa|victoria|zira|female|woman/i;
+
     return voices.find(function (voice) {
-      return /^en-PH/i.test(voice.lang);
+      return /^en-PH/i.test(voice.lang) && femaleVoiceNames.test(voice.name);
+    }) || voices.find(function (voice) {
+      return /^en-/i.test(voice.lang) && femaleVoiceNames.test(voice.name) &&
+        /natural|online|google|microsoft|enhanced/i.test(voice.name);
+    }) || voices.find(function (voice) {
+      return /^en-/i.test(voice.lang) && femaleVoiceNames.test(voice.name);
     }) || voices.find(function (voice) {
       return /^en-/i.test(voice.lang) && /natural|google|microsoft/i.test(voice.name);
     }) || voices.find(function (voice) {
       return /^en-/i.test(voice.lang);
     }) || null;
+  }
+
+  function getSpeechSafeText(text) {
+    return String(text || "")
+      .replace(/[\p{Extended_Pictographic}\p{Emoji_Presentation}\uFE0F\u200D]/gu, " ")
+      .replace(/[\u{1F3FB}-\u{1F3FF}]/gu, " ")
+      .replace(/[*_`~#]+/g, " ")
+      .replace(/\s+([,.;:!?])/g, "$1")
+      .replace(/\s+/g, " ")
+      .trim();
   }
 
   function resumePersistentMic(delay) {
@@ -2380,7 +2422,13 @@ function portfolioChatbot() {
 
     window.speechSynthesis.cancel();
 
-    const utterance = new SpeechSynthesisUtterance(text);
+    const spokenText = getSpeechSafeText(text);
+
+    if (!spokenText) {
+      return;
+    }
+
+    const utterance = new SpeechSynthesisUtterance(spokenText);
     const voice = getPreferredVoice();
 
     if (voice) {
@@ -2390,8 +2438,8 @@ function portfolioChatbot() {
       utterance.lang = "en-PH";
     }
 
-    utterance.rate = 1.02;
-    utterance.pitch = 1;
+    utterance.rate = 1;
+    utterance.pitch = 1.06;
     utterance.addEventListener("start", function () {
       recognitionPausedForSpeech = true;
 
@@ -2403,7 +2451,7 @@ function portfolioChatbot() {
       setLumoVisualizerState("speaking", 0.58);
     });
     utterance.addEventListener("boundary", function (event) {
-      const phrase = text.slice(event.charIndex, event.charIndex + 24);
+      const phrase = spokenText.slice(event.charIndex, event.charIndex + 24);
       const emphasis = /[!?]/.test(phrase) ? 0.16 : /[,.;:]/.test(phrase) ? -0.05 : 0.04;
       const wordLength = (phrase.split(/\s+/)[0] || "").length;
       setLumoVisualizerState(
