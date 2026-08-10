@@ -1,7 +1,7 @@
 "use strict";
 
 const GEMINI_API_BASE_URL = "https://generativelanguage.googleapis.com/v1beta/models";
-const DEFAULT_MODEL = "gemini-3-flash-preview";
+const DEFAULT_MODEL = "gemini-2.5-flash";
 const MAX_MESSAGE_LENGTH = 350;
 const MAX_HISTORY_MESSAGES = 8;
 const MAX_HISTORY_MESSAGE_LENGTH = 600;
@@ -242,8 +242,7 @@ module.exports = async function handler(req, res) {
       console.error(
         "Lumo Gemini request failed:",
         geminiResponse.status,
-        data?.error?.status || "unknown_error",
-        data?.error?.message || "No error details returned."
+        data?.error?.status || data?.error?.message || "unknown_error"
       );
       return res.status(502).json({ error: "The assistant could not generate a response." });
     }
