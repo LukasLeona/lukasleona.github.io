@@ -2005,6 +2005,14 @@ function portfolioChatbot() {
   let lumoVisualizerEnergy = 0.12;
   let lumoVisualizerTargetEnergy = 0.12;
   let lumoTextAnimationTimer = null;
+  let lumoFaceOverlay = null;
+  let lumoFaceCanvas = null;
+  let lumoFaceContext = null;
+  let lumoFaceStatus = null;
+  let lumoFaceFrame = null;
+  let lumoFaceParticles = [];
+  let lumoFaceOpenedAt = 0;
+  let lumoFaceReturnFocus = null;
 
   const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
   const aiEndpointMeta = document.querySelector('meta[name="luke-chatbot-api"]');
@@ -2110,6 +2118,311 @@ function portfolioChatbot() {
     startLumoVisualizer();
   }
 
+  function lumoParticleSeed(index, salt) {
+    const value = Math.sin(index * 12.9898 + salt * 78.233) * 43758.5453;
+    return value - Math.floor(value);
+  }
+
+  function createLumoFaceMode() {
+    if (lumoFaceOverlay) {
+      return;
+    }
+
+    lumoFaceOverlay = document.createElement("section");
+    lumoFaceOverlay.className = "lumo-face-mode";
+    lumoFaceOverlay.setAttribute("role", "dialog");
+    lumoFaceOverlay.setAttribute("aria-modal", "true");
+    lumoFaceOverlay.setAttribute("aria-label", "Lumo particle face");
+    lumoFaceOverlay.setAttribute("aria-hidden", "true");
+    lumoFaceOverlay.innerHTML =
+      '<canvas class="lumo-face-canvas" aria-hidden="true"></canvas>' +
+      '<div class="lumo-face-vignette" aria-hidden="true"></div>' +
+      '<div class="lumo-face-interface">' +
+      '<div class="lumo-face-identity"><i></i><span>LUMO // PARTICLE INTELLIGENCE</span></div>' +
+      '<strong class="lumo-face-status">FORMING</strong>' +
+      '</div>' +
+      '<button type="button" class="lumo-face-exit" aria-label="Exit Lumo face mode">' +
+      '<span>EXIT LUMO</span><i aria-hidden="true"></i></button>';
+
+    document.body.appendChild(lumoFaceOverlay);
+    lumoFaceCanvas = lumoFaceOverlay.querySelector(".lumo-face-canvas");
+    lumoFaceContext = lumoFaceCanvas ? lumoFaceCanvas.getContext("2d") : null;
+    lumoFaceStatus = lumoFaceOverlay.querySelector(".lumo-face-status");
+
+    const exitButton = lumoFaceOverlay.querySelector(".lumo-face-exit");
+    if (exitButton) {
+      exitButton.addEventListener("click", exitLumoFaceMode);
+    }
+
+    window.addEventListener("resize", function () {
+      if (lumoFaceOverlay && lumoFaceOverlay.classList.contains("is-active")) {
+        buildLumoFaceParticles(true);
+      }
+    });
+  }
+
+  function addLumoFaceLine(points, count, category, particles) {
+    for (let index = 0; index < count; index += 1) {
+      const progress = count === 1 ? 0 : index / (count - 1);
+      const point = points(progress, index);
+      particles.push({
+        tx: point.x,
+        ty: point.y,
+        category: category,
+        progress: typeof point.progress === "number" ? point.progress : progress,
+        band: point.band || 0,
+        seed: lumoParticleSeed(particles.length + 1, 7),
+        size: 0.55 + lumoParticleSeed(particles.length + 1, 8) * 1.45
+      });
+    }
+  }
+
+  function buildLumoFaceParticles(keepPosition) {
+    if (!lumoFaceCanvas || !lumoFaceContext) {
+      return;
+    }
+
+    const width = Math.max(1, window.innerWidth);
+    const height = Math.max(1, window.innerHeight);
+    const pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
+    lumoFaceCanvas.width = Math.floor(width * pixelRatio);
+    lumoFaceCanvas.height = Math.floor(height * pixelRatio);
+    lumoFaceCanvas.style.width = width + "px";
+    lumoFaceCanvas.style.height = height + "px";
+
+    const centerX = width * 0.5;
+    const centerY = height * (width < 600 ? 0.46 : 0.48);
+    const faceWidth = Math.min(width * (width < 600 ? 0.82 : 0.48), height * 0.57);
+    const faceHeight = Math.min(height * (width < 600 ? 0.55 : 0.68), width * 0.72);
+    const oldParticles = lumoFaceParticles;
+    const particles = [];
+
+    addLumoFaceLine(function (progress) {
+      const angle = progress * Math.PI * 2;
+      const lowerFace = Math.max(0, -Math.cos(angle));
+      const jawScale = 1 - lowerFace * 0.18;
+      return {
+        x: centerX + Math.sin(angle) * faceWidth * 0.5 * jawScale,
+        y: centerY - Math.cos(angle) * faceHeight * 0.5
+      };
+    }, 310, "outline", particles);
+
+    [-1, 1].forEach(function (side) {
+      addLumoFaceLine(function (progress) {
+        const angle = progress * Math.PI;
+        return {
+          x: centerX + side * faceWidth * 0.205 + (progress - 0.5) * faceWidth * 0.235,
+          y: centerY - faceHeight * 0.14 - Math.sin(angle) * faceHeight * 0.035
+        };
+      }, 72, "eye", particles);
+
+      addLumoFaceLine(function (progress) {
+        const angle = progress * Math.PI * 2;
+        return {
+          x: centerX + side * faceWidth * 0.205 + Math.cos(angle) * faceWidth * 0.035,
+          y: centerY - faceHeight * 0.115 + Math.sin(angle) * faceHeight * 0.042
+        };
+      }, 48, "iris", particles);
+
+      addLumoFaceLine(function (progress) {
+        return {
+          x: centerX + side * faceWidth * 0.205 + (progress - 0.5) * faceWidth * 0.25,
+          y: centerY - faceHeight * 0.215 - Math.sin(progress * Math.PI) * faceHeight * 0.025
+        };
+      }, 44, "brow", particles);
+
+      addLumoFaceLine(function (progress) {
+        return {
+          x: centerX + side * faceWidth * (0.28 + progress * 0.08),
+          y: centerY + faceHeight * (0.01 + progress * 0.22)
+        };
+      }, 42, "cheek", particles);
+    });
+
+    addLumoFaceLine(function (progress) {
+      return {
+        x: centerX + Math.sin(progress * Math.PI * 1.4) * faceWidth * 0.025,
+        y: centerY - faceHeight * 0.08 + progress * faceHeight * 0.29
+      };
+    }, 86, "nose", particles);
+
+    addLumoFaceLine(function (progress) {
+      return {
+        x: centerX + (progress - 0.5) * faceWidth * 0.18,
+        y: centerY + faceHeight * 0.225 + Math.abs(progress - 0.5) * faceHeight * 0.025
+      };
+    }, 48, "nose", particles);
+
+    for (let row = -3; row <= 3; row += 1) {
+      addLumoFaceLine(function (progress) {
+        return {
+          x: centerX + (progress - 0.5) * faceWidth * 0.48,
+          y: centerY + faceHeight * 0.315 + row * 2.4,
+          progress: progress,
+          band: row
+        };
+      }, 54, "mouth", particles);
+    }
+
+    addLumoFaceLine(function (progress, index) {
+      const angle = lumoParticleSeed(index + 1, 11) * Math.PI * 2;
+      const radius = faceWidth * (0.56 + lumoParticleSeed(index + 1, 12) * 0.3);
+      return {
+        x: centerX + Math.cos(angle) * radius,
+        y: centerY + Math.sin(angle) * radius * 0.92
+      };
+    }, 180, "halo", particles);
+
+    const robotRect = toggle.getBoundingClientRect();
+    const originX = robotRect.left + robotRect.width / 2;
+    const originY = robotRect.top + robotRect.height / 2;
+
+    lumoFaceParticles = particles.map(function (particle, index) {
+      const previous = keepPosition && oldParticles[index] ? oldParticles[index] : null;
+      particle.x = previous ? previous.x : originX + (lumoParticleSeed(index, 13) - 0.5) * 42;
+      particle.y = previous ? previous.y : originY + (lumoParticleSeed(index, 14) - 0.5) * 52;
+      particle.sx = particle.x;
+      particle.sy = particle.y;
+      return particle;
+    });
+  }
+
+  function drawLumoFace(timestamp) {
+    if (!lumoFaceCanvas || !lumoFaceContext || !lumoFaceOverlay ||
+      !lumoFaceOverlay.classList.contains("is-active")) {
+      lumoFaceFrame = null;
+      return;
+    }
+
+    const width = Math.max(1, window.innerWidth);
+    const height = Math.max(1, window.innerHeight);
+    const pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
+    const context = lumoFaceContext;
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const rawProgress = Math.min(1, (timestamp - lumoFaceOpenedAt) / (reduceMotion ? 80 : 1850));
+    const gather = 1 - Math.pow(1 - rawProgress, 3);
+    const isSpeaking = lumoVisualizerState === "speaking";
+    const isThinking = lumoVisualizerState === "thinking";
+    const motionScale = reduceMotion ? 0.12 : 1;
+
+    context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
+    context.clearRect(0, 0, width, height);
+    context.save();
+    context.globalCompositeOperation = "lighter";
+
+    lumoFaceParticles.forEach(function (particle, index) {
+      let targetX = particle.tx;
+      let targetY = particle.ty;
+      const time = timestamp * 0.001;
+      const microMotion = (isSpeaking ? 2.8 : isThinking ? 1.8 : 1.05) * motionScale;
+
+      if (particle.category === "mouth") {
+        const envelope = Math.pow(Math.sin(Math.PI * particle.progress), 0.78);
+        const amplitude = isSpeaking ? 7 + lumoVisualizerEnergy * 28 : 1.8;
+        targetY += Math.sin(
+          particle.progress * Math.PI * 7.5 - timestamp * (isSpeaking ? 0.014 : 0.003) +
+          particle.band * 0.38
+        ) * amplitude * envelope * motionScale;
+        targetY += particle.band * (isSpeaking ? 0.55 : 0.18) * lumoVisualizerEnergy;
+      } else if (particle.category === "iris") {
+        targetX += Math.sin(time * 0.72) * 2.4 * motionScale;
+      } else if (particle.category === "halo") {
+        const orbit = time * (0.08 + particle.seed * 0.08);
+        targetX += Math.cos(orbit + index) * 7 * motionScale;
+        targetY += Math.sin(orbit + index) * 7 * motionScale;
+      }
+
+      targetX += Math.sin(time * 1.6 + index * 0.73) * microMotion;
+      targetY += Math.cos(time * 1.35 + index * 0.57) * microMotion;
+
+      const spiral = (1 - gather) * 115 * motionScale;
+      particle.x = particle.sx + (targetX - particle.sx) * gather +
+        Math.sin(index * 0.37 + timestamp * 0.006) * spiral;
+      particle.y = particle.sy + (targetY - particle.sy) * gather +
+        Math.cos(index * 0.41 + timestamp * 0.006) * spiral;
+
+      const twinkle = 0.7 + Math.sin(timestamp * 0.004 + index * 1.27) * 0.3;
+      const alpha = Math.max(0.08, gather * (particle.category === "halo" ? 0.35 : 0.62 + twinkle * 0.3));
+      const radius = particle.size * (particle.category === "mouth" && isSpeaking ? 1.28 : 1);
+
+      context.beginPath();
+      context.shadowBlur = particle.category === "mouth" ? 13 : 6;
+      context.shadowColor = "rgba(44, 255, 207, .7)";
+      context.fillStyle = particle.category === "mouth" || particle.category === "iris"
+        ? `rgba(196, 255, 241, ${alpha})`
+        : particle.seed > 0.42
+          ? `rgba(42, 231, 188, ${alpha})`
+          : `rgba(18, 155, 142, ${alpha * 0.82})`;
+      context.arc(particle.x, particle.y, radius, 0, Math.PI * 2);
+      context.fill();
+    });
+
+    context.restore();
+    lumoFaceFrame = window.requestAnimationFrame(drawLumoFace);
+  }
+
+  function enterLumoFaceMode() {
+    createLumoFaceMode();
+
+    if (!lumoFaceOverlay || lumoFaceOverlay.classList.contains("is-active")) {
+      return;
+    }
+
+    lumoFaceReturnFocus = document.activeElement;
+    buildLumoFaceParticles(false);
+    lumoFaceOpenedAt = performance.now();
+    lumoFaceOverlay.setAttribute("aria-hidden", "false");
+    document.body.classList.add("lumo-face-mode-active");
+    toggle.classList.add("is-particle-departure");
+
+    window.requestAnimationFrame(function () {
+      lumoFaceOverlay.classList.add("is-active");
+      if (!lumoFaceFrame) {
+        lumoFaceFrame = window.requestAnimationFrame(drawLumoFace);
+      }
+    });
+
+    window.setTimeout(function () {
+      const exitButton = lumoFaceOverlay.querySelector(".lumo-face-exit");
+      if (exitButton) {
+        exitButton.focus({ preventScroll: true });
+      }
+    }, 900);
+  }
+
+  function exitLumoFaceMode() {
+    if (!lumoFaceOverlay || !lumoFaceOverlay.classList.contains("is-active")) {
+      return;
+    }
+
+    if (window.speechSynthesis) {
+      window.speechSynthesis.cancel();
+    }
+
+    lumoFaceOverlay.classList.add("is-leaving");
+    lumoFaceOverlay.setAttribute("aria-hidden", "true");
+    setLumoVisualizerState("idle");
+
+    window.setTimeout(function () {
+      lumoFaceOverlay.classList.remove("is-active", "is-leaving");
+      document.body.classList.remove("lumo-face-mode-active");
+      toggle.classList.remove("is-particle-departure");
+
+      if (lumoFaceFrame) {
+        window.cancelAnimationFrame(lumoFaceFrame);
+        lumoFaceFrame = null;
+      }
+
+      if (lumoFaceContext) {
+        lumoFaceContext.clearRect(0, 0, lumoFaceCanvas.width, lumoFaceCanvas.height);
+      }
+
+      if (lumoFaceReturnFocus && typeof lumoFaceReturnFocus.focus === "function") {
+        lumoFaceReturnFocus.focus({ preventScroll: true });
+      }
+    }, 520);
+  }
+
   function getLumoStateSettings() {
     const settings = {
       idle: { label: "READY", energy: 0.12, speed: 0.00055 },
@@ -2142,6 +2455,12 @@ function portfolioChatbot() {
 
     if (lumoVisualizerLabel) {
       lumoVisualizerLabel.textContent = settings.label;
+    }
+
+    if (lumoFaceStatus) {
+      lumoFaceStatus.textContent = lumoVisualizerState === "idle"
+        ? "CONSCIOUS"
+        : settings.label;
     }
   }
 
@@ -2415,8 +2734,8 @@ function portfolioChatbot() {
     }, typeof delay === "number" ? delay : 320);
   }
 
-  function speakReply(text) {
-    if (!voiceMode || !window.speechSynthesis || !text) {
+  function speakReply(text, forceVoice) {
+    if ((!voiceMode && !forceVoice) || !window.speechSynthesis || !text) {
       return;
     }
 
@@ -2743,6 +3062,27 @@ function portfolioChatbot() {
 
   function getBotReply(question) {
     const text = normalizeQuestion(question);
+
+    if (
+      includesAny(text, [
+        "show your face",
+        "show me your face",
+        "show his face",
+        "show lumo face",
+        "let me see your face",
+        "what do you look like",
+        "reveal your face",
+        "reveal yourself",
+        "appear lumo"
+      ])
+    ) {
+      return {
+        messages: [
+          "You asked to see me. Here I am—Lumo, formed from light, data, and a constellation of moving stars."
+        ],
+        faceMode: true
+      };
+    }
 
     if (
       includesAny(text, [
@@ -3169,7 +3509,12 @@ function portfolioChatbot() {
 
   function deliverReply(reply) {
     const responseMessages = reply.messages || [];
+    const faceModeReply = Boolean(reply.faceMode);
     let delay = 0;
+
+    if (faceModeReply) {
+      enterLumoFaceMode();
+    }
 
     responseMessages.forEach(function (messageText, index) {
       window.setTimeout(function () {
@@ -3182,8 +3527,8 @@ function portfolioChatbot() {
     if (reply.action) {
       window.setTimeout(function () {
         addAction(reply.action);
-        if (voiceMode) {
-          speakReply(responseMessages.join(" "));
+        if (voiceMode || faceModeReply) {
+          speakReply(responseMessages.join(" "), faceModeReply);
         } else {
           animateLumoTextResponse(responseMessages.join(" "));
         }
@@ -3195,8 +3540,8 @@ function portfolioChatbot() {
       }, delay + 80);
     } else {
       window.setTimeout(function () {
-        if (voiceMode) {
-          speakReply(responseMessages.join(" "));
+        if (voiceMode || faceModeReply) {
+          speakReply(responseMessages.join(" "), faceModeReply);
         } else {
           animateLumoTextResponse(responseMessages.join(" "));
         }
@@ -3264,6 +3609,12 @@ function portfolioChatbot() {
   });
 
   document.addEventListener("keydown", function (event) {
+    if (event.key === "Escape" && lumoFaceOverlay &&
+      lumoFaceOverlay.classList.contains("is-active")) {
+      exitLumoFaceMode();
+      return;
+    }
+
     if (event.key === "Escape" && panel.classList.contains("show")) {
       setChatOpen(false);
       toggle.focus();
