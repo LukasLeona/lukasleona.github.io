@@ -1,7 +1,7 @@
 "use strict";
 
-const OPENAI_RESPONSES_URL = "https://api.openai.com/v1/responses";
-const DEFAULT_MODEL = "gpt-5.6-luna";
+const GEMINI_API_BASE_URL = "https://generativelanguage.googleapis.com/v1beta/models";
+const DEFAULT_MODEL = "gemini-2.5-flash";
 const MAX_MESSAGE_LENGTH = 350;
 const MAX_HISTORY_MESSAGES = 8;
 const MAX_HISTORY_MESSAGE_LENGTH = 600;
@@ -139,20 +139,33 @@ function buildInstructions(page) {
   ].join("\n");
 }
 
-function extractReply(data) {
-  if (typeof data?.output_text === "string" && data.output_text.trim()) {
-    return data.output_text.trim();
+function buildGeminiContents(history, message) {
+  const contents = history.map((item) => ({
+    role: item.role === "assistant" ? "model" : "user",
+    parts: [{ text: item.content }]
+  }));
+
+  const previous = contents[contents.length - 1];
+
+  if (previous && previous.role === "user") {
+    previous.parts[0].text += `\n\n${message}`;
+  } else {
+    contents.push({ role: "user", parts: [{ text: message }] });
   }
 
-  if (!Array.isArray(data?.output)) {
+  return contents;
+}
+
+function extractReply(data) {
+  if (!Array.isArray(data?.candidates)) {
     return "";
   }
 
-  return data.output
-    .filter((item) => item && item.type === "message" && Array.isArray(item.content))
-    .flatMap((item) => item.content)
-    .filter((content) => content && content.type === "output_text" && typeof content.text === "string")
-    .map((content) => content.text.trim())
+  return data.candidates
+    .filter((candidate) => candidate && Array.isArray(candidate.content?.parts))
+    .flatMap((candidate) => candidate.content.parts)
+    .filter((part) => part && typeof part.text === "string")
+    .map((part) => part.text.trim())
     .filter(Boolean)
     .join("\n")
     .trim();
@@ -179,10 +192,10 @@ module.exports = async function handler(req, res) {
     return res.status(429).json({ error: "Too many messages. Please try again shortly." });
   }
 
-  const apiKey = process.env.OPENAI_API_KEY;
+  const apiKey = process.env.GEMINI_API_KEY;
 
   if (!apiKey) {
-    console.error("Lumo configuration error: OPENAI_API_KEY is missing.");
+    console.error("Lumo configuration error: GEMINI_API_KEY is missing.");
     return res.status(503).json({ error: "The assistant is temporarily unavailable." });
   }
 
@@ -199,41 +212,55 @@ module.exports = async function handler(req, res) {
   const timeout = setTimeout(() => controller.abort(), 15000);
 
   try {
-    const openAIResponse = await fetch(OPENAI_RESPONSES_URL, {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${apiKey}`,
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        model: process.env.OPENAI_CHAT_MODEL || DEFAULT_MODEL,
-        reasoning: { effort: "low" },
-        instructions: buildInstructions(page),
-        input: history.concat({ role: "user", content: message }),
-        max_output_tokens: 300,
-        store: false
-      }),
-      signal: controller.signal
-    });
+    const model = process.env.GEMINI_CHAT_MODEL || DEFAULT_MODEL;
+    const geminiResponse = await fetch(
+      `${GEMINI_API_BASE_URL}/${encodeURIComponent(model)}:generateContent`,
+      {
+        method: "POST",
+        headers: {
+          "x-goog-api-key": apiKey,
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          systemInstruction: {
+            parts: [{ text: buildInstructions(page) }]
+          },
+          contents: buildGeminiContents(history, message),
+          generationConfig: {
+            temperature: 0.4,
+            maxOutputTokens: 300
+          },
+          store: false
+        }),
+        signal: controller.signal
+      }
+    );
 
-    const data = await openAIResponse.json().catch(() => ({}));
+    const data = await geminiResponse.json().catch(() => ({}));
 
-    if (!openAIResponse.ok) {
-      console.error("Lumo upstream request failed:", openAIResponse.status, data?.error?.type || "unknown_error");
+    if (!geminiResponse.ok) {
+      console.error(
+        "Lumo Gemini request failed:",
+        geminiResponse.status,
+        data?.error?.status || data?.error?.message || "unknown_error"
+      );
       return res.status(502).json({ error: "The assistant could not generate a response." });
     }
 
     const reply = extractReply(data);
 
     if (!reply) {
-      console.error("Lumo upstream response contained no text.");
+      console.error(
+        "Lumo Gemini response contained no text:",
+        data?.promptFeedback?.blockReason || "empty_response"
+      );
       return res.status(502).json({ error: "The assistant returned an empty response." });
     }
 
     return res.status(200).json({ reply: reply.slice(0, 1200) });
   } catch (error) {
     const timedOut = error && error.name === "AbortError";
-    console.error(timedOut ? "Lumo upstream request timed out." : "Lumo request failed unexpectedly.");
+    console.error(timedOut ? "Lumo Gemini request timed out." : "Lumo request failed unexpectedly.");
     return res.status(timedOut ? 504 : 500).json({
       error: timedOut ? "The assistant took too long to respond." : "The assistant is temporarily unavailable."
     });
