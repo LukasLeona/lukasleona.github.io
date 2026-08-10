@@ -1,28 +1,68 @@
-# Lumo — Luke's AI assistant setup
+# Lumo API backend
 
-The verified local answers and browser voice mode work without an API key. Generated answers use the server-side function at `api/chat.js`.
+Lumo's browser code already defaults to `POST /api/chat`. Place `api/chat.js` at the root of the same project and deploy the project to Vercel.
 
-## Enable generated answers
+## Required environment variable
 
-1. Deploy the portfolio to a host that supports JavaScript serverless functions, such as Vercel.
-2. Add `OPENAI_API_KEY` as a protected environment variable in the host dashboard.
-3. Optionally set `OPENAI_CHAT_MODEL`; the default is `gpt-5.6-luna`.
-4. Redeploy and confirm that a POST request to `/api/chat` succeeds.
+Add this protected environment variable in the Vercel project settings:
 
-Never add the real API key to HTML, browser JavaScript, Git, or `.env.example`.
+```text
+OPENAI_API_KEY=your_openai_api_key
+```
 
-## Keep the website on static hosting
+Do not put the real key in HTML, browser JavaScript, Git, or a public `.env` file.
 
-If the portfolio stays on GitHub Pages, deploy `api/chat.js` separately on a function-capable host. Then configure the public endpoint before `assets/js/luke.js` loads:
+## Optional environment variables
+
+```text
+OPENAI_CHAT_MODEL=gpt-5.6-luna
+CHATBOT_ALLOWED_ORIGIN=https://lukasleona.com,https://www.lukasleona.com
+```
+
+`OPENAI_CHAT_MODEL` defaults to `gpt-5.6-luna`. Add preview or alternate frontend domains to `CHATBOT_ALLOWED_ORIGIN`, separated by commas, when the frontend and API are hosted on different domains.
+
+## Deploy on the same Vercel project
+
+Use this structure:
+
+```text
+project-root/
+├── api/
+│   └── chat.js
+├── assets/
+│   └── js/
+│       └── luke.js
+└── index.html
+```
+
+After adding the environment variable, redeploy. The existing frontend will call `/api/chat` automatically.
+
+## Keep the portfolio on static hosting
+
+Deploy this API folder as a small Vercel project. Then add this before `assets/js/luke.js` in the portfolio HTML:
 
 ```html
 <script>
-  window.LUKE_CHATBOT_API_URL = "https://your-secure-function.example/api/chat";
+  window.LUKE_CHATBOT_API_URL = "https://your-api-project.vercel.app/api/chat";
 </script>
 ```
 
-Set `CHATBOT_ALLOWED_ORIGIN=https://lukasleona.com` on the function host. Multiple allowed origins can be comma-separated.
+Set `CHATBOT_ALLOWED_ORIGIN` to the exact public portfolio origin and redeploy the API.
 
-## Voice mode
+## Verification
 
-The microphone button uses the visitor's browser speech recognition, and the speaker button controls spoken replies. Microphone permission is requested only after the visitor presses the microphone button. Browser support varies, so typed chat remains available at all times.
+Test the deployed function with a POST request:
+
+```bash
+curl -X POST "https://your-domain.example/api/chat" \
+  -H "Content-Type: application/json" \
+  -d '{"message":"What day is it today?","history":[],"page":"index.html"}'
+```
+
+A successful response has this shape:
+
+```json
+{"reply":"Today is ..."}
+```
+
+The endpoint accepts only POST requests, validates message/history lengths, restricts browser origins, applies a basic per-instance rate limit, and keeps API responses out of caches.
