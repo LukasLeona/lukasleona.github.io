@@ -1,6 +1,6 @@
 "use strict";
 
-const GEMINI_API_BASE_URL = "https://generativelanguage.googleapis.com/v1beta/models";
+const GEMINI_INTERACTIONS_URL = "https://generativelanguage.googleapis.com/v1beta/interactions";
 const DEFAULT_MODEL = "gemini-3-flash-preview";
 const MAX_MESSAGE_LENGTH = 350;
 const MAX_HISTORY_MESSAGES = 8;
@@ -48,6 +48,7 @@ function applyCors(req, res) {
   res.setHeader("Access-Control-Allow-Headers", "Content-Type");
   res.setHeader("Cache-Control", "no-store");
   res.setHeader("X-Content-Type-Options", "nosniff");
+  res.setHeader("X-Lumo-Backend", "gemini-interactions-v1");
 
   return allowed;
 }
@@ -139,33 +140,32 @@ function buildInstructions(page) {
   ].join("\n");
 }
 
-function buildGeminiContents(history, message) {
-  const contents = history.map((item) => ({
-    role: item.role === "assistant" ? "model" : "user",
-    parts: [{ text: item.content }]
-  }));
+function buildGeminiInput(history, message) {
+  const transcript = history.map((item) => {
+    const speaker = item.role === "assistant" ? "Lumo" : "Visitor";
+    return `${speaker}: ${item.content}`;
+  });
 
-  const previous = contents[contents.length - 1];
+  transcript.push(`Visitor: ${message}`);
+  transcript.push("Lumo:");
 
-  if (previous && previous.role === "user") {
-    previous.parts[0].text += `\n\n${message}`;
-  } else {
-    contents.push({ role: "user", parts: [{ text: message }] });
-  }
-
-  return contents;
+  return transcript.join("\n");
 }
 
 function extractReply(data) {
-  if (!Array.isArray(data?.candidates)) {
+  if (typeof data?.output_text === "string" && data.output_text.trim()) {
+    return data.output_text.trim();
+  }
+
+  if (!Array.isArray(data?.steps)) {
     return "";
   }
 
-  return data.candidates
-    .filter((candidate) => candidate && Array.isArray(candidate.content?.parts))
-    .flatMap((candidate) => candidate.content.parts)
-    .filter((part) => part && typeof part.text === "string")
-    .map((part) => part.text.trim())
+  return data.steps
+    .filter((step) => step && step.type === "model_output" && Array.isArray(step.content))
+    .flatMap((step) => step.content)
+    .filter((content) => content && content.type === "text" && typeof content.text === "string")
+    .map((content) => content.text.trim())
     .filter(Boolean)
     .join("\n")
     .trim();
@@ -213,28 +213,24 @@ module.exports = async function handler(req, res) {
 
   try {
     const model = process.env.GEMINI_CHAT_MODEL || DEFAULT_MODEL;
-    const geminiResponse = await fetch(
-      `${GEMINI_API_BASE_URL}/${encodeURIComponent(model)}:generateContent`,
-      {
+    const geminiResponse = await fetch(GEMINI_INTERACTIONS_URL, {
         method: "POST",
         headers: {
           "x-goog-api-key": apiKey,
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
-          systemInstruction: {
-            parts: [{ text: buildInstructions(page) }]
-          },
-          contents: buildGeminiContents(history, message),
-          generationConfig: {
-            temperature: 0.4,
-            maxOutputTokens: 300
+          model: model,
+          system_instruction: buildInstructions(page),
+          input: buildGeminiInput(history, message),
+          generation_config: {
+            max_output_tokens: 300,
+            thinking_level: "low"
           },
           store: false
         }),
         signal: controller.signal
-      }
-    );
+    });
 
     const data = await geminiResponse.json().catch(() => ({}));
 
@@ -242,7 +238,7 @@ module.exports = async function handler(req, res) {
       console.error(
         "Lumo Gemini request failed:",
         geminiResponse.status,
-        data?.error?.status || "unknown_error",
+        data?.error?.code || data?.error?.status || "unknown_error",
         data?.error?.message || "No error details returned."
       );
       return res.status(502).json({ error: "The assistant could not generate a response." });
