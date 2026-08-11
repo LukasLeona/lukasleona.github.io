@@ -1370,3 +1370,48 @@ html[data-theme="light"] .lumo-visualizer-state {
     animation: none !important;
   }
 }
+
+/* Show Lumo's voice particle field only while speech synthesis is speaking. */
+.lumo-visualizer {
+  flex-basis: 0 !important;
+  min-height: 0 !important;
+  max-height: 0;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  border-bottom-color: transparent !important;
+  opacity: 0;
+  overflow: hidden;
+  pointer-events: none;
+  transform: translateY(-7px);
+  transition:
+    max-height .34s ease,
+    min-height .34s ease,
+    flex-basis .34s ease,
+    padding .34s ease,
+    border-color .2s ease,
+    opacity .24s ease,
+    transform .34s ease;
+}
+
+.lumo-visualizer[data-state="speaking"] {
+  flex-basis: 88px !important;
+  min-height: 88px !important;
+  max-height: 88px;
+  padding-top: 8px !important;
+  padding-bottom: 7px !important;
+  border-bottom-color: rgba(255, 255, 255, .065) !important;
+  opacity: 1;
+  transform: none;
+}
+
+html[data-theme="light"] .lumo-visualizer[data-state="speaking"] {
+  border-bottom-color: rgba(31, 35, 43, .08) !important;
+}
+
+@media (max-width: 420px) {
+  .lumo-visualizer[data-state="speaking"] {
+    flex-basis: 80px !important;
+    min-height: 80px !important;
+    max-height: 80px;
+  }
+}

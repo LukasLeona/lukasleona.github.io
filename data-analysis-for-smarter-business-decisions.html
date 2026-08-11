@@ -173,7 +173,7 @@
        ROBOT CHATBOT
   ========================================= -->
 
-        <div class="portfolio-chatbot">
+        <div class="portfolio-chatbot global-chatbot">
 
 
             <!-- ROBOT BUTTON -->
@@ -181,7 +181,7 @@
             <button type="button" class="chatbot-robot-button" id="chatbotToggle"
                 aria-label="Chat with Lumo, Luke's AI assistant" aria-expanded="false">
 
-                <span class="robot-icon">
+                <span class="robot-icon" aria-hidden="true">
 
 
                     <!-- Antenna -->
@@ -218,7 +218,7 @@
                 </span>
 
 
-                <span class="chatbot-online-dot"></span>
+                <span class="chatbot-online-dot" aria-hidden="true"></span>
 
 
             </button>
@@ -229,10 +229,12 @@
          CUTE POP-UP MESSAGE
     ========================================= -->
 
-            <div class="chatbot-teaser" id="chatbotTeaser" aria-live="polite">
+            <div class="chatbot-teaser" id="chatbotTeaser" aria-live="polite" aria-atomic="true">
+
+                <span class="chatbot-teaser-avatar" aria-hidden="true">🤖</span>
 
                 <span id="chatbotTeaserText">
-                    Hi! 👋
+                    Need help exploring?
                 </span>
 
             </div>
@@ -289,7 +291,7 @@
 
                 <!-- MESSAGES -->
 
-                <div class="chatbot-messages" id="chatbotMessages">
+                <div class="chatbot-messages" id="chatbotMessages" aria-live="polite">
 
 
                     <div class="chat-message bot-message">
@@ -302,12 +304,23 @@
 
                         <div class="chat-message-bubble">
 
-                            Hi! I'm Lumo, Luke's AI assistant. 👋
+                            Hi! I’m Lumo, Luke’s AI assistant. 👋
 
-                            <br><br>
+                        </div>
 
-                            I can help you explore his skills, projects, services,
-                            pricing, availability, experience, or how to contact him.
+
+                    </div>
+
+
+                    <div class="chat-message bot-message">
+
+
+                        <div class="chat-message-avatar chat-message-avatar-spacer" aria-hidden="true"></div>
+
+
+                        <div class="chat-message-bubble">
+
+                            I can help you explore Luke’s projects, skills, services, pricing, availability, or the best way to contact him. Ask me anything.
 
                         </div>
 
@@ -318,26 +331,29 @@
 
                     <!-- QUICK QUESTIONS -->
 
-                    <div class="chatbot-quick-actions">
+                    <div class="chatbot-quick-actions" aria-label="Suggested questions">
 
 
-                        <button type="button" class="chatbot-quick-btn" data-question="What are Luke's skills?">
-
-                            Skills
-
-                        </button>
+                        <span>TRY ASKING</span>
 
 
-                        <button type="button" class="chatbot-quick-btn" data-question="Show me Luke's work">
+                        <button type="button" class="chatbot-quick-btn" data-question="Which project should I view first?">
 
-                            His Work
+                            Find a project
 
                         </button>
 
 
-                        <button type="button" class="chatbot-quick-btn" data-question="How can I hire Luke?">
+                        <button type="button" class="chatbot-quick-btn" data-question="What can Luke help me build?">
 
-                            Hire Luke
+                            Explore capabilities
+
+                        </button>
+
+
+                        <button type="button" class="chatbot-quick-btn" data-question="How can I start a project with Luke?">
+
+                            Start a project
 
                         </button>
 
@@ -354,7 +370,7 @@
                 <form class="chatbot-input-area" id="chatbotForm">
 
 
-                    <input type="text" id="chatbotInput" placeholder="Ask me something..." autocomplete="off"
+                    <input type="text" id="chatbotInput" placeholder="Ask about Luke's work..." autocomplete="off"
                         aria-label="Chat message">
 
 
