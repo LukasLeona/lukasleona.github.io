@@ -888,6 +888,20 @@ body.cursor-active .cursor-ring {
   will-change: transform;
 }
 
+[data-preview] {
+  cursor: pointer;
+}
+
+[data-preview]:focus-visible {
+  outline: none;
+}
+
+[data-preview]:focus-visible .interior-image,
+[data-preview]:focus-visible .exterior-image {
+  outline: 2px solid var(--lilac);
+  outline-offset: 0.45rem;
+}
+
 .exterior-card.exterior-tall {
   width: min(28vw, 29rem);
   margin-top: -7vh;
@@ -915,22 +929,28 @@ body.cursor-active .cursor-ring {
 }
 
 .exterior-image::after {
-  content: "OPEN";
+  content: "VIEW";
   position: absolute;
-  inset: 0;
+  top: 50%;
+  left: 50%;
   z-index: 2;
   display: grid;
   place-items: center;
+  width: 5rem;
+  height: 5rem;
+  border-radius: 50%;
   color: var(--ink);
-  background: rgba(181,185,240,0.82);
-  font-size: 0.61rem;
-  letter-spacing: 0.2em;
+  background: var(--lilac);
+  font-size: 0.57rem;
+  letter-spacing: 0.16em;
   opacity: 0;
-  transition: opacity 0.45s;
+  transform: translate(-50%, -38%) scale(0.7);
+  transition: opacity 0.45s, transform 0.55s var(--ease);
 }
 
 .exterior-card:hover .exterior-image::after {
   opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
 }
 
 .exterior-image img {
