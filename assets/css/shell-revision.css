@@ -1190,30 +1190,25 @@ html[data-theme="light"] .chat-message.bot-system-message .chat-message-bubble {
 }
 
 .lumo-visualizer {
-  position: relative;
-  flex: 0 0 88px;
-  min-height: 88px;
-  padding: 8px 15px 7px;
+  position: absolute;
+  z-index: 8;
+  top: 72px;
+  right: 0;
+  left: 0;
+  flex: none;
+  min-height: 0;
+  padding: 6px 15px 2px;
   overflow: hidden;
-  border-bottom: 1px solid rgba(255, 255, 255, .065);
-  background:
-    radial-gradient(ellipse at 50% 82%, rgba(235, 176, 32, .11), transparent 57%),
-    linear-gradient(180deg, rgba(18, 19, 23, .98), rgba(27, 28, 32, .96));
+  border: 0;
+  background: transparent !important;
+  pointer-events: none;
 }
 
 .lumo-visualizer::before,
 .lumo-visualizer::after {
-  content: "";
-  position: absolute;
-  top: 38px;
-  width: 5px;
-  height: 1px;
-  background: rgba(235, 176, 32, .48);
-  box-shadow: 0 0 8px rgba(235, 176, 32, .38);
+  display: none !important;
+  content: none !important;
 }
-
-.lumo-visualizer::before { left: 9px; }
-.lumo-visualizer::after { right: 9px; }
 
 .lumo-visualizer-meta {
   position: relative;
@@ -1268,9 +1263,7 @@ html[data-theme="light"] .chat-message.bot-system-message .chat-message-bubble {
 }
 
 .lumo-visualizer[data-state="speaking"] {
-  background:
-    radial-gradient(ellipse at 50% 82%, rgba(235, 176, 32, .18), transparent 62%),
-    linear-gradient(180deg, rgba(18, 19, 23, .98), rgba(27, 28, 32, .96));
+  background: transparent !important;
 }
 
 html[data-theme="light"] .chatbot-mini-robot.lumo-brand-icon,
@@ -1282,10 +1275,8 @@ html[data-theme="light"] .lumo-message-avatar {
 }
 
 html[data-theme="light"] .lumo-visualizer {
-  border-bottom-color: rgba(31, 35, 43, .08);
-  background:
-    radial-gradient(ellipse at 50% 82%, rgba(213, 157, 20, .13), transparent 60%),
-    linear-gradient(180deg, #f8f9fa, #eef0f3);
+  border: 0;
+  background: transparent !important;
 }
 
 html[data-theme="light"] .lumo-visualizer-meta,
@@ -1311,14 +1302,16 @@ html[data-theme="light"] .lumo-visualizer-state {
 
 @media (max-width: 420px) {
   .lumo-visualizer {
-    flex-basis: 80px;
-    min-height: 80px;
+    top: 66px;
+    flex: none;
+    min-height: 0;
+    padding-top: 5px;
     padding-right: 12px;
     padding-left: 12px;
   }
 
   .lumo-wave-canvas {
-    height: 49px;
+    height: 52px;
   }
 
   .chatbot-header-profile span {

@@ -2593,7 +2593,7 @@ function portfolioChatbot() {
       (lumoVisualizerTargetEnergy + pulse - lumoVisualizerEnergy) * 0.09;
 
     const isLight = document.documentElement.getAttribute("data-theme") === "light";
-    const centerY = height * (window.innerWidth < 576 ? 0.62 : 0.64);
+    const centerY = height * (window.innerWidth < 576 ? 0.54 : 0.57);
     const formationByState = {
       idle: 0.3,
       listening: 0.86,

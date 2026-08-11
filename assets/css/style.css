@@ -40,46 +40,28 @@ body {
    Teal star-like particles gather into a living voice shape.
 ========================================================= */
 .lumo-visualizer {
-  position: relative;
-  flex: 0 0 auto;
+  position: absolute;
+  z-index: 8;
+  top: 72px;
+  right: 0;
+  left: 0;
+  flex: none;
   padding: 8px 14px 4px;
   overflow: hidden;
   border: 0;
   background: transparent;
   isolation: isolate;
-}
-
-.lumo-visualizer::before {
-  display: none;
-}
-
-.lumo-visualizer::after {
-  content: "";
-  position: absolute;
-  z-index: 0;
-  inset: 24px -8px -12px;
   pointer-events: none;
-  background: radial-gradient(
-    ellipse at 50% 68%,
-    rgba(2, 8, 7, .96) 0%,
-    rgba(3, 10, 9, .86) 38%,
-    rgba(3, 9, 8, .5) 62%,
-    transparent 84%
-  );
-  filter: blur(7px);
-  opacity: .82;
-  transition: opacity .3s ease, transform .3s ease;
+}
+
+.lumo-visualizer::before,
+.lumo-visualizer::after {
+  display: none;
 }
 
 .lumo-visualizer[data-state="listening"],
 .lumo-visualizer[data-state="speaking"] {
   background: transparent;
-}
-
-.lumo-visualizer[data-state="listening"]::after,
-.lumo-visualizer[data-state="speaking"]::after {
-  opacity: .94;
-  transform: scaleY(1.08);
 }
 
 .lumo-visualizer-meta {
@@ -130,6 +112,9 @@ body {
   height: 62px;
   display: block;
   border-radius: 14px;
+  filter:
+    drop-shadow(0 6px 8px rgba(0, 0, 0, .98))
+    drop-shadow(0 -3px 5px rgba(0, 0, 0, .72));
 }
 
 @keyframes lumoParticleSignal {
@@ -148,16 +133,6 @@ body {
   background: transparent;
 }
 
-[data-theme="light"] .lumo-visualizer::after {
-  background: radial-gradient(
-    ellipse at 50% 68%,
-    rgba(5, 12, 10, .88) 0%,
-    rgba(7, 14, 12, .72) 42%,
-    rgba(8, 15, 13, .34) 66%,
-    transparent 84%
-  );
-}
-
 [data-theme="light"] .lumo-visualizer-meta {
   color: rgba(10, 99, 82, .68);
 }
@@ -168,6 +143,7 @@ body {
 
 @media (max-width: 575px) {
   .lumo-visualizer {
+    top: 66px;
     padding: 7px 12px 3px;
   }
 
