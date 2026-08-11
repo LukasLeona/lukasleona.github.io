@@ -43,8 +43,16 @@
   const exteriorLine = document.querySelector(".exterior-line i");
   const exteriorCurrent = document.querySelector(".exterior-current");
   const exteriorWord = document.querySelector(".exterior-word");
-  const landscapeSection = document.querySelector(".landscape-section");
-  const landscapeFrames = [...document.querySelectorAll("[data-landscape-depth]")];
+  const landscapeCarousel = document.querySelector("[data-landscape-carousel]");
+  const landscapeSlides = [...document.querySelectorAll(".landscape-slide")];
+  const landscapePrevious = document.querySelector(".landscape-prev");
+  const landscapeNext = document.querySelector(".landscape-next");
+  const landscapeDots = [...document.querySelectorAll("[data-landscape-dot]")];
+  const landscapeProjectCopy = document.querySelector(".landscape-project-copy");
+  const landscapeNumber = document.querySelector("[data-landscape-number]");
+  const landscapeKicker = document.querySelector("[data-landscape-kicker]");
+  const landscapeTitle = document.querySelector("[data-landscape-title]");
+  const landscapeDescription = document.querySelector("[data-landscape-description]");
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const coarsePointer = window.matchMedia("(pointer: coarse)").matches;
   let desiredVideoTime = 0;
@@ -167,16 +175,6 @@
       });
     }
 
-    if (landscapeSection && landscapeFrames.length && window.innerWidth > 620) {
-      const landscapeRect = landscapeSection.getBoundingClientRect();
-      const landscapeProgress = clamp((window.innerHeight - landscapeRect.top) / (landscapeRect.height + window.innerHeight));
-      const centerProgress = landscapeProgress - 0.5;
-      landscapeFrames.forEach((frame) => {
-        const depth = Number(frame.dataset.landscapeDepth || 0);
-        frame.style.setProperty("--landscape-y", `${(-centerProgress * depth * window.innerHeight * 2.2).toFixed(2)}px`);
-      });
-    }
-
     document.querySelectorAll(".parallax-media").forEach((media) => {
       const rect = media.parentElement.getBoundingClientRect();
       if (rect.bottom < 0 || rect.top > window.innerHeight) return;
@@ -224,6 +222,80 @@
   }, { threshold: 0.14, rootMargin: "0px 0px -8% 0px" });
 
   document.querySelectorAll(".reveal-up, .reveal-lines").forEach((item) => revealObserver.observe(item));
+
+  if (landscapeCarousel && landscapeSlides.length) {
+    const landscapeDeck = landscapeCarousel.querySelector(".landscape-deck");
+    let landscapeIndex = 0;
+    let landscapePointerStart = null;
+    let landscapeCopyTimer = 0;
+
+    const renderLandscapeCarousel = (position) => {
+      const count = landscapeSlides.length;
+      landscapeIndex = (position + count) % count;
+
+      landscapeSlides.forEach((slide, index) => {
+        const distance = (index - landscapeIndex + count) % count;
+        slide.classList.remove("is-active", "is-next", "is-previous", "is-hidden");
+
+        if (distance === 0) slide.classList.add("is-active");
+        else if (distance === 1) slide.classList.add("is-next");
+        else if (distance === count - 1) slide.classList.add("is-previous");
+        else slide.classList.add("is-hidden");
+
+        slide.setAttribute("aria-hidden", String(distance !== 0));
+      });
+
+      const activeSlide = landscapeSlides[landscapeIndex];
+      landscapeNumber.textContent = `${String(landscapeIndex + 1).padStart(2, "0")} / ${String(count).padStart(2, "0")}`;
+      landscapeKicker.textContent = activeSlide.dataset.kicker;
+      landscapeTitle.textContent = activeSlide.dataset.title;
+      landscapeDescription.textContent = activeSlide.dataset.description;
+
+      window.clearTimeout(landscapeCopyTimer);
+      landscapeProjectCopy.classList.remove("is-changing");
+      void landscapeProjectCopy.offsetWidth;
+      landscapeProjectCopy.classList.add("is-changing");
+      landscapeCopyTimer = window.setTimeout(() => landscapeProjectCopy.classList.remove("is-changing"), 560);
+
+      landscapeDots.forEach((dot, index) => {
+        const active = index === landscapeIndex;
+        dot.classList.toggle("is-active", active);
+        dot.setAttribute("aria-current", String(active));
+      });
+    };
+
+    landscapePrevious.addEventListener("click", () => renderLandscapeCarousel(landscapeIndex - 1));
+    landscapeNext.addEventListener("click", () => renderLandscapeCarousel(landscapeIndex + 1));
+    landscapeDots.forEach((dot) => {
+      dot.addEventListener("click", () => renderLandscapeCarousel(Number(dot.dataset.landscapeDot)));
+    });
+
+    landscapeCarousel.addEventListener("keydown", (event) => {
+      if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") return;
+      event.preventDefault();
+      renderLandscapeCarousel(landscapeIndex + (event.key === "ArrowRight" ? 1 : -1));
+    });
+
+    landscapeDeck.addEventListener("pointerdown", (event) => {
+      if (event.pointerType === "mouse") return;
+      landscapePointerStart = event.clientX;
+      landscapeDeck.setPointerCapture?.(event.pointerId);
+    });
+
+    landscapeDeck.addEventListener("pointerup", (event) => {
+      if (landscapePointerStart === null) return;
+      const distance = event.clientX - landscapePointerStart;
+      landscapePointerStart = null;
+      if (Math.abs(distance) < 45) return;
+      renderLandscapeCarousel(landscapeIndex + (distance < 0 ? 1 : -1));
+    });
+
+    landscapeDeck.addEventListener("pointercancel", () => {
+      landscapePointerStart = null;
+    });
+
+    renderLandscapeCarousel(0);
+  }
 
   const preview = document.querySelector(".image-preview");
   const previewDialog = preview.querySelector(".preview-dialog");

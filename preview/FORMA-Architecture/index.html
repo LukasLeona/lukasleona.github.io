@@ -344,32 +344,80 @@
       </section>
 
       <section class="landscape-section" id="landscape" aria-label="Landscape architecture studies">
-        <div class="landscape-heading">
-          <p class="section-index reveal-up">Landscape studies · 06</p>
-          <h2 class="reveal-lines"><span>The house ends.</span><span><em>The living ground</em> continues.</span></h2>
-          <div class="landscape-heading-line" aria-hidden="true"><i></i><span>Four field studies</span></div>
-        </div>
+        <div
+          class="landscape-carousel"
+          data-landscape-carousel
+          tabindex="0"
+          role="region"
+          aria-roledescription="carousel"
+          aria-label="Four landscape field studies"
+        >
+          <div class="landscape-carousel-copy">
+            <p class="section-index">Landscape studies · 06</p>
+            <h2>
+              <span>The house ends.</span>
+              <span><em>The living ground</em> continues.</span>
+            </h2>
 
-        <div class="landscape-field">
-          <figure class="landscape-frame landscape-main" data-landscape-depth="0.08">
-            <img src="assets/landscape/20-terrace.webp" alt="Sculptural tree, grasses, water, and dark stone terrace" loading="lazy" decoding="async" />
-            <figcaption><span>01 / Night garden</span><strong>Wind Terrace</strong></figcaption>
-          </figure>
-          <figure class="landscape-frame landscape-path" data-landscape-depth="-0.12">
-            <img src="assets/landscape/21-woodland.webp" alt="Illuminated woodland steps through ferns toward a house" loading="lazy" decoding="async" />
-            <figcaption><span>02 / Arrival</span><strong>Fern Walk</strong></figcaption>
-          </figure>
-          <figure class="landscape-frame landscape-roof" data-landscape-depth="0.05">
-            <img src="assets/landscape/22-living-roof.webp" alt="Modern residence integrated into a meadow living roof" loading="lazy" decoding="async" />
-            <figcaption><span>03 / Ecology</span><strong>Living Roof</strong></figcaption>
-          </figure>
-          <figure class="landscape-frame landscape-water" data-landscape-depth="-0.07">
-            <img src="assets/landscape/23-rain-garden.webp" alt="Rain garden with mossy boulders, native planting, and reflecting water" loading="lazy" decoding="async" />
-            <figcaption><span>04 / Water</span><strong>Rain Court</strong></figcaption>
-          </figure>
+            <div class="landscape-project-copy" aria-live="polite" aria-atomic="true">
+              <p class="landscape-slide-meta"><span data-landscape-number>01 / 04</span><span data-landscape-kicker>Night garden</span></p>
+              <h3 data-landscape-title>Wind Terrace</h3>
+              <p data-landscape-description>A quiet night garden shaped by water, shadow, and wind-moved grasses.</p>
+            </div>
+          </div>
 
-          <div class="landscape-orbit" aria-hidden="true">
-            <span>GROUND · WATER · WEATHER · TIME ·</span>
+          <div class="landscape-deck" aria-label="Landscape images">
+            <figure
+              class="landscape-slide is-active"
+              data-title="Wind Terrace"
+              data-kicker="Night garden"
+              data-description="A quiet night garden shaped by water, shadow, and wind-moved grasses."
+              aria-hidden="false"
+            >
+              <img src="assets/landscape/20-terrace.webp" alt="Sculptural tree, grasses, water, and dark stone terrace" loading="lazy" decoding="async" />
+            </figure>
+            <figure
+              class="landscape-slide is-next"
+              data-title="Fern Walk"
+              data-kicker="Arrival"
+              data-description="A lantern-lit path through ferns turns arrival into a gradual reveal."
+              aria-hidden="true"
+            >
+              <img src="assets/landscape/21-woodland.webp" alt="Illuminated woodland steps through ferns toward a house" loading="lazy" decoding="async" />
+            </figure>
+            <figure
+              class="landscape-slide is-hidden"
+              data-title="Living Roof"
+              data-kicker="Ecology"
+              data-description="Meadow planting folds the home back into its wooded horizon."
+              aria-hidden="true"
+            >
+              <img src="assets/landscape/22-living-roof.webp" alt="Modern residence integrated into a meadow living roof" loading="lazy" decoding="async" />
+            </figure>
+            <figure
+              class="landscape-slide is-previous"
+              data-title="Rain Court"
+              data-kicker="Water"
+              data-description="Stone, moss, and collected rain create a garden that changes with the weather."
+              aria-hidden="true"
+            >
+              <img src="assets/landscape/23-rain-garden.webp" alt="Rain garden with mossy boulders, native planting, and reflecting water" loading="lazy" decoding="async" />
+            </figure>
+          </div>
+
+          <div class="landscape-carousel-controls" aria-label="Landscape carousel controls">
+            <button class="landscape-control landscape-prev" type="button" aria-label="Previous landscape study">
+              <span aria-hidden="true">←</span>
+            </button>
+            <div class="landscape-dots" role="group" aria-label="Choose a landscape study">
+              <button type="button" class="is-active" data-landscape-dot="0" aria-label="Show study 1: Wind Terrace" aria-current="true"></button>
+              <button type="button" data-landscape-dot="1" aria-label="Show study 2: Fern Walk" aria-current="false"></button>
+              <button type="button" data-landscape-dot="2" aria-label="Show study 3: Living Roof" aria-current="false"></button>
+              <button type="button" data-landscape-dot="3" aria-label="Show study 4: Rain Court" aria-current="false"></button>
+            </div>
+            <button class="landscape-control landscape-next" type="button" aria-label="Next landscape study">
+              <span aria-hidden="true">→</span>
+            </button>
           </div>
         </div>
       </section>
