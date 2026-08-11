@@ -225,6 +225,98 @@
 
   document.querySelectorAll(".reveal-up, .reveal-lines").forEach((item) => revealObserver.observe(item));
 
+  const preview = document.querySelector(".image-preview");
+  const previewDialog = preview.querySelector(".preview-dialog");
+  const previewImage = preview.querySelector(".preview-media img");
+  const previewIndex = preview.querySelector(".preview-index");
+  const previewTitle = preview.querySelector(".preview-title");
+  const previewMaterials = preview.querySelector(".preview-materials");
+  const previewCount = preview.querySelector(".preview-count");
+  const previewClose = preview.querySelector(".preview-close");
+  const previewPrevious = preview.querySelector(".preview-previous");
+  const previewNext = preview.querySelector(".preview-next");
+  const previewItems = [...document.querySelectorAll("[data-preview]")];
+  let previewGroup = [];
+  let previewPosition = 0;
+  let previewOrigin = null;
+
+  const renderPreview = (position) => {
+    if (!previewGroup.length) return;
+    previewPosition = (position + previewGroup.length) % previewGroup.length;
+    const card = previewGroup[previewPosition];
+    const sourceImage = card.querySelector("img");
+    const caption = card.querySelector("figcaption");
+    const itemIndex = caption.querySelector("span")?.textContent.trim() || String(previewPosition + 1).padStart(2, "0");
+    const itemTitle = caption.querySelector("strong")?.textContent.trim() || sourceImage.alt;
+    const itemMaterials = caption.querySelector("p")?.textContent.trim() || "";
+
+    previewImage.classList.remove("is-loaded");
+    previewImage.alt = sourceImage.alt;
+    previewImage.onload = () => previewImage.classList.add("is-loaded");
+    previewImage.src = sourceImage.currentSrc || sourceImage.src;
+    if (previewImage.complete) requestAnimationFrame(() => previewImage.classList.add("is-loaded"));
+
+    previewIndex.textContent = itemIndex;
+    previewTitle.textContent = itemTitle;
+    previewMaterials.textContent = itemMaterials;
+    previewCount.textContent = `${String(previewPosition + 1).padStart(2, "0")} / ${String(previewGroup.length).padStart(2, "0")}`;
+  };
+
+  const openPreview = (card) => {
+    const groupName = card.dataset.previewGroup;
+    previewGroup = previewItems.filter((item) => item.dataset.previewGroup === groupName);
+    previewPosition = Math.max(0, previewGroup.indexOf(card));
+    previewOrigin = card;
+    renderPreview(previewPosition);
+    preview.classList.add("is-open");
+    preview.setAttribute("aria-hidden", "false");
+    document.body.classList.add("preview-open");
+    requestAnimationFrame(() => previewClose.focus({ preventScroll: true }));
+  };
+
+  const closePreview = () => {
+    if (!preview.classList.contains("is-open")) return;
+    preview.classList.remove("is-open");
+    preview.setAttribute("aria-hidden", "true");
+    document.body.classList.remove("preview-open");
+    previewImage.classList.remove("is-loaded");
+    previewOrigin?.focus({ preventScroll: true });
+  };
+
+  previewItems.forEach((card) => {
+    card.addEventListener("click", () => openPreview(card));
+    card.addEventListener("keydown", (event) => {
+      if (event.key !== "Enter" && event.key !== " ") return;
+      event.preventDefault();
+      openPreview(card);
+    });
+  });
+
+  previewClose.addEventListener("click", closePreview);
+  previewPrevious.addEventListener("click", () => renderPreview(previewPosition - 1));
+  previewNext.addEventListener("click", () => renderPreview(previewPosition + 1));
+  previewDialog.addEventListener("click", (event) => {
+    if (event.target === previewDialog) closePreview();
+  });
+
+  window.addEventListener("keydown", (event) => {
+    if (!preview.classList.contains("is-open")) return;
+    if (event.key === "Escape") closePreview();
+    if (event.key === "ArrowLeft") renderPreview(previewPosition - 1);
+    if (event.key === "ArrowRight") renderPreview(previewPosition + 1);
+    if (event.key !== "Tab") return;
+
+    const controls = [previewClose, previewPrevious, previewNext];
+    const current = controls.indexOf(document.activeElement);
+    if (event.shiftKey && current <= 0) {
+      event.preventDefault();
+      controls[controls.length - 1].focus();
+    } else if (!event.shiftKey && current === controls.length - 1) {
+      event.preventDefault();
+      controls[0].focus();
+    }
+  });
+
   const cursorDot = document.querySelector(".cursor-dot");
   const cursorRing = document.querySelector(".cursor-ring");
   let cursorX = -50;
@@ -253,7 +345,7 @@
   };
   animateCursor();
 
-  document.querySelectorAll("a, [data-tilt]").forEach((item) => {
+  document.querySelectorAll("a, button, [data-tilt], [data-preview]").forEach((item) => {
     item.addEventListener("pointerenter", () => document.body.classList.add("cursor-active"));
     item.addEventListener("pointerleave", () => document.body.classList.remove("cursor-active"));
   });
