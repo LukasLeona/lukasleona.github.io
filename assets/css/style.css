@@ -165,7 +165,7 @@ body {
 }
 
 /* =========================================================
-   LUMO FULL-SCREEN PARTICLE FACE
+   LUMO FULL-SCREEN PARTICLE SIGNAL
 ========================================================= */
 body.lumo-face-mode-active {
   overflow: hidden !important;
@@ -183,7 +183,7 @@ body.lumo-face-mode-active {
     radial-gradient(circle at 50% 102%, rgba(47, 255, 166, .24), transparent 29%),
     radial-gradient(circle at 50% 46%, rgba(7, 84, 52, .28), transparent 39%),
     radial-gradient(circle at 50% 50%, #06110c 0, #020805 54%, #010201 100%);
-  transition: opacity .52s ease, visibility 0s linear .52s;
+  transition: opacity .26s ease, visibility 0s linear .26s;
   isolation: isolate;
 }
 
@@ -287,6 +287,116 @@ body.lumo-face-mode-active {
   text-shadow: 0 0 12px rgba(69, 255, 173, .62);
 }
 
+.lumo-telemetry {
+  position: absolute;
+  z-index: 7;
+  top: 50%;
+  right: clamp(22px, 5vw, 76px);
+  width: clamp(150px, 13vw, 190px);
+  display: grid;
+  gap: 16px;
+  transform: translateY(-50%);
+  pointer-events: none;
+  font-family: "Poppins", sans-serif;
+}
+
+.lumo-telemetry::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -17px;
+  width: 1px;
+  background: linear-gradient(transparent, rgba(69, 255, 173, .52), transparent);
+  box-shadow: 0 0 9px rgba(69, 255, 173, .28);
+}
+
+.lumo-telemetry > div {
+  display: grid;
+  gap: 3px;
+}
+
+.lumo-telemetry span,
+.lumo-face-caption span {
+  color: rgba(162, 230, 198, .42);
+  font-size: 7px;
+  font-weight: 600;
+  letter-spacing: .2em;
+}
+
+.lumo-telemetry strong,
+.lumo-telemetry time,
+.lumo-face-caption strong {
+  color: rgba(187, 255, 218, .85);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: .13em;
+  text-shadow: 0 0 11px rgba(69, 255, 173, .22);
+}
+
+.lumo-face-voice-state {
+  color: #45ffad !important;
+}
+
+.lumo-face-caption {
+  position: absolute;
+  z-index: 7;
+  left: clamp(20px, 4vw, 58px);
+  bottom: clamp(28px, 4vw, 52px);
+  display: grid;
+  gap: 5px;
+  pointer-events: none;
+  font-family: "Poppins", sans-serif;
+}
+
+.lumo-origin-beacon {
+  position: fixed;
+  z-index: 9;
+  left: 50%;
+  top: 50%;
+  width: 48px;
+  height: 48px;
+  display: grid;
+  place-items: center;
+  opacity: 0;
+  border: 1px solid rgba(69, 255, 173, .72);
+  border-radius: 14px;
+  color: #c9ffe4;
+  background: rgba(4, 25, 17, .92);
+  box-shadow:
+    inset 0 0 18px rgba(69, 255, 173, .12),
+    0 0 18px rgba(69, 255, 173, .35);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  font-family: "Poppins", sans-serif;
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.lumo-origin-beacon::before,
+.lumo-origin-beacon::after,
+.lumo-origin-beacon i {
+  content: "";
+  position: absolute;
+  inset: -9px;
+  border: 1px solid rgba(69, 255, 173, .25);
+  border-radius: 50%;
+}
+
+.lumo-origin-beacon::after {
+  inset: -19px;
+  border-color: rgba(69, 255, 173, .12);
+}
+
+.lumo-origin-beacon i {
+  inset: -31px;
+  border-color: rgba(69, 255, 173, .07);
+}
+
+.lumo-origin-beacon.is-transferring {
+  animation: lumoOriginTransfer 2.9s cubic-bezier(.22, .74, .2, 1) forwards;
+}
+
 .lumo-face-exit {
   position: absolute;
   z-index: 8;
@@ -354,7 +464,7 @@ body.lumo-face-mode-active {
 
 .chatbot-robot-button.is-particle-departure {
   pointer-events: none;
-  animation: lumoRobotParticleDeparture .72s ease forwards !important;
+  animation: lumoRobotParticleDeparture 1.8s ease forwards !important;
 }
 
 @keyframes lumoRobotParticleDeparture {
@@ -372,6 +482,29 @@ body.lumo-face-mode-active {
     opacity: 0;
     transform: scale(.4);
     filter: blur(5px) drop-shadow(0 0 28px rgba(49, 239, 196, 1));
+  }
+}
+
+@keyframes lumoOriginTransfer {
+  0%, 14% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+    filter: blur(0);
+  }
+  38% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.22);
+    box-shadow: inset 0 0 24px rgba(69, 255, 173, .22), 0 0 42px rgba(69, 255, 173, .7);
+  }
+  68% {
+    opacity: .52;
+    transform: translate(-50%, -50%) scale(.66);
+    filter: blur(1px);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(.12);
+    filter: blur(7px);
   }
 }
 
@@ -402,6 +535,27 @@ body.lumo-face-mode-active {
     line-height: 1.55;
   }
 
+  .lumo-telemetry {
+    top: auto;
+    right: 18px;
+    bottom: 86px;
+    width: 128px;
+    gap: 9px;
+    transform: none;
+  }
+
+  .lumo-telemetry > div:nth-child(3),
+  .lumo-telemetry > div:nth-child(4) {
+    display: none;
+  }
+
+  .lumo-face-caption {
+    left: 18px;
+    bottom: 88px;
+    max-width: 122px;
+    line-height: 1.45;
+  }
+
   .lumo-face-exit {
     right: 50%;
     bottom: 24px;
@@ -418,6 +572,7 @@ body.lumo-face-mode-active {
 @media (prefers-reduced-motion: reduce) {
   .lumo-face-mode::after,
   .lumo-face-identity i,
+  .lumo-origin-beacon,
   .chatbot-robot-button.is-particle-departure {
     animation: none !important;
   }

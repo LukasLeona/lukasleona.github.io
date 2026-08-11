@@ -2013,6 +2013,10 @@ function portfolioChatbot() {
   let lumoFaceParticles = [];
   let lumoFaceOpenedAt = 0;
   let lumoFaceReturnFocus = null;
+  let lumoFaceClock = null;
+  let lumoFaceVoiceState = null;
+  let lumoFaceSignal = null;
+  let lumoFaceOrigin = null;
 
   const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
   const aiEndpointMeta = document.querySelector('meta[name="luke-chatbot-api"]');
@@ -2132,7 +2136,7 @@ function portfolioChatbot() {
     lumoFaceOverlay.className = "lumo-face-mode";
     lumoFaceOverlay.setAttribute("role", "dialog");
     lumoFaceOverlay.setAttribute("aria-modal", "true");
-    lumoFaceOverlay.setAttribute("aria-label", "Lumo particle face");
+    lumoFaceOverlay.setAttribute("aria-label", "Lumo particle intelligence display");
     lumoFaceOverlay.setAttribute("aria-hidden", "true");
     lumoFaceOverlay.innerHTML =
       '<canvas class="lumo-face-canvas" aria-hidden="true"></canvas>' +
@@ -2141,13 +2145,26 @@ function portfolioChatbot() {
       '<div class="lumo-face-identity"><i></i><span>LUMO // PARTICLE INTELLIGENCE</span></div>' +
       '<strong class="lumo-face-status">FORMING</strong>' +
       '</div>' +
-      '<button type="button" class="lumo-face-exit" aria-label="Exit Lumo face mode">' +
+      '<aside class="lumo-telemetry" aria-label="Lumo live system information">' +
+      '<div><span>LOCAL / MNL</span><time class="lumo-face-clock">--:--:--</time></div>' +
+      '<div><span>VOICE LINK</span><strong class="lumo-face-voice-state">STANDBY</strong></div>' +
+      '<div><span>SIGNAL</span><strong class="lumo-face-signal">42%</strong></div>' +
+      '<div><span>CORE</span><strong>ONLINE</strong></div>' +
+      '</aside>' +
+      '<div class="lumo-face-caption"><span>NEURAL PARTICLE FIELD</span>' +
+      '<strong>VOICE-REACTIVE SIGNAL</strong></div>' +
+      '<div class="lumo-origin-beacon" aria-hidden="true"><span>L</span><i></i></div>' +
+      '<button type="button" class="lumo-face-exit" aria-label="Exit Lumo display">' +
       '<span>EXIT LUMO</span><i aria-hidden="true"></i></button>';
 
     document.body.appendChild(lumoFaceOverlay);
     lumoFaceCanvas = lumoFaceOverlay.querySelector(".lumo-face-canvas");
     lumoFaceContext = lumoFaceCanvas ? lumoFaceCanvas.getContext("2d") : null;
     lumoFaceStatus = lumoFaceOverlay.querySelector(".lumo-face-status");
+    lumoFaceClock = lumoFaceOverlay.querySelector(".lumo-face-clock");
+    lumoFaceVoiceState = lumoFaceOverlay.querySelector(".lumo-face-voice-state");
+    lumoFaceSignal = lumoFaceOverlay.querySelector(".lumo-face-signal");
+    lumoFaceOrigin = lumoFaceOverlay.querySelector(".lumo-origin-beacon");
 
     const exitButton = lumoFaceOverlay.querySelector(".lumo-face-exit");
     if (exitButton) {
@@ -2159,6 +2176,23 @@ function portfolioChatbot() {
         buildLumoFaceParticles(true);
       }
     });
+  }
+
+  function updateLumoTelemetry() {
+    if (lumoFaceClock) {
+      lumoFaceClock.textContent = new Intl.DateTimeFormat("en-PH", {
+        timeZone: "Asia/Manila",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+        hour12: false
+      }).format(new Date());
+    }
+
+    if (lumoFaceSignal) {
+      const signal = Math.round(38 + lumoVisualizerEnergy * 62);
+      lumoFaceSignal.textContent = signal + "%";
+    }
   }
 
   function addLumoFaceLine(points, count, category, particles) {
@@ -2192,106 +2226,76 @@ function portfolioChatbot() {
     lumoFaceCanvas.style.height = height + "px";
 
     const centerX = width * 0.5;
-    const centerY = height * (width < 600 ? 0.45 : 0.47);
-    const faceWidth = Math.min(width * (width < 600 ? 0.73 : 0.36), height * 0.48);
-    const faceHeight = Math.min(height * (width < 600 ? 0.52 : 0.61), width * 0.62);
+    const centerY = height * (width < 600 ? 0.46 : 0.5);
+    const fieldRadius = Math.min(
+      width * (width < 600 ? 0.33 : 0.245),
+      height * (width < 600 ? 0.27 : 0.34)
+    );
     const oldParticles = lumoFaceParticles;
     const particles = [];
 
-    /* Dense curved point cloud: the face is a surface, not a cartoon outline. */
-    const meshRows = width < 600 ? 48 : 56;
-    const meshColumns = width < 600 ? 34 : 42;
+    /* Layered particle ribbons form one continuously breathing energy signal. */
+    const ribbonCount = width < 600 ? 9 : 12;
+    const pointsPerRibbon = width < 600 ? 118 : 156;
 
-    for (let row = 0; row < meshRows; row += 1) {
-      const v = -0.98 + (row / (meshRows - 1)) * 1.96;
-      const verticalCurve = Math.sqrt(Math.max(0, 1 - v * v));
-      const forehead = v < -0.32 ? 0.9 + (v + 1) * 0.13 : 1;
-      const jaw = v > 0.42 ? 1 - (v - 0.42) * 0.48 : 1;
-      const halfWidth = faceWidth * 0.5 * verticalCurve * forehead * jaw;
-
-      for (let column = 0; column < meshColumns; column += 1) {
-        const u = -1 + (column / (meshColumns - 1)) * 2;
-        const normalizedX = u * verticalCurve * forehead * jaw;
-        const eyeSide = normalizedX < 0 ? -1 : 1;
-        const eyeX = eyeSide * 0.29;
-        const insideEyeSocket = Math.pow((normalizedX - eyeX) / 0.19, 2) +
-          Math.pow((v + 0.25) / 0.105, 2) < 1;
-        const insideSpeechRegion = Math.pow(normalizedX / 0.3, 2) +
-          Math.pow((v - 0.54) / 0.09, 2) < 1;
-
-        const depth = Math.sqrt(Math.max(0, 1 - u * u)) *
-          Math.sqrt(Math.max(0, 1 - v * v));
-        const cheekLift = Math.exp(-Math.pow((Math.abs(normalizedX) - 0.38) / 0.2, 2)) *
-          Math.exp(-Math.pow((v - 0.1) / 0.3, 2));
-        const noseProjection = Math.exp(-Math.pow(normalizedX / 0.16, 2)) *
-          Math.exp(-Math.pow((v - 0.02) / 0.42, 2));
-        const rowOffset = row % 2 ? halfWidth / (meshColumns - 1) : 0;
-        const seed = lumoParticleSeed(row * meshColumns + column, 19);
-
-        const region = insideEyeSocket
-          ? "socket"
-          : insideSpeechRegion
-            ? "speech"
-            : "surface";
-        const regionDepth = insideEyeSocket
-          ? depth * 0.3
-          : insideSpeechRegion
-            ? depth * 0.72
-            : Math.min(1, depth + noseProjection * 0.12);
+    for (let layer = 0; layer < ribbonCount; layer += 1) {
+      for (let step = 0; step < pointsPerRibbon; step += 1) {
+        const progress = step / pointsPerRibbon;
+        const angle = progress * Math.PI * 2;
+        const seed = lumoParticleSeed(layer * pointsPerRibbon + step, 31);
+        const phase = layer * 0.61 + lumoParticleSeed(layer, 32) * Math.PI;
+        const radial = 0.77 + layer * (0.28 / Math.max(1, ribbonCount - 1));
+        const wave = Math.sin(angle * 3 + phase) * (0.09 + layer * 0.0025) +
+          Math.sin(angle * 5 - phase * 0.7) * 0.026;
+        const radius = fieldRadius * radial * (1 + wave);
 
         particles.push({
-          tx: centerX + u * halfWidth + rowOffset + (seed - 0.5) * 1.8,
-          ty: centerY + v * faceHeight * 0.5 - cheekLift * 2.5,
-          category: region,
-          progress: (u + 1) / 2,
-          band: row,
-          depth: regionDepth,
+          tx: centerX + Math.cos(angle) * radius,
+          ty: centerY + Math.sin(angle) * radius * 0.78,
+          category: "ribbon",
+          angle: angle,
+          progress: progress,
+          layer: layer,
+          step: step,
+          pointsPerRibbon: pointsPerRibbon,
+          radial: radial,
+          phase: phase,
+          depth: layer / Math.max(1, ribbonCount - 1),
+          brightness: 0.38 + seed * 0.62,
           seed: seed,
-          size: 0.5 + regionDepth * 0.78 + seed * 0.48
+          size: 0.48 + seed * 0.9,
+          centerX: centerX,
+          centerY: centerY,
+          fieldRadius: fieldRadius
         });
       }
     }
 
-    /* No drawn-on facial features: depth and density alone define the face. */
-
-    /* Crown and chin streams create the dimensional data-light silhouette. */
-    for (let stream = 0; stream < 68; stream += 1) {
-      const u = -0.92 + (stream / 67) * 1.84;
-      const topY = centerY - faceHeight * 0.49 + Math.abs(u) * faceHeight * 0.08;
-      const crownLength = faceHeight * (0.04 + lumoParticleSeed(stream, 21) * 0.25);
-      const points = 2 + Math.floor(lumoParticleSeed(stream, 22) * 6);
-
-      addLumoFaceLine(function (progress) {
-        return {
-          x: centerX + u * faceWidth * 0.43 + (lumoParticleSeed(stream, 23) - 0.5) * 5,
-          y: topY - progress * crownLength,
-          depth: 0.38 + progress * 0.36
-        };
-      }, points, "crown", particles);
+    /* Floating inner and outer sparks keep the signal alive between replies. */
+    const sparkCount = width < 600 ? 180 : 280;
+    for (let index = 0; index < sparkCount; index += 1) {
+      const seed = lumoParticleSeed(index, 36);
+      const angle = lumoParticleSeed(index, 37) * Math.PI * 2;
+      const radial = 0.12 + Math.pow(lumoParticleSeed(index, 38), 0.62) * 1.18;
+      const radius = fieldRadius * radial;
+      particles.push({
+        tx: centerX + Math.cos(angle) * radius,
+        ty: centerY + Math.sin(angle) * radius * 0.8,
+        category: "spark",
+        angle: angle,
+        progress: angle / (Math.PI * 2),
+        layer: index % ribbonCount,
+        radial: radial,
+        phase: seed * Math.PI * 2,
+        depth: 0.2 + seed * 0.6,
+        brightness: 0.25 + seed * 0.7,
+        seed: seed,
+        size: 0.45 + seed * 1.35,
+        centerX: centerX,
+        centerY: centerY,
+        fieldRadius: fieldRadius
+      });
     }
-
-    for (let stream = 0; stream < 28; stream += 1) {
-      const u = -0.7 + (stream / 27) * 1.4;
-      const chinY = centerY + faceHeight * (0.47 - Math.abs(u) * 0.04);
-      const trailLength = faceHeight * (0.06 + lumoParticleSeed(stream, 24) * 0.18);
-      addLumoFaceLine(function (progress) {
-        return {
-          x: centerX + u * faceWidth * 0.32,
-          y: chinY + progress * trailLength,
-          depth: 0.4
-        };
-      }, 3 + Math.floor(lumoParticleSeed(stream, 25) * 5), "trail", particles);
-    }
-
-    addLumoFaceLine(function (progress, index) {
-      const angle = lumoParticleSeed(index + 1, 11) * Math.PI * 2;
-      const radius = faceWidth * (0.55 + lumoParticleSeed(index + 1, 12) * 0.35);
-      return {
-        x: centerX + Math.cos(angle) * radius,
-        y: centerY + Math.sin(angle) * radius * 1.05,
-        depth: 0.15
-      };
-    }, 130, "halo", particles);
 
     const robotRect = toggle.getBoundingClientRect();
     const originX = robotRect.left + robotRect.width / 2;
@@ -2319,11 +2323,26 @@ function portfolioChatbot() {
     const pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
     const context = lumoFaceContext;
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const rawProgress = Math.min(1, (timestamp - lumoFaceOpenedAt) / (reduceMotion ? 80 : 1850));
+    const transferDelay = reduceMotion ? 0 : 380;
+    const transferDuration = reduceMotion ? 80 : 2450;
+    const rawProgress = Math.max(0, Math.min(
+      1,
+      (timestamp - lumoFaceOpenedAt - transferDelay) / transferDuration
+    ));
     const gather = 1 - Math.pow(1 - rawProgress, 3);
     const isSpeaking = lumoVisualizerState === "speaking";
     const isThinking = lumoVisualizerState === "thinking";
+    const isListeningState = lumoVisualizerState === "listening";
     const motionScale = reduceMotion ? 0.12 : 1;
+    const time = timestamp * 0.001;
+    const pumpStrength = isSpeaking
+      ? 0.105 + lumoVisualizerEnergy * 0.13
+      : isListeningState
+        ? 0.052
+        : isThinking ? 0.038 : 0.024;
+    const pumpSpeed = isSpeaking ? 5.2 : isListeningState ? 2.1 : isThinking ? 1.35 : 0.62;
+    const pump = 1 + Math.sin(time * pumpSpeed) * pumpStrength * motionScale;
+    const rotationSpeed = isSpeaking ? 0.16 : isListeningState ? 0.1 : 0.052;
 
     context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
     context.clearRect(0, 0, width, height);
@@ -2331,66 +2350,86 @@ function portfolioChatbot() {
     context.globalCompositeOperation = "lighter";
 
     lumoFaceParticles.forEach(function (particle, index) {
-      let targetX = particle.tx;
-      let targetY = particle.ty;
-      const time = timestamp * 0.001;
-      const microMotion = (isSpeaking ? 2.8 : isThinking ? 1.8 : 1.05) * motionScale;
+      const isRibbon = particle.category === "ribbon";
+      const rotation = time * rotationSpeed * (0.72 + particle.layer * 0.025);
+      const angle = particle.angle + rotation;
+      const liveWave = Math.sin(
+        angle * 3 + particle.phase + time * (isSpeaking ? 1.7 : 0.34)
+      ) * (0.085 + particle.layer * 0.0025);
+      const crossWave = Math.sin(
+        angle * 5 - particle.phase * 0.7 - time * (isSpeaking ? 1.05 : 0.21)
+      ) * (isSpeaking ? 0.052 : 0.027);
+      const sparkDrift = isRibbon
+        ? 0
+        : Math.sin(time * (0.28 + particle.seed * 0.2) + particle.phase) * 0.045;
+      const radius = particle.fieldRadius * (particle.radial + sparkDrift) *
+        (1 + liveWave + crossWave) * pump;
+      let targetX = particle.centerX + Math.cos(angle) * radius;
+      let targetY = particle.centerY + Math.sin(angle) * radius *
+        (0.76 + Math.sin(time * 0.31 + particle.phase) * 0.035);
 
-      if (particle.category === "speech") {
-        const envelope = Math.pow(Math.sin(Math.PI * particle.progress), 0.78);
-        const amplitude = isSpeaking ? 2 + lumoVisualizerEnergy * 11 : 0.35;
-        targetY += Math.sin(
-          particle.progress * Math.PI * 5.5 - timestamp * (isSpeaking ? 0.012 : 0.002) +
-          particle.band * 0.17
-        ) * amplitude * envelope * motionScale;
-      } else if (particle.category === "crown" || particle.category === "trail") {
-        targetY += Math.sin(time * 1.1 + index * 0.28) * 2.2 * motionScale;
-      } else if (particle.category === "halo") {
-        const orbit = time * (0.08 + particle.seed * 0.08);
-        targetX += Math.cos(orbit + index) * 7 * motionScale;
-        targetY += Math.sin(orbit + index) * 7 * motionScale;
+      if (!isRibbon) {
+        targetX += Math.sin(time * 0.9 + index * 0.71) * 4.5 * motionScale;
+        targetY += Math.cos(time * 0.74 + index * 0.53) * 4.5 * motionScale;
       }
 
-      targetX += Math.sin(time * 1.6 + index * 0.73) * microMotion;
-      targetY += Math.cos(time * 1.35 + index * 0.57) * microMotion;
-
-      const spiral = (1 - gather) * 115 * motionScale;
+      const spiral = (1 - gather) * (120 + particle.seed * 130) * motionScale;
       particle.x = particle.sx + (targetX - particle.sx) * gather +
-        Math.sin(index * 0.37 + timestamp * 0.006) * spiral;
+        Math.sin(index * 0.37 + timestamp * 0.0048) * spiral * rawProgress;
       particle.y = particle.sy + (targetY - particle.sy) * gather +
-        Math.cos(index * 0.41 + timestamp * 0.006) * spiral;
+        Math.cos(index * 0.41 + timestamp * 0.0048) * spiral * rawProgress;
 
-      const twinkle = 0.7 + Math.sin(timestamp * 0.004 + index * 1.27) * 0.3;
-      const categoryAlpha = particle.category === "halo"
-        ? 0.2
-        : particle.category === "crown" || particle.category === "trail"
-          ? 0.32 + particle.depth * 0.32
-          : particle.category === "socket"
-            ? 0.08 + particle.depth * 0.2
-            : particle.category === "speech"
-              ? (isSpeaking ? 0.46 : 0.24) + particle.depth * 0.32
-              : 0.2 + particle.depth * 0.6;
-      const alpha = Math.max(0.04, gather * categoryAlpha * (0.78 + twinkle * 0.22));
-      const isFaceSurface = ["surface", "socket", "speech"].includes(particle.category);
-      const depthScale = isFaceSurface ? 0.68 + particle.depth * 0.48 : 1;
-      const radius = particle.size * depthScale *
-        (particle.category === "speech" && isSpeaking ? 1.12 : 1);
+      const twinkle = 0.66 + Math.sin(timestamp * 0.0035 + index * 1.27) * 0.34;
+      const responseBoost = isSpeaking ? 1.14 + lumoVisualizerEnergy * 0.5 : 1;
+      const alpha = Math.max(
+        0.025,
+        gather * (isRibbon ? 0.35 + particle.brightness * 0.55 : 0.12 + particle.brightness * 0.32) *
+        (0.78 + twinkle * 0.22) * responseBoost
+      );
+      const dotRadius = particle.size * (isSpeaking ? 1.08 + lumoVisualizerEnergy * 0.28 : 1);
+      const paletteIndex = particle.layer % 5;
+      const palette = [
+        [28, 255, 151],
+        [91, 255, 183],
+        [13, 193, 111],
+        [171, 255, 207],
+        [86, 225, 86]
+      ][paletteIndex];
 
       context.beginPath();
-      context.shadowBlur = particle.category === "speech" && isSpeaking
-        ? 9
-        : isFaceSurface ? 4 : 7;
-      context.shadowColor = "rgba(57, 255, 174, .72)";
-      context.fillStyle = particle.category === "speech" && isSpeaking
-        ? `rgba(151, 255, 204, ${alpha})`
-        : particle.seed > 0.36
-          ? `rgba(57, 255, 174, ${alpha})`
-          : `rgba(12, 183, 117, ${alpha * 0.82})`;
-      context.arc(particle.x, particle.y, radius, 0, Math.PI * 2);
+      context.shadowBlur = isSpeaking ? 8 + particle.brightness * 9 : 4 + particle.brightness * 5;
+      context.shadowColor = `rgba(${palette[0]}, ${palette[1]}, ${palette[2]}, .72)`;
+      context.fillStyle = `rgba(${palette[0]}, ${palette[1]}, ${palette[2]}, ${Math.min(1, alpha)})`;
+      context.arc(particle.x, particle.y, dotRadius, 0, Math.PI * 2);
       context.fill();
+
+      if (isRibbon && particle.step > 0 && gather > 0.5) {
+        const previous = lumoFaceParticles[index - 1];
+        if (previous && previous.category === "ribbon" && previous.layer === particle.layer) {
+          context.beginPath();
+          context.lineWidth = isSpeaking ? 0.55 : 0.32;
+          context.strokeStyle = `rgba(${palette[0]}, ${palette[1]}, ${palette[2]}, ${Math.min(0.3, alpha * 0.25)})`;
+          context.moveTo(previous.x, previous.y);
+          context.lineTo(particle.x, particle.y);
+          context.stroke();
+        }
+      }
+
+      if (isRibbon && particle.step === particle.pointsPerRibbon - 1 && gather > 0.5) {
+        const first = lumoFaceParticles[index - particle.step];
+        if (first && first.category === "ribbon" && first.layer === particle.layer) {
+          context.beginPath();
+          context.lineWidth = isSpeaking ? 0.55 : 0.32;
+          context.strokeStyle = `rgba(${palette[0]}, ${palette[1]}, ${palette[2]}, ${Math.min(0.3, alpha * 0.25)})`;
+          context.moveTo(particle.x, particle.y);
+          context.lineTo(first.x, first.y);
+          context.stroke();
+        }
+      }
     });
 
     context.restore();
+    updateLumoTelemetry();
     lumoFaceFrame = window.requestAnimationFrame(drawLumoFace);
   }
 
@@ -2404,6 +2443,17 @@ function portfolioChatbot() {
     lumoFaceReturnFocus = document.activeElement;
     buildLumoFaceParticles(false);
     lumoFaceOpenedAt = performance.now();
+
+    if (lumoFaceOrigin) {
+      const robotRect = toggle.getBoundingClientRect();
+      lumoFaceOrigin.style.left = robotRect.left + robotRect.width / 2 + "px";
+      lumoFaceOrigin.style.top = robotRect.top + robotRect.height / 2 + "px";
+      lumoFaceOrigin.classList.remove("is-transferring");
+      void lumoFaceOrigin.offsetWidth;
+      lumoFaceOrigin.classList.add("is-transferring");
+    }
+
+    updateLumoTelemetry();
     lumoFaceOverlay.setAttribute("aria-hidden", "false");
     document.body.classList.add("lumo-face-mode-active");
     toggle.classList.add("is-particle-departure");
@@ -2420,7 +2470,7 @@ function portfolioChatbot() {
       if (exitButton) {
         exitButton.focus({ preventScroll: true });
       }
-    }, 900);
+    }, 2700);
   }
 
   function exitLumoFaceMode() {
@@ -2440,6 +2490,9 @@ function portfolioChatbot() {
       lumoFaceOverlay.classList.remove("is-active", "is-leaving");
       document.body.classList.remove("lumo-face-mode-active");
       toggle.classList.remove("is-particle-departure");
+      if (lumoFaceOrigin) {
+        lumoFaceOrigin.classList.remove("is-transferring");
+      }
 
       if (lumoFaceFrame) {
         window.cancelAnimationFrame(lumoFaceFrame);
@@ -2492,7 +2545,13 @@ function portfolioChatbot() {
 
     if (lumoFaceStatus) {
       lumoFaceStatus.textContent = lumoVisualizerState === "idle"
-        ? "CONSCIOUS"
+        ? "SIGNAL STABLE"
+        : settings.label;
+    }
+
+    if (lumoFaceVoiceState) {
+      lumoFaceVoiceState.textContent = lumoVisualizerState === "idle"
+        ? "STANDBY"
         : settings.label;
     }
   }
@@ -3111,7 +3170,7 @@ function portfolioChatbot() {
     ) {
       return {
         messages: [
-          "You asked to see me. Here I am—Lumo, formed from light, data, and a constellation of moving stars."
+          "This is my signal form—Lumo, a living field of light, data, and voice-reactive energy."
         ],
         faceMode: true
       };
