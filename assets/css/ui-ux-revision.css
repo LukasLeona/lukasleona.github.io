@@ -261,11 +261,11 @@ html[data-theme="light"] #portfolio .portfolio-drawer-tags span {
 
   #hero .hero-image {
     position: absolute !important;
-    top: 28% !important;
-    left: 50% !important;
+    top: 20% !important;
+    left: clamp(28px, 9vw, 84px) !important;
     display: block !important;
     margin: 0 !important;
-    transform: translateX(-50%) !important;
+    transform: none !important;
   }
 
   #hero .hero-image img {
@@ -277,22 +277,23 @@ html[data-theme="light"] #portfolio .portfolio-drawer-tags span {
 
   #hero .hero-content {
     position: absolute !important;
-    top: calc(28% + 112px) !important;
-    left: 50% !important;
-    width: min(calc(100% - 36px), 350px) !important;
-    max-width: 350px !important;
+    top: calc(20% + clamp(112px, 16vw, 148px)) !important;
+    left: clamp(24px, 8vw, 72px) !important;
+    width: min(calc(100% - 48px), 520px) !important;
+    max-width: 520px !important;
     margin: 0 !important;
-    text-align: center !important;
-    transform: translateX(-50%) !important;
+    text-align: left !important;
+    transform: none !important;
   }
 
   #hero .hero-main-title {
     height: 5.75em !important;
-    max-width: 420px !important;
+    max-width: 520px !important;
     display: flex !important;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
     justify-content: flex-start;
+    text-align: left !important;
     font-size: clamp(28px, 6.5vw, 38px) !important;
     line-height: 1.14 !important;
     letter-spacing: -.65px !important;
@@ -311,15 +312,22 @@ html[data-theme="light"] #portfolio .portfolio-drawer-tags span {
     min-height: 18px;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
+    width: min(100%, 270px);
     margin-top: 11px !important;
+    margin-left: auto !important;
+    text-align: left !important;
     font-size: clamp(9px, 2.2vw, 12px) !important;
     line-height: 1.4 !important;
     white-space: normal;
   }
 
   #hero .hero-actions {
+    display: flex !important;
+    justify-content: flex-end;
+    width: min(100%, 480px);
     margin-top: 23px !important;
+    margin-left: auto !important;
   }
 
   #hero .hero-work-btn {
@@ -344,10 +352,10 @@ html[data-theme="light"] #portfolio .portfolio-drawer-tags span {
   #hero .hero-footer {
     position: absolute !important;
     bottom: max(22px, env(safe-area-inset-bottom)) !important;
-    left: 50% !important;
+    left: clamp(24px, 8vw, 72px) !important;
     width: auto !important;
     margin: 0 !important;
-    transform: translateX(-50%) !important;
+    transform: none !important;
   }
 
   #hero .hero-footer .social {
@@ -446,7 +454,7 @@ html[data-theme="light"] #portfolio .portfolio-drawer-tags span {
 
 @media (max-width: 360px) {
   #hero .hero-content {
-    width: calc(100% - 28px) !important;
+    width: calc(100% - 48px) !important;
   }
 
   #hero .hero-main-title {
@@ -465,7 +473,7 @@ html[data-theme="light"] #portfolio .portfolio-drawer-tags span {
   }
 
   #hero .hero-image {
-    top: 18% !important;
+    top: 17% !important;
   }
 
   #hero .hero-image img {
@@ -473,7 +481,7 @@ html[data-theme="light"] #portfolio .portfolio-drawer-tags span {
   }
 
   #hero .hero-content {
-    top: calc(18% + 100px) !important;
+    top: calc(17% + 100px) !important;
     margin: 0 !important;
   }
 
