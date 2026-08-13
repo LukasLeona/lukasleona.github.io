@@ -1,4 +1,4 @@
-# LayoutForge — Website Simulator
+# LayoutForge - Website Simulator
 
 A standalone interactive website configurator built with plain HTML, CSS, and JavaScript.
 

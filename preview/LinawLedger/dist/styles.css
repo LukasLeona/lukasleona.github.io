@@ -2900,7 +2900,7 @@ svg {
 }
 
 .history-section::before {
-  content: "22 — 26";
+  content: "22 - 26";
   position: absolute;
   top: 16px;
   right: -18px;

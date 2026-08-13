@@ -50,7 +50,7 @@ html[data-theme="light"] .star-field-canvas {
 }
 
 /* =========================================================
-   LEFT NAVIGATION — DESKTOP
+   LEFT NAVIGATION - DESKTOP
 ========================================================= */
 
 @media (min-width: 992px) {
@@ -388,7 +388,7 @@ html[data-theme="light"] .star-field-canvas {
 }
 
 /* =========================================================
-   THEME SWITCH — VISIBLE STARS LEFT / CLOUDS RIGHT
+   THEME SWITCH - VISIBLE STARS LEFT / CLOUDS RIGHT
 ========================================================= */
 
 #color-switcher.direct-theme-switcher {

@@ -1,4 +1,4 @@
-LUKAS PORTFOLIO — SEO + THEME + COMPACT-LAPTOP REVISION
+LUKAS PORTFOLIO - SEO + THEME + COMPACT-LAPTOP REVISION
 
 Replace the matching files in your repository with this package.
 

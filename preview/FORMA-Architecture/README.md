@@ -1,4 +1,4 @@
-# FORMA — Scroll-driven architecture concept
+# FORMA - Scroll-driven architecture concept
 
 A dependency-free static website concept built around a scroll-scrubbed 16-second house construction film.
 

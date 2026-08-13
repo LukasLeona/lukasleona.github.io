@@ -16,14 +16,14 @@ Then open `http://localhost:8080` in a browser.
 
 ## Included files
 
-- `index.html` — page structure and tourism content
-- `styles.css` — responsive layout, photographic cards, color system, and motion
-- `script.js` — sound controls, navigation, filters, activity rail, trip builder, dialogs, counters, parallax, and reveal effects
-- `assets/pulag-hero.mp4` — supplied 64-second, 1920×1080 hero film with its original audio
-- `assets/ritual-dance.mp4` — supplied 50-second, 1920×1080 culture-section film
-- `assets/images/` — optimized WebP versions of the supplied destination photographs and the culture illustration
-- `assets/favicon.svg` — palette-matched browser icon
-- `site.webmanifest` — basic installable-site metadata
+- `index.html` - page structure and tourism content
+- `styles.css` - responsive layout, photographic cards, color system, and motion
+- `script.js` - sound controls, navigation, filters, activity rail, trip builder, dialogs, counters, parallax, and reveal effects
+- `assets/pulag-hero.mp4` - supplied 64-second, 1920×1080 hero film with its original audio
+- `assets/ritual-dance.mp4` - supplied 50-second, 1920×1080 culture-section film
+- `assets/images/` - optimized WebP versions of the supplied destination photographs and the culture illustration
+- `assets/favicon.svg` - palette-matched browser icon
+- `site.webmanifest` - basic installable-site metadata
 
 ## Hero sound behavior
 

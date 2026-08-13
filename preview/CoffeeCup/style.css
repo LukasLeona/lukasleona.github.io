@@ -624,7 +624,7 @@ button { color: inherit; }
 }
 
 /* =========================================================
-   V3 CINEMATIC HERO — safe, responsive editorial choreography
+   V3 CINEMATIC HERO - safe, responsive editorial choreography
    ========================================================= */
 .story__video {
   object-position: center center;
@@ -946,7 +946,7 @@ button { color: inherit; }
 }
 
 /* =========================================================
-   V4 HERO POSITIONING — true inner-frame placement + alternating motion
+   V4 HERO POSITIONING - true inner-frame placement + alternating motion
    ========================================================= */
 .story__copy-wrap {
   --copy-inset-x: clamp(4.75rem, 7vw, 8.5rem);

@@ -1,4 +1,4 @@
-LUKAS PORTFOLIO — SECOND REVISION
+LUKAS PORTFOLIO - SECOND REVISION
 
 Replace these files in the matching project paths:
 - index.html

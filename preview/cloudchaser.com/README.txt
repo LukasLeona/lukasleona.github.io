@@ -1,4 +1,4 @@
-CLOUD CHASER — CURATED JOURNEYS & FAVICON UPDATE
+CLOUD CHASER - CURATED JOURNEYS & FAVICON UPDATE
 
 Replace the matching files in your project with the files in this folder.
 

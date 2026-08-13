@@ -1,4 +1,4 @@
-READYStation LMS — Front-end Demo
+READYStation LMS - Front-end Demo
 =================================
 
 HOW TO OPEN
@@ -7,10 +7,10 @@ HOW TO OPEN
 3. For the most reliable local preview, open the folder in VS Code and use the Live Server extension.
 
 MAIN PAGES
-- index.html — final homepage using the Index 5 hero direction and the Index 2 homepage-content structure
-- courses.html — course catalog (Courses is a direct page, not a dropdown)
-- hazmat-awareness.html — HazMat Awareness course information and curriculum
-- hazmat-course.html — interactive course player demo
+- index.html - final homepage using the Index 5 hero direction and the Index 2 homepage-content structure
+- courses.html - course catalog (Courses is a direct page, not a dropdown)
+- hazmat-awareness.html - HazMat Awareness course information and curriculum
+- hazmat-course.html - interactive course player demo
 - about-us.html
 - contact.html
 - login.html

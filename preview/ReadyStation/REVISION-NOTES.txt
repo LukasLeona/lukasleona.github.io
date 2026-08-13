@@ -1,4 +1,4 @@
-ReadyStation LMS — Revision Build
+ReadyStation LMS - Revision Build
 Generated: August 2, 2026
 
 Completed revisions

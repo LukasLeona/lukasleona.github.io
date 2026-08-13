@@ -1,4 +1,4 @@
-# Pamana — Filipino Wedding Website Demo
+# Pamana - Filipino Wedding Website Demo
 
 Open `index.html` in a browser.
 

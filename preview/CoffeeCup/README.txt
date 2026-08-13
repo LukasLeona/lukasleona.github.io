@@ -1,4 +1,4 @@
-SLOW POUR COFFEE — V4
+SLOW POUR COFFEE - V4
 
 Hero fixes:
 - All hero copy is placed well inside the frame, not against the browser edges.

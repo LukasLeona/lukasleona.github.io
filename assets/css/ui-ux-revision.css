@@ -444,6 +444,20 @@ html[data-theme="light"] #portfolio .portfolio-drawer-tags span {
   }
 }
 
+@media (max-width: 360px) {
+  #hero .hero-content {
+    width: calc(100% - 28px) !important;
+  }
+
+  #hero .hero-main-title {
+    height: 6.9em !important;
+  }
+
+  #hero .hero-title-second {
+    min-height: 4.6em;
+  }
+}
+
 @media (max-width: 991px) and (max-height: 700px) {
   #main > section#hero {
     padding-top: 58px !important;
