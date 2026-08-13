@@ -39,7 +39,7 @@
   #about .about-v2-section-heading p,
   #about .about-v2-why-intro p {
     width: 100%;
-    max-width: 92ch;
+    max-width: none;
   }
 
   #about .about-v2-tools-header,
@@ -55,9 +55,10 @@
   #about .about-v2-tools-header p,
   #resume .resume-v2-intro > p,
   #portfolio .portfolio-v2-intro > p,
-  #blog .blog-v2-intro-side {
+  #blog .blog-v2-intro-side,
+  #blog .blog-v2-intro-side > p {
     width: 100%;
-    max-width: 92ch;
+    max-width: none;
   }
 
   #about .about-v2-tools-header p {
@@ -179,6 +180,11 @@ html[data-theme="light"] #portfolio .portfolio-project-tags span {
 
   #main > section {
     border-radius: 0 !important;
+  }
+
+  #main > section:not(#hero) {
+    padding: 76px 20px 96px !important;
+    scroll-padding-top: 76px;
   }
 
   .area,
@@ -316,12 +322,43 @@ html[data-theme="light"] #portfolio .portfolio-project-tags span {
     gap: 12px !important;
   }
 
+  #about .about-v2-section-heading h2,
+  #about .about-v2-tools-header h2,
+  #about .about-v2-why-intro h2,
+  #about .about-v2-final h2,
+  #resume .resume-v2-intro h2,
+  #resume .resume-section-heading h2,
+  #portfolio .portfolio-v2-intro h2,
+  #blog .blog-v2-intro h2 {
+    font-size: clamp(30px, 6vw, 40px) !important;
+    line-height: 1.18 !important;
+    letter-spacing: -.75px !important;
+  }
+
+  #about .about-v2-eyebrow,
+  #resume .resume-v2-eyebrow,
+  #portfolio .portfolio-v2-eyebrow,
+  #blog .blog-v2-eyebrow {
+    font-size: 10px !important;
+    letter-spacing: 1.55px !important;
+  }
+
+  #about .about-v2-tools {
+    margin: 48px 0 !important;
+    padding: 22px !important;
+    border-radius: 17px !important;
+  }
+
   #portfolio .portfolio-project-tags {
     margin-bottom: 18px;
   }
 }
 
 @media (max-width: 575px) {
+  #main > section:not(#hero) {
+    padding: 72px 17px 92px !important;
+  }
+
   #main > section#hero {
     padding-right: 18px !important;
     padding-left: 18px !important;
@@ -330,6 +367,21 @@ html[data-theme="light"] #portfolio .portfolio-project-tags span {
   #hero .hero-main-title {
     max-width: 340px !important;
     font-size: clamp(27px, 8vw, 34px) !important;
+  }
+
+  #about .about-v2-section-heading h2,
+  #about .about-v2-tools-header h2,
+  #about .about-v2-why-intro h2,
+  #about .about-v2-final h2,
+  #resume .resume-v2-intro h2,
+  #resume .resume-section-heading h2,
+  #portfolio .portfolio-v2-intro h2,
+  #blog .blog-v2-intro h2 {
+    font-size: clamp(28px, 8.4vw, 35px) !important;
+  }
+
+  #about .about-v2-tools {
+    padding: 19px 16px !important;
   }
 
   #portfolio .portfolio-project-tags span {
