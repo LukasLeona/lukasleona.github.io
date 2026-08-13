@@ -3020,7 +3020,7 @@ function portfolioChatbot() {
 
     recognition.addEventListener("end", function () {
       isListening = false;
-      input.placeholder = micSessionActive ? "Mic is on — speak when ready…" : "Ask about Luke's work...";
+      input.placeholder = micSessionActive ? "Mic is on - speak when ready…" : "Ask about Luke's work...";
       setLumoVisualizerState(isReplying ? "thinking" : "idle");
       updateVoiceControls();
       resumePersistentMic(420);
@@ -3028,7 +3028,7 @@ function portfolioChatbot() {
 
     recognition.addEventListener("error", function (event) {
       isListening = false;
-      input.placeholder = micSessionActive ? "Mic is on — speak when ready…" : "Ask about Luke's work...";
+      input.placeholder = micSessionActive ? "Mic is on - speak when ready…" : "Ask about Luke's work...";
       setLumoVisualizerState("idle");
 
       if (event.error === "not-allowed" || event.error === "service-not-allowed") {
@@ -3170,7 +3170,7 @@ function portfolioChatbot() {
     ) {
       return {
         messages: [
-          "This is my signal form—Lumo, a living field of light, data, and voice-reactive energy."
+          "This is my signal form - Lumo, a living field of light, data, and voice-reactive energy."
         ],
         faceMode: true
       };
@@ -3203,7 +3203,7 @@ function portfolioChatbot() {
     ) {
       return {
         messages: [
-          "Luke is single and coffee-friendly. ☕ His professional rate starts at $6 per hour—so if that still sounds like a good coffee date, why not send him a message?"
+          "Luke is single and coffee-friendly. ☕ His professional rate starts at $6 per hour - so if that still sounds like a good coffee date, why not send him a message?"
         ],
         action: {
           label: "Ask Luke over coffee",
@@ -3388,7 +3388,7 @@ function portfolioChatbot() {
       return {
         messages: [
           "Luke can help with web development, UI implementation, SEO, data analytics, automation, and ongoing technical support.",
-          "The Resume section is interactive—tap Web, Design, SEO, Data, Automation, or Support to see a live example of each capability."
+          "The Resume section is interactive - tap Web, Design, SEO, Data, Automation, or Support to see a live example of each capability."
         ],
         action: {
           label: "Explore capabilities",
@@ -4471,7 +4471,7 @@ function interactiveResume() {
 
 
     /* =====================================================
-       4. DATA DASHBOARD DEMO — DATA CAPABILITY ONLY
+       4. DATA DASHBOARD DEMO - DATA CAPABILITY ONLY
     ===================================================== */
 
     var dataDashboard = document.getElementById("resumeDataDashboard");
@@ -4485,7 +4485,7 @@ function interactiveResume() {
         trends: ["+18.4%", "+12.1%", "vs. previous period"],
         lineLabel: "REVENUE TREND",
         lineValue: "₱482K",
-        linePeriod: "Jan — Jul",
+        linePeriod: "Jan - Jul",
         line: [132,116,126,82,94,50,62],
         bars: [34,52,44,71,62,86,76],
         barNames: ["Web","SEO","Email","Social","Direct","Paid","Referral"],
@@ -5200,30 +5200,30 @@ function interactivePortfolio() {
   ===================================================== */
 
   var projects = {
-    slowpour:{category:"WEB • 3D SCROLL EXPERIENCE",title:"Slow Pour — 3D Coffee Experience",summary:"An artistic coffee landing page where scrolling controls the visual progression of the drink and reveals a changing editorial story.",contribution:["Scroll-scrubbed coffee animation","Responsive desktop, tablet, and mobile layouts","Alternating editorial text choreography","Smooth motion and transition design"],stack:["HTML","CSS","JavaScript","Scroll Animation","Responsive UI"],links:[{label:"Open Experience",url:"/preview/CoffeeCup/index.html",external:true}]},
-    fire:{category:"WEB • LMS • SEO",title:"Fire & Rescue Academy",summary:"A professional digital training platform for emergency-services education, course delivery, and online discoverability.",contribution:["Responsive website development","LMS course structure and delivery","SEO and content optimization","Technical troubleshooting"],stack:["WordPress","Tutor LMS","CSS","SEO"],links:[{label:"Visit Live",url:"https://fireandrescueacademy.com/",external:true}]},
-    iskolar:{category:"WEB • PLATFORM",title:"IskolarLink",summary:"A student information and coordination platform that brings academic communication and workflows into one clearer environment.",contribution:["React front-end development","Information architecture","Responsive implementation","Academic workflow presentation"],stack:["React","JavaScript","UI Structure"],links:[{label:"Open Project",url:"preview/IskolarLink.com/IskolarLink-main/#/",external:true}]},
-    corporate:{category:"WEB • CORPORATE",title:"Disaster Response & Training",summary:"A professional corporate website for a disaster-response and training organization.",contribution:["Website design and development","Responsive implementation","Content structure","Digital presence improvements"],stack:["WordPress","Responsive","Content"],links:[{label:"Visit Live",url:"https://conquerorscc.com/",external:true}]},
-    lakbay:{category:"WEB • TRAVEL APP",title:"Lakbay Baguio",summary:"A Baguio itinerary experience with local discovery, trip planning, and a conversational emotional-support concept.",contribution:["Travel-focused UI","Interactive itinerary flow","Responsive front end","Conversational support concept"],stack:["HTML","CSS","JavaScript"],links:[{label:"Open Project",url:"preview/lakbaybaguio.com/index.html",external:true}]},
-    mebs:{category:"WEB • CONSTRUCTION",title:"MeBS Construction",summary:"A modern construction-company website focused on engineering credibility and project presentation.",contribution:["Website repurposing","Industry-specific content adaptation","Responsive UI refinement","Brand interaction improvements"],stack:["HTML","CSS","JavaScript","UI/UX"],links:[{label:"Open Project",url:"preview/mebsconstruction.com/index.html",external:true}]},
-    cloudchaser:{category:"WEB • TRAVEL",title:"Cloud Chaser",summary:"A polished travel-agency experience for curated Philippine and Asian trips.",contribution:["Travel website repurposing","Itinerary content structure","Responsive refinement","Conversion improvements"],stack:["HTML","CSS","JavaScript","Travel UX"],links:[{label:"Open Trips",url:"preview/cloudchaser.com/trips.html",external:true}]},
+    slowpour:{category:"WEB • 3D SCROLL EXPERIENCE",title:"Slow Pour: 3D Coffee Experience",summary:"An artistic coffee landing page where scrolling controls the visual progression of the drink and reveals a changing editorial story.",contribution:["Scroll-scrubbed coffee animation","Responsive desktop, tablet, and mobile layouts","Alternating editorial text choreography","Smooth motion and transition design"],stack:["HTML5","CSS3","JavaScript ES6+","Scroll Animation","Responsive UI"],links:[{label:"Open Experience",url:"/preview/CoffeeCup/index.html",external:true}]},
+    fire:{category:"WEB • LMS • SEO",title:"Fire & Rescue Academy",summary:"A professional digital training platform for emergency-services education, course delivery, and online discoverability.",contribution:["Responsive website development","LMS course structure and delivery","SEO and content optimization","Technical troubleshooting"],stack:["WordPress CMS","Tutor LMS","CSS3","SEO"],links:[{label:"Visit Live",url:"https://fireandrescueacademy.com/",external:true}]},
+    iskolar:{category:"WEB • PLATFORM",title:"IskolarLink",summary:"A student information and coordination platform that brings academic communication and workflows into one clearer environment.",contribution:["React front-end development","Information architecture","Responsive implementation","Academic workflow presentation"],stack:["React.js","JavaScript ES6+","UI Structure"],links:[{label:"Open Project",url:"preview/IskolarLink.com/IskolarLink-main/#/",external:true}]},
+    corporate:{category:"WEB • CORPORATE",title:"Disaster Response & Training",summary:"A professional corporate website for a disaster-response and training organization.",contribution:["Website design and development","Responsive implementation","Content structure","Digital presence improvements"],stack:["WordPress CMS","Responsive","Content"],links:[{label:"Visit Live",url:"https://conquerorscc.com/",external:true}]},
+    lakbay:{category:"WEB • TRAVEL APP",title:"Lakbay Baguio",summary:"A Baguio itinerary experience with local discovery, trip planning, and a conversational emotional-support concept.",contribution:["Travel-focused UI","Interactive itinerary flow","Responsive front end","Conversational support concept"],stack:["HTML5","CSS3","JavaScript ES6+"],links:[{label:"Open Project",url:"preview/lakbaybaguio.com/index.html",external:true}]},
+    mebs:{category:"WEB • CONSTRUCTION",title:"MeBS Construction",summary:"A modern construction-company website focused on engineering credibility and project presentation.",contribution:["Website repurposing","Industry-specific content adaptation","Responsive UI refinement","Brand interaction improvements"],stack:["HTML5","CSS3","JavaScript ES6+","UI/UX"],links:[{label:"Open Project",url:"preview/mebsconstruction.com/index.html",external:true}]},
+    cloudchaser:{category:"WEB • TRAVEL",title:"Cloud Chaser",summary:"A polished travel-agency experience for curated Philippine and Asian trips.",contribution:["Travel website repurposing","Itinerary content structure","Responsive refinement","Conversion improvements"],stack:["HTML5","CSS3","JavaScript ES6+","Travel UX"],links:[{label:"Open Trips",url:"preview/cloudchaser.com/trips.html",external:true}]},
     layoutletter:{category:"AUTOMATION • CREATOR TOOL",title:"LayoutLetter",summary:"A visual newsletter builder for creators and businesses that makes campaign assembly faster and more approachable.",contribution:["Product interface concept","Visual builder workflow","Responsive front-end experience","Automation-oriented interaction design"],stack:["Automation","Newsletter","Builder","UI/UX"],links:[{label:"Open Project",url:"preview/LayoutLetter.com/index.html",external:true}]},
-    mountain:{category:"WEB • TOURISM",title:"Discover Mountain Province",summary:"A destination website for exploring Mountain Province through places, stories, and trip ideas.",contribution:["Tourism content structure","Destination-focused visual system","Responsive implementation","Discovery pathways"],stack:["HTML","CSS","JavaScript","Tourism UX"],links:[{label:"Open Project",url:"preview/DiscoverMountainProvince.com/index.html",external:true}]},
+    mountain:{category:"WEB • TOURISM",title:"Discover Mountain Province",summary:"A destination website for exploring Mountain Province through places, stories, and trip ideas.",contribution:["Tourism content structure","Destination-focused visual system","Responsive implementation","Discovery pathways"],stack:["HTML5","CSS3","JavaScript ES6+","Tourism UX"],links:[{label:"Open Project",url:"preview/DiscoverMountainProvince.com/index.html",external:true}]},
     readystation:{category:"AUTOMATION • LMS",title:"ReadyStation LMS",summary:"A training platform built for first responders and the realities of fireground preparation.",contribution:["LMS product presentation","First-responder workflow framing","Responsive interface","Training-focused user experience"],stack:["LMS","Training","Automation","First Responders"],links:[{label:"Open Project",url:"preview/ReadyStation.com/index.html",external:true}]},
-    let:{category:"DATA • EDUCATION ANALYTICS",title:"LET Performance Trends",summary:"An interactive analysis of LET performance, institutions, geography, demographics, and examination ratings.",contribution:["Data preparation","Trend and geographic analysis","Visualization","Interactive case study"],stack:["Python","Analytics","Visualization","Statistics"],links:[{label:"Explore Analysis",url:"let-performance-analysis.html",external:false}]},
-    spending:{category:"DATA • CUSTOMER BEHAVIOR",title:"Spending Behavior Analysis",summary:"Customer segmentation, purchasing relationships, and future transaction forecasting.",contribution:["Exploratory analysis","K-Means segmentation","Apriori association analysis","ARIMA forecasting"],stack:["Python","Pandas","K-Means","Apriori","ARIMA"],links:[{label:"Explore Analysis",url:"customer-spending-analysis.html",external:false}]},
-    campaign1:{category:"CONTENT • CAMPAIGN",title:"Campaign Landing Experience",summary:"A conversion-focused campaign experience combining content, implementation, and visual hierarchy.",contribution:["Front-end implementation","Campaign layout","Responsive styling","Content presentation"],stack:["HTML","CSS","JavaScript","Content"],links:[{label:"View Campaign",url:"http://paidmediasandbox.3jzvudtzb5-dv13xg0776gq.p.temp-site.link/luke/mood/v2-20off/v2startup.html",external:true}]},
-    campaign2:{category:"CONTENT • INTERACTIVE",title:"Interactive Campaign Blog",summary:"A visual storytelling experience for interactive promotional content.",contribution:["Page development","Interactive behavior","Responsive styling","Campaign storytelling"],stack:["HTML","CSS","JavaScript"],links:[{label:"View Campaign",url:"https://va-0097.github.io/Mood/",external:true}]},
-    layoutforge:{category:"WEB • INTERACTIVE DESIGN TOOL",title:"LayoutForge — Website Vision Simulator",summary:"A responsive website simulator that helps visitors explore layout, imagery, typography, color, and motion before committing to development.",contribution:["Expanded hero, body, and footer layout library","Custom palette and typography controls","Plain, soft, and dynamic motion modes","Responsive desktop, tablet, and mobile preview","Portfolio-embedded simulator experience"],stack:["HTML","CSS","JavaScript","Responsive UI","Interaction Design"],links:[{label:"Try Simulator",url:"preview/layoutforge-simulator/index.html",external:true}]}
+    let:{category:"DATA • EDUCATION ANALYTICS",title:"LET Performance Trends",summary:"An interactive analysis of LET performance, institutions, geography, demographics, and examination ratings.",contribution:["Data preparation","Trend and geographic analysis","Visualization","Interactive case study"],stack:["Python 3","Analytics","Visualization","Statistics"],links:[{label:"Explore Analysis",url:"let-performance-analysis.html",external:false}]},
+    spending:{category:"DATA • CUSTOMER BEHAVIOR",title:"Spending Behavior Analysis",summary:"Customer segmentation, purchasing relationships, and future transaction forecasting.",contribution:["Exploratory analysis","K-Means segmentation","Apriori association analysis","ARIMA forecasting"],stack:["Python 3","Pandas","K-Means","Apriori","ARIMA"],links:[{label:"Explore Analysis",url:"customer-spending-analysis.html",external:false}]},
+    campaign1:{category:"CONTENT • CAMPAIGN",title:"Campaign Landing Experience",summary:"A conversion-focused campaign experience combining content, implementation, and visual hierarchy.",contribution:["Front-end implementation","Campaign layout","Responsive styling","Content presentation"],stack:["HTML5","CSS3","JavaScript ES6+","Content"],links:[{label:"View Campaign",url:"http://paidmediasandbox.3jzvudtzb5-dv13xg0776gq.p.temp-site.link/luke/mood/v2-20off/v2startup.html",external:true}]},
+    campaign2:{category:"CONTENT • INTERACTIVE",title:"Interactive Campaign Blog",summary:"A visual storytelling experience for interactive promotional content.",contribution:["Page development","Interactive behavior","Responsive styling","Campaign storytelling"],stack:["HTML5","CSS3","JavaScript ES6+"],links:[{label:"View Campaign",url:"https://va-0097.github.io/Mood/",external:true}]},
+    layoutforge:{category:"WEB • INTERACTIVE DESIGN TOOL",title:"LayoutForge: Website Vision Simulator",summary:"A responsive website simulator that helps visitors explore layout, imagery, typography, color, and motion before committing to development.",contribution:["Expanded hero, body, and footer layout library","Custom palette and typography controls","Plain, soft, and dynamic motion modes","Responsive desktop, tablet, and mobile preview","Portfolio-embedded simulator experience"],stack:["HTML5","CSS3","JavaScript ES6+","Responsive UI","Interaction Design"],links:[{label:"Try Simulator",url:"preview/layoutforge-simulator/index.html",external:true}]}
   };
 
 
   Object.assign(projects, {
-    canyonranch:{category:"WEB • REAL ESTATE",title:"Canyon Ranch",summary:"A premium residential property experience presenting the community, modern homes, and lifestyle through immersive visual storytelling.",contribution:["Residential property presentation","Immersive exterior and lifestyle storytelling","Responsive front-end experience","Interactive project exploration"],stack:["HTML","CSS","JavaScript","Responsive UI"],links:[{label:"Open Project",url:"/preview/CanyonRanch/index.html",external:true}]},
-    forma:{category:"WEB • ARCHITECTURE • MOTION",title:"FORMA — Architecture Studio",summary:"A cinematic architecture-studio experience where a residence assembles through scroll, supported by material-led storytelling and selected work.",contribution:["Scroll-led architectural storytelling","Video-scrubbed hero experience","Responsive gallery and studio presentation","Motion and interaction design"],stack:["HTML","CSS","JavaScript","Video","Motion"],links:[{label:"Open Project",url:"preview/FORMA-Architecture/index.html",external:true}]},
-    amore:{category:"WEB • WEDDING INVITATION",title:"Terra Amore — Wedding Invitation",summary:"An editorial wedding invitation with ceremony details, RSVP, gallery moments, and a warm coastal visual story.",contribution:["Invitation experience design","Responsive ceremony and RSVP flow","Editorial gallery presentation","Custom motion and interaction details"],stack:["HTML","CSS","JavaScript","Responsive UI"],links:[{label:"Open Invitation",url:"preview/WeddingSite/Amore/index.html",external:true}]},
-    signaldesk:{category:"WEB • DATA DASHBOARD • AUTOMATION",title:"Signal Desk — Social Media Intelligence",summary:"A responsive marketing dashboard and publishing workspace that turns social-platform research, live open-web signals, audience activity, and publishing recommendations into an actionable campaign workflow.",contribution:["Responsive dashboard and multi-page interface","Live trend-signal integration","Audience activity charts and opportunity heatmaps","Multi-media post previews and per-platform scheduling"],stack:["Python","HTML","CSS","JavaScript","Chart.js"],links:[{label:"Open Dashboard",url:"preview/MarketingDashboard/index.html",external:true}]},
-    linawledger:{category:"DATA • WEB • PUBLIC FINANCE",title:"LinawLedger — 2026 Budget Transparency",summary:"An interactive transparency dashboard that turns the FY 2026 General Appropriations Act into an approachable public view of departments, agencies, programs, expense classes, regions, and five-year enacted trends.",contribution:["Budget information architecture and plain-language explanations","Interactive department, agency, program, and regional exploration","Responsive maps, allocation charts, and single-entity trend views","Traceable presentation of enacted DBM data and source methodology"],stack:["HTML","CSS","JavaScript","Data Visualization","Responsive UI"],links:[{label:"Open Dashboard",url:"preview/LinawLedger/index.html",external:true}]}
+    canyonranch:{category:"WEB • REAL ESTATE",title:"Canyon Ranch",summary:"A premium residential property experience presenting the community, modern homes, and lifestyle through immersive visual storytelling.",contribution:["Residential property presentation","Immersive exterior and lifestyle storytelling","Responsive front-end experience","Interactive project exploration"],stack:["HTML5","CSS3","JavaScript ES6+","Responsive UI"],links:[{label:"Open Project",url:"/preview/CanyonRanch/index.html",external:true}]},
+    forma:{category:"WEB • ARCHITECTURE • MOTION",title:"FORMA: Architecture Studio",summary:"A cinematic architecture-studio experience where a residence assembles through scroll, supported by material-led storytelling and selected work.",contribution:["Scroll-led architectural storytelling","Video-scrubbed hero experience","Responsive gallery and studio presentation","Motion and interaction design"],stack:["HTML5","CSS3","JavaScript ES6+","Video","Motion"],links:[{label:"Open Project",url:"preview/FORMA-Architecture/index.html",external:true}]},
+    amore:{category:"WEB • WEDDING INVITATION",title:"Terra Amore: Wedding Invitation",summary:"An editorial wedding invitation with ceremony details, RSVP, gallery moments, and a warm coastal visual story.",contribution:["Invitation experience design","Responsive ceremony and RSVP flow","Editorial gallery presentation","Custom motion and interaction details"],stack:["HTML5","CSS3","JavaScript ES6+","Responsive UI"],links:[{label:"Open Invitation",url:"preview/WeddingSite/Amore/index.html",external:true}]},
+    signaldesk:{category:"WEB • DATA DASHBOARD • AUTOMATION",title:"Signal Desk: Social Media Intelligence",summary:"A responsive marketing dashboard and publishing workspace that turns social-platform research, live open-web signals, audience activity, and publishing recommendations into an actionable campaign workflow.",contribution:["Responsive dashboard and multi-page interface","Live trend-signal integration","Audience activity charts and opportunity heatmaps","Multi-media post previews and per-platform scheduling"],stack:["Python 3","HTML5","CSS3","JavaScript ES6+","Chart.js"],links:[{label:"Open Dashboard",url:"preview/MarketingDashboard/index.html",external:true}]},
+    linawledger:{category:"DATA • WEB • PUBLIC FINANCE",title:"LinawLedger: 2026 Budget Transparency",summary:"An interactive transparency dashboard that turns the FY 2026 General Appropriations Act into an approachable public view of departments, agencies, programs, expense classes, regions, and five-year enacted trends.",contribution:["Budget information architecture and plain-language explanations","Interactive department, agency, program, and regional exploration","Responsive maps, allocation charts, and single-entity trend views","Traceable presentation of enacted DBM data and source methodology"],stack:["HTML5","CSS3","JavaScript ES6+","Data Visualization","Responsive UI"],links:[{label:"Open Dashboard",url:"preview/LinawLedger/index.html",external:true}]}
   });
 
 
@@ -5866,7 +5866,7 @@ var creativeGalleryItems = [
       "inline",
 
     title:
-      "Creative Work 02 — Motion"
+      "Creative Work 02 - Motion"
   },
 
 
@@ -5997,7 +5997,7 @@ var creativeGalleryItems = [
       "inline",
 
     title:
-      "Cafely Promo Video — AI Generated"
+      "Cafely Promo Video - AI Generated"
   }
 
 ];

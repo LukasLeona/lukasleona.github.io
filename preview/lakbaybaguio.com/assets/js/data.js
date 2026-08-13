@@ -147,8 +147,8 @@
     startLocations: [
       { id: "victory-liner", name: "Victory Liner Baguio Terminal", lat: 16.40179, lng: 120.59903, area: "City Center", terminal: true, googleQuery: "Victory Liner Baguio Terminal" },
       { id: "gov-pack", name: "Gov. Pack Road Bus Terminal", lat: 16.40946, lng: 120.59978, area: "City Center", terminal: true, googleQuery: "Gov Pack Road Baguio bus terminal" },
-      { id: "genesis-baguio", name: "Genesis Transport — Baguio Terminal", lat: 16.40905, lng: 120.60010, area: "City Center", terminal: true, googleQuery: "Genesis Transport Baguio Terminal Gov Pack Road" },
-      { id: "joybus-baguio", name: "JoyBus — Baguio Terminal", lat: 16.40905, lng: 120.60010, area: "City Center", terminal: true, googleQuery: "JoyBus Baguio Terminal Gov Pack Road" },
+      { id: "genesis-baguio", name: "Genesis Transport - Baguio Terminal", lat: 16.40905, lng: 120.60010, area: "City Center", terminal: true, googleQuery: "Genesis Transport Baguio Terminal Gov Pack Road" },
+      { id: "joybus-baguio", name: "JoyBus - Baguio Terminal", lat: 16.40905, lng: 120.60010, area: "City Center", terminal: true, googleQuery: "JoyBus Baguio Terminal Gov Pack Road" },
       { id: "sm-baguio", name: "SM City Baguio", lat: 16.40817, lng: 120.59997, area: "City Center", googleQuery: "SM City Baguio" },
       { id: "burnham-start", name: "Burnham Park", lat: 16.41107, lng: 120.59334, area: "City Center", googleQuery: "Burnham Park Baguio" },
       { id: "session-start", name: "Session Road", lat: 16.41273, lng: 120.59864, area: "City Center", googleQuery: "Session Road Baguio" },

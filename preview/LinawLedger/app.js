@@ -101,7 +101,7 @@
     en: {
       heroEyebrow: "Republic Act No. 12314 · Fiscal Year 2026",
       heroTitle: "Saan napupunta ang <em>₱6.793 trillion?</em>",
-      heroLead: "Explore the national budget by department, agency, program, expense class, or region—without having to decode hundreds of pages.",
+      heroLead: "Explore the national budget by department, agency, program, expense class, or region - without having to decode hundreds of pages.",
       searchLabel: "Search the 2026 national budget",
       searchButton: "Search budget",
       tryLabel: "Try:",
@@ -141,7 +141,7 @@
     fil: {
       heroEyebrow: "Batas Republika Blg. 12314 · Taong Piskal 2026",
       heroTitle: "Saan napupunta ang <em>₱6.793 trilyon?</em>",
-      heroLead: "Tingnan ang pambansang badyet ayon sa departamento, ahensiya, programa, uri ng gastusin, o rehiyon—nang hindi kinakailangang himayin ang daan-daang pahina.",
+      heroLead: "Tingnan ang pambansang badyet ayon sa departamento, ahensiya, programa, uri ng gastusin, o rehiyon - nang hindi kinakailangang himayin ang daan-daang pahina.",
       searchLabel: "Hanapin sa pambansang badyet ng 2026",
       searchButton: "Maghanap",
       tryLabel: "Subukan:",
@@ -510,7 +510,7 @@
       <div class="detail-top">
         <div class="detail-breadcrumb"><span class="detail-fy">FY 2026 GAA</span><span class="detail-chevron" aria-hidden="true">→</span><span class="detail-kind">${escapeHtml(kindLabel(department.kind))}</span></div>
         <h3>${escapeHtml(department.name)}</h3>
-        <p class="detail-intro">A structured view of this enacted spending authority—by expense class, attached agency, and major program entry.</p>
+        <p class="detail-intro">A structured view of this enacted spending authority - by expense class, attached agency, and major program entry.</p>
         <div class="detail-total">
           <div><small>Authorized allocation</small><strong>${formatThousands(department.amount_thousand_pesos, 2)}</strong></div>
           <span class="share-pill">${formatPercent(department.amount_thousand_pesos * 1000, totalPesos, 2)} of national budget</span>
@@ -549,7 +549,7 @@
         <p class="detail-intro">An operating-unit view within ${escapeHtml(agency.department)}, showing its expense mix and largest listed program entries.</p>
         <div class="detail-total">
           <div><small>Authorized allocation</small><strong>${formatThousands(agency.amount_thousand_pesos, 2)}</strong></div>
-          <span class="share-pill">${department ? formatPercent(agency.amount_thousand_pesos, department.amount_thousand_pesos, 2) : "—"} of parent</span>
+          <span class="share-pill">${department ? formatPercent(agency.amount_thousand_pesos, department.amount_thousand_pesos, 2) : " - "} of parent</span>
         </div>
       </div>
       <div class="detail-block">

@@ -18,7 +18,7 @@ function applyWeddingConfig() {
   $$('[data-bride-initial]').forEach((el) => { el.textContent = WEDDING_CONFIG.brideName.charAt(0); });
   $$('[data-groom-initial]').forEach((el) => { el.textContent = WEDDING_CONFIG.groomName.charAt(0); });
   $$('[data-wedding-date-label]').forEach((el) => { el.textContent = WEDDING_CONFIG.weddingDateLabel; });
-  document.title = `${WEDDING_CONFIG.brideName} & ${WEDDING_CONFIG.groomName} — Georgia Beach Wedding`;
+  document.title = `${WEDDING_CONFIG.brideName} & ${WEDDING_CONFIG.groomName} - Georgia Beach Wedding`;
 }
 
 function setupLoader() {

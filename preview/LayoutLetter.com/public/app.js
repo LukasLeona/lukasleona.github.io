@@ -301,7 +301,7 @@
         },
         {
           id: uid(), type: "quote", quote: "Good newsletters feel less like broadcasts and more like letters worth opening.",
-          attribution: "— LayoutLetter editorial team", color: "#2C687B", fontFamily: "Lora", fontSize: 24,
+          attribution: " - LayoutLetter editorial team", color: "#2C687B", fontFamily: "Lora", fontSize: 24,
           align: "center", padding: 38, background: "#EAF6F5",
         },
       ],
@@ -390,7 +390,7 @@
     {
       id: uid(),
       name: "Welcome Newsletter",
-      subject: "Welcome — we’re glad you’re here",
+      subject: "Welcome - we’re glad you’re here",
       status: "Draft",
       date: "2026-07-30T11:30:00.000Z",
       recipients: 0,
@@ -732,7 +732,7 @@
             ${blockTool("product", "$", "Product", "Layout")}
             ${blockTool("button", "↗", "Button", "Actions")}
             ${blockTool("social", "◎", "Social links", "Actions")}
-            ${blockTool("divider", "—", "Divider", "Structure")}
+            ${blockTool("divider", " - ", "Divider", "Structure")}
             ${blockTool("spacer", "↕", "Spacer", "Structure")}
           </div>
 
@@ -908,7 +908,7 @@
         return `
           <div style="background:${background};padding:${padding}px;text-align:${align};color:${escapeAttr(block.color || palette.darkTeal)};font-family:${escapeAttr(fontStack(block.fontFamily || "Lora"))}">
             <div style="font-size:${clampNumber(block.fontSize, 16, 42, 24)}px;font-weight:700;line-height:1.45">“${escapeHtml(block.quote || "A memorable idea belongs here.")}”</div>
-            <div style="margin-top:13px;font-family:${escapeAttr(fontStack("Poppins"))};font-size:11px;font-weight:700;letter-spacing:.5px;opacity:.72">${escapeHtml(block.attribution || "— Your name")}</div>
+            <div style="margin-top:13px;font-family:${escapeAttr(fontStack("Poppins"))};font-size:11px;font-weight:700;letter-spacing:.5px;opacity:.72">${escapeHtml(block.attribution || " - Your name")}</div>
           </div>
         `;
 
@@ -1616,7 +1616,7 @@
     const block = state.blocks.find((item) => item.id === state.selectedBlockId);
     if (!block) {
       navigator.clipboard?.writeText(color).catch(() => {});
-      showToast("Color copied", `${color} — select a block to apply it directly.`);
+      showToast("Color copied", `${color} - select a block to apply it directly.`);
       return;
     }
 
@@ -1955,7 +1955,7 @@
       quote: {
         ...base,
         quote: "A memorable idea belongs here.",
-        attribution: "— Your name",
+        attribution: " - Your name",
         fontSize: 24,
         color: palette.darkTeal,
         align: "center",
@@ -3051,7 +3051,7 @@
 
   function formatDate(value) {
     const date = new Date(value);
-    if (Number.isNaN(date.getTime())) return "—";
+    if (Number.isNaN(date.getTime())) return " - ";
     return new Intl.DateTimeFormat("en-US", {
       month: "short",
       day: "numeric",

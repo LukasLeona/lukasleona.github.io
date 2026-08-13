@@ -137,7 +137,7 @@
   let gifts;
   try { gifts=JSON.parse(localStorage.getItem(storageKey)) || defaultGifts; } catch { gifts=defaultGifts; }
   const iconFor = cat => ({Kitchen:'◫',Home:'⌂',Travel:'✈','Cash Gift':'₱',Experience:'♡',Other:'✦'}[cat]||'✦');
-  const money = n => n ? `₱${Number(n).toLocaleString('en-PH')}` : '—';
+  const money = n => n ? `₱${Number(n).toLocaleString('en-PH')}` : ' - ';
   const renderGifts = () => {
     const list=$('#giftList'); list.innerHTML='';
     $('#giftCount').textContent=`${gifts.length} thoughtful gift${gifts.length===1?'':'s'}`;

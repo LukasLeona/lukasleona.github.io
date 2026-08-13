@@ -386,7 +386,7 @@ function buildSchedule() {
   state.queue.sort((a, b) => Number(b.isNow) - Number(a.isNow) || a.date - b.date || (a.hour * 60 + a.minute) - (b.hour * 60 + b.minute));
   renderQueue();
   updateWorkflow();
-  showToast("Publishing queue prepared — nothing was posted");
+  showToast("Publishing queue prepared - nothing was posted");
 }
 
 function buildDashboardActivity(platformId, ageValue = "all") {
@@ -567,7 +567,7 @@ function exportQueue() {
   link.click();
   link.remove();
   URL.revokeObjectURL(url);
-  showToast("Draft queue exported — nothing was published");
+  showToast("Draft queue exported - nothing was published");
 }
 
 function parseLocalDate(value) {

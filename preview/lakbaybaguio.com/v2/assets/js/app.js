@@ -819,13 +819,13 @@
 
   function itineraryToText(itinerary) {
     const lines = [
-      "LAKBAY BAGUIO — GENERATED ITINERARY",
+      "LAKBAY BAGUIO - GENERATED ITINERARY",
       `Start: ${itinerary.start.name}`,
       `Date: ${itinerary.date ? formatDate(itinerary.date) : "Not specified"}`,
       `Estimated transport: ${formatCurrency(itinerary.totalFare)}`,
       "",
       ...itinerary.items.flatMap((item) => [
-        `${item.index}. ${minutesToTime(item.visitStart)} — ${item.destination.name} (${formatDuration(item.destination.duration)})`,
+        `${item.index}. ${minutesToTime(item.visitStart)} - ${item.destination.name} (${formatDuration(item.destination.duration)})`,
         `   ${item.transport.label} from ${item.from.name} · ${item.distance.toFixed(1)} km est. · ${item.transport.minutes} min · ${item.transport.fareTotal ? formatCurrency(item.transport.fareTotal) : "Free"}`,
         ...item.transport.steps.map((step, index) => `   ${index + 1}) ${step}`),
         "   Suggested activities:",

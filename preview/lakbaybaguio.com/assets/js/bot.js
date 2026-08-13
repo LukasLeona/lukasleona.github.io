@@ -85,7 +85,7 @@
       "Strawberry taho muna bago problema.",
       "Hindi kumpleto ang Baguio trip kung puro lakad at walang kain.",
       "Good Taste serving sizes are not emotionally prepared for one person. 😭",
-      "Mainit na kape plus malamig na panahon—simple pero effective.",
+      "Mainit na kape plus malamig na panahon - simple pero effective.",
       "Hindi lahat ng itinerary kailangang productive. Puwede ring café hopping lang."
     ],
     trip: [
@@ -100,7 +100,7 @@
       "Baguio is not asking you to be productive. Minsan, sapat nang present ka.",
       "Your itinerary is a guide, not a deadline.",
       "Take the long breath, the warm drink, and the slow walk.",
-      "May mga problemang hindi masosolve ng view—but the view can help you face them with a calmer mind.",
+      "May mga problemang hindi masosolve ng view - but the view can help you face them with a calmer mind.",
       "Pine trees, fog, and a little distance from routine can make room for clearer thoughts.",
       "Hindi mo kailangang i-post lahat. Some moments can stay yours."
     ]
@@ -167,7 +167,7 @@
           const results = $("#results");
           if (results && !results.hidden) {
             contextMessage(
-              "Plan generated! Guide lang ang oras. Baguio traffic, fog, and spontaneous café stops can change the day—and that is okay. 🌲",
+              "Plan generated! Guide lang ang oras. Baguio traffic, fog, and spontaneous café stops can change the day - and that is okay. 🌲",
               [
                 { label: "Give me a reminder", intent: "trip" },
                 { label: "Comfort me", intent: "comfort" }
@@ -234,7 +234,7 @@
 
     if (!state.greeted) {
       state.greeted = true;
-      queueBotMessage("Hi, ako si Kabsat 🌲 Hindi ako therapist o live tour guide—friendly Baguio companion lang na may kaunting lambing, humor, at practical reminders.", 220);
+      queueBotMessage("Hi, ako si Kabsat 🌲 Hindi ako therapist o live tour guide - friendly Baguio companion lang na may kaunting lambing, humor, at practical reminders.", 220);
       queueBotMessage("Anong klaseng kasama ang kailangan mo ngayon?", 900, menuReplies);
     } else {
       window.setTimeout(() => ui.input.focus(), 100);
@@ -272,7 +272,7 @@
     queueBotMessage(
       state.muted
         ? "Automatic message bubbles muted. Nandito pa rin ako kapag ikaw ang nag-open. 🤍"
-        : "Message bubbles are back—gentle hellos lang, promise.",
+        : "Message bubbles are back - gentle hellos lang, promise.",
       180,
       menuReplies
     );
@@ -315,7 +315,7 @@
 
   function handleIntent(intent) {
     if (intent === "menu") {
-      queueBotMessage("Choose a mood or topic. Walang pressure—friendly pause lang tayo.", 240, menuReplies);
+      queueBotMessage("Choose a mood or topic. Walang pressure - friendly pause lang tayo.", 240, menuReplies);
       return;
     }
     if (["curse-yes", "curse-no", "curse-explain"].includes(intent)) {
@@ -343,11 +343,11 @@
     const first = intent === "curse-explain"
       ? "Sabi nila, kapag magkasamang pumunta sa Baguio ang mag-partner, maghihiwalay daw pagkatapos."
       : intent === "curse-yes"
-        ? "Gets ko kung bakit nakaka-praning ang kuwento—lalo na kapag paulit-ulit mo itong naririnig."
+        ? "Gets ko kung bakit nakaka-praning ang kuwento - lalo na kapag paulit-ulit mo itong naririnig."
         : "Same. Ako rin, hindi naniniwala na isang lugar ang may kontrol sa relasyon.";
 
     queueBotMessage(first, 260);
-    queueBotMessage("Marami namang pumunta sa Baguio na nag-stay together—and marami ring naghiwalay kahit hindi nag-Baguio. 😅", 1050);
+    queueBotMessage("Marami namang pumunta sa Baguio na nag-stay together - and marami ring naghiwalay kahit hindi nag-Baguio. 😅", 1050);
     queueBotMessage("At the end of the day, hindi lugar ang nagdedesisyon para sa relasyon. Choices, communication, at kung paano ninyo aalagaan ang isa’t isa pa rin.", 1850);
     queueBotMessage("Kaya mag-picture na kayo sa Burnham. Huwag lang mag-away kung sino ang magpe-pedal ng boat. 🚣", 2700, [
       { label: "Couple trip tip", intent: "couple" },
@@ -395,7 +395,7 @@
           if (cycles >= 3) {
             card.remove();
             state.breathingTimer = null;
-            queueBotMessage("Good. Hindi nawala ang lahat ng problema—but you gave your body a small quiet moment. That counts.", 250, menuReplies);
+            queueBotMessage("Good. Hindi nawala ang lahat ng problema - but you gave your body a small quiet moment. That counts.", 250, menuReplies);
             return;
           }
           next();
@@ -429,8 +429,8 @@
 
   function reactToSelectionCount(count) {
     if (!state.open || Date.now() - state.lastContextAt < 12000) return;
-    if (count === 0) contextMessage("Blank canvas ulit. Choose places that match your energy—not just what everyone says you must visit.");
-    else if (count === 2) contextMessage("Nice—may route na tayong mabubuo. You can add more, pero okay lang din ang simple day.");
+    if (count === 0) contextMessage("Blank canvas ulit. Choose places that match your energy - not just what everyone says you must visit.");
+    else if (count === 2) contextMessage("Nice - may route na tayong mabubuo. You can add more, pero okay lang din ang simple day.");
     else if (count >= 10) contextMessage("Ang dami nating pinili. Gusto mo bang bawasan para hindi maging Amazing Race: Baguio Edition? 😭", [
       { label: "Give me a pacing tip", intent: "trip" },
       { label: "Kaya ko ’to", intent: "random" }
@@ -440,13 +440,13 @@
   function reactToDestination(destination) {
     if (!state.open || Date.now() - state.lastContextAt < 10000) return;
     const custom = {
-      "burnham-park": "Burnham Park added! Paddle boat, bike ride, or strawberry taho—choose your kind of soft day.",
+      "burnham-park": "Burnham Park added! Paddle boat, bike ride, or strawberry taho - choose your kind of soft day.",
       "baguio-night-market": "Night Market added! Save your energy and bring small bills. Late-night stop ito, hindi pang-10:15 AM. 😭",
       "camp-john-hay": "Camp John Hay added. Leave space for a slow forest walk, warm drink, and zero rushing.",
       "mines-view-park": "Mines View added. Go earlier when possible, and keep a little patience for crowds and photo lines.",
       "strawberry-farm": "Strawberry Farm added! Seasonal ang picking, but local strawberry treats are always part of the fun."
     };
-    contextMessage(custom[destination.id] || `${destination.name} added. Good choice—remember to enjoy the stop, not just collect the photo.`);
+    contextMessage(custom[destination.id] || `${destination.name} added. Good choice - remember to enjoy the stop, not just collect the photo.`);
   }
 
   function contextMessage(text, replies) {

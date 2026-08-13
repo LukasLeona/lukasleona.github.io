@@ -116,7 +116,7 @@
     const heroStories = [
       { kicker: 'Private hillside living in Carmona', one: 'Where the horizon', two: 'feels like home.', description: 'A residential community where architecture opens naturally to light, landscape, and a more considered pace.' },
       { kicker: 'Interiors with room to breathe', one: 'Space, considered', two: 'down to the light.', description: 'Generous rooms, framed views, and quiet material choices turn everyday living into something beautifully effortless.' },
-      { kicker: 'Architecture for real family life', one: 'Designed for the life', two: 'you are building.', description: 'Flexible places to gather, retreat, work, and grow—shaped around the rhythms that make a house yours.' },
+      { kicker: 'Architecture for real family life', one: 'Designed for the life', two: 'you are building.', description: 'Flexible places to gather, retreat, work, and grow - shaped around the rhythms that make a house yours.' },
       { kicker: 'An arrival with a sense of place', one: 'Every return', two: 'feels elevated.', description: 'From the first turn home to the last light upstairs, every detail is composed to make arrival feel different.' },
       { kicker: 'A quieter address in the south', one: 'Come home to', two: 'higher ground.', description: 'Contemporary homes, green ridges, and connected southern living come together at Canyon Ranch.' }
     ];
@@ -376,7 +376,7 @@
       const interest = String(data.get('interest') || 'Canyon Ranch');
       const date = String(data.get('date') || 'To be arranged');
       const message = String(data.get('message') || 'I would like to learn more.');
-      const subject = encodeURIComponent(`Canyon Ranch inquiry — ${interest}`);
+      const subject = encodeURIComponent(`Canyon Ranch inquiry - ${interest}`);
       const bodyText = encodeURIComponent(`Name: ${name}\nEmail: ${email}\nPhone: ${phone}\nInterest: ${interest}\nPreferred visit: ${date}\n\nMessage:\n${message}`);
       if (status) status.textContent = 'Opening your email app with the inquiry details…';
       window.location.href = `mailto:hello@canyonranch.ph?subject=${subject}&body=${bodyText}`;

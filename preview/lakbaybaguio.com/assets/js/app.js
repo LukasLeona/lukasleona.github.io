@@ -1049,7 +1049,7 @@
       lines.push(`DAY ${day.index + 1}`);
       day.notices.forEach((notice) => lines.push(`Note: ${notice}`));
       day.items.forEach((item, index) => {
-        lines.push(`${index + 1}. ${minutesToTime(item.arrivalMinutes)} — ${item.destination.name}`);
+        lines.push(`${index + 1}. ${minutesToTime(item.arrivalMinutes)} - ${item.destination.name}`);
         lines.push(`   ${transportLabel(item.transport.mode)} from ${item.from.name}, about ${formatDuration(item.transport.minutes)}.`);
         item.transport.instructions.forEach((instruction) => lines.push(`   - ${instruction}`));
         lines.push(`   Try: ${item.destination.activities.join("; ")}`);

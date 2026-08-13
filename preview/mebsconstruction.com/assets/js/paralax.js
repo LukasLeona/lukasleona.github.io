@@ -2,7 +2,7 @@
   'use strict';
 
   /* ─────────────────────────────────────────────
-     DOM ready guard — script যেখানেই থাকুক,
+     DOM ready guard - script যেখানেই থাকুক,
      HTML fully parse হওয়ার পরই চলবে
   ───────────────────────────────────────────── */
   function init() {
@@ -11,7 +11,7 @@
     var scene = document.getElementById('lp-scene');
     if (!scene) return; /* lp-scene না থাকলে চুপচাপ বের হও */
 
-    /* ── Cursor elements — null check ── */
+    /* ── Cursor elements - null check ── */
     var dot  = document.getElementById('lp-dot');
     var ring = document.getElementById('lp-ring');
 
@@ -23,7 +23,7 @@
     var RETURN_DURATION = parseFloat(scene.getAttribute('data-lp-return-duration')) || 1.4;
     var RETURN_EASE     = scene.getAttribute('data-lp-return-ease')                 || 'elastic.out(1,0.6)';
 
-    /* Apply cursor size + color — only if elements exist */
+    /* Apply cursor size + color - only if elements exist */
     if (dot) {
       gsap.set(dot, { width: CURSOR_SIZE, height: CURSOR_SIZE, opacity: 0 });
     }
@@ -73,10 +73,10 @@
       var nx = (mx - cx) / cx;
       var ny = (my - cy) / cy;
 
-      /* Cursor dot — instant */
+      /* Cursor dot - instant */
       if (dot)  gsap.to(dot,  { x: mx, y: my, duration: 0.05, ease: 'none' });
 
-      /* Cursor ring — lagged */
+      /* Cursor ring - lagged */
       if (ring) gsap.to(ring, { x: mx, y: my, duration: RING_DURATION, ease: 'power2.out' });
 
       /* Each parallax item */
@@ -106,7 +106,7 @@
       });
     });
 
-    /* ── Mouse leave — return to origin ── */
+    /* ── Mouse leave - return to origin ── */
     scene.addEventListener('mouseleave', function () {
       var targets = [];
       if (dot)  targets.push(dot);
@@ -136,7 +136,7 @@
   } /* end init() */
 
   /* ─────────────────────────────────────────────
-     Safe execution — DOM ready হলে চালাও,
+     Safe execution - DOM ready হলে চালাও,
      নইলে DOMContentLoaded-এ wait করো
   ───────────────────────────────────────────── */
   if (document.readyState === 'loading') {

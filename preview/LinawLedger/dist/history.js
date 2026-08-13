@@ -53,7 +53,7 @@
   }
 
   function optionLabel(item) {
-    return item.short && item.short !== item.name ? `${item.name} — ${item.short}` : item.name;
+    return item.short && item.short !== item.name ? `${item.name} - ${item.short}` : item.name;
   }
 
   function populateSelector() {
@@ -70,7 +70,7 @@
   }
 
   function formatLarge(value) {
-    if (value === null || value === undefined) return "—";
+    if (value === null || value === undefined) return " - ";
     if (Math.abs(value) >= 1000) return `₱${(value / 1000).toFixed(3)}T`;
     return formatBillions(value);
   }
@@ -113,7 +113,7 @@
       </div>
       <div class="history-stat ${changeClass}">
         <span>Change since ${firstYear}</span>
-        <strong>${change === null ? "—" : `${change >= 0 ? "+" : "−"}${formatLarge(Math.abs(change))}`}</strong>
+        <strong>${change === null ? " - " : `${change >= 0 ? "+" : "−"}${formatLarge(Math.abs(change))}`}</strong>
         <small>${percent === null ? "Insufficient comparable years" : `${percent >= 0 ? "+" : ""}${percent.toFixed(1)}% in nominal pesos`}</small>
       </div>
       <div class="history-stat">
@@ -225,7 +225,7 @@
       const delta = value !== null && value !== undefined && previous !== null && previous !== undefined ? value - previous : null;
       const deltaPercent = delta !== null && previous ? (delta / previous) * 100 : null;
       const deltaClass = delta === null ? "is-missing" : delta >= 0 ? "change-positive" : "change-negative";
-      const deltaText = deltaPercent === null ? "—" : `${deltaPercent >= 0 ? "+" : ""}${deltaPercent.toFixed(1)}%`;
+      const deltaText = deltaPercent === null ? " - " : `${deltaPercent >= 0 ? "+" : ""}${deltaPercent.toFixed(1)}%`;
       return `<tr>
         <td>${year}</td>
         <td class="${value === null ? "is-missing" : ""}">${formatBillions(value, true)}</td>

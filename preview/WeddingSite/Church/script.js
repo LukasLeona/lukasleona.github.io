@@ -20,7 +20,7 @@ function applyWeddingConfig() {
   $$('[data-bride-name]').forEach((el) => { el.textContent = WEDDING_CONFIG.brideName; });
   $$('[data-groom-name]').forEach((el) => { el.textContent = WEDDING_CONFIG.groomName; });
   $$('[data-wedding-date-label]').forEach((el) => { el.textContent = WEDDING_CONFIG.weddingDateLabel; });
-  document.title = `${WEDDING_CONFIG.brideName} & ${WEDDING_CONFIG.groomName} — Wedding Invitation`;
+  document.title = `${WEDDING_CONFIG.brideName} & ${WEDDING_CONFIG.groomName} - Wedding Invitation`;
 }
 
 function setupLoader() {
