@@ -47,7 +47,7 @@
   };
 
   function enhanceTechnologyBadges() {
-    document.querySelectorAll("#portfolio .portfolio-project-tags").forEach(function (group) {
+    document.querySelectorAll("#portfolio .portfolio-project-tags, #portfolio .portfolio-drawer-tags").forEach(function (group) {
       group.setAttribute("role", "list");
 
       group.querySelectorAll(":scope > span").forEach(function (badge) {
@@ -67,8 +67,20 @@
   }
 
   if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", enhanceTechnologyBadges, { once: true });
+    document.addEventListener("DOMContentLoaded", function () {
+      enhanceTechnologyBadges();
+
+      var drawerStack = document.getElementById("portfolioDrawerStack");
+      if (drawerStack) {
+        new MutationObserver(enhanceTechnologyBadges).observe(drawerStack, { childList: true });
+      }
+    }, { once: true });
   } else {
     enhanceTechnologyBadges();
+
+    var drawerStack = document.getElementById("portfolioDrawerStack");
+    if (drawerStack) {
+      new MutationObserver(enhanceTechnologyBadges).observe(drawerStack, { childList: true });
+    }
   }
 }());

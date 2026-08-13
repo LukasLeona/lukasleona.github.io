@@ -261,7 +261,7 @@ html[data-theme="light"] #portfolio .portfolio-drawer-tags span {
 
   #hero .hero-image {
     position: absolute !important;
-    top: 20% !important;
+    top: 28% !important;
     left: 50% !important;
     display: block !important;
     margin: 0 !important;
@@ -277,10 +277,10 @@ html[data-theme="light"] #portfolio .portfolio-drawer-tags span {
 
   #hero .hero-content {
     position: absolute !important;
-    top: calc(20% + 112px) !important;
+    top: calc(28% + 112px) !important;
     left: 50% !important;
-    width: min(100%, 430px) !important;
-    max-width: 430px !important;
+    width: min(calc(100% - 36px), 350px) !important;
+    max-width: 350px !important;
     margin: 0 !important;
     text-align: center !important;
     transform: translateX(-50%) !important;
@@ -307,11 +307,15 @@ html[data-theme="light"] #portfolio .portfolio-drawer-tags span {
   }
 
   #hero .hero-role-line {
+    height: 2.8em;
     min-height: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     margin-top: 11px !important;
     font-size: clamp(9px, 2.2vw, 12px) !important;
     line-height: 1.4 !important;
-    white-space: nowrap;
+    white-space: normal;
   }
 
   #hero .hero-actions {

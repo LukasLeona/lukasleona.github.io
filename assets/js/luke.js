@@ -3020,7 +3020,7 @@ function portfolioChatbot() {
 
     recognition.addEventListener("end", function () {
       isListening = false;
-      input.placeholder = micSessionActive ? "Mic is on - speak when ready…" : "Ask about Luke's work...";
+      input.placeholder = micSessionActive ? "Mic is on. Speak when ready…" : "Ask about Luke's work...";
       setLumoVisualizerState(isReplying ? "thinking" : "idle");
       updateVoiceControls();
       resumePersistentMic(420);
@@ -3028,7 +3028,7 @@ function portfolioChatbot() {
 
     recognition.addEventListener("error", function (event) {
       isListening = false;
-      input.placeholder = micSessionActive ? "Mic is on - speak when ready…" : "Ask about Luke's work...";
+      input.placeholder = micSessionActive ? "Mic is on. Speak when ready…" : "Ask about Luke's work...";
       setLumoVisualizerState("idle");
 
       if (event.error === "not-allowed" || event.error === "service-not-allowed") {
@@ -3170,7 +3170,7 @@ function portfolioChatbot() {
     ) {
       return {
         messages: [
-          "This is my signal form - Lumo, a living field of light, data, and voice-reactive energy."
+          "This is my signal form: Lumo, a living field of light, data, and voice-reactive energy."
         ],
         faceMode: true
       };
@@ -3203,7 +3203,7 @@ function portfolioChatbot() {
     ) {
       return {
         messages: [
-          "Luke is single and coffee-friendly. ☕ His professional rate starts at $6 per hour - so if that still sounds like a good coffee date, why not send him a message?"
+          "Luke is single and coffee-friendly. ☕ His professional rate starts at $6 per hour. If that still sounds like a good coffee date, why not send him a message?"
         ],
         action: {
           label: "Ask Luke over coffee",
@@ -3388,7 +3388,7 @@ function portfolioChatbot() {
       return {
         messages: [
           "Luke can help with web development, UI implementation, SEO, data analytics, automation, and ongoing technical support.",
-          "The Resume section is interactive - tap Web, Design, SEO, Data, Automation, or Support to see a live example of each capability."
+          "The Resume section is interactive. Tap Web, Design, SEO, Data, Automation, or Support to see a live example of each capability."
         ],
         action: {
           label: "Explore capabilities",
@@ -4485,7 +4485,7 @@ function interactiveResume() {
         trends: ["+18.4%", "+12.1%", "vs. previous period"],
         lineLabel: "REVENUE TREND",
         lineValue: "₱482K",
-        linePeriod: "Jan - Jul",
+        linePeriod: "Jan to Jul",
         line: [132,116,126,82,94,50,62],
         bars: [34,52,44,71,62,86,76],
         barNames: ["Web","SEO","Email","Social","Direct","Paid","Referral"],
@@ -5866,7 +5866,7 @@ var creativeGalleryItems = [
       "inline",
 
     title:
-      "Creative Work 02 - Motion"
+      "Creative Work 02: Motion"
   },
 
 
@@ -5997,7 +5997,7 @@ var creativeGalleryItems = [
       "inline",
 
     title:
-      "Cafely Promo Video - AI Generated"
+      "Cafely Promo Video: AI Generated"
   }
 
 ];
