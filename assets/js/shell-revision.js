@@ -40,6 +40,18 @@
     }
   }
 
+  function relocateThemeSwitch() {
+    var switcher = document.getElementById("color-switcher");
+    var mobileSlot = document.getElementById("mobileThemeSlot");
+    if (!switcher || !mobileSlot) return;
+
+    if (window.matchMedia("(max-width: 991px)").matches) {
+      if (switcher.parentElement !== mobileSlot) mobileSlot.appendChild(switcher);
+    } else if (switcher.parentElement === mobileSlot) {
+      document.body.appendChild(switcher);
+    }
+  }
+
   function normalizeRightRail() {
     var rail = document.querySelector(".right-side");
     if (!rail || rail.querySelector(".sidebar-social-stack")) return;
@@ -112,6 +124,7 @@
 
   function prepareShell() {
     normalizeThemeSwitch();
+    relocateThemeSwitch();
     normalizeRightRail();
     normalizeChatbot();
     normalizeMobileDrawer();
@@ -119,7 +132,7 @@
 
   function createStarField() {
     var area = document.querySelector(".area");
-    if (!area || area.querySelector(".star-field-canvas")) return;
+    if (!area || area.querySelector(".star-field-canvas") || window.matchMedia("(max-width: 991px)").matches) return;
 
     var canvas = document.createElement("canvas");
     canvas.className = "star-field-canvas";
@@ -469,6 +482,7 @@
     prepareShell();
     createStarField();
     createPortfolioLivePreviews();
+    window.addEventListener("resize", relocateThemeSwitch, { passive: true });
   }
 
   if (document.readyState === "loading") {
