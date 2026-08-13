@@ -2,12 +2,12 @@
   "use strict";
 
   var iconMap = {
-    "html": ["logos:html-5", true],
-    "css": ["logos:css-3", true],
-    "javascript": ["logos:javascript", true],
-    "python": ["logos:python", true],
-    "react": ["logos:react", true],
-    "wordpress": ["logos:wordpress-icon", true],
+    "html5": ["logos:html-5", true],
+    "css3": ["logos:css-3", true],
+    "javascript es6+": ["logos:javascript", true],
+    "python 3": ["logos:python", true],
+    "react.js": ["logos:react", true],
+    "wordpress cms": ["logos:wordpress-icon", true],
     "chart.js": ["simple-icons:chartdotjs", false],
     "tutor lms": ["mdi:school-outline", false],
     "seo": ["mdi:magnify-scan", false],
