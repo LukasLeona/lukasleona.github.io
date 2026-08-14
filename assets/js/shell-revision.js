@@ -372,7 +372,53 @@
 
     var loadedMedia = [];
     var visibility = new WeakMap();
-    var maxLoaded = 4;
+    var maxLoaded = window.matchMedia("(max-width: 991px)").matches ? 1 : 2;
+
+    function disconnectPreviewMuteGuard(frame) {
+      if (!frame || !frame._previewMuteObserver) return;
+      frame._previewMuteObserver.disconnect();
+      frame._previewMuteObserver = null;
+    }
+
+    function mutePreviewMedia(frame) {
+      try {
+        var previewDocument = frame.contentDocument;
+        if (!previewDocument) return;
+
+        function silence(media) {
+          if (!(media instanceof frame.contentWindow.HTMLMediaElement)) return;
+          media.defaultMuted = true;
+          if (!media.muted) media.muted = true;
+          if (media.volume !== 0) media.volume = 0;
+          if (media.tagName === "AUDIO") media.pause();
+        }
+
+        previewDocument.querySelectorAll("audio, video").forEach(silence);
+        previewDocument.addEventListener("play", function (event) {
+          silence(event.target);
+        }, true);
+        previewDocument.addEventListener("volumechange", function (event) {
+          silence(event.target);
+        }, true);
+
+        disconnectPreviewMuteGuard(frame);
+        frame._previewMuteObserver = new MutationObserver(function (records) {
+          records.forEach(function (record) {
+            record.addedNodes.forEach(function (node) {
+              if (node.nodeType !== 1) return;
+              if (node.matches && node.matches("audio, video")) silence(node);
+              if (node.querySelectorAll) node.querySelectorAll("audio, video").forEach(silence);
+            });
+          });
+        });
+        frame._previewMuteObserver.observe(previewDocument.documentElement, {
+          childList: true,
+          subtree: true
+        });
+      } catch (error) {
+        /* Cross-origin previews remain protected by the iframe autoplay policy. */
+      }
+    }
 
     function removeFromLoaded(media) {
       loadedMedia = loadedMedia.filter(function (item) { return item !== media; });
@@ -382,6 +428,7 @@
       var frame = media.querySelector(".project-live-preview-frame");
       if (!frame || frame.dataset.previewActive !== "true") return;
 
+      disconnectPreviewMuteGuard(frame);
       delete frame.dataset.previewActive;
       frame.src = "about:blank";
       media.classList.remove("is-live-preview-loading", "is-live-preview-ready");
@@ -436,6 +483,7 @@
       frame.setAttribute("aria-hidden", "true");
       frame.setAttribute("scrolling", "no");
       frame.setAttribute("sandbox", "allow-scripts allow-same-origin allow-forms allow-popups");
+      frame.setAttribute("allow", "autoplay 'none'");
       frame.title = "Live preview of " + (title ? title.textContent.trim() : "project website");
 
       badge.className = "project-live-preview-badge";
@@ -443,6 +491,7 @@
 
       frame.addEventListener("load", function () {
         if (frame.dataset.previewActive !== "true") return;
+        mutePreviewMedia(frame);
         media.classList.remove("is-live-preview-loading");
         media.classList.add("is-live-preview-ready");
       });
@@ -460,12 +509,16 @@
       var observer = new IntersectionObserver(function (entries) {
         entries.forEach(function (entry) {
           visibility.set(entry.target, entry.isIntersecting);
-          if (entry.isIntersecting) activatePreview(entry.target);
+          if (entry.isIntersecting) {
+            activatePreview(entry.target);
+          } else {
+            unloadPreview(entry.target);
+          }
         });
       }, {
         root: null,
-        rootMargin: "180px 0px",
-        threshold: .08
+        rootMargin: "48px 0px",
+        threshold: .12
       });
 
       previewMedia.forEach(function (media) { observer.observe(media); });
