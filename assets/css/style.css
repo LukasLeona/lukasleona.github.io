@@ -4868,10 +4868,6 @@ body.dark-arshia,
 ======================================== */
 
 .hero-portrait-reveal {
-  --reveal-x: 50%;
-  --reveal-y: 50%;
-  --reveal-radius: 105px;
-
   position: absolute;
 
   /* Same general position as old .extend-icon */
@@ -4918,40 +4914,23 @@ body.dark-arshia,
   z-index: 1;
 }
 
-/* Alternate hidden image */
+/* Hidden source used by the canvas-based painted reveal. */
 .hero-portrait-layer {
-  z-index: 2;
-
+  z-index: 0;
   opacity: 0;
-
-  -webkit-clip-path:
-    circle(0px at var(--reveal-x) var(--reveal-y));
-
-  transition: opacity 0.12s ease;
+  visibility: hidden;
 }
 
-
-/* Reveal alternate image only around cursor */
-.hero-portrait-reveal.is-revealing .hero-portrait-layer {
-
-  opacity: 1;
-
-  -webkit-clip-path:
-    circle(var(--reveal-radius) at var(--reveal-x) var(--reveal-y));
-
-  clip-path:
-    circle(var(--reveal-radius) at var(--reveal-x) var(--reveal-y));
-}
-
-
-/* Yellow scanner circle */
-.hero-scan-ring {
-  display: none !important;
-}
-
-
-.hero-portrait-reveal.is-revealing .hero-scan-ring {
-  opacity: 1;
+.hero-portrait-brush {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: block;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  filter: saturate(1.08) contrast(1.04);
+  transform-origin: right bottom;
 }
 
 

@@ -480,12 +480,12 @@
         <img class="hero-portrait-base" src="assets/img/webdesigner/hero-layers/profile-main.png" alt="Luke Leona"
           draggable="false">
 
-        <!-- Hidden rotating reveal portrait -->
+        <!-- Hidden source for the rotating painted portrait -->
         <img class="hero-portrait-layer" id="heroPortraitLayer"
           src="assets/img/webdesigner/hero-layers/profile-skeleton.png" alt="" aria-hidden="true" draggable="false">
 
-        <!-- Scanner ring -->
-        <div class="hero-scan-ring" aria-hidden="true"></div>
+        <!-- The alternate portrait is painted into this textured mask -->
+        <canvas class="hero-portrait-brush" id="heroPortraitBrush" aria-hidden="true"></canvas>
 
       </div>
       <!-- END INTERACTIVE DESKTOP HERO PORTRAIT -->

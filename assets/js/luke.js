@@ -1687,10 +1687,12 @@ function heroImageReveal() {
 
   const portrait = document.getElementById("heroPortraitReveal");
   const revealImage = document.getElementById("heroPortraitLayer");
+  const brushCanvas = document.getElementById("heroPortraitBrush");
 
   if (
     !portrait ||
     !revealImage ||
+    !brushCanvas ||
     window.innerWidth <= 991
   ) {
     return;
@@ -1709,96 +1711,292 @@ function heroImageReveal() {
     "assets/img/webdesigner/hero-layers/profile-software.png"
   ];
 
-  /*
-    Preload all images so the reveal does not
-    flash or lag the first time each one appears.
-  */
-  revealLayers.forEach(function (src) {
-    const image = new Image();
-    image.src = src;
+  const layerImages = revealLayers.map(function (src) {
+    const layer = new Image();
+    layer.decoding = "async";
+    layer.src = src;
+    return layer;
   });
 
-  let currentLayer = -1;
+  const brushContext = brushCanvas.getContext("2d");
+  const maskCanvas = document.createElement("canvas");
+  const maskContext = maskCanvas.getContext("2d");
+  const stampCanvas = document.createElement("canvas");
+  const stampContext = stampCanvas.getContext("2d");
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  /*
-    Move the reveal circle to the mouse position.
-  */
-  function updateRevealPosition(event) {
-    const rect = portrait.getBoundingClientRect();
-
-    const x = event.clientX - rect.left;
-    const y = event.clientY - rect.top;
-
-    portrait.style.setProperty(
-      "--reveal-x",
-      x + "px"
-    );
-
-    portrait.style.setProperty(
-      "--reveal-y",
-      y + "px"
-    );
+  if (!brushContext || !maskContext || !stampContext) {
+    return;
   }
 
-  /*
-    Every NEW hover selects the next image.
+  stampCanvas.width = 220;
+  stampCanvas.height = 110;
 
-    Hover 1 = Skeleton
-    Hover 2 = Code
-    Hover 3 = Automation
-    Hover 4 = Data
-    Hover 5 = Marketing
-    Hover 6 = Software Engineering
-    Then repeat.
-  */
-  portrait.addEventListener(
-    "mouseenter",
-    function (event) {
+  let randomSeed = 24837;
 
-      currentLayer =
-        (currentLayer + 1) %
-        revealLayers.length;
+  function seededRandom() {
+    randomSeed = (randomSeed * 16807) % 2147483647;
+    return (randomSeed - 1) / 2147483646;
+  }
 
-      revealImage.src =
-        revealLayers[currentLayer];
+  function buildBrushStamp() {
+    stampContext.clearRect(0, 0, stampCanvas.width, stampCanvas.height);
+    stampContext.lineCap = "round";
 
-      updateRevealPosition(event);
+    for (let bristle = 0; bristle < 46; bristle++) {
+      const y = 13 + seededRandom() * 84;
+      const start = 8 + seededRandom() * 34;
+      const end = 182 + seededRandom() * 34;
+      const bend = (seededRandom() - 0.5) * 15;
+      const thickness = 0.8 + seededRandom() * 5.4;
 
-      portrait.classList.add(
-        "is-revealing"
+      stampContext.beginPath();
+      stampContext.moveTo(start, y);
+      stampContext.quadraticCurveTo(108, y + bend, end, y + bend * 0.28);
+      stampContext.strokeStyle = "rgba(255,255,255," + (0.2 + seededRandom() * 0.72) + ")";
+      stampContext.lineWidth = thickness;
+      stampContext.stroke();
+    }
+
+    for (let grain = 0; grain < 70; grain++) {
+      const x = 18 + seededRandom() * 190;
+      const y = 15 + seededRandom() * 78;
+      const radius = 0.5 + seededRandom() * 2.1;
+
+      stampContext.beginPath();
+      stampContext.arc(x, y, radius, 0, Math.PI * 2);
+      stampContext.fillStyle = "rgba(255,255,255," + (0.08 + seededRandom() * 0.32) + ")";
+      stampContext.fill();
+    }
+  }
+
+  buildBrushStamp();
+
+  let currentLayer = -1;
+  let currentImage = layerImages[0];
+  let canvasWidth = 0;
+  let canvasHeight = 0;
+  let pixelRatio = 1;
+  let pointerInside = false;
+  let lastPoint = null;
+  let animationFrame = 0;
+  let maskEnergy = 0;
+  let previousFrameTime = 0;
+
+  function sizeCanvas() {
+    const rect = portrait.getBoundingClientRect();
+
+    canvasWidth = Math.max(1, rect.width);
+    canvasHeight = Math.max(1, rect.height);
+    pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
+
+    brushCanvas.width = Math.round(canvasWidth * pixelRatio);
+    brushCanvas.height = Math.round(canvasHeight * pixelRatio);
+    maskCanvas.width = brushCanvas.width;
+    maskCanvas.height = brushCanvas.height;
+
+    brushContext.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
+    maskContext.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
+    lastPoint = null;
+    maskEnergy = 0;
+  }
+
+  function imagePlacement(image) {
+    const style = window.getComputedStyle(revealImage);
+    const imageWidth = image.naturalWidth || canvasWidth;
+    const imageHeight = image.naturalHeight || canvasHeight;
+    const objectFit = style.objectFit || "cover";
+    let scale = 1;
+
+    if (objectFit === "contain") {
+      scale = Math.min(canvasWidth / imageWidth, canvasHeight / imageHeight);
+    } else {
+      scale = Math.max(canvasWidth / imageWidth, canvasHeight / imageHeight);
+    }
+
+    const width = imageWidth * scale;
+    const height = imageHeight * scale;
+    const position = style.objectPosition || "50% 50%";
+    const alignRight = position.indexOf("right") !== -1;
+    const alignBottom = position.indexOf("bottom") !== -1;
+    const alignLeft = position.indexOf("left") !== -1;
+    const alignTop = position.indexOf("top") !== -1;
+
+    return {
+      x: alignLeft ? 0 : (canvasWidth - width) * (alignRight ? 1 : 0.5),
+      y: alignTop ? 0 : (canvasHeight - height) * (alignBottom ? 1 : 0.5),
+      width: width,
+      height: height
+    };
+  }
+
+  function renderPaintedPortrait() {
+    brushContext.clearRect(0, 0, canvasWidth, canvasHeight);
+
+    if (!currentImage || !currentImage.complete || !currentImage.naturalWidth) {
+      return;
+    }
+
+    const placement = imagePlacement(currentImage);
+
+    brushContext.globalCompositeOperation = "source-over";
+    brushContext.drawImage(
+      currentImage,
+      placement.x,
+      placement.y,
+      placement.width,
+      placement.height
+    );
+
+    brushContext.globalCompositeOperation = "destination-in";
+    brushContext.drawImage(maskCanvas, 0, 0, canvasWidth, canvasHeight);
+    brushContext.globalCompositeOperation = "source-over";
+  }
+
+  function fadeMask(amount) {
+    maskContext.save();
+    maskContext.globalCompositeOperation = "destination-out";
+    maskContext.fillStyle = "rgba(0,0,0," + amount + ")";
+    maskContext.fillRect(0, 0, canvasWidth, canvasHeight);
+    maskContext.restore();
+  }
+
+  function animateBrush(time) {
+    const elapsed = previousFrameTime ? Math.min(time - previousFrameTime, 48) : 16.67;
+    const retention = pointerInside ? 0.996 : 0.965;
+    const fadeAmount = 1 - Math.pow(retention, elapsed / 16.67);
+
+    previousFrameTime = time;
+    fadeMask(fadeAmount);
+    maskEnergy *= Math.pow(retention, elapsed / 16.67);
+    renderPaintedPortrait();
+
+    if (maskEnergy > 0.012) {
+      animationFrame = window.requestAnimationFrame(animateBrush);
+    } else {
+      maskContext.clearRect(0, 0, canvasWidth, canvasHeight);
+      brushContext.clearRect(0, 0, canvasWidth, canvasHeight);
+      animationFrame = 0;
+      previousFrameTime = 0;
+    }
+  }
+
+  function startAnimation() {
+    if (!animationFrame) {
+      previousFrameTime = 0;
+      animationFrame = window.requestAnimationFrame(animateBrush);
+    }
+  }
+
+  function paintStamp(x, y, angle, strength) {
+    const movementVariation = Math.sin(x * 0.071 + y * 0.037) * 0.08;
+    const width = 178 + strength * 28;
+    const height = 82 + strength * 16;
+
+    maskContext.save();
+    maskContext.translate(x, y);
+    maskContext.rotate(angle + movementVariation);
+    maskContext.globalCompositeOperation = "source-over";
+    maskContext.globalAlpha = 0.58 + strength * 0.24;
+    maskContext.drawImage(stampCanvas, -width / 2, -height / 2, width, height);
+    maskContext.restore();
+
+    maskEnergy = 1;
+    renderPaintedPortrait();
+    startAnimation();
+  }
+
+  function paintBetween(previous, next) {
+    const deltaX = next.x - previous.x;
+    const deltaY = next.y - previous.y;
+    const distance = Math.hypot(deltaX, deltaY);
+    const angle = distance > 1 ? Math.atan2(deltaY, deltaX) : previous.angle || 0;
+    const spacing = 22;
+    const steps = Math.max(1, Math.ceil(distance / spacing));
+    const strength = Math.min(distance / 55, 1);
+
+    for (let step = 1; step <= steps; step++) {
+      const progress = step / steps;
+      paintStamp(
+        previous.x + deltaX * progress,
+        previous.y + deltaY * progress,
+        angle,
+        strength
       );
     }
-  );
 
+    next.angle = angle;
+  }
 
-  /*
-    Follow the cursor while inside
-    the portrait.
-  */
-  portrait.addEventListener(
-    "mousemove",
-    function (event) {
+  function pointerPosition(event) {
+    const rect = portrait.getBoundingClientRect();
 
-      updateRevealPosition(event);
+    return {
+      x: event.clientX - rect.left,
+      y: event.clientY - rect.top,
+      angle: lastPoint ? lastPoint.angle : 0
+    };
+  }
 
+  function chooseNextLayer() {
+    currentLayer = (currentLayer + 1) % layerImages.length;
+    currentImage = layerImages[currentLayer];
+    revealImage.src = revealLayers[currentLayer];
+
+    if (!currentImage.complete) {
+      currentImage.addEventListener("load", renderPaintedPortrait, { once: true });
     }
-  );
+  }
 
+  sizeCanvas();
 
-  /*
-    When the mouse leaves:
-    return completely to normal photo.
-  */
-  portrait.addEventListener(
-    "mouseleave",
-    function () {
+  if (window.ResizeObserver) {
+    const portraitResizeObserver = new ResizeObserver(sizeCanvas);
+    portraitResizeObserver.observe(portrait);
+  } else {
+    window.addEventListener("resize", sizeCanvas);
+  }
 
-      portrait.classList.remove(
-        "is-revealing"
-      );
+  portrait.addEventListener("pointerenter", function (event) {
+    pointerInside = true;
+    lastPoint = null;
+    maskContext.clearRect(0, 0, canvasWidth, canvasHeight);
+    brushContext.clearRect(0, 0, canvasWidth, canvasHeight);
+    chooseNextLayer();
 
+    const point = pointerPosition(event);
+    paintStamp(point.x, point.y, 0, 0.35);
+    lastPoint = point;
+  });
+
+  portrait.addEventListener("pointermove", function (event) {
+    if (!pointerInside) {
+      return;
     }
-  );
+
+    const point = pointerPosition(event);
+
+    if (lastPoint) {
+      paintBetween(lastPoint, point);
+    } else {
+      paintStamp(point.x, point.y, 0, 0.35);
+    }
+
+    lastPoint = point;
+  });
+
+  portrait.addEventListener("pointerleave", function () {
+    pointerInside = false;
+    lastPoint = null;
+
+    if (reduceMotion) {
+      maskContext.clearRect(0, 0, canvasWidth, canvasHeight);
+      brushContext.clearRect(0, 0, canvasWidth, canvasHeight);
+      maskEnergy = 0;
+    } else {
+      startAnimation();
+    }
+  });
 }
 
 /*---------------------------------------------------------
