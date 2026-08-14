@@ -524,7 +524,7 @@
 
                 <!-- Rotating typed roles -->
                 <p class="hero-role-line">
-                  <span id="typed-role">SOFTWARE ENGINEER • DATA ANALYST</span>
+                  <span id="typed-role">SOFTWARE ENGINEER • WEB DEVELOPER</span>
                   <span class="cursor">|</span>
                 </p>
 
@@ -6570,7 +6570,11 @@
           titleElements[0].textContent = titleParts.before;
           titleElements[1].textContent = titleParts.name;
           titleElements[2].textContent = titleParts.after;
-          if (roleElement) roleElement.textContent = "SOFTWARE ENGINEER • DATA ANALYST";
+          if (roleElement) roleElement.textContent = "";
+          roleIndex = 0;
+          roleCharIndex = 0;
+          deleting = false;
+          setTimeout(typeRole, 450);
           return;
         }
 

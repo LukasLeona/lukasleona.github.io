@@ -343,7 +343,10 @@ html[data-theme="light"] #portfolio .portfolio-drawer-tags span {
   }
 
   #hero .hero-role-line .cursor {
-    display: none !important;
+    display: inline-block !important;
+    flex: 0 0 auto;
+    margin-left: 4px;
+    color: #ebb020;
   }
 
   #hero #typed-role {
