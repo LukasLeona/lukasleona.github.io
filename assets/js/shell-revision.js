@@ -373,6 +373,24 @@
     var loadedMedia = [];
     var visibility = new WeakMap();
     var maxLoaded = window.matchMedia("(max-width: 991px)").matches ? 1 : 2;
+    var deferredPortfolioFrames = portfolio.querySelectorAll("iframe[data-portfolio-preview-src]");
+
+    function portfolioIsActive() {
+      return portfolio.classList.contains("active");
+    }
+
+    function setDeferredPortfolioFrames(active) {
+      deferredPortfolioFrames.forEach(function (frame) {
+        var rect = frame.getBoundingClientRect();
+        var nearViewport = rect.bottom >= -48 && rect.top <= window.innerHeight + 48;
+        if (active && nearViewport) {
+          if (!frame.getAttribute("src")) frame.src = frame.dataset.portfolioPreviewSrc;
+        } else if (frame.getAttribute("src")) {
+          frame.src = "about:blank";
+          frame.removeAttribute("src");
+        }
+      });
+    }
 
     function disconnectPreviewMuteGuard(frame) {
       if (!frame || !frame._previewMuteObserver) return;
@@ -441,6 +459,12 @@
           return media !== currentMedia && visibility.get(media) !== true;
         });
 
+        if (!candidate) {
+          candidate = loadedMedia.find(function (media) {
+            return media !== currentMedia;
+          });
+        }
+
         if (!candidate) break;
         unloadPreview(candidate);
       }
@@ -448,7 +472,7 @@
 
     function activatePreview(media) {
       var frame = media.querySelector(".project-live-preview-frame");
-      if (!frame || frame.dataset.previewActive === "true") return;
+      if (!portfolioIsActive() || !frame || frame.dataset.previewActive === "true") return;
 
       frame.dataset.previewActive = "true";
       media.classList.add("is-live-preview-loading");
@@ -506,15 +530,34 @@
     if (!previewMedia.length) return;
 
     if ("IntersectionObserver" in window) {
-      var observer = new IntersectionObserver(function (entries) {
-        entries.forEach(function (entry) {
-          visibility.set(entry.target, entry.isIntersecting);
-          if (entry.isIntersecting) {
-            activatePreview(entry.target);
-          } else {
-            unloadPreview(entry.target);
-          }
+      function refreshVisiblePreviews() {
+        var viewportCenter = window.innerHeight / 2;
+        var candidates = portfolioIsActive() ? previewMedia.filter(function (media) {
+          var rect = media.getBoundingClientRect();
+          return rect.bottom >= -48 && rect.top <= window.innerHeight + 48;
+        }) : [];
+
+        candidates.sort(function (first, second) {
+          var firstRect = first.getBoundingClientRect();
+          var secondRect = second.getBoundingClientRect();
+          var firstDistance = Math.abs(firstRect.top + firstRect.height / 2 - viewportCenter);
+          var secondDistance = Math.abs(secondRect.top + secondRect.height / 2 - viewportCenter);
+          return firstDistance - secondDistance;
         });
+
+        var allowed = candidates.slice(0, maxLoaded);
+        previewMedia.forEach(function (media) {
+          var shouldLoad = allowed.indexOf(media) !== -1;
+          visibility.set(media, shouldLoad);
+          if (shouldLoad) activatePreview(media);
+          else unloadPreview(media);
+        });
+
+        setDeferredPortfolioFrames(portfolioIsActive());
+      }
+
+      var observer = new IntersectionObserver(function () {
+        refreshVisiblePreviews();
       }, {
         root: null,
         rootMargin: "48px 0px",
@@ -522,12 +565,32 @@
       });
 
       previewMedia.forEach(function (media) { observer.observe(media); });
+
+      var deferredFrameObserver = new IntersectionObserver(function () {
+        setDeferredPortfolioFrames(portfolioIsActive());
+      }, {
+        root: null,
+        rootMargin: "48px 0px",
+        threshold: .12
+      });
+      deferredPortfolioFrames.forEach(function (frame) { deferredFrameObserver.observe(frame); });
+
+      var sectionStateObserver = new MutationObserver(function () {
+        refreshVisiblePreviews();
+      });
+
+      sectionStateObserver.observe(portfolio, {
+        attributes: true,
+        attributeFilter: ["class"]
+      });
+      refreshVisiblePreviews();
     } else {
       previewMedia.forEach(function (media) {
         media.addEventListener("mouseenter", function () { activatePreview(media); }, { once: true });
         media.addEventListener("focusin", function () { activatePreview(media); }, { once: true });
         media.addEventListener("touchstart", function () { activatePreview(media); }, { once: true, passive: true });
       });
+      setDeferredPortfolioFrames(portfolioIsActive());
     }
   }
 
