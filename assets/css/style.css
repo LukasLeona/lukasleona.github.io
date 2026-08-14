@@ -4921,6 +4921,19 @@ body.dark-arshia,
   visibility: hidden;
 }
 
+/* Keep the canvas reveal aligned with the calibrated desktop portrait. */
+@media (min-width: 1200px) and (max-width: 1500px) and (min-height: 560px) {
+  #hero .hero-portrait-brush {
+    transform: scale(1.18) !important;
+  }
+}
+
+@media (min-width: 992px) and (max-width: 1750px) and (max-height: 920px) {
+  #hero .hero-portrait-brush {
+    transform: scale(1.02) !important;
+  }
+}
+
 .hero-portrait-brush {
   position: absolute;
   inset: 0;

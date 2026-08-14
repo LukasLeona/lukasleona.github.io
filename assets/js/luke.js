@@ -1863,7 +1863,7 @@ function heroImageReveal() {
 
   function animateBrush(time) {
     const elapsed = previousFrameTime ? Math.min(time - previousFrameTime, 48) : 16.67;
-    const retention = pointerInside ? 0.996 : 0.965;
+    const retention = pointerInside ? 0.98 : 0.90;
     const fadeAmount = 1 - Math.pow(retention, elapsed / 16.67);
 
     previousFrameTime = time;
@@ -1902,7 +1902,6 @@ function heroImageReveal() {
     maskContext.restore();
 
     maskEnergy = 1;
-    renderPaintedPortrait();
     startAnimation();
   }
 
