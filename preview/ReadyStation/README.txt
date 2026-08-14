@@ -29,7 +29,7 @@ CUSTOM FILES ADDED
 
 DEMO FEATURES
 - Responsive desktop, tablet, and mobile layouts
-- ReadyStation LMS logo and favicon
+- Fire and Rescue Academy logo and favicon
 - Poppins typography with system-font fallback
 - Color palette: #4B1426, #17433F, #558467, #EFEABB
 - Course search and category filters

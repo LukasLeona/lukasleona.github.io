@@ -1,4 +1,4 @@
-ReadyStation LMS - Revision Build
+Fire and Rescue Academy - Revision Build
 Generated: August 2, 2026
 
 Completed revisions
@@ -21,7 +21,7 @@ Completed revisions
 6. Chapter 1 and Chapter 3 grading use the uploaded answer-key files.
 7. A separate Chapter 2 answer-key file was not found. The Chapter 2 grading mapping is explicitly identified in the course UI as derived from the uploaded Chapter 2 lesson material.
 8. Firefighter photographs were added to the homepage and HazMat course visuals.
-9. A ReadyStation helper bot is visible on normal site pages and intentionally hidden from the course player.
+9. A Fire and Rescue Academy helper bot is visible on normal site pages and intentionally hidden from the course player.
 10. Progress and completion status are saved locally in the browser for demo purposes.
 
 QA performed

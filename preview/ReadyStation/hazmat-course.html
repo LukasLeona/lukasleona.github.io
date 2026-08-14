@@ -3,10 +3,23 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#17433F">
+  <meta name="description" content="Interactive HazMat Awareness training with lessons, scenario checks, matching activities, quizzes, and progress tracking.">
+  <meta name="theme-color" content="#142725">
   <link rel="icon" href="assets/images/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="assets/css/readystation.css">
-  <title>HazMat Awareness Course Demo | ReadyStation LMS</title>
+  <title>HazMat Awareness Course Demo | Fire and Rescue Academy</title>
+
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://fireandrescueacademy.example/hazmat-course.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="HazMat Awareness Course Demo | Fire and Rescue Academy">
+<meta property="og:description" content="Interactive HazMat Awareness training with lessons, scenario checks, matching activities, quizzes, and progress tracking.">
+<meta property="og:url" content="https://fireandrescueacademy.example/hazmat-course.html">
+<meta property="og:image" content="https://fireandrescueacademy.example/assets/images/home-hero-firefighters.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="HazMat Awareness Course Demo | Fire and Rescue Academy">
+<meta name="twitter:description" content="Interactive HazMat Awareness training with lessons, scenario checks, matching activities, quizzes, and progress tracking.">
+<!-- Replace the .example canonical host when the production domain is connected. -->
 </head>
 <body class="player-body">
   <div class="player-shell">
@@ -15,13 +28,17 @@
         <button id="courseMenuToggle" class="btn btn-ghost btn-sm player-menu-btn" type="button" aria-label="Open course outline" aria-expanded="false">
           <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
         </button>
-        <a class="brand" href="index.html"><img src="assets/images/logo.svg" alt="ReadyStation LMS"></a>
+        <a class="brand" href="index.html"><img src="assets/images/logo.svg" alt="Fire and Rescue Academy"></a>
       </div>
       <div class="player-topbar-center">
         <span class="player-course-title">HazMat Awareness</span>
         <span class="player-course-subtitle">Interactive demo aligned to the uploaded chapter content, quizzes, and tests.</span>
       </div>
       <div class="player-topbar-right">
+        <div class="player-hud" aria-label="Training status">
+          <span class="hud-stat"><small>Training XP</small><strong id="courseXp">0</strong></span>
+          <span class="hud-stat"><small>Rank</small><strong id="courseRank">Rookie</strong></span>
+        </div>
         <div class="top-progress-pill"><span>Progress</span><strong id="courseProgressValue">0%</strong></div>
         <a class="btn btn-ghost btn-sm" href="hazmat-awareness.html">Exit course</a>
       </div>
@@ -41,6 +58,15 @@
           <div class="player-progress-label"><span>Completed items</span><strong id="courseProgressValueSidebar">0%</strong></div>
           <div class="progress-track"><span id="courseProgressBar" style="width:0%"></span></div>
           <div class="outline-meta"><span id="outlineCompletedCount">0 completed</span><span id="outlineTotalCount">0 items</span></div>
+        </div>
+        <div class="badge-shelf" aria-label="Course achievements">
+          <div class="badge-shelf-title"><span>Achievement badges</span><span id="badgeCount">0 / 4</span></div>
+          <div class="badge-row">
+            <span class="academy-badge" data-badge="start" title="First Response: complete one item">FR</span>
+            <span class="academy-badge" data-badge="quarter" title="Scene Aware: reach 25 percent">SA</span>
+            <span class="academy-badge" data-badge="half" title="Hazard Spotter: reach 50 percent">HS</span>
+            <span class="academy-badge" data-badge="finish" title="Mission Ready: complete the course">MR</span>
+          </div>
         </div>
         <div id="courseOutline" class="course-outline"></div>
         <div class="form-note" style="margin-top:24px">Demo progress is stored in this browser only.</div>
