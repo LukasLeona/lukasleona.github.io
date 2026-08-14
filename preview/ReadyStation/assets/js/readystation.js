@@ -141,6 +141,53 @@
     });
   });
 
+  // Homepage learner command-center preview
+  const homeModes = {
+    drill: {
+      kicker: 'Bonus mission',
+      title: 'Daily HazMat Drill',
+      copy: 'Make three rapid awareness-level decisions. Correct calls earn XP; unsafe calls cost a life.',
+      label: 'Available reward',
+      reward: '+150 XP'
+    },
+    progress: {
+      kicker: 'Readiness path',
+      title: 'Mission Progress',
+      copy: 'Each completed lesson adds 100 XP and advances a saved course-progress path from Rookie to Mission Ready.',
+      label: 'Current completion',
+      reward: '25%'
+    },
+    badges: {
+      kicker: 'Achievements',
+      title: 'Badge Locker',
+      copy: 'Unlock First Response, Scene Aware, Hazard Spotter, Drill Ace, and Mission Ready through course actions.',
+      label: 'Achievements',
+      reward: '2 / 5'
+    }
+  };
+  $$('[data-home-mode]').forEach(button => {
+    button.addEventListener('click', () => {
+      const mode = homeModes[button.dataset.homeMode];
+      if (!mode) return;
+      $$('[data-home-mode]').forEach(tab => {
+        const active = tab === button;
+        tab.classList.toggle('active', active);
+        tab.setAttribute('aria-selected', String(active));
+      });
+      const fields = {
+        homeModeKicker: mode.kicker,
+        homeModeTitle: mode.title,
+        homeModeCopy: mode.copy,
+        homeModeLabel: mode.label,
+        homeModeReward: mode.reward
+      };
+      Object.entries(fields).forEach(([id, value]) => {
+        const node = document.getElementById(id);
+        if (node) node.textContent = value;
+      });
+    });
+  });
+
   // Course filters and search
   const searchInput = $('#courseSearch');
   const courseCards = $$('.course-card[data-category]');
