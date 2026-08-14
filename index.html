@@ -504,6 +504,14 @@
                 <img src="assets/img/webdesigner/profile-img.png" alt="Luke Leona">
               </div>
 
+              <div class="hero-mobile-intro d-lg-none">
+                <span>01</span>
+                <p>
+                  <strong>DIGITAL BUILDER</strong>
+                  <small>PHILIPPINES • REMOTE WORLDWIDE</small>
+                </p>
+              </div>
+
               <!-- Hero text -->
               <div class="hero-content mt-4 mx-auto mx-lg-0 text-lg-left mt-lg-none">
 
@@ -524,7 +532,7 @@
 
                 <!-- Rotating typed roles -->
                 <p class="hero-role-line">
-                  <span id="typed-role">SOFTWARE ENGINEER • WEB DEVELOPER</span>
+                  <span id="typed-role">SOFTWARE ENGINEER • DATA ANALYST</span>
                   <span class="cursor">|</span>
                 </p>
 
@@ -542,6 +550,13 @@
             </div>
           </div>
         </div>
+      </div>
+
+
+      <div class="hero-mobile-capabilities d-lg-none" aria-label="Core capabilities">
+        <div><span>01</span><strong>WEB</strong></div>
+        <div><span>02</span><strong>DATA</strong></div>
+        <div><span>03</span><strong>AUTOMATION</strong></div>
       </div>
 
 
@@ -6556,10 +6571,20 @@
     window.addEventListener(
       "load",
       function () {
+        var compactHero = window.matchMedia("(max-width: 991px)").matches;
+        var roleElement = document.getElementById("typed-role");
+
+        if (compactHero) {
+          titleElements[0].textContent = titleParts.before;
+          titleElements[1].textContent = titleParts.name;
+          titleElements[2].textContent = titleParts.after;
+          if (roleElement) roleElement.textContent = "SOFTWARE ENGINEER • DATA ANALYST";
+          return;
+        }
+
         titleElements.forEach(function (element) {
           if (element) element.textContent = "";
         });
-        var roleElement = document.getElementById("typed-role");
         if (roleElement) roleElement.textContent = "";
         typeTitle();
       }
