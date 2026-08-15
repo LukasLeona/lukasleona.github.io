@@ -129,25 +129,50 @@
   }, { threshold: 0.13, rootMargin: '0px 0px -6% 0px' });
   document.querySelectorAll('.reveal').forEach(element => observer.observe(element));
 
-  const selected = { milk: 'Whole', sweetness: 'Regular', espresso: 'Double' };
+  const selected = { milk: 'Whole', sweetness: 'Regular', espresso: 'Double', ice: 'Classic ice' };
   const orderSummary = document.getElementById('orderSummary');
+  const orderPrice = document.getElementById('orderPrice');
+  const orderLink = document.getElementById('orderLink');
+  const textureLabel = document.getElementById('textureLabel');
+  const intensityDots = [...document.querySelectorAll('#intensityDots b')];
   const drink = document.querySelector('.order-card__drink');
+
+  function updateCustomizer() {
+    const sweetnessText = selected.sweetness === 'Light' ? 'light caramel' : selected.sweetness === 'Extra' ? 'extra caramel' : 'regular caramel';
+    const shotCount = selected.espresso === 'Single' ? 1 : selected.espresso === 'Triple' ? 3 : 2;
+    const price = 5.8 + (selected.milk === 'Whole' ? 0 : 0.6) + (selected.espresso === 'Triple' ? 0.9 : 0);
+    const texture = selected.milk === 'Oat' ? 'Velvety' : selected.milk === 'Almond' ? 'Light' : 'Silky';
+
+    orderSummary.textContent = `${selected.espresso} espresso · ${selected.milk} milk · ${sweetnessText} · ${selected.ice}`;
+    orderPrice.textContent = `$${price.toFixed(2)}`;
+    textureLabel.textContent = texture;
+    intensityDots.forEach((dot, index) => dot.classList.toggle('is-on', index < shotCount + 1));
+
+    const sweetnessScale = selected.sweetness === 'Light' ? 0.94 : selected.sweetness === 'Extra' ? 1.05 : 1;
+    const milkOpacity = selected.milk === 'Oat' ? 0.58 : selected.milk === 'Almond' ? 0.42 : 0.48;
+    const iceOpacity = selected.ice === 'Light ice' ? 0.34 : 0.6;
+    drink.style.transform = `scale(${sweetnessScale})`;
+    drink.querySelector('.order-card__milk').style.opacity = milkOpacity;
+    drink.querySelector('.order-card__ice').style.opacity = iceOpacity;
+
+    const orderText = `${selected.espresso} espresso, ${selected.milk} milk, ${sweetnessText}, ${selected.ice}`;
+    orderLink.href = `mailto:orders@slowpour.example?subject=${encodeURIComponent('My Slow Pour order')}&body=${encodeURIComponent(`I'd like an iced caramel latte with ${orderText}.`)}`;
+  }
 
   document.querySelectorAll('.segmented').forEach(group => {
     group.addEventListener('click', event => {
       const button = event.target.closest('button');
       if (!button) return;
-      group.querySelectorAll('button').forEach(item => item.classList.remove('is-selected'));
+      group.querySelectorAll('button').forEach(item => {
+        item.classList.remove('is-selected');
+        item.setAttribute('aria-pressed', 'false');
+      });
       button.classList.add('is-selected');
+      button.setAttribute('aria-pressed', 'true');
       selected[group.dataset.option] = button.dataset.value;
-
-      const sweetnessText = selected.sweetness === 'Light' ? 'light caramel' : selected.sweetness === 'Extra' ? 'extra caramel' : 'regular caramel';
-      orderSummary.textContent = `${selected.espresso} espresso · ${selected.milk} milk · ${sweetnessText}`;
-
-      const sweetnessScale = selected.sweetness === 'Light' ? 0.94 : selected.sweetness === 'Extra' ? 1.05 : 1;
-      const milkOpacity = selected.milk === 'Oat' ? 0.58 : selected.milk === 'Almond' ? 0.42 : 0.48;
-      drink.style.transform = `scale(${sweetnessScale})`;
-      drink.querySelector('.order-card__milk').style.opacity = milkOpacity;
+      updateCustomizer();
     });
   });
+
+  updateCustomizer();
 })();

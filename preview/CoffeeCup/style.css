@@ -624,6 +624,187 @@ button { color: inherit; }
 }
 
 /* =========================================================
+   V5 EDITORIAL EXPANSION
+   ========================================================= */
+.site-nav { gap: clamp(1rem, 2vw, 2rem); }
+.site-nav .nav-cta { padding: .72rem 1.05rem; }
+
+/* Inside your glass */
+.details {
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 8% 12%, rgba(180, 107, 53, .16), transparent 32%),
+    var(--espresso);
+}
+.details__layout { grid-template-columns: minmax(0, .95fr) minmax(0, 1.05fr); }
+.details__visual { min-height: 720px; }
+.details__visual img { width: min(100%, 660px); aspect-ratio: 1 / 1.08; object-fit: cover; }
+.glass-caption {
+  position: absolute;
+  z-index: 3;
+  left: clamp(1rem, 4vw, 3rem);
+  bottom: 5%;
+  display: grid;
+  gap: .18rem;
+  padding: 1rem 1.2rem;
+  border-left: 2px solid var(--caramel-light);
+  background: rgba(25, 16, 13, .7);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+}
+.glass-caption span { color: rgba(247, 243, 237, .52); font-size: .62rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; }
+.glass-caption strong { font-family: "Instrument Serif", Georgia, serif; font-size: 1.45rem; font-weight: 400; }
+.details__intro { max-width: 36rem; margin: 1.5rem 0 0; color: rgba(247, 243, 237, .66); font-size: 1.04rem; line-height: 1.75; }
+.pour-map { margin-top: 2.4rem; padding: 1.3rem; border: 1px solid rgba(247, 243, 237, .12); border-radius: 1.35rem; background: rgba(247, 243, 237, .035); }
+.pour-map__bar { display: flex; height: 13px; overflow: hidden; border-radius: 999px; background: rgba(247, 243, 237, .1); }
+.pour-map__bar span { display: block; }
+.pour-map__espresso { width: 23%; background: #71442e; }
+.pour-map__milk { width: 69%; background: #e3d6c9; }
+.pour-map__caramel { width: 8%; background: #cf844b; }
+.pour-map__legend { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem 1.5rem; margin-top: 1.3rem; }
+.pour-map__legend div { display: grid; grid-template-columns: auto 1fr auto; gap: .6rem; align-items: center; }
+.pour-map__legend span { color: rgba(247, 243, 237, .58); font-size: .76rem; }
+.pour-map__legend strong { font-size: .76rem; font-weight: 500; }
+.legend-dot { width: 8px; height: 8px; border-radius: 50%; }
+.legend-dot--espresso { background: #71442e; }
+.legend-dot--milk { background: #e3d6c9; }
+.legend-dot--caramel { background: #cf844b; }
+.legend-dot--ice { border: 1px solid rgba(247, 243, 237, .72); background: rgba(247, 243, 237, .18); }
+.taste-profile { display: grid; gap: .7rem; margin-top: 1.7rem; }
+.taste-profile > div { display: grid; grid-template-columns: 4.5rem 1fr; gap: 1rem; align-items: center; }
+.taste-profile span { color: rgba(247, 243, 237, .55); font-size: .7rem; font-weight: 700; letter-spacing: .09em; text-transform: uppercase; }
+.taste-profile i { height: 3px; overflow: hidden; background: rgba(247, 243, 237, .12); }
+.taste-profile b { display: block; width: var(--profile); height: 100%; background: linear-gradient(90deg, var(--caramel), var(--caramel-light)); }
+
+/* Make it yours */
+.customize { background: linear-gradient(135deg, #ded4c7 0%, #eee7dc 52%, #d6c7b8 100%); }
+.customizer { grid-template-columns: minmax(0, 1.1fr) minmax(330px, .62fr); align-items: stretch; }
+.customizer__controls { gap: 0; }
+.choice-group { padding: 1.35rem 0; border-bottom: 1px solid rgba(29, 23, 20, .1); }
+.choice-group:first-child { padding-top: .3rem; }
+.choice-group:last-child { padding-bottom: .3rem; border-bottom: 0; }
+.choice-heading { display: flex; gap: .85rem; align-items: center; margin-bottom: .8rem; }
+.choice-heading > span { display: grid; place-items: center; width: 2rem; height: 2rem; flex: 0 0 auto; border: 1px solid rgba(29, 23, 20, .18); border-radius: 50%; color: var(--caramel); font-family: "Instrument Serif", Georgia, serif; font-size: .9rem; }
+.choice-heading div { display: grid; gap: .08rem; }
+.choice-heading strong { font-size: .76rem; letter-spacing: .06em; text-transform: uppercase; }
+.choice-heading small { color: rgba(29, 23, 20, .48); font-size: .7rem; }
+.segmented { border-radius: 1rem; }
+.segmented--two { grid-template-columns: repeat(2, 1fr); }
+.segmented button { min-height: 48px; border-radius: .75rem; }
+.segmented button small { display: block; margin-top: .12rem; color: rgba(29, 23, 20, .45); font-size: .58rem; }
+.segmented button.is-selected small { color: rgba(247, 243, 237, .54); }
+.segmented button:focus-visible { outline: 2px solid var(--caramel); outline-offset: 2px; }
+.order-card { min-height: 650px; padding: 1.65rem; background: radial-gradient(circle at 50% 28%, #56301f 0%, var(--espresso) 55%); }
+.order-card::before { content: ""; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(120deg, rgba(255,255,255,.045), transparent 34%); }
+.order-card__drink { width: 178px; height: 250px; margin-top: 2.4rem; }
+.order-card > p { max-width: 28rem; min-height: 0; margin-bottom: 1.15rem; }
+.build-profile { margin: 0 auto; padding: .9rem 1rem; border: 1px solid rgba(247, 243, 237, .1); border-radius: 1rem; background: rgba(247, 243, 237, .035); }
+.build-profile > div { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+.build-profile > div + div { margin-top: .65rem; padding-top: .65rem; border-top: 1px solid rgba(247, 243, 237, .08); }
+.build-profile span { color: rgba(247, 243, 237, .48); font-size: .65rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
+.build-profile strong { font-size: .72rem; font-weight: 600; }
+#intensityDots { display: flex; gap: .3rem; }
+#intensityDots b { width: 7px; height: 7px; border: 1px solid rgba(247, 243, 237, .28); border-radius: 50%; }
+#intensityDots b.is-on { border-color: var(--caramel-light); background: var(--caramel-light); }
+.order-card__bottom { left: 1.65rem; right: 1.65rem; }
+.order-card__bottom a:hover span { transform: rotate(90deg); }
+.order-card__bottom a span { transition: transform .35s var(--ease); }
+
+/* House recipe */
+.recipe { background: #f3ede4; }
+.recipe__grid { display: grid; grid-template-columns: minmax(0, 1.02fr) minmax(0, .98fr); gap: clamp(3rem, 8vw, 8rem); align-items: center; }
+.recipe__image { position: relative; min-height: 760px; }
+.recipe__image::before { content: ""; position: absolute; inset: 7% -5% -5% 7%; border: 1px solid rgba(29, 23, 20, .14); border-radius: var(--radius-lg); }
+.recipe__image img { position: relative; width: 100%; height: 760px; object-fit: cover; border-radius: var(--radius-lg); box-shadow: 0 35px 90px rgba(45, 29, 22, .15); }
+.recipe__badge { position: absolute; right: -1.5rem; bottom: 4rem; display: grid; place-items: center; width: 112px; aspect-ratio: 1; border-radius: 50%; color: var(--milk); background: var(--espresso); font-size: .62rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
+.recipe__badge b { display: block; margin-bottom: -.2rem; font-family: "Instrument Serif", Georgia, serif; font-size: 2.3rem; font-weight: 400; letter-spacing: 0; }
+.recipe__lede { max-width: 36rem; color: rgba(29, 23, 20, .64); line-height: 1.75; }
+.recipe-steps { margin-top: 2.5rem; }
+.recipe-steps article { display: grid; grid-template-columns: auto 1fr; gap: 1.2rem; padding: 1.15rem 0; border-top: 1px solid var(--line); }
+.recipe-steps article:last-child { border-bottom: 1px solid var(--line); }
+.recipe-steps article > span { display: grid; place-items: center; width: 2.35rem; height: 2.35rem; border-radius: 50%; color: var(--milk); background: var(--caramel); font-family: "Instrument Serif", Georgia, serif; }
+.recipe-steps h3 { margin: 0 0 .25rem; font-family: "Instrument Serif", Georgia, serif; font-size: 1.45rem; font-weight: 400; }
+.recipe-steps p { margin: 0; color: rgba(29, 23, 20, .58); font-size: .86rem; line-height: 1.6; }
+.recipe__note { margin: 1.7rem 0 0; padding: 1rem 1.15rem; border-left: 2px solid var(--caramel); color: rgba(29, 23, 20, .62); background: rgba(180, 107, 53, .07); font-size: .82rem; line-height: 1.6; }
+
+/* Brewing tips */
+.tips { color: var(--milk); background: #17100e; }
+.tips__header, .gallery__header { display: grid; grid-template-columns: 1fr minmax(260px, .48fr); gap: 3rem; align-items: end; margin-bottom: clamp(3rem, 7vw, 6rem); }
+.tips__header > p, .gallery__header > p { max-width: 32rem; margin: 0 0 .55rem; color: rgba(247, 243, 237, .56); line-height: 1.7; }
+.tips__grid { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid rgba(247, 243, 237, .14); border-bottom: 1px solid rgba(247, 243, 237, .14); }
+.tip-card { min-height: 390px; padding: 2rem 1.5rem; border-right: 1px solid rgba(247, 243, 237, .14); }
+.tip-card:last-child { border-right: 0; }
+.tip-card > span { color: var(--caramel-light); font-family: "Instrument Serif", Georgia, serif; font-size: 1.2rem; }
+.tip-card h3 { max-width: 9ch; margin: 5.5rem 0 1rem; font-family: "Instrument Serif", Georgia, serif; font-size: clamp(1.8rem, 2.5vw, 2.7rem); font-weight: 400; line-height: 1; }
+.tip-card p { margin: 0; color: rgba(247, 243, 237, .54); font-size: .85rem; line-height: 1.7; }
+.tip-card small { display: block; margin-top: 2rem; color: rgba(247, 243, 237, .82); font-size: .62rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+.tip-callout { display: grid; grid-template-columns: .85fr 1fr; gap: 3rem; align-items: center; margin-top: 3rem; padding: 2rem; border: 1px solid rgba(247, 243, 237, .14); border-radius: var(--radius-lg); background: radial-gradient(circle at 12% 20%, rgba(180, 107, 53, .2), transparent 32%); }
+.tip-callout div { display: grid; gap: .4rem; }
+.tip-callout span { color: var(--caramel-light); font-size: .64rem; font-weight: 700; letter-spacing: .13em; text-transform: uppercase; }
+.tip-callout strong { font-family: "Instrument Serif", Georgia, serif; font-size: clamp(1.8rem, 3vw, 3.2rem); font-weight: 400; }
+.tip-callout p { margin: 0; color: rgba(247, 243, 237, .55); line-height: 1.7; }
+
+/* Gallery */
+.gallery { background: #d9cec1; }
+.gallery__header > p { color: rgba(29, 23, 20, .62); }
+.gallery__grid { display: grid; grid-template-columns: repeat(12, 1fr); grid-template-rows: repeat(2, minmax(320px, 34vw)) minmax(300px, 31vw); gap: 1rem; }
+.gallery-card { position: relative; min-height: 0; margin: 0; overflow: hidden; border-radius: var(--radius-lg); background: var(--espresso); }
+.gallery-card--tall { grid-column: 1 / span 5; grid-row: 1 / span 2; }
+.gallery-card--wide { grid-column: 6 / -1; }
+.gallery-card--third { grid-column: span 4; }
+.gallery-card img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s var(--ease); }
+.gallery-card:hover img { transform: scale(1.035); }
+.gallery-card::after { content: ""; position: absolute; inset: 0; background: linear-gradient(transparent 55%, rgba(18, 11, 9, .8)); pointer-events: none; }
+.gallery-card figcaption { position: absolute; z-index: 2; right: 1.5rem; bottom: 1.4rem; left: 1.5rem; display: flex; gap: 1rem; align-items: flex-end; color: var(--milk); }
+.gallery-card figcaption > span { color: var(--caramel-light); font-family: "Instrument Serif", Georgia, serif; font-size: 1.2rem; }
+.gallery-card figcaption p { max-width: 28rem; margin: 0; color: rgba(247, 243, 237, .7); font-size: .78rem; line-height: 1.5; }
+.gallery-card figcaption strong { display: block; color: var(--milk); font-family: "Instrument Serif", Georgia, serif; font-size: 1.55rem; font-weight: 400; }
+
+@media (max-width: 1100px) {
+  .details__visual { min-height: 580px; }
+  .details__layout { gap: 3rem; }
+  .pour-map__legend { grid-template-columns: 1fr; }
+  .customizer { grid-template-columns: 1fr minmax(300px, .72fr); }
+  .recipe__image, .recipe__image img { min-height: 640px; height: 640px; }
+  .tips__grid { grid-template-columns: repeat(2, 1fr); }
+  .tip-card { border-bottom: 1px solid rgba(247, 243, 237, .14); }
+  .tip-card:nth-child(2) { border-right: 0; }
+  .tip-card:nth-child(n+3) { border-bottom: 0; }
+}
+
+@media (max-width: 780px) {
+  .details__visual { min-height: auto; }
+  .details__visual img { aspect-ratio: 1 / 1.05; }
+  .glass-caption { left: 1rem; bottom: 1rem; }
+  .pour-map__legend { grid-template-columns: 1fr 1fr; }
+  .customizer { grid-template-columns: 1fr; }
+  .order-card { min-height: 620px; }
+  .recipe__grid, .tips__header, .gallery__header, .tip-callout { grid-template-columns: 1fr; }
+  .recipe__grid { gap: 4rem; }
+  .recipe__image, .recipe__image img { min-height: 0; height: auto; aspect-ratio: 4 / 5; }
+  .recipe__badge { right: 1rem; bottom: -2rem; }
+  .tips__header, .gallery__header { gap: 1.5rem; }
+  .tip-callout { gap: 1rem; }
+  .gallery__grid { grid-template-columns: 1fr; grid-template-rows: auto; }
+  .gallery-card, .gallery-card--tall, .gallery-card--wide, .gallery-card--third { grid-column: auto; grid-row: auto; min-height: 420px; }
+  .gallery-card--tall { min-height: 620px; }
+}
+
+@media (max-width: 520px) {
+  .pour-map__legend { grid-template-columns: 1fr; }
+  .segmented button { font-size: .7rem; }
+  .order-card { min-height: 590px; }
+  .order-card__drink { width: 150px; height: 215px; margin-top: 2rem; }
+  .tips__grid { grid-template-columns: 1fr; }
+  .tip-card { min-height: 320px; border-right: 0; border-bottom: 1px solid rgba(247, 243, 237, .14) !important; }
+  .tip-card:last-child { border-bottom: 0 !important; }
+  .tip-card h3 { margin-top: 3.5rem; }
+  .gallery-card { min-height: 330px; }
+  .gallery-card--tall { min-height: 520px; }
+}
+
+/* =========================================================
    V3 CINEMATIC HERO - safe, responsive editorial choreography
    ========================================================= */
 .story__video {

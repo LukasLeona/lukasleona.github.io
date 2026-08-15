@@ -6,11 +6,15 @@
   <meta name="theme-color" content="#1c1411">
   <meta name="description" content="Slow Pour - a cinematic iced caramel coffee experience built around the ritual of taking your time.">
   <title>Slow Pour - Iced Caramel Coffee</title>
+  <link rel="icon" href="favicon.ico?v=6" sizes="any">
+  <link rel="shortcut icon" href="favicon.ico?v=6">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon-32.png?v=6">
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/images/apple-touch-icon.png?v=6">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=4">
+  <link rel="stylesheet" href="style.css?v=6">
 </head>
 <body>
   <div class="loader" id="loader" aria-live="polite">
@@ -31,9 +35,10 @@
 
     <nav class="site-nav" id="siteNav" aria-label="Primary navigation">
       <a href="#blend">The blend</a>
-      <a href="#customize">Customize</a>
-      <a href="#moments">Our ritual</a>
-      <a href="#order">Order</a>
+      <a href="#recipe">Recipe</a>
+      <a href="#tips">Brew better</a>
+      <a href="#gallery">Gallery</a>
+      <a class="nav-cta" href="#customize">Make yours</a>
     </nav>
   </header>
 
@@ -144,26 +149,44 @@
       </div>
     </section>
 
-    <section class="details content-section">
+    <section class="details content-section" id="inside">
       <div class="section-shell details__layout">
         <div class="details__visual reveal">
           <div class="details__halo" aria-hidden="true"></div>
           <img src="assets/images/coffee-final.jpg" alt="Finished iced caramel coffee in a clear glass">
-          <span class="float-label float-label--one">Silky texture</span>
-          <span class="float-label float-label--two">Balanced sweetness</span>
+          <span class="float-label float-label--one">Double espresso</span>
+          <span class="float-label float-label--two">House caramel</span>
+          <div class="glass-caption">
+            <span>House build</span>
+            <strong>16 fl oz</strong>
+          </div>
         </div>
 
         <div class="details__content reveal">
           <p class="eyebrow">Inside your glass</p>
-          <h2 class="section-title section-title--light">Everything you want. <em>Nothing you don’t.</em></h2>
-          <div class="details-list">
-            <div><span>Size</span><strong>16 oz</strong></div>
-            <div><span>Coffee</span><strong>Double espresso</strong></div>
-            <div><span>Milk</span><strong>Your choice</strong></div>
-            <div><span>Sweetness</span><strong>Fully adjustable</strong></div>
-            <div><span>Serving</span><strong>Over crystal ice</strong></div>
+          <h2 class="section-title section-title--light">Simple ingredients. <em>Beautiful balance.</em></h2>
+          <p class="details__intro">Every layer has a purpose: deep espresso for structure, cold milk for texture, and just enough caramel to round the edges.</p>
+
+          <div class="pour-map" aria-label="House drink composition">
+            <div class="pour-map__bar" aria-hidden="true">
+              <span class="pour-map__espresso"></span>
+              <span class="pour-map__milk"></span>
+              <span class="pour-map__caramel"></span>
+            </div>
+            <div class="pour-map__legend">
+              <div><i class="legend-dot legend-dot--espresso"></i><span>Espresso</span><strong>2 shots</strong></div>
+              <div><i class="legend-dot legend-dot--milk"></i><span>Cold milk</span><strong>6 oz</strong></div>
+              <div><i class="legend-dot legend-dot--caramel"></i><span>Caramel</span><strong>3 tsp</strong></div>
+              <div><i class="legend-dot legend-dot--ice"></i><span>Crystal ice</span><strong>Full glass</strong></div>
+            </div>
           </div>
-          <p class="details__footnote">Built for long conversations, focused work, and the little pause between everything else.</p>
+
+          <div class="taste-profile" aria-label="Taste profile">
+            <div><span>Bold</span><i><b style="--profile: 82%"></b></i></div>
+            <div><span>Creamy</span><i><b style="--profile: 88%"></b></i></div>
+            <div><span>Sweet</span><i><b style="--profile: 56%"></b></i></div>
+          </div>
+          <p class="details__footnote">The house build is a starting point. Milk, sweetness, ice, and espresso can all move with your mood.</p>
         </div>
       </div>
     </section>
@@ -180,27 +203,34 @@
       <div class="section-shell customizer reveal" data-customizer>
         <div class="customizer__controls">
           <div class="choice-group">
-            <span class="choice-label">Milk</span>
+            <div class="choice-heading"><span>01</span><div><strong>Choose your milk</strong><small>Set the texture</small></div></div>
             <div class="segmented" data-option="milk">
-              <button class="is-selected" type="button" data-value="Whole">Whole</button>
-              <button type="button" data-value="Oat">Oat</button>
-              <button type="button" data-value="Almond">Almond</button>
+              <button class="is-selected" type="button" data-value="Whole" aria-pressed="true">Whole</button>
+              <button type="button" data-value="Oat" aria-pressed="false">Oat <small>+ $0.60</small></button>
+              <button type="button" data-value="Almond" aria-pressed="false">Almond <small>+ $0.60</small></button>
             </div>
           </div>
           <div class="choice-group">
-            <span class="choice-label">Sweetness</span>
+            <div class="choice-heading"><span>02</span><div><strong>Set the sweetness</strong><small>Find your finish</small></div></div>
             <div class="segmented" data-option="sweetness">
-              <button type="button" data-value="Light">Light</button>
-              <button class="is-selected" type="button" data-value="Regular">Regular</button>
-              <button type="button" data-value="Extra">Extra</button>
+              <button type="button" data-value="Light" aria-pressed="false">Light</button>
+              <button class="is-selected" type="button" data-value="Regular" aria-pressed="true">Regular</button>
+              <button type="button" data-value="Extra" aria-pressed="false">Extra</button>
             </div>
           </div>
           <div class="choice-group">
-            <span class="choice-label">Espresso</span>
+            <div class="choice-heading"><span>03</span><div><strong>Pick your strength</strong><small>Dial the energy</small></div></div>
             <div class="segmented" data-option="espresso">
-              <button type="button" data-value="Single">Single</button>
-              <button class="is-selected" type="button" data-value="Double">Double</button>
-              <button type="button" data-value="Triple">Triple</button>
+              <button type="button" data-value="Single" aria-pressed="false">Single</button>
+              <button class="is-selected" type="button" data-value="Double" aria-pressed="true">Double</button>
+              <button type="button" data-value="Triple" aria-pressed="false">Triple <small>+ $0.90</small></button>
+            </div>
+          </div>
+          <div class="choice-group">
+            <div class="choice-heading"><span>04</span><div><strong>Finish over ice</strong><small>Control the chill</small></div></div>
+            <div class="segmented segmented--two" data-option="ice">
+              <button class="is-selected" type="button" data-value="Classic ice" aria-pressed="true">Classic ice</button>
+              <button type="button" data-value="Light ice" aria-pressed="false">Light ice</button>
             </div>
           </div>
         </div>
@@ -208,7 +238,7 @@
         <aside class="order-card">
           <div class="order-card__top">
             <span>Your Slow Pour</span>
-            <span>01</span>
+            <span>Made now</span>
           </div>
           <div class="order-card__drink" aria-hidden="true">
             <span class="order-card__ice"></span>
@@ -216,12 +246,75 @@
             <span class="order-card__coffee"></span>
           </div>
           <h3>Iced Caramel Latte</h3>
-          <p id="orderSummary">Double espresso · Whole milk · Regular caramel</p>
+          <p id="orderSummary" aria-live="polite">Double espresso · Whole milk · Regular caramel · Classic ice</p>
+          <div class="build-profile" aria-label="Customized drink profile">
+            <div><span>Intensity</span><i id="intensityDots"><b></b><b></b><b class="is-on"></b><b class="is-on"></b><b></b></i></div>
+            <div><span>Texture</span><strong id="textureLabel">Silky</strong></div>
+          </div>
           <div class="order-card__bottom">
-            <strong>$5.80</strong>
-            <a href="#order" aria-label="Add customized coffee to order">Add to order <span>+</span></a>
+            <strong id="orderPrice">$5.80</strong>
+            <a id="orderLink" href="mailto:orders@slowpour.example?subject=My%20Slow%20Pour" aria-label="Order customized coffee">Order this pour <span>+</span></a>
           </div>
         </aside>
+      </div>
+    </section>
+
+    <section class="recipe content-section" id="recipe">
+      <div class="section-shell recipe__grid">
+        <div class="recipe__image reveal">
+          <img src="assets/images/recipe-flatlay.jpg" alt="Espresso, milk, ice, caramel, and coffee beans arranged for an iced latte recipe" loading="lazy">
+          <span class="recipe__badge"><b>5</b> minutes</span>
+        </div>
+        <div class="recipe__content reveal">
+          <p class="eyebrow eyebrow--dark">The house recipe</p>
+          <h2 class="section-title">Make the slow pour <em>at home.</em></h2>
+          <p class="recipe__lede">A café-style iced caramel latte with a bold center and a soft finish—no complicated equipment required.</p>
+          <div class="recipe-steps">
+            <article><span>01</span><div><h3>Chill the glass</h3><p>Fill a 16 oz glass generously with large, fresh ice cubes.</p></div></article>
+            <article><span>02</span><div><h3>Build the base</h3><p>Add 6 oz of cold milk and stir in 3 teaspoons of caramel.</p></div></article>
+            <article><span>03</span><div><h3>Pull it bold</h3><p>Brew two fresh espresso shots—about 2 oz in total.</p></div></article>
+            <article><span>04</span><div><h3>Pour it slowly</h3><p>Stream the espresso over the ice, pause for the marble, then stir.</p></div></article>
+          </div>
+          <p class="recipe__note"><strong>No espresso machine?</strong> Use 2 oz of strong moka pot coffee or cold brew concentrate.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="tips content-section" id="tips">
+      <div class="section-shell tips__header reveal">
+        <div>
+          <p class="eyebrow">Brew better</p>
+          <h2 class="section-title section-title--light">Small details. <em>Better coffee.</em></h2>
+        </div>
+        <p>Four habits that make every home-brewed cup taste cleaner, sweeter, and more intentional.</p>
+      </div>
+      <div class="section-shell tips__grid">
+        <article class="tip-card reveal"><span>01</span><h3>Start with fresh beans</h3><p>Buy in small batches and grind just before brewing. Aroma fades quickly once coffee is ground.</p><small>Best within 2–4 weeks of roast</small></article>
+        <article class="tip-card reveal"><span>02</span><h3>Mind your water</h3><p>Filtered water gives coffee a cleaner canvas. For hot brewing, stay just below a full boil.</p><small>Ideal range: 92–96°C</small></article>
+        <article class="tip-card reveal"><span>03</span><h3>Use a steady ratio</h3><p>Measure both coffee and water so a great cup is easy to repeat, then adjust by taste.</p><small>Start around 1:16</small></article>
+        <article class="tip-card reveal"><span>04</span><h3>Respect the ice</h3><p>Use large, dense cubes and cool the drink quickly. Small melting ice can flatten your flavor.</p><small>Bigger ice, slower dilution</small></article>
+      </div>
+      <div class="section-shell tip-callout reveal">
+        <div><span>The simple rule</span><strong>Fresh · Measured · Patient</strong></div>
+        <p>Good coffee is rarely about doing more. It is about giving a few important details your full attention.</p>
+      </div>
+    </section>
+
+    <section class="gallery content-section" id="gallery">
+      <div class="section-shell gallery__header reveal">
+        <div>
+          <p class="eyebrow eyebrow--dark">Pour studies</p>
+          <h2 class="section-title">Coffee, held in <em>the moment.</em></h2>
+        </div>
+        <p>Morning light, the ingredients before they meet, and the marble that makes us stop and look.</p>
+      </div>
+      <div class="section-shell gallery__grid">
+        <figure class="gallery-card gallery-card--tall reveal"><img src="assets/images/gallery-morning.jpg" alt="Iced caramel latte glowing in warm morning window light" loading="lazy"><figcaption><span>01</span><p><strong>First light</strong> The quiet before the day begins.</p></figcaption></figure>
+        <figure class="gallery-card gallery-card--wide reveal"><img src="assets/images/gallery-pour.jpg" alt="Espresso pouring into milk and ice in a clear glass" loading="lazy"><figcaption><span>02</span><p><strong>The bloom</strong> Espresso finding its way through milk.</p></figcaption></figure>
+        <figure class="gallery-card gallery-card--wide reveal"><img src="assets/images/recipe-flatlay.jpg" alt="Iced caramel latte ingredients arranged on a dark wood surface" loading="lazy"><figcaption><span>03</span><p><strong>Before the pour</strong> A few good ingredients, measured with care.</p></figcaption></figure>
+        <figure class="gallery-card gallery-card--third reveal"><img src="assets/images/gallery-beans.jpg" alt="Freshly roasted coffee beans spilling from a handmade ceramic scoop" loading="lazy"><figcaption><span>04</span><p><strong>The roast</strong> Warm, fragrant, and ready to become something good.</p></figcaption></figure>
+        <figure class="gallery-card gallery-card--third reveal"><img src="assets/images/gallery-espresso.jpg" alt="Fresh espresso with golden crema in a ceramic cup" loading="lazy"><figcaption><span>05</span><p><strong>Small and bold</strong> A concentrated beginning with a golden finish.</p></figcaption></figure>
+        <figure class="gallery-card gallery-card--third reveal"><img src="assets/images/gallery-corner.jpg" alt="Iced caramel latte on a walnut table in a warm sunlit cafe" loading="lazy"><figcaption><span>06</span><p><strong>Stay awhile</strong> A quiet corner and nowhere else to be.</p></figcaption></figure>
       </div>
     </section>
 
@@ -275,7 +368,9 @@
       <div class="footer-links">
         <a href="#blend">The blend</a>
         <a href="#customize">Customize</a>
-        <a href="#moments">Our ritual</a>
+        <a href="#recipe">Recipe</a>
+        <a href="#tips">Brew better</a>
+        <a href="#gallery">Gallery</a>
       </div>
       <div class="footer-meta">
         <span>© 2026 Slow Pour</span>
@@ -284,6 +379,6 @@
     </div>
   </footer>
 
-  <script src="script.js?v=4"></script>
+  <script src="script.js?v=5"></script>
 </body>
 </html>
