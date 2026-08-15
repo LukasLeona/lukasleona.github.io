@@ -1686,11 +1686,13 @@ function heroImageReveal() {
   "use strict";
 
   const portrait = document.getElementById("heroPortraitReveal");
+  const baseImage = portrait && portrait.querySelector(".hero-portrait-base");
   const revealImage = document.getElementById("heroPortraitLayer");
   const brushCanvas = document.getElementById("heroPortraitBrush");
 
   if (
     !portrait ||
+    !baseImage ||
     !revealImage ||
     !brushCanvas ||
     window.innerWidth <= 991
@@ -1785,6 +1787,7 @@ function heroImageReveal() {
 
   function sizeCanvas() {
     const rect = portrait.getBoundingClientRect();
+    const baseStyle = window.getComputedStyle(baseImage);
 
     canvasWidth = Math.max(1, rect.width);
     canvasHeight = Math.max(1, rect.height);
@@ -1797,12 +1800,21 @@ function heroImageReveal() {
 
     brushContext.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
     maskContext.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
+
+    /*
+      Keep the painted canvas on the exact transform used by the visible
+      portrait. This prevents responsive hero overrides from moving or
+      scaling the two layers independently.
+    */
+    brushCanvas.style.transform = baseStyle.transform;
+    brushCanvas.style.transformOrigin = baseStyle.transformOrigin;
+
     lastPoint = null;
     maskEnergy = 0;
   }
 
-  function imagePlacement(image) {
-    const style = window.getComputedStyle(revealImage);
+  function imagePlacement(image, referenceImage) {
+    const style = window.getComputedStyle(referenceImage || baseImage);
     const imageWidth = image.naturalWidth || canvasWidth;
     const imageHeight = image.naturalHeight || canvasHeight;
     const objectFit = style.objectFit || "cover";
@@ -1837,7 +1849,8 @@ function heroImageReveal() {
       return;
     }
 
-    const placement = imagePlacement(currentImage);
+    /* Every rotating image uses the base portrait's fitted geometry. */
+    const placement = imagePlacement(currentImage, baseImage);
 
     brushContext.globalCompositeOperation = "source-over";
     brushContext.drawImage(
@@ -1847,6 +1860,23 @@ function heroImageReveal() {
       placement.width,
       placement.height
     );
+
+    /*
+      Intersect the effect with the real portrait's transparent silhouette.
+      Alternate artwork can no longer spill around the head or shoulders.
+    */
+    if (baseImage.complete && baseImage.naturalWidth) {
+      const basePlacement = imagePlacement(baseImage, baseImage);
+
+      brushContext.globalCompositeOperation = "destination-in";
+      brushContext.drawImage(
+        baseImage,
+        basePlacement.x,
+        basePlacement.y,
+        basePlacement.width,
+        basePlacement.height
+      );
+    }
 
     brushContext.globalCompositeOperation = "destination-in";
     brushContext.drawImage(maskCanvas, 0, 0, canvasWidth, canvasHeight);
@@ -1952,9 +1982,10 @@ function heroImageReveal() {
   if (window.ResizeObserver) {
     const portraitResizeObserver = new ResizeObserver(sizeCanvas);
     portraitResizeObserver.observe(portrait);
-  } else {
-    window.addEventListener("resize", sizeCanvas);
   }
+
+  /* Also resync transforms when crossing a responsive breakpoint. */
+  window.addEventListener("resize", sizeCanvas);
 
   portrait.addEventListener("pointerenter", function (event) {
     pointerInside = true;
@@ -5419,7 +5450,7 @@ function interactivePortfolio() {
     canyonranch:{category:"WEB • REAL ESTATE",title:"Canyon Ranch",summary:"A premium residential property experience presenting the community, modern homes, and lifestyle through immersive visual storytelling.",contribution:["Residential property presentation","Immersive exterior and lifestyle storytelling","Responsive front-end experience","Interactive project exploration"],stack:["HTML5","CSS3","JavaScript ES6+","Responsive UI"],links:[{label:"Open Project",url:"/preview/CanyonRanch/index.html",external:true}]},
     forma:{category:"WEB • ARCHITECTURE • MOTION",title:"FORMA: Architecture Studio",summary:"A cinematic architecture-studio experience where a residence assembles through scroll, supported by material-led storytelling and selected work.",contribution:["Scroll-led architectural storytelling","Video-scrubbed hero experience","Responsive gallery and studio presentation","Motion and interaction design"],stack:["HTML5","CSS3","JavaScript ES6+","Video","Motion"],links:[{label:"Open Project",url:"preview/FORMA-Architecture/index.html",external:true}]},
     amore:{category:"WEB • WEDDING INVITATION",title:"Terra Amore: Wedding Invitation",summary:"An editorial wedding invitation with ceremony details, RSVP, gallery moments, and a warm coastal visual story.",contribution:["Invitation experience design","Responsive ceremony and RSVP flow","Editorial gallery presentation","Custom motion and interaction details"],stack:["HTML5","CSS3","JavaScript ES6+","Responsive UI"],links:[{label:"Open Invitation",url:"preview/WeddingSite/Amore/index.html",external:true}]},
-    signaldesk:{category:"WEB • DATA DASHBOARD • AUTOMATION",title:"Signal Desk: Social Media Intelligence",summary:"A responsive marketing dashboard and publishing workspace that turns social-platform research, live open-web signals, audience activity, and publishing recommendations into an actionable campaign workflow.",contribution:["Responsive dashboard and multi-page interface","Live trend-signal integration","Audience activity charts and opportunity heatmaps","Multi-media post previews and per-platform scheduling"],stack:["Python 3","HTML5","CSS3","JavaScript ES6+","Chart.js"],links:[{label:"Open Dashboard",url:"preview/MarketingDashboard/index.html",external:true}]},
+    signaldesk:{category:"WEB • DATA DASHBOARD • AUTOMATION",title:"Signal Desk: Social Media Intelligence",summary:"A responsive marketing dashboard and publishing workspace that turns social-platform research, live open-web signals, audience activity, and publishing recommendations into an actionable campaign workflow.",contribution:["Responsive dashboard and multi-page interface","Live trend-signal integration","Audience activity charts and opportunity heatmaps","Multi-media post previews and per-platform scheduling"],stack:["Python 3","HTML5","CSS3","JavaScript ES6+","Chart.js","n8n","API"],links:[{label:"Open Dashboard",url:"preview/MarketingDashboard/index.html",external:true}]},
     linawledger:{category:"DATA • WEB • PUBLIC FINANCE",title:"LinawLedger: 2026 Budget Transparency",summary:"An interactive transparency dashboard that turns the FY 2026 General Appropriations Act into an approachable public view of departments, agencies, programs, expense classes, regions, and five-year enacted trends.",contribution:["Budget information architecture and plain-language explanations","Interactive department, agency, program, and regional exploration","Responsive maps, allocation charts, and single-entity trend views","Traceable presentation of enacted DBM data and source methodology"],stack:["HTML5","CSS3","JavaScript ES6+","Data Visualization","Responsive UI"],links:[{label:"Open Dashboard",url:"preview/LinawLedger/index.html",external:true}]}
   });
 
