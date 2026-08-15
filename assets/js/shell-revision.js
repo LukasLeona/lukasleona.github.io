@@ -43,12 +43,24 @@
   function relocateThemeSwitch() {
     var switcher = document.getElementById("color-switcher");
     var mobileSlot = document.getElementById("mobileThemeSlot");
+    var rail = document.querySelector(".right-side");
+    var desktopSlot = document.getElementById("desktopThemeSlot");
+
+    if (!desktopSlot && rail) {
+      desktopSlot = document.createElement("div");
+      desktopSlot.className = "right-rail-theme-slot";
+      desktopSlot.id = "desktopThemeSlot";
+
+      var date = rail.querySelector("#date");
+      rail.insertBefore(desktopSlot, date || rail.firstChild);
+    }
+
     if (!switcher || !mobileSlot) return;
 
     if (window.matchMedia("(max-width: 991px)").matches) {
       if (switcher.parentElement !== mobileSlot) mobileSlot.appendChild(switcher);
-    } else if (switcher.parentElement === mobileSlot) {
-      document.body.appendChild(switcher);
+    } else if (desktopSlot && switcher.parentElement !== desktopSlot) {
+      desktopSlot.appendChild(switcher);
     }
   }
 

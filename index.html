@@ -207,6 +207,30 @@
 ========================================= -->
   <div class="right-side d-none d-lg-block">
 
+    <!-- Theme switch: top of the desktop utility rail -->
+    <div class="right-rail-theme-slot" id="desktopThemeSlot">
+      <div id="color-switcher" class="color-switcher direct-theme-switcher">
+        <button
+          type="button"
+          class="theme-mode-switch"
+          id="themeModeSwitch"
+          role="switch"
+          aria-checked="false"
+          aria-label="Dark mode active. Switch to light mode"
+          title="Switch light and dark mode"
+        >
+          <span class="theme-mode-track" aria-hidden="true">
+            <span class="theme-mode-stars"></span>
+            <span class="theme-mode-cloud"></span>
+            <span class="theme-mode-thumb">
+              <i class="bi bi-sun-fill theme-thumb-sun"></i>
+              <i class="bi bi-moon-stars-fill theme-thumb-moon"></i>
+            </span>
+          </span>
+        </button>
+      </div>
+    </div>
+
     <!-- Date -->
     <div id="date"></div>
 
@@ -6406,28 +6430,6 @@
     </ul>
   </div>
   <!--  Background Shapes End  -->
-
-  <!-- Direct animated light / dark switch -->
-  <div id="color-switcher" class="color-switcher direct-theme-switcher">
-    <button
-      type="button"
-      class="theme-mode-switch"
-      id="themeModeSwitch"
-      role="switch"
-      aria-checked="false"
-      aria-label="Dark mode active. Switch to light mode"
-      title="Switch light and dark mode"
-    >
-      <span class="theme-mode-track" aria-hidden="true">
-        <span class="theme-mode-stars"></span>
-        <span class="theme-mode-cloud"></span>
-        <span class="theme-mode-thumb">
-          <i class="bi bi-sun-fill theme-thumb-sun"></i>
-          <i class="bi bi-moon-stars-fill theme-thumb-moon"></i>
-        </span>
-      </span>
-    </button>
-  </div>
 
   <!-- Mouase Magic Cursor Start -->
   <div class="m-magic-cursor mmc-outer"></div>
