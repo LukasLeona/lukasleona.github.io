@@ -127,7 +127,7 @@
     if (!Number.isFinite(raw) || raw <= 0) return 1;
     const power = 10 ** Math.floor(Math.log10(raw));
     const normalized = raw / power;
-    const nice = normalized <= 1 ? 1 : normalized <= 2 ? 2 : normalized <= 5 ? 5 : 10;
+    const nice = normalized <= 1 ? 1 : normalized <= 2 ? 2 : normalized <= 2.5 ? 2.5 : normalized <= 5 ? 5 : 10;
     return nice * power;
   }
 
@@ -151,15 +151,33 @@
     return segments;
   }
 
+  function smoothPath(points, xFor, yFor) {
+    if (!points.length) return "";
+    if (points.length === 1) return `M${xFor(points[0].index)},${yFor(points[0].value)}`;
+    return points.reduce((path, point, index) => {
+      const x = xFor(point.index);
+      const y = yFor(point.value);
+      if (!index) return `M${x},${y}`;
+      const previous = points[index - 1];
+      const before = points[index - 2] || previous;
+      const after = points[index + 1] || point;
+      const c1x = xFor(previous.index) + (x - xFor(before.index)) / 6;
+      const c1y = yFor(previous.value) + (y - yFor(before.value)) / 6;
+      const c2x = x - (xFor(after.index) - xFor(previous.index)) / 6;
+      const c2y = y - (yFor(after.value) - yFor(previous.value)) / 6;
+      return `${path} C${c1x.toFixed(2)},${c1y.toFixed(2)} ${c2x.toFixed(2)},${c2y.toFixed(2)} ${x.toFixed(2)},${y.toFixed(2)}`;
+    }, "");
+  }
+
   function renderChart(series) {
-    const width = 920;
-    const height = 420;
-    const margin = { top: 62, right: 38, bottom: 58, left: 82 };
+    const width = 960;
+    const height = 400;
+    const margin = { top: 46, right: 42, bottom: 54, left: 82 };
     const plotWidth = width - margin.left - margin.right;
     const plotHeight = height - margin.top - margin.bottom;
     const values = series.values.filter((value) => value !== null && value !== undefined);
     const maxValue = Math.max(...values, 1);
-    const step = niceStep(maxValue / 4);
+    const step = niceStep(maxValue / 5);
     const yMax = Math.ceil(maxValue / step) * step;
     const xFor = (index) => margin.left + (plotWidth * index) / Math.max(1, data.years.length - 1);
     const yFor = (value) => margin.top + plotHeight - (value / yMax) * plotHeight;
@@ -171,33 +189,35 @@
         <text class="history-axis-label" x="${margin.left - 14}" y="${y + 4}" text-anchor="end">${axisLabel(value)}</text>`;
     }).join("");
 
-    const years = data.years.map((year, index) => `
-      <line class="history-grid-line history-year-guide" x1="${xFor(index)}" y1="${margin.top}" x2="${xFor(index)}" y2="${height - margin.bottom}"></line>
-      <text class="history-year-label" x="${xFor(index)}" y="${height - 20}" text-anchor="middle">${year}</text>`).join("");
+    const years = data.years.map((year, index) => `<text class="history-year-label" x="${xFor(index)}" y="${height - 18}" text-anchor="middle">${year}</text>`).join("");
 
     const segments = knownSegments(series.values);
     const baseline = height - margin.bottom;
     const areas = segments.map((segment) => {
       if (segment.length < 2) return "";
-      const line = segment.map((point, index) => `${index ? "L" : "M"}${xFor(point.index).toFixed(2)},${yFor(point.value).toFixed(2)}`).join(" ");
+      const line = smoothPath(segment, xFor, yFor);
       return `<path class="history-area" d="M${xFor(segment[0].index).toFixed(2)},${baseline} ${line.replace(/^M/, "L")} L${xFor(segment.at(-1).index).toFixed(2)},${baseline} Z"></path>`;
     }).join("");
     const lines = segments.map((segment) => {
-      const path = segment.map((point, index) => `${index ? "L" : "M"}${xFor(point.index).toFixed(2)},${yFor(point.value).toFixed(2)}`).join(" ");
-      return `<path class="history-line" d="${path}"></path>`;
+      return `<path class="history-line" d="${smoothPath(segment, xFor, yFor)}"></path>`;
     }).join("");
 
     const points = series.values.map((value, yearIndex) => {
       if (value === null || value === undefined) {
-        return `<text class="history-missing" x="${xFor(yearIndex)}" y="${baseline - 11}" text-anchor="middle">n/a</text>`;
+        return `<text class="history-missing" x="${xFor(yearIndex)}" y="${baseline - 10}" text-anchor="middle">—</text>`;
       }
       const label = `${series.name}, ${data.years[yearIndex]}: ${formatBillions(value, true)}`;
       return `<g class="history-point">
-        <circle class="history-point-halo" cx="${xFor(yearIndex)}" cy="${yFor(value)}" r="13"></circle>
-        <circle class="history-dot" cx="${xFor(yearIndex)}" cy="${yFor(value)}" r="6.5" tabindex="0" role="button" aria-label="${escapeHtml(label)}" data-year-index="${yearIndex}"></circle>
-        <text class="history-value-label" x="${xFor(yearIndex)}" y="${yFor(value) - 18}" text-anchor="middle">${formatLarge(value)}</text>
+        <circle class="history-point-halo" cx="${xFor(yearIndex)}" cy="${yFor(value)}" r="12"></circle>
+        <circle class="history-dot" cx="${xFor(yearIndex)}" cy="${yFor(value)}" r="5.5" tabindex="0" role="button" aria-label="${escapeHtml(label)}" data-year-index="${yearIndex}"></circle>
       </g>`;
     }).join("");
+
+    const latest = lastKnown(series.values);
+    const latestCallout = latest ? `<g class="history-latest-callout" transform="translate(${Math.max(margin.left + 54, xFor(latest.index) - 116)},${Math.max(10, yFor(latest.value) - 50)})">
+      <rect width="108" height="34" rx="17"></rect>
+      <text x="54" y="22" text-anchor="middle">${formatLarge(latest.value)}</text>
+    </g>` : "";
 
     elements.chart.innerHTML = `<svg class="history-svg" viewBox="0 0 ${width} ${height}" role="group" aria-label="Interactive yearly data points">
       <defs>
@@ -206,7 +226,8 @@
           <stop offset="100%" stop-color="${seriesColor}" stop-opacity="0.02"></stop>
         </linearGradient>
       </defs>
-      ${horizontalGrid}${years}${areas}${lines}${points}
+      <rect class="history-latest-band" x="${xFor(data.years.length - 1) - 28}" y="${margin.top}" width="56" height="${plotHeight}"></rect>
+      ${horizontalGrid}${years}${areas}${lines}${points}${latestCallout}
     </svg>`;
     elements.chart.setAttribute("aria-label", `${series.name}, enacted allocations from ${data.years[0]} to ${data.years.at(-1)}`);
   }

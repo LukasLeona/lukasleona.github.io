@@ -3,53 +3,73 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="LinawLedger makes the Philippines' FY 2026 General Appropriations Act easier to search, compare, and understand.">
+  <meta name="description" content="Explore the Philippine national budget from 2019 to 2026. Compare departments, state universities, public hospitals, regions, agencies, programs, and expense classes using official DBM data.">
   <meta name="author" content="Luke Mark Leona">
   <link rel="canonical" href="https://lukasleona.com/preview/LinawLedger/index.html">
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
   <meta name="theme-color" content="#073c3a">
-  <meta property="og:title" content="LinawLedger - The 2026 Philippine budget, made clear">
-  <meta property="og:description" content="Explore the FY 2026 national budget by department, agency, program, expense class, and region.">
+  <link rel="icon" type="image/png" href="../../assets/img/favicon.png">
+  <meta property="og:title" content="LinawLedger | Philippine Budget Explorer, 2019–2026">
+  <meta property="og:description" content="Follow eight enacted Philippine budgets and compare departments, state universities, public hospitals, regions, agencies, and programs using official DBM data.">
   <meta property="og:locale" content="en_PH">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Luke Mark Leona Portfolio">
   <meta property="og:url" content="https://lukasleona.com/preview/LinawLedger/index.html">
   <meta property="og:image" content="https://lukasleona.com/preview/LinawLedger/og-v2.png">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="LinawLedger - The 2026 Philippine budget, made clear">
-  <meta name="twitter:description" content="Explore the FY 2026 national budget by department, agency, program, expense class, and region.">
+  <meta name="twitter:title" content="LinawLedger | Philippine Budget Explorer, 2019–2026">
+  <meta name="twitter:description" content="Follow eight enacted Philippine budgets and compare departments, state universities, public hospitals, regions, agencies, and programs using official DBM data.">
   <meta name="twitter:image" content="https://lukasleona.com/preview/LinawLedger/og-v2.png">
-  <title>LinawLedger | 2026 Philippine Budget Explorer by Luke Mark Leona</title>
+  <title>Philippine Budget Explorer 2019–2026 | LinawLedger</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=20260805-3">
+  <link rel="stylesheet" href="styles.css?v=20260818-2">
   <script src="data/budget-data.js" defer></script>
   <script src="data/historical-budget.js" defer></script>
+  <script src="data/institution-comparisons.js" defer></script>
   <script src="data/philippines-provinces.js" defer></script>
-  <script src="app.js?v=20260805-3" defer></script>
-  <script src="history.js?v=20260805-4" defer></script>
+  <script src="app.js?v=20260818-2" defer></script>
+  <script src="history.js?v=20260818-2" defer></script>
+  <script src="comparisons.js?v=20260818-2" defer></script>
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
-    "name": "LinawLedger",
-    "alternateName": "2026 Philippine Budget Explorer",
-    "url": "https://lukasleona.com/preview/LinawLedger/index.html",
-    "applicationCategory": "EducationalApplication",
-    "operatingSystem": "Web",
-    "description": "An interactive transparency application for exploring the Philippines' FY 2026 national budget by department, agency, program, expense class, and region.",
-    "creator": {
-      "@type": "Person",
-      "@id": "https://lukasleona.com/#person",
-      "name": "Luke Mark Leona",
-      "url": "https://lukasleona.com/"
-    },
-    "offers": {
-      "@type": "Offer",
-      "price": "0",
-      "priceCurrency": "PHP"
-    }
+    "@graph": [
+      {
+        "@type": "WebApplication",
+        "@id": "https://lukasleona.com/preview/LinawLedger/index.html#app",
+        "name": "LinawLedger",
+        "alternateName": "Philippine Budget Explorer 2019–2026",
+        "url": "https://lukasleona.com/preview/LinawLedger/index.html",
+        "applicationCategory": "EducationalApplication",
+        "operatingSystem": "Web",
+        "inLanguage": "en-PH",
+        "isAccessibleForFree": true,
+        "dateModified": "2026-08-18",
+        "description": "An interactive public-budget transparency application for exploring eight Philippine General Appropriations Acts from 2019 to 2026, including departments, state universities, public hospitals, regions, agencies, programs, and expense classes.",
+        "creator": { "@id": "https://lukasleona.com/#person" },
+        "about": { "@id": "https://lukasleona.com/preview/LinawLedger/index.html#dataset" },
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "PHP" }
+      },
+      {
+        "@type": "Dataset",
+        "@id": "https://lukasleona.com/preview/LinawLedger/index.html#dataset",
+        "name": "LinawLedger Philippine Enacted Budget Series, 2019–2026",
+        "description": "A browser-based presentation of official DBM General Appropriations Act figures for eight fiscal years.",
+        "temporalCoverage": "2019/2026",
+        "spatialCoverage": { "@type": "Country", "name": "Philippines" },
+        "creator": { "@id": "https://lukasleona.com/#person" },
+        "isBasedOn": "https://www.dbm.gov.ph/index.php/2026/general-appropriations-act-gaa-fy-2026"
+      },
+      {
+        "@type": "Person",
+        "@id": "https://lukasleona.com/#person",
+        "name": "Luke Mark Leona",
+        "alternateName": ["Luke Leona", "Mark Leona", "Lukas Leona"],
+        "url": "https://lukasleona.com/"
+      }
+    ]
   }
   </script>
 </head>
@@ -71,7 +91,8 @@
       </a>
       <nav class="main-nav" aria-label="Main navigation">
         <a href="#highlights">Highlights</a>
-        <a href="#trends">5-year trends</a>
+        <a href="#trends">8-year trends</a>
+        <a href="#comparisons">Comparisons</a>
         <a href="#departments">Departments</a>
         <a href="#regions">Regions</a>
         <a href="#agencies">Agencies</a>
@@ -89,7 +110,7 @@
         <div class="hero-copy">
           <p class="eyebrow"><span></span><span data-i18n="heroEyebrow">Republic Act No. 12314 · Fiscal Year 2026</span></p>
           <h1 data-i18n="heroTitle">Saan napupunta ang <em>₱6.793 trillion?</em></h1>
-          <p class="hero-lead" data-i18n="heroLead">Explore the national budget by department, agency, program, expense class, or region - without having to decode hundreds of pages.</p>
+          <p class="hero-lead" data-i18n="heroLead">Explore the 2026 national budget, then follow eight enacted budgets from 2019–2026 by department, agency, institution, expense class, or region—without decoding hundreds of pages.</p>
 
           <form class="global-search" id="globalSearchForm" role="search">
             <label class="sr-only" for="globalSearch" data-i18n="searchLabel">Search the 2026 national budget</label>
@@ -131,6 +152,7 @@
             </div>
           </div>
           <p class="rounding-note" data-i18n="roundingNote">Rounded DBM presentation figures may not add exactly to the total.</p>
+          <p class="chart-source">Source: <a href="https://www.dbm.gov.ph/index.php/2026/2026-people-s-enacted-budget" target="_blank" rel="noreferrer">DBM, 2026 People’s Enacted Budget <span aria-hidden="true">↗</span></a></p>
           <div class="plain-note">
             <span aria-hidden="true">i</span>
             <p data-i18n="appropriationNote"><strong>This is spending authority.</strong> An appropriation is permission to spend; it does not mean the money has already been released or paid out.</p>
@@ -181,6 +203,7 @@
             </div>
             <div class="top-allocation-chart" id="topAllocationChart" aria-label="Largest FY 2026 allocations bar chart"></div>
             <p class="chart-footnote">Bars share one scale. Hover or focus a logo to reveal the office and allocation; select it to open details. Category badges are used where no single department seal applies. “Include funds” adds automatic appropriations and special-purpose groupings.</p>
+            <p class="chart-source">Source: <a href="https://www.dbm.gov.ph/index.php/2026/general-appropriations-act-gaa-fy-2026" target="_blank" rel="noreferrer">DBM, FY 2026 General Appropriations Act <span aria-hidden="true">↗</span></a></p>
           </article>
 
           <article class="chart-card expense-chart-card">
@@ -194,6 +217,7 @@
               <div class="expense-legend" id="expenseLegend"></div>
             </div>
             <p class="chart-footnote">PS = people and benefits; MOOE = operations and transfers; CO = infrastructure and equipment.</p>
+            <p class="chart-source">Source: <a href="https://www.dbm.gov.ph/index.php/2026/general-appropriations-act-gaa-fy-2026" target="_blank" rel="noreferrer">DBM, FY 2026 GAA-by-object workbook <span aria-hidden="true">↗</span></a></p>
           </article>
         </div>
 
@@ -209,8 +233,8 @@
       <div class="shell">
         <div class="section-heading history-heading">
           <div>
-            <p class="kicker">Five enacted budgets, one clear view</p>
-            <h2>Follow one public allocation across five enacted budgets.</h2>
+            <p class="kicker">Eight enacted budgets, one clear view</p>
+            <h2>Follow one public allocation across eight enacted budgets.</h2>
           </div>
           <p>Select one department, office, or region to see its own year-by-year path. The view focuses on change over time - not a race between unrelated institutions.</p>
         </div>
@@ -240,9 +264,10 @@
               <span>Nominal Philippine pesos · billions</span>
             </div>
             <div class="history-chart-scroller">
-              <div class="history-chart" id="historyChart" role="img" aria-label="Five-year enacted allocation trend line chart"></div>
+              <div class="history-chart" id="historyChart" role="img" aria-label="Eight-year enacted allocation trend line chart"></div>
             </div>
             <div class="history-tooltip" id="historyTooltip" role="status" aria-live="polite" hidden></div>
+            <p class="chart-source">Source: <a href="#sources">DBM General Appropriations Acts, FY 2019–FY 2026</a></p>
           </div>
 
           <div class="history-lower-grid">
@@ -262,6 +287,50 @@
               <a href="#sources">See data sources and method <span aria-hidden="true">→</span></a>
             </aside>
           </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section comparison-section" id="comparisons">
+      <div class="shell">
+        <div class="section-heading comparison-heading">
+          <div>
+            <p class="kicker">Institution scale, without hiding the gap</p>
+            <h2>Compare major offices with institutions people rely on.</h2>
+          </div>
+          <p>Separate, clearly labeled scales keep universities and hospitals readable while preserving the real peso totals. Select any year to inspect the exact enacted allocations.</p>
+        </div>
+
+        <article class="comparison-card" data-comparison="sucs">
+          <div class="comparison-card-heading">
+            <div><span>Government offices vs state universities</span><h3>Eight years of national priorities and public higher education.</h3></div>
+            <span class="comparison-badge">2019–2026</span>
+          </div>
+          <div class="comparison-summary" data-comparison-summary></div>
+          <div class="comparison-panels">
+            <div class="comparison-panel" data-comparison-panel="offices"></div>
+            <div class="comparison-panel" data-comparison-panel="counterpart"></div>
+          </div>
+          <div class="comparison-readout" data-comparison-readout aria-live="polite"></div>
+          <p class="comparison-method">Panels use independent, labeled y-axes because department budgets are many times larger. Compare direction and volatility visually; use the year readout or table for exact peso amounts.</p>
+          <p class="chart-source">Source: <a href="#sources">DBM General Appropriations Acts, FY 2019–FY 2026</a></p>
+          <details class="comparison-data-details"><summary>View exact annual allocations</summary><div class="comparison-table-wrap" data-comparison-table></div></details>
+        </article>
+
+        <article class="comparison-card" data-comparison="hospitals">
+          <div class="comparison-card-heading">
+            <div><span>Government offices vs public hospitals</span><h3>Eight years of central government and specialty health facilities.</h3></div>
+            <span class="comparison-badge">2019–2026</span>
+          </div>
+          <div class="comparison-summary" data-comparison-summary></div>
+          <div class="comparison-panels">
+            <div class="comparison-panel" data-comparison-panel="offices"></div>
+            <div class="comparison-panel" data-comparison-panel="counterpart"></div>
+          </div>
+          <div class="comparison-readout" data-comparison-readout aria-live="polite"></div>
+          <p class="comparison-method">The facility panel shows direct new appropriations in each institution’s GAA agency page. It does not represent the entire health sector or all hospital funding.</p>
+          <p class="chart-source">Source: <a href="#sources">DBM General Appropriations Acts, FY 2019–FY 2026</a></p>
+          <details class="comparison-data-details"><summary>View exact annual allocations</summary><div class="comparison-table-wrap" data-comparison-table></div></details>
         </article>
       </div>
     </section>
@@ -358,6 +427,7 @@
               <span><i class="map-swatch level-5"></i>₱500B+</span>
             </div>
             <p class="map-note">Simplified province boundaries are grouped using the current 18-region PSGC structure, including the Negros Island Region.</p>
+            <p class="chart-source chart-source-dark">Sources: <a href="https://www.dbm.gov.ph/index.php/2026/2026-people-s-enacted-budget" target="_blank" rel="noreferrer">DBM 2026 People’s Enacted Budget</a> · <a href="https://psa.gov.ph/classification/psgc" target="_blank" rel="noreferrer">PSA PSGC</a></p>
           </article>
           <aside class="region-spotlight" id="regionSpotlight" aria-live="polite"></aside>
         </div>
@@ -393,6 +463,7 @@
           <div class="automatic-chart-wrap">
             <div class="automatic-chart-head"><span>FY 2026 components</span><small>Share of automatic appropriations</small></div>
             <div class="automatic-chart" id="automaticChart"></div>
+            <p class="chart-source">Source: <a href="https://www.dbm.gov.ph/index.php/2026/general-appropriations-act-gaa-fy-2026" target="_blank" rel="noreferrer">DBM, FY 2026 General Appropriations Act <span aria-hidden="true">↗</span></a></p>
           </div>
         </article>
 
@@ -465,7 +536,8 @@
         <div class="source-list" id="sourceList"></div>
         <div class="method-card">
           <span>Method note</span>
-          <p>Five-year trend lines use the FY 2022–2026 enacted GAA workbooks. Region trends count rows carrying a UACS region code and exclude untagged nationwide rows; operational coding can concentrate central-office entries under NCR.</p>
+          <p>Eight-year department and institution trend lines use the FY 2019–2026 enacted GAA workbooks. Region series currently begin in 2022, count rows carrying a UACS region code, and exclude untagged nationwide rows; operational coding can concentrate central-office entries under NCR.</p>
+          <p>Comparison panels use separate labeled y-axes to keep smaller institutions legible. Top offices are ranked using FY 2026 department totals; SUCs and hospitals use direct new appropriations on their respective GAA agency pages. These comparisons describe authorization, not releases or actual expenditure.</p>
           <p>Agency and expense figures are aggregated from DBM’s FY 2026 GAA-by-object Excel file. Regional totals come from the 2026 People’s Enacted Budget because operational office codes are not equivalent to geographic allocations. The map uses simplified MIT-licensed province boundaries reclassified to PSA’s current 18-region structure.</p>
           <small>Amounts are shown in Philippine pesos. Minor differences can result from rounding.</small>
         </div>
@@ -479,7 +551,7 @@
         <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
         <span class="brand-copy"><strong>LinawLedger</strong><small>Linaw sa bawat piso.</small></span>
       </a>
-      <p>Built to make the FY 2026 Philippine national budget easier to understand.</p>
+      <p>Built to make eight Philippine enacted budgets—from FY 2019 to FY 2026—easier to understand.</p>
       <div><a href="#sources">Sources</a><a href="#understand">Methodology</a><a href="https://www.dbm.gov.ph" target="_blank" rel="noreferrer">DBM ↗</a></div>
     </div>
   </footer>

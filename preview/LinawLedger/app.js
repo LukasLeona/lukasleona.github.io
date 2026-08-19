@@ -101,7 +101,7 @@
     en: {
       heroEyebrow: "Republic Act No. 12314 · Fiscal Year 2026",
       heroTitle: "Saan napupunta ang <em>₱6.793 trillion?</em>",
-      heroLead: "Explore the national budget by department, agency, program, expense class, or region - without having to decode hundreds of pages.",
+      heroLead: "Explore the 2026 national budget, then follow eight enacted budgets from 2019–2026 by department, agency, institution, expense class, or region—without decoding hundreds of pages.",
       searchLabel: "Search the 2026 national budget",
       searchButton: "Search budget",
       tryLabel: "Try:",
@@ -141,7 +141,7 @@
     fil: {
       heroEyebrow: "Batas Republika Blg. 12314 · Taong Piskal 2026",
       heroTitle: "Saan napupunta ang <em>₱6.793 trilyon?</em>",
-      heroLead: "Tingnan ang pambansang badyet ayon sa departamento, ahensiya, programa, uri ng gastusin, o rehiyon - nang hindi kinakailangang himayin ang daan-daang pahina.",
+      heroLead: "Tingnan ang badyet ng 2026 at sundan ang walong pinagtibay na badyet mula 2019–2026 ayon sa departamento, ahensiya, institusyon, uri ng gastusin, o rehiyon.",
       searchLabel: "Hanapin sa pambansang badyet ng 2026",
       searchButton: "Maghanap",
       tryLabel: "Subukan:",
@@ -241,38 +241,30 @@
     const entries = data.departments
       .filter((item) => state.allocationChartFilter === "all" || item.kind === "department")
       .sort((a, b) => b.amount_thousand_pesos - a.amount_thousand_pesos)
-      .slice(0, 10);
+      .slice(0, 8);
     const max = entries[0]?.amount_thousand_pesos || 1;
-    const gridTicks = [1, 0.75, 0.5, 0.25, 0];
     elements.topAllocationChart.innerHTML = `
-      <div class="allocation-chart-stage" style="--chart-count:${entries.length}">
-        <div class="allocation-grid-lines" aria-hidden="true">
-          ${gridTicks.map((ratio) => `<span><em>${formatThousands(max * ratio)}</em></span>`).join("")}
-        </div>
-        <div class="allocation-columns">
-          ${entries.map((item, index) => {
-            const mark = allocationMarks[item.name];
-            const badge = allocationBadges[item.name] || item.name.match(/\(([^)]+)\)/)?.[1] || "GOV";
-            const height = Math.max(3.5, (item.amount_thousand_pesos / max) * 100).toFixed(2);
-            const color = [1, 4, 7].includes(index) ? "#d6a43a" : "#2b9b88";
-            const value = formatThousands(item.amount_thousand_pesos);
-            const share = formatPercent(item.amount_thousand_pesos, data.meta.total_thousand_pesos);
-            return `
-              <button class="allocation-column" type="button" data-chart-department="${escapeHtml(item.name)}" style="--bar-height:${height}%;--bar-color:${color}" aria-label="${escapeHtml(item.name)}: ${value}, ${share} of the national budget. Open allocation details.">
-                <span class="allocation-tooltip" aria-hidden="true">
-                  <small>Rank ${String(index + 1).padStart(2, "0")} · ${share} of national budget</small>
-                  <strong>${escapeHtml(item.name)}</strong>
-                  <em>${value}</em>
-                  <span>Open allocation details <b aria-hidden="true">→</b></span>
-                </span>
-                <span class="allocation-column-rail" aria-hidden="true"><i></i></span>
-                <span class="allocation-logo${mark ? " has-image" : " is-badge"}" aria-hidden="true">
-                  ${mark ? `<img src="${mark.src}" alt="" loading="lazy">` : `<b>${escapeHtml(badge)}</b>`}
-                </span>
-                <span class="allocation-rank" aria-hidden="true">${String(index + 1).padStart(2, "0")}</span>
-              </button>`;
-          }).join("")}
-        </div>
+      <div class="allocation-scale" aria-hidden="true"><span>₱0</span><span>Common scale · max ${formatThousands(max)}</span></div>
+      <div class="allocation-bars">
+        ${entries.map((item, index) => {
+          const mark = allocationMarks[item.name];
+          const badge = allocationBadges[item.name] || item.name.match(/\(([^)]+)\)/)?.[1] || "GOV";
+          const width = Math.max(2.5, (item.amount_thousand_pesos / max) * 100).toFixed(2);
+          const color = [1, 4, 7].includes(index) ? "#d6a43a" : "#2b9b88";
+          const value = formatThousands(item.amount_thousand_pesos);
+          const share = formatPercent(item.amount_thousand_pesos, data.meta.total_thousand_pesos);
+          return `
+            <button class="allocation-bar" type="button" data-chart-department="${escapeHtml(item.name)}" style="--bar-width:${width}%;--bar-color:${color}" aria-label="${escapeHtml(item.name)}: ${value}, ${share} of the national budget. Open allocation details.">
+              <span class="allocation-bar-rank" aria-hidden="true">${String(index + 1).padStart(2, "0")}</span>
+              <span class="allocation-bar-identity">
+                <span class="allocation-bar-logo${mark ? " has-image" : " is-badge"}" aria-hidden="true">${mark ? `<img src="${mark.src}" alt="" loading="lazy">` : `<b>${escapeHtml(badge)}</b>`}</span>
+                <span><strong>${escapeHtml(item.name)}</strong><small>${escapeHtml(kindLabel(item.kind))}</small></span>
+              </span>
+              <span class="allocation-bar-track" aria-hidden="true"><i></i></span>
+              <span class="allocation-bar-value"><strong>${value}</strong><small>${share} of total</small></span>
+              <span class="allocation-bar-arrow" aria-hidden="true">↗</span>
+            </button>`;
+        }).join("")}
       </div>`;
   }
 
@@ -385,14 +377,15 @@
     mapData.features.forEach((feature) => {
       const region = data.regions.find((item) => item.name === feature.properties.budget_region);
       if (!region) return;
+      const provinceName = feature.properties.province || "Province boundary";
       const path = document.createElementNS(namespace, "path");
       path.setAttribute("d", pathForFeature(feature));
       path.setAttribute("class", "map-province");
       path.style.setProperty("--region-fill", mapColor(region.amount_billion));
       path.dataset.region = region.name;
-      path.dataset.province = feature.properties.province;
+      path.dataset.province = provinceName;
       const title = document.createElementNS(namespace, "title");
-      title.textContent = `${feature.properties.province}, ${region.name}: ₱${region.amount_billion.toFixed(1)} billion regional allocation`;
+      title.textContent = `${provinceName}, ${region.name}: ₱${region.amount_billion.toFixed(1)} billion regional allocation`;
       path.appendChild(title);
       path.addEventListener("mouseenter", () => showMapTooltip(path, region));
       path.addEventListener("mousemove", (event) => positionMapTooltip(event));
