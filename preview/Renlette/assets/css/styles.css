@@ -30,7 +30,7 @@
 
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: calc(var(--header-height) + 24px);
+  scroll-padding-top: 72px;
 }
 
 body {
@@ -2457,6 +2457,10 @@ h3 {
   :root {
     --header-height: 70px;
     --gutter: 20px;
+  }
+
+  html {
+    scroll-padding-top: 70px;
   }
 
   .site-header,
