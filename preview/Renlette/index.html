@@ -104,7 +104,7 @@
 
     <nav class="desktop-nav" aria-label="Primary navigation">
       <a href="#about">About</a>
-      <a href="#products">Equipment</a>
+      <a href="products.html">Equipment</a>
       <a href="#support">Support</a>
       <a href="videos.html">Videos</a>
       <a href="#faq">FAQ</a>
@@ -123,7 +123,7 @@
       </div>
       <nav aria-label="Mobile navigation">
         <a href="#about"><span>01</span>About</a>
-        <a href="#products"><span>02</span>Equipment</a>
+        <a href="products.html"><span>02</span>Equipment</a>
         <a href="#support"><span>03</span>Support</a>
         <a href="videos.html"><span>04</span>Videos</a>
         <a href="#faq"><span>05</span>FAQ</a>
@@ -169,198 +169,103 @@
     </div>
 
     <section class="about-section" id="about" aria-labelledby="about-title">
-      <div class="section-label reveal" data-reveal><span>01</span> Our role</div>
-      <div class="about-heading">
-        <p class="eyebrow reveal" data-reveal>Equipped for the real world</p>
-        <h2 id="about-title" class="reveal-lines"><span>When every second matters,</span><span>preparation is the advantage.</span></h2>
+      <div class="about-overview">
+        <div class="section-label reveal" data-reveal><span>01</span> Our role</div>
+        <div class="about-heading">
+          <p class="eyebrow reveal" data-reveal>More than a catalog</p>
+          <h2 id="about-title" class="reveal-lines"><span>Prepared teams need</span><span>the right system, not just a product.</span></h2>
+        </div>
+        <div class="about-copy reveal" data-reveal>
+          <p>Renlette Trading supplies high-quality rescue, safety, construction PPE and medical equipment for demanding operations across the Philippines.</p>
+          <p>We help teams connect the task, operating environment and equipment category before they request specifications or a quotation.</p>
+          <a class="text-link" href="products.html">Explore every category <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        </div>
       </div>
-      <div class="about-copy reveal" data-reveal>
-        <p>Renlette Trading supplies high-quality rescue, safety, construction PPE and medical equipment for demanding operations across the Philippines.</p>
-        <p>Our range supports hydraulic rescue, confined-space work, collapsed structures, high-angle rescue, firefighting, water safety and flood response.</p>
-        <a class="text-link" href="#support">How we support your team <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+
+      <div class="about-proof" aria-label="Renlette Trading service highlights">
+        <div><strong>09</strong><span>Core equipment families</span></div>
+        <div><strong>Nationwide</strong><span>Supply across the Philippines</span></div>
+        <div><strong>After sales</strong><span>Technical guidance and training</span></div>
       </div>
-      <div class="equipment-composition" aria-label="Selection of rescue equipment available from Renlette Trading">
-        <span class="composition-word" aria-hidden="true">EQUIPPED</span>
-        <div class="equipment-item equipment-item-main reveal" data-reveal>
-          <img src="assets/images/combination-tool-cutout.png" width="800" height="800" alt="Hydraulic combination rescue tool with a transparent background" loading="lazy">
+
+      <div class="response-team-panel" aria-label="Professionals equipped for firefighting, high-angle rescue and medical response">
+        <span class="team-panel-grid" aria-hidden="true"></span>
+        <div class="team-panel-copy reveal" data-reveal>
+          <p>Equipment carried by the people who use it</p>
+          <h3>For teams who arrive first and leave last.</h3>
+          <a href="products.html">Browse the complete product directory <span>↗</span></a>
         </div>
-        <div class="equipment-item equipment-item-secondary reveal" data-reveal>
-          <img src="assets/images/diablo-scba-cutout.png" width="800" height="800" alt="DIABLO self-contained breathing apparatus with a transparent background" loading="lazy">
-        </div>
-        <div class="equipment-item equipment-item-small reveal" data-reveal>
-          <img src="assets/images/firefighter-helmet-cutout.png" width="800" height="800" alt="Structural firefighter helmet with a transparent background" loading="lazy">
-        </div>
-        <div class="composition-note"><span>One trusted source</span><strong>From first assessment to final recovery</strong></div>
+        <img class="response-team-image reveal" data-reveal src="assets/images/response-team-cutout-v2.png" width="1200" height="800" alt="Firefighter, high-angle rescue technician and medical responder wearing professional equipment" loading="lazy">
+        <div class="team-discipline-tags" aria-hidden="true"><span>Fire</span><span>Rope</span><span>Medical</span><span>PPE</span></div>
       </div>
     </section>
 
-    <section class="product-section" id="products" aria-labelledby="products-title">
+    <section class="product-section category-overview-section" id="products" aria-labelledby="products-title">
       <div class="product-intro">
         <div>
-          <div class="section-label light reveal" data-reveal><span>02</span> Equipment</div>
-          <h2 id="products-title" class="reveal-lines"><span>Find the right tool</span><span>for the response.</span></h2>
+          <div class="section-label light reveal" data-reveal><span>02</span> Equipment categories</div>
+          <h2 id="products-title" class="reveal-lines"><span>Start with the mission.</span><span>Then find the equipment.</span></h2>
         </div>
-        <p class="reveal" data-reveal>Explore key categories from the Renlette catalog. For specifications, compatibility and current availability, send us your requirements.</p>
-      </div>
-
-      <div class="product-filter" role="group" aria-label="Filter products">
-        <button class="is-active" type="button" data-filter="all" aria-pressed="true">All equipment</button>
-        <button type="button" data-filter="fire" aria-pressed="false">Fire</button>
-        <button type="button" data-filter="rescue" aria-pressed="false">Technical rescue</button>
-        <button type="button" data-filter="marine" aria-pressed="false">Water and marine</button>
-        <button type="button" data-filter="breathing" aria-pressed="false">Breathing air</button>
-        <button type="button" data-filter="communications" aria-pressed="false">Communications</button>
-        <button type="button" data-filter="ppe" aria-pressed="false">PPE and medical</button>
-        <button type="button" data-filter="energy" aria-pressed="false">Energy safety</button>
-      </div>
-
-      <div class="product-grid" aria-live="polite">
-        <article class="product-card" data-category="fire">
-          <div class="product-media"><img src="assets/images/attackpro-camera-cutout.png" width="800" height="800" alt="AttackPRO Plus handheld thermal imaging camera on a transparent background"></div>
-          <div class="product-meta"><span>Thermal imaging</span><span>01</span></div>
-          <h3>AttackPRO+</h3>
-          <p>A clear visual aid for firefighters working in heat, smoke and low-visibility conditions.</p>
-          <button type="button" class="product-inquire" data-product="AttackPRO+ thermal imaging camera">Ask about this equipment <span>↗</span></button>
-        </article>
-
-        <article class="product-card" data-category="fire ppe">
-          <div class="product-media"><img src="assets/images/firefighter-helmet-cutout.png" width="800" height="800" alt="Yellow structural firefighter helmet on a transparent background" loading="lazy"></div>
-          <div class="product-meta"><span>Firefighting PPE</span><span>02</span></div>
-          <h3>Firefighter helmet</h3>
-          <p>Head protection for structural firefighting and emergency response operations.</p>
-          <button type="button" class="product-inquire" data-product="Structural firefighter helmet">Request product details <span>↗</span></button>
-        </article>
-
-        <article class="product-card" data-category="rescue">
-          <div class="product-media"><img src="assets/images/combination-tool-cutout.png" width="800" height="800" alt="Hydraulic combination extrication tool on a transparent background" loading="lazy"></div>
-          <div class="product-meta"><span>Extrication</span><span>03</span></div>
-          <h3>Combination tool</h3>
-          <p>A versatile cutter and spreader for vehicle extrication and technical rescue work.</p>
-          <button type="button" class="product-inquire" data-product="Hydraulic combination rescue tool">Request product details <span>↗</span></button>
-        </article>
-
-        <article class="product-card" data-category="fire">
-          <div class="product-media"><img src="assets/images/fire-nozzle-cutout.png" width="800" height="800" alt="Selectable red and black fire nozzle on a transparent background" loading="lazy"></div>
-          <div class="product-meta"><span>Fire suppression</span><span>04</span></div>
-          <h3>Selectable fire nozzle</h3>
-          <p>Adjustable firefighting nozzle for controlled water delivery across response needs.</p>
-          <button type="button" class="product-inquire" data-product="Selectable fire nozzle">Ask about this equipment <span>↗</span></button>
-        </article>
-
-        <article class="product-card" data-category="rescue ppe">
-          <div class="product-media"><img src="assets/images/rescue-harness-cutout.png" width="800" height="800" alt="High-angle rescue harness kit on a transparent background" loading="lazy"></div>
-          <div class="product-meta"><span>High-angle rescue</span><span>05</span></div>
-          <h3>Rescue harness system</h3>
-          <p>Harness and attachment equipment for rope access and high-angle rescue teams.</p>
-          <button type="button" class="product-inquire" data-product="High-angle rescue harness system">Request product details <span>↗</span></button>
-        </article>
-
-        <article class="product-card" data-category="ppe">
-          <div class="product-media"><img src="assets/images/safety-helmet-cutout.png" width="800" height="800" alt="Blue industrial safety helmet on a transparent background" loading="lazy"></div>
-          <div class="product-meta"><span>Construction PPE</span><span>06</span></div>
-          <h3>Industrial safety helmet</h3>
-          <p>Everyday head protection for construction, industrial and site safety applications.</p>
-          <button type="button" class="product-inquire" data-product="Industrial safety helmet">Request product details <span>↗</span></button>
-        </article>
-
-        <article class="product-card" data-category="ppe">
-          <div class="product-media"><img src="assets/images/aed-cutout.png" width="800" height="800" alt="Orange automated external defibrillator on a transparent background" loading="lazy"></div>
-          <div class="product-meta"><span>Medical equipment</span><span>07</span></div>
-          <h3>Automated external defibrillator</h3>
-          <p>Portable emergency medical equipment intended to support rapid cardiac response.</p>
-          <button type="button" class="product-inquire" data-product="Automated external defibrillator">Ask about this equipment <span>↗</span></button>
-        </article>
-
-        <article class="product-card" data-category="energy">
-          <div class="product-media"><img src="assets/images/emergency-plug-cutout.png" width="800" height="800" alt="Yellow Emergency Plug kit on a transparent background" loading="lazy"></div>
-          <div class="product-meta"><span>Electric vehicle safety</span><span>08</span></div>
-          <h3>Emergency Plug</h3>
-          <p>An EV immobilisation tool designed for first responders working around plug-in vehicles.</p>
-          <button type="button" class="product-inquire" data-product="Emergency Plug EV safety tool">Request product details <span>↗</span></button>
-        </article>
-
-        <article class="product-card" data-category="fire energy">
-          <div class="product-media"><img src="assets/images/lith-ex-extinguisher-cutout.png" width="800" height="800" alt="AVD Lith-Ex fire extinguisher on a transparent background" loading="lazy"></div>
-          <div class="product-meta"><span>Lithium battery fire safety</span><span>09</span></div>
-          <h3>AVD Lith-Ex extinguisher</h3>
-          <p>Purpose-built fire suppression equipment for lithium-ion battery fire risks.</p>
-          <button type="button" class="product-inquire" data-product="AVD Lith-Ex fire extinguisher">Request product details <span>↗</span></button>
-        </article>
-
-        <article class="product-card" data-category="fire energy">
-          <div class="product-media"><img src="assets/images/pvstop-cylinder-cutout.png" width="800" height="800" alt="PVSTOP solar panel block out cylinder on a transparent background" loading="lazy"></div>
-          <div class="product-meta"><span>Solar PV safety</span><span>10</span></div>
-          <h3>PVSTOP block out</h3>
-          <p>A light-blocking coating system used to help make solar PV systems electrically safe.</p>
-          <button type="button" class="product-inquire" data-product="PVSTOP solar panel block out">Ask about this equipment <span>↗</span></button>
-        </article>
-
-        <article class="product-card" data-category="breathing fire">
-          <div class="product-media"><img src="assets/images/diablo-scba-cutout.png" width="800" height="800" alt="DIABLO self-contained breathing apparatus on a transparent background" loading="lazy"></div>
-          <div class="product-meta"><span>Breathing air</span><span>11</span></div>
-          <h3>DIABLO SCBA</h3>
-          <p>Self-contained breathing apparatus for firefighting and hazardous atmosphere response.</p>
-          <button type="button" class="product-inquire" data-product="DIABLO self-contained breathing apparatus">Ask about this equipment <span>↗</span></button>
-        </article>
-
-        <article class="product-card" data-category="breathing">
-          <div class="product-media"><img src="assets/images/mistral-compressor-cutout.png" width="800" height="800" alt="Paramina Mistral breathing air compressor on a transparent background" loading="lazy"></div>
-          <div class="product-meta"><span>Breathing air</span><span>12</span></div>
-          <h3>Paramina Mistral compressor</h3>
-          <p>High-pressure compressor equipment for breathing air cylinder refilling applications.</p>
-          <button type="button" class="product-inquire" data-product="Paramina Mistral breathing air compressor">Request product details <span>↗</span></button>
-        </article>
-
-        <article class="product-card" data-category="communications marine">
-          <div class="product-media"><img src="assets/images/marine-radio-cutout.png" width="800" height="800" alt="Rugged portable land and marine radio on a transparent background" loading="lazy"></div>
-          <div class="product-meta"><span>Communications</span><span>13</span></div>
-          <h3>Land and marine radio</h3>
-          <p>Portable two-way communications equipment for field, water and marine operations.</p>
-          <button type="button" class="product-inquire" data-product="Land and marine radio">Request product details <span>↗</span></button>
-        </article>
-      </div>
-
-      <div class="catalog-cta reveal" data-reveal>
-        <p>Need a product that is not shown here?</p>
-        <a href="#contact">Tell us what your operation requires <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-      </div>
-    </section>
-
-    <section class="pvstop-section" id="pvstop" aria-labelledby="pvstop-title">
-      <div class="pvstop-art" aria-hidden="true">
-        <span class="sun-core"></span>
-        <span class="sun-ring sun-ring-one"></span>
-        <span class="sun-ring sun-ring-two"></span>
-        <span class="pv-grid"></span>
-        <img class="pvstop-product" src="assets/images/pvstop-cylinder-cutout.png" width="800" height="800" alt="" loading="lazy">
-      </div>
-      <div class="pvstop-copy">
-        <div class="official-badge">Renlette is an official PVSTOP distributor in the Philippines</div>
-        <img src="assets/images/pvstop-logo.png" width="1000" height="270" alt="PVSTOP" loading="lazy">
-        <h2 id="pvstop-title">Make solar PV systems safer in seconds.</h2>
-        <p>Renlette Trading distributes PVSTOP, a light-blocking coating technology designed to make solar PV systems electrically safe during emergencies, maintenance and site assessments.</p>
-        <ul>
-          <li><span>01</span> Electrically safe within seconds</li>
-          <li><span>02</span> Supports firefighters and emergency responders</li>
-          <li><span>03</span> Helps plan coverage requirements</li>
-        </ul>
-        <a class="dark-button" href="#contact"><span>Ask about PVSTOP</span><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-      </div>
-    </section>
-
-    <section class="pvstop-calculator" aria-labelledby="calculator-title">
-      <div class="calculator-intro">
-        <div>
-          <p class="eyebrow">PVSTOP coverage calculator</p>
-          <h2 id="calculator-title">Plan the coverage your site may require.</h2>
-        </div>
-        <div class="calculator-copy">
-          <p>Use the official PVSTOP calculator below to estimate coverage. The tool is provided and maintained by PVSTOP, so its central version stays current.</p>
-          <p class="calculator-language">The embedded calculator is currently available in English.</p>
+        <div class="category-intro-copy reveal" data-reveal>
+          <p>The homepage now gives you the category view. Open the complete product directory to see every item from the Renlette product sheets.</p>
+          <a class="text-link light-link" href="products.html">View all products <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
         </div>
       </div>
-      <div class="calculator-frame">
-        <iframe style="width: 720px; height: 1000px; border: none;" src="https://pvstop.com.au/coverage-calculator-iframe/?dist=pvstop-mx"></iframe>
+
+      <div class="category-grid">
+        <a class="category-card category-card-cyan" href="products.html#firefighting">
+          <span class="category-number">01</span>
+          <div class="category-card-media"><img src="assets/images/firefighter-helmet-cutout.png" width="800" height="731" alt="Yellow structural firefighter helmet" loading="lazy"><img class="category-product-secondary" src="assets/images/fire-nozzle-cutout.png" width="800" height="533" alt="Selectable fire nozzle" loading="lazy"></div>
+          <div class="category-card-copy"><span>Protection and suppression</span><h3>Firefighting equipment</h3><p>Turnout gear, hose equipment, fire nozzles, monitors and breathing systems.</p><strong>Explore category ↗</strong></div>
+        </a>
+
+        <a class="category-card category-card-ice" href="products.html#medical">
+          <span class="category-number">02</span>
+          <div class="category-card-media"><img src="assets/images/aed-cutout.png" width="800" height="739" alt="Automated external defibrillator" loading="lazy"></div>
+          <div class="category-card-copy"><span>Emergency care</span><h3>Medical and EMS</h3><p>AEDs, oxygen equipment, trauma kits, stretchers and patient handling systems.</p><strong>Explore category ↗</strong></div>
+        </a>
+
+        <a class="category-card category-card-orange" href="products.html#ppe">
+          <span class="category-number">03</span>
+          <div class="category-card-media"><img src="assets/images/safety-helmet-cutout.png" width="800" height="533" alt="Blue industrial safety helmet" loading="lazy"></div>
+          <div class="category-card-copy"><span>Worksite protection</span><h3>PPE and construction safety</h3><p>Head, eye, hearing, respiratory, hand, body and foot protection.</p><strong>Explore category ↗</strong></div>
+        </a>
+
+        <a class="category-card category-card-sheet" href="products.html#hazmat">
+          <span class="category-number">04</span>
+          <div class="category-card-media"><img class="category-sheet-image" src="assets/images/catalog-hazmat-sheet.png" width="526" height="789" alt="Hazardous material response equipment collection" loading="lazy"></div>
+          <div class="category-card-copy"><span>Containment and decontamination</span><h3>Hazardous materials</h3><p>Chemical protection, spill control, decontamination and containment equipment.</p><strong>Explore category ↗</strong></div>
+        </a>
+
+        <a class="category-card category-card-red" href="products.html#high-angle">
+          <span class="category-number">05</span>
+          <div class="category-card-media"><img src="assets/images/rescue-harness-cutout.png" width="533" height="800" alt="High-angle rescue harness system" loading="lazy"></div>
+          <div class="category-card-copy"><span>Rope access and rescue</span><h3>High-angle rescue</h3><p>Ropes, connectors, harnesses, control devices, rescue litters and rigging systems.</p><strong>Explore category ↗</strong></div>
+        </a>
+
+        <a class="category-card category-card-steel" href="products.html#technical-rescue">
+          <span class="category-number">06</span>
+          <div class="category-card-media"><img src="assets/images/combination-tool-cutout.png" width="800" height="533" alt="Hydraulic combination rescue tool" loading="lazy"></div>
+          <div class="category-card-copy"><span>Extrication, lifting and water</span><h3>Technical rescue</h3><p>Hydraulic tools, lifting systems and equipment for complex rescue operations.</p><strong>Explore category ↗</strong></div>
+        </a>
+
+        <a class="category-card category-card-blue" href="products.html#thermal-imaging">
+          <span class="category-number">07</span>
+          <div class="category-card-media"><img src="assets/images/attackpro-camera-cutout.png" width="533" height="800" alt="AttackPRO Plus thermal imaging camera" loading="lazy"></div>
+          <div class="category-card-copy"><span>Detection and assessment</span><h3>Thermal imaging</h3><p>Handheld cameras for fireground visibility, assessment and victim location.</p><strong>Explore category ↗</strong></div>
+        </a>
+
+        <a class="category-card category-card-dark" href="products.html#breathing-communications">
+          <span class="category-number">08</span>
+          <div class="category-card-media"><img src="assets/images/diablo-scba-cutout.png" width="533" height="800" alt="DIABLO self-contained breathing apparatus" loading="lazy"><img class="category-product-secondary" src="assets/images/marine-radio-cutout.png" width="533" height="800" alt="Portable two-way radio" loading="lazy"></div>
+          <div class="category-card-copy"><span>Air and coordination</span><h3>Breathing air and communications</h3><p>SCBA, refilling compressors, cylinders and rugged portable radios.</p><strong>Explore category ↗</strong></div>
+        </a>
+
+        <a class="category-card category-card-yellow" href="products.html#energy-safety">
+          <span class="category-number">09</span>
+          <div class="category-card-media"><img src="assets/images/emergency-plug-cutout.png" width="800" height="533" alt="Emergency Plug electric vehicle safety tool" loading="lazy"><img class="category-product-secondary" src="assets/images/lith-ex-extinguisher-cutout.png" width="533" height="800" alt="AVD Lith-Ex extinguisher" loading="lazy"></div>
+          <div class="category-card-copy"><span>EV and battery response</span><h3>Energy safety equipment</h3><p>Vehicle immobilisation and lithium battery fire suppression equipment.</p><strong>Explore category ↗</strong></div>
+        </a>
       </div>
     </section>
 
@@ -485,7 +390,7 @@
       <div><strong>RENLETTE</strong><span>TRADING</span></div>
     </div>
     <div class="footer-links">
-      <div><span>Explore</span><a href="#about">About Renlette</a><a href="#products">Equipment</a><a href="#pvstop">PVSTOP</a><a href="videos.html">Videos</a><a href="#support">After-sales support</a><a href="#faq">FAQ</a></div>
+      <div><span>Explore</span><a href="#about">About Renlette</a><a href="products.html">Products</a><a href="videos.html">Videos</a><a href="#support">After-sales support</a><a href="#faq">FAQ</a></div>
       <div><span>Connect</span><a href="https://www.facebook.com/renlette.tradingyahoo.com.ph/" target="_blank" rel="noopener noreferrer">Facebook</a><a href="https://www.youtube.com/user/dennisrenatopurifica" target="_blank" rel="noopener noreferrer">YouTube</a><a href="mailto:renlette.trading@yahoo.com.ph">Email us</a></div>
     </div>
     <div class="footer-bottom">

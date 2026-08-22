@@ -103,8 +103,54 @@
     });
   });
 
+  const catalogSearch = doc.querySelector("[data-catalog-search]");
+  const catalogItems = [...doc.querySelectorAll(".catalog-item")];
+  const catalogSections = [...doc.querySelectorAll("[data-catalog-section]")];
+  const catalogCount = doc.querySelector("[data-catalog-count]");
+  const catalogEmpty = doc.querySelector("[data-catalog-empty]");
+  const clearCatalogButton = doc.querySelector("[data-clear-catalog]");
+
+  const updateCatalog = () => {
+    const query = (catalogSearch?.value || "").trim().toLowerCase();
+    let visibleCount = 0;
+
+    catalogItems.forEach((item) => {
+      const matches = !query || item.textContent.toLowerCase().includes(query);
+      item.hidden = !matches;
+      if (matches) visibleCount += 1;
+    });
+
+    catalogSections.forEach((section) => {
+      section.hidden = !section.querySelector(".catalog-item:not([hidden])");
+    });
+
+    if (catalogCount) {
+      catalogCount.textContent = query
+        ? `Showing ${visibleCount} of ${catalogItems.length} product types`
+        : `Showing all ${catalogItems.length} product types`;
+    }
+    if (catalogEmpty) catalogEmpty.hidden = visibleCount > 0 || !query;
+  };
+
+  catalogSearch?.addEventListener("input", updateCatalog);
+  clearCatalogButton?.addEventListener("click", () => {
+    if (!catalogSearch) return;
+    catalogSearch.value = "";
+    updateCatalog();
+    catalogSearch.focus();
+  });
+  if (catalogItems.length) updateCatalog();
+
   const equipmentField = doc.querySelector("#equipment");
   const messageField = doc.querySelector("#message");
+  const requestedProduct = new URLSearchParams(window.location.search).get("equipment");
+
+  if (requestedProduct && equipmentField) {
+    equipmentField.value = requestedProduct;
+    if (messageField && !messageField.value.trim()) {
+      messageField.value = `Please send product details and quotation guidance for ${requestedProduct}.`;
+    }
+  }
 
   doc.querySelectorAll("[data-product]").forEach((button) => {
     button.addEventListener("click", () => {
