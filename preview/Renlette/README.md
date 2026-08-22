@@ -19,7 +19,8 @@ Then open `http://127.0.0.1:4173/`.
 - `videos.html`: responsive library of the 12 videos embedded on the previous WordPress videos page
 - `assets/css/styles.css`: design system, layouts, motion and responsive rules
 - `assets/js/main.js`: navigation, catalog search, inquiry handoff, accordions, form validation and chatbot logic
-- `assets/images/`: transparent logo, optimized generated photography and catalog imagery
+- `assets/images/`: transparent logo, optimized generated photography, category responders and product cutouts
+- `assets/images/catalog-products/`: 116 individually displayed WebP product images used by the classified directory
 
 ## Integration notes
 
@@ -30,4 +31,4 @@ Then open `http://127.0.0.1:4173/`.
 
 ## Image notes
 
-The logo was extracted from the supplied image onto a transparent background. The hero, training and response-team photographs were generated for this build. The catalog combines transparent single-product cutouts with the supplied Renlette product sheets.
+The logo was extracted from the supplied image onto a transparent background. The hero, training, response-team and category-responder photographs were generated for this build. The supplied Renlette posters were used only as product references and are not displayed in the catalog. Every catalog item has its own product image above its name.

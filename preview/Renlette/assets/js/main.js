@@ -103,6 +103,91 @@
     });
   });
 
+  const categoryCarousels = [...doc.querySelectorAll("[data-product-carousel]")];
+
+  categoryCarousels.forEach((card) => {
+    const image = card.querySelector("[data-carousel-image]");
+    const name = card.querySelector("[data-carousel-name]");
+    const position = card.querySelector("[data-carousel-position]");
+    const previousButton = card.querySelector("[data-carousel-prev]");
+    const nextButton = card.querySelector("[data-carousel-next]");
+    const firstProduct = Number(card.dataset.productStart);
+    const lastProduct = Number(card.dataset.productEnd);
+    const productNames = (card.dataset.productNames || "").split("|").filter(Boolean);
+    const productCount = lastProduct - firstProduct + 1;
+    let currentIndex = 0;
+    let rotationTimer = null;
+    let transitionTimer = null;
+
+    if (!image || !name || !position || productCount < 1) return;
+
+    const sourceFor = (index) => {
+      const productNumber = firstProduct + index;
+      return `assets/images/catalog-products/product-${String(productNumber).padStart(3, "0")}.webp`;
+    };
+
+    const labelFor = (index) => productNames[index] || `Product ${index + 1}`;
+
+    const showProduct = (nextIndex) => {
+      currentIndex = (nextIndex + productCount) % productCount;
+      card.classList.add("is-changing");
+      window.clearTimeout(transitionTimer);
+      transitionTimer = window.setTimeout(() => {
+        const productName = labelFor(currentIndex);
+        image.src = sourceFor(currentIndex);
+        image.alt = productName;
+        name.textContent = productName;
+        position.textContent = `${String(currentIndex + 1).padStart(2, "0")} / ${String(productCount).padStart(2, "0")}`;
+        window.requestAnimationFrame(() => card.classList.remove("is-changing"));
+      }, reducedMotion ? 0 : 150);
+    };
+
+    const stopRotation = () => {
+      window.clearInterval(rotationTimer);
+      rotationTimer = null;
+    };
+
+    const startRotation = () => {
+      stopRotation();
+      if (!reducedMotion && productCount > 1 && !doc.hidden) {
+        rotationTimer = window.setInterval(() => showProduct(currentIndex + 1), 5000);
+      }
+    };
+
+    const moveManually = (direction) => {
+      showProduct(currentIndex + direction);
+      startRotation();
+    };
+
+    previousButton?.addEventListener("click", () => moveManually(-1));
+    nextButton?.addEventListener("click", () => moveManually(1));
+    card.addEventListener("pointerenter", stopRotation);
+    card.addEventListener("pointerleave", startRotation);
+    card.addEventListener("focusin", stopRotation);
+    card.addEventListener("focusout", (event) => {
+      if (!card.contains(event.relatedTarget)) startRotation();
+    });
+    doc.addEventListener("visibilitychange", () => {
+      if (doc.hidden) stopRotation();
+      else startRotation();
+    });
+
+    const preloadProducts = () => {
+      for (let index = 0; index < productCount; index += 1) {
+        const preloadImage = new Image();
+        preloadImage.src = sourceFor(index);
+      }
+    };
+
+    if ("requestIdleCallback" in window) {
+      window.requestIdleCallback(preloadProducts, { timeout: 2400 });
+    } else {
+      window.setTimeout(preloadProducts, 800);
+    }
+
+    startRotation();
+  });
+
   const catalogSearch = doc.querySelector("[data-catalog-search]");
   const catalogItems = [...doc.querySelectorAll(".catalog-item")];
   const catalogSections = [...doc.querySelectorAll("[data-catalog-section]")];

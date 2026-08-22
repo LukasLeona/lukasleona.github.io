@@ -104,7 +104,7 @@
 
     <nav class="desktop-nav" aria-label="Primary navigation">
       <a href="#about">About</a>
-      <a href="products.html">Equipment</a>
+      <a href="products.html">Products</a>
       <a href="#support">Support</a>
       <a href="videos.html">Videos</a>
       <a href="#faq">FAQ</a>
@@ -123,7 +123,7 @@
       </div>
       <nav aria-label="Mobile navigation">
         <a href="#about"><span>01</span>About</a>
-        <a href="products.html"><span>02</span>Equipment</a>
+        <a href="products.html"><span>02</span>Products</a>
         <a href="#support"><span>03</span>Support</a>
         <a href="videos.html"><span>04</span>Videos</a>
         <a href="#faq"><span>05</span>FAQ</a>
@@ -170,9 +170,8 @@
 
     <section class="about-section" id="about" aria-labelledby="about-title">
       <div class="about-overview">
-        <div class="section-label reveal" data-reveal><span>01</span> Our role</div>
         <div class="about-heading">
-          <p class="eyebrow reveal" data-reveal>More than a catalog</p>
+          <div class="section-heading-line reveal" data-reveal><span>01 - Our role</span><i aria-hidden="true">|</i><strong>More than a catalog</strong></div>
           <h2 id="about-title" class="reveal-lines"><span>Prepared teams need</span><span>the right system, not just a product.</span></h2>
         </div>
         <div class="about-copy reveal" data-reveal>
@@ -203,69 +202,96 @@
     <section class="product-section category-overview-section" id="products" aria-labelledby="products-title">
       <div class="product-intro">
         <div>
-          <div class="section-label light reveal" data-reveal><span>02</span> Equipment categories</div>
+          <div class="section-heading-line light reveal" data-reveal><span>02 - Equipment categories</span></div>
           <h2 id="products-title" class="reveal-lines"><span>Start with the mission.</span><span>Then find the equipment.</span></h2>
         </div>
         <div class="category-intro-copy reveal" data-reveal>
-          <p>The homepage now gives you the category view. Open the complete product directory to see every item from the Renlette product sheets.</p>
+          <p>Start with the equipment category, then open the complete product directory to compare every available item.</p>
           <a class="text-link light-link" href="products.html">View all products <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
         </div>
       </div>
 
       <div class="category-grid">
-        <a class="category-card category-card-cyan" href="products.html#firefighting">
+        <article class="category-card category-card-cyan" data-product-carousel data-product-start="1" data-product-end="12" data-product-names="Structural firefighting gloves|Turnout coat|Turnout trousers|Structural firefighter helmet|Self-contained breathing apparatus|Firefighter boots|Fire hose cabinet|Fire hose reel system|Portable fire extinguisher|Selectable fire nozzle|Automatic fire nozzle|Oscillating fire monitor">
           <span class="category-number">01</span>
-          <div class="category-card-media"><img src="assets/images/firefighter-helmet-cutout.png" width="800" height="731" alt="Yellow structural firefighter helmet" loading="lazy"><img class="category-product-secondary" src="assets/images/fire-nozzle-cutout.png" width="800" height="533" alt="Selectable fire nozzle" loading="lazy"></div>
-          <div class="category-card-copy"><span>Protection and suppression</span><h3>Firefighting equipment</h3><p>Turnout gear, hose equipment, fire nozzles, monitors and breathing systems.</p><strong>Explore category ↗</strong></div>
-        </a>
+          <div class="category-card-media">
+            <div class="category-product-stage"><img data-carousel-image src="assets/images/catalog-products/product-001.webp" width="480" height="360" alt="Structural firefighting gloves" loading="lazy"><div class="category-product-meta" aria-live="polite"><span data-carousel-name>Structural firefighting gloves</span><small data-carousel-position>01 / 12</small></div></div>
+            <div class="category-carousel-controls"><button type="button" data-carousel-prev aria-label="Show previous firefighting product">←</button><button type="button" data-carousel-next aria-label="Show next firefighting product">→</button></div>
+          </div>
+          <div class="category-card-copy"><span>Protection and suppression</span><h3>Firefighting equipment</h3><p>Turnout gear, hose equipment, fire nozzles, monitors and breathing systems.</p><a href="products.html#firefighting">Explore category ↗</a></div>
+        </article>
 
-        <a class="category-card category-card-ice" href="products.html#medical">
+        <article class="category-card category-card-ice" data-product-carousel data-product-start="13" data-product-end="32" data-product-names="Surgical face masks|Protective goggles|Disposable protective coveralls|Oxygen masks|Nebulizer kits|Bag-valve-mask resuscitators|Medical oxygen cylinders|Oxygen regulators and flowmeters|Trauma first aid kits|Emergency medical carry bags|Portable suction units|Patient monitors|Automated external defibrillators|Ambulance stretchers|Basket stretchers|Long spine boards|Head immobilizers|Scoop stretchers|Folding stretchers|Stair chairs">
           <span class="category-number">02</span>
-          <div class="category-card-media"><img src="assets/images/aed-cutout.png" width="800" height="739" alt="Automated external defibrillator" loading="lazy"></div>
-          <div class="category-card-copy"><span>Emergency care</span><h3>Medical and EMS</h3><p>AEDs, oxygen equipment, trauma kits, stretchers and patient handling systems.</p><strong>Explore category ↗</strong></div>
-        </a>
+          <div class="category-card-media">
+            <div class="category-product-stage"><img data-carousel-image src="assets/images/catalog-products/product-013.webp" width="480" height="360" alt="Surgical face masks" loading="lazy"><div class="category-product-meta" aria-live="polite"><span data-carousel-name>Surgical face masks</span><small data-carousel-position>01 / 20</small></div></div>
+            <div class="category-carousel-controls"><button type="button" data-carousel-prev aria-label="Show previous medical product">←</button><button type="button" data-carousel-next aria-label="Show next medical product">→</button></div>
+          </div>
+          <div class="category-card-copy"><span>Emergency care</span><h3>Medical and EMS</h3><p>AEDs, oxygen equipment, trauma kits, stretchers and patient handling systems.</p><a href="products.html#medical">Explore category ↗</a></div>
+        </article>
 
-        <a class="category-card category-card-orange" href="products.html#ppe">
+        <article class="category-card category-card-orange" data-product-carousel data-product-start="33" data-product-end="53" data-product-names="Safety helmets|Hearing protection earmuffs|Safety glasses|Face shields and caps|Work gloves|Coveralls and workwear|Raincoats and high visibility rainwear|High visibility clothing|Chemical-resistant gloves|Cut-resistant gloves|Safety shoes|Work boots|PVC boots|Safety boots|Electrical insulating gloves|Respirator masks|Filter respirators|Full-body safety harnesses|Waders|Protective eyewear|PVC gloves">
           <span class="category-number">03</span>
-          <div class="category-card-media"><img src="assets/images/safety-helmet-cutout.png" width="800" height="533" alt="Blue industrial safety helmet" loading="lazy"></div>
-          <div class="category-card-copy"><span>Worksite protection</span><h3>PPE and construction safety</h3><p>Head, eye, hearing, respiratory, hand, body and foot protection.</p><strong>Explore category ↗</strong></div>
-        </a>
+          <div class="category-card-media">
+            <div class="category-product-stage"><img data-carousel-image src="assets/images/catalog-products/product-033.webp" width="480" height="360" alt="Safety helmets" loading="lazy"><div class="category-product-meta" aria-live="polite"><span data-carousel-name>Safety helmets</span><small data-carousel-position>01 / 21</small></div></div>
+            <div class="category-carousel-controls"><button type="button" data-carousel-prev aria-label="Show previous PPE product">←</button><button type="button" data-carousel-next aria-label="Show next PPE product">→</button></div>
+          </div>
+          <div class="category-card-copy"><span>Worksite protection</span><h3>PPE and construction safety</h3><p>Head, eye, hearing, respiratory, hand, body and foot protection.</p><a href="products.html#ppe">Explore category ↗</a></div>
+        </article>
 
-        <a class="category-card category-card-sheet" href="products.html#hazmat">
+        <article class="category-card category-card-sheet" data-product-carousel data-product-start="54" data-product-end="79" data-product-names="Level A chemical protective suits|Chemical-resistant gloves|Decontamination boots|Portable decontamination pools|Decontamination shower systems|Decontamination wash platforms|Decontamination collection tanks|Decon solution applicators|Portable spill kits|Absorbent pads|Absorbent socks and booms|Absorbent pillows|Overpack and salvage drums|Safety cones|Drain covers|Spill containment pallets|Flexible containment berms|Safety zone floor mats|Hazard zone markers|Portable transfer pumps|Chemical-resistant hoses|Hose couplings and valves|Utility tarps|Spill response storage tubs|Hazmat brooms and squeegees|Hazard warning signs">
           <span class="category-number">04</span>
-          <div class="category-card-media"><img class="category-sheet-image" src="assets/images/catalog-hazmat-sheet.png" width="526" height="789" alt="Hazardous material response equipment collection" loading="lazy"></div>
-          <div class="category-card-copy"><span>Containment and decontamination</span><h3>Hazardous materials</h3><p>Chemical protection, spill control, decontamination and containment equipment.</p><strong>Explore category ↗</strong></div>
-        </a>
+          <div class="category-card-media">
+            <div class="category-product-stage"><img data-carousel-image src="assets/images/catalog-products/product-054.webp" width="480" height="360" alt="Level A chemical protective suits" loading="lazy"><div class="category-product-meta" aria-live="polite"><span data-carousel-name>Level A chemical protective suits</span><small data-carousel-position>01 / 26</small></div></div>
+            <div class="category-carousel-controls"><button type="button" data-carousel-prev aria-label="Show previous hazardous materials product">←</button><button type="button" data-carousel-next aria-label="Show next hazardous materials product">→</button></div>
+          </div>
+          <div class="category-card-copy"><span>Containment and decontamination</span><h3>Hazardous materials</h3><p>Chemical protection, spill control, decontamination and containment equipment.</p><a href="products.html#hazmat">Explore category ↗</a></div>
+        </article>
 
-        <a class="category-card category-card-red" href="products.html#high-angle">
+        <article class="category-card category-card-red" data-product-carousel data-product-start="80" data-product-end="96" data-product-names="Static kernmantle ropes|Prusik cords|Rope protectors and edge rollers|Rescue carabiners|Rescue pulleys|Descenders and belay devices|Mechanical ascenders|Rigging plates|Full-body rescue harnesses|Rescue helmets|Rope rescue gloves|Stokes baskets and rescue litters|Litter bridles|Rescue tripods and artificial high directionals|Pre-rigged rescue kits|Rope rescue bags|Rescue team radios">
           <span class="category-number">05</span>
-          <div class="category-card-media"><img class="category-sheet-image" src="assets/images/catalog-high-angle-sheet.png" width="526" height="789" alt="High-angle rescue equipment collection" loading="lazy"></div>
-          <div class="category-card-copy"><span>Rope access and rescue</span><h3>High-angle rescue</h3><p>Ropes, connectors, harnesses, control devices, rescue litters and rigging systems.</p><strong>Explore category ↗</strong></div>
-        </a>
+          <div class="category-card-media">
+            <div class="category-product-stage"><img data-carousel-image src="assets/images/catalog-products/product-080.webp" width="480" height="360" alt="Static kernmantle ropes" loading="lazy"><div class="category-product-meta" aria-live="polite"><span data-carousel-name>Static kernmantle ropes</span><small data-carousel-position>01 / 17</small></div></div>
+            <div class="category-carousel-controls"><button type="button" data-carousel-prev aria-label="Show previous high-angle rescue product">←</button><button type="button" data-carousel-next aria-label="Show next high-angle rescue product">→</button></div>
+          </div>
+          <div class="category-card-copy"><span>Rope access and rescue</span><h3>High-angle rescue</h3><p>Ropes, connectors, harnesses, control devices, rescue litters and rigging systems.</p><a href="products.html#high-angle">Explore category ↗</a></div>
+        </article>
 
-        <a class="category-card category-card-steel" href="products.html#technical-rescue">
+        <article class="category-card category-card-steel" data-product-carousel data-product-start="97" data-product-end="104" data-product-names="Hydraulic combination tools|Hydraulic rescue cutters|Hydraulic spreaders|Hydraulic rams|Hydraulic power units|Inflatable lifting bags|Inflatable rescue boats|Flood and water rescue equipment">
           <span class="category-number">06</span>
-          <div class="category-card-media"><img src="assets/images/combination-tool-cutout.png" width="800" height="533" alt="Hydraulic combination rescue tool" loading="lazy"></div>
-          <div class="category-card-copy"><span>Extrication, lifting and water</span><h3>Technical rescue</h3><p>Hydraulic tools, lifting systems and equipment for complex rescue operations.</p><strong>Explore category ↗</strong></div>
-        </a>
+          <div class="category-card-media">
+            <div class="category-product-stage"><img data-carousel-image src="assets/images/catalog-products/product-097.webp" width="480" height="360" alt="Hydraulic combination tools" loading="lazy"><div class="category-product-meta" aria-live="polite"><span data-carousel-name>Hydraulic combination tools</span><small data-carousel-position>01 / 08</small></div></div>
+            <div class="category-carousel-controls"><button type="button" data-carousel-prev aria-label="Show previous technical rescue product">←</button><button type="button" data-carousel-next aria-label="Show next technical rescue product">→</button></div>
+          </div>
+          <div class="category-card-copy"><span>Extrication, lifting and water</span><h3>Technical rescue</h3><p>Hydraulic tools, lifting systems and equipment for complex rescue operations.</p><a href="products.html#technical-rescue">Explore category ↗</a></div>
+        </article>
 
-        <a class="category-card category-card-blue" href="products.html#thermal-imaging">
+        <article class="category-card category-card-blue" data-product-carousel data-product-start="105" data-product-end="107" data-product-names="Seek Thermal FirePRO 300|Seek Thermal AttackPRO+|Seek Thermal PRO">
           <span class="category-number">07</span>
-          <div class="category-card-media"><img src="assets/images/attackpro-camera-cutout.png" width="533" height="800" alt="AttackPRO Plus thermal imaging camera" loading="lazy"></div>
-          <div class="category-card-copy"><span>Detection and assessment</span><h3>Thermal imaging</h3><p>Handheld cameras for fireground visibility, assessment and victim location.</p><strong>Explore category ↗</strong></div>
-        </a>
+          <div class="category-card-media">
+            <div class="category-product-stage"><img data-carousel-image src="assets/images/catalog-products/product-105.webp" width="480" height="360" alt="Seek Thermal FirePRO 300" loading="lazy"><div class="category-product-meta" aria-live="polite"><span data-carousel-name>Seek Thermal FirePRO 300</span><small data-carousel-position>01 / 03</small></div></div>
+            <div class="category-carousel-controls"><button type="button" data-carousel-prev aria-label="Show previous thermal imaging product">←</button><button type="button" data-carousel-next aria-label="Show next thermal imaging product">→</button></div>
+          </div>
+          <div class="category-card-copy"><span>Detection and assessment</span><h3>Thermal imaging</h3><p>Handheld cameras for fireground visibility, assessment and victim location.</p><a href="products.html#thermal-imaging">Explore category ↗</a></div>
+        </article>
 
-        <a class="category-card category-card-dark" href="products.html#breathing-communications">
+        <article class="category-card category-card-dark" data-product-carousel data-product-start="108" data-product-end="114" data-product-names="DIABLO self-contained breathing apparatus|SCBA face masks|SCBA cylinders|Backplates and harnesses|Paramina Mistral compressors|Breathing air filling connectors|Land and marine two-way radios">
           <span class="category-number">08</span>
-          <div class="category-card-media"><img src="assets/images/diablo-scba-cutout.png" width="533" height="800" alt="DIABLO self-contained breathing apparatus" loading="lazy"><img class="category-product-secondary" src="assets/images/marine-radio-cutout.png" width="533" height="800" alt="Portable two-way radio" loading="lazy"></div>
-          <div class="category-card-copy"><span>Air and coordination</span><h3>Breathing air and communications</h3><p>SCBA, refilling compressors, cylinders and rugged portable radios.</p><strong>Explore category ↗</strong></div>
-        </a>
+          <div class="category-card-media">
+            <div class="category-product-stage"><img data-carousel-image src="assets/images/catalog-products/product-108.webp" width="480" height="360" alt="DIABLO self-contained breathing apparatus" loading="lazy"><div class="category-product-meta" aria-live="polite"><span data-carousel-name>DIABLO self-contained breathing apparatus</span><small data-carousel-position>01 / 07</small></div></div>
+            <div class="category-carousel-controls"><button type="button" data-carousel-prev aria-label="Show previous breathing air product">←</button><button type="button" data-carousel-next aria-label="Show next breathing air product">→</button></div>
+          </div>
+          <div class="category-card-copy"><span>Air and coordination</span><h3>Breathing air and communications</h3><p>SCBA, refilling compressors, cylinders and rugged portable radios.</p><a href="products.html#breathing-communications">Explore category ↗</a></div>
+        </article>
 
-        <a class="category-card category-card-yellow" href="products.html#energy-safety">
+        <article class="category-card category-card-yellow" data-product-carousel data-product-start="115" data-product-end="116" data-product-names="Emergency Plug EV immobilisation tool|AVD Lith-Ex fire extinguisher">
           <span class="category-number">09</span>
-          <div class="category-card-media"><img src="assets/images/emergency-plug-cutout.png" width="800" height="533" alt="Emergency Plug electric vehicle safety tool" loading="lazy"><img class="category-product-secondary" src="assets/images/lith-ex-extinguisher-cutout.png" width="533" height="800" alt="AVD Lith-Ex extinguisher" loading="lazy"></div>
-          <div class="category-card-copy"><span>EV and battery response</span><h3>Energy safety equipment</h3><p>Vehicle immobilisation and lithium battery fire suppression equipment.</p><strong>Explore category ↗</strong></div>
-        </a>
+          <div class="category-card-media">
+            <div class="category-product-stage"><img data-carousel-image src="assets/images/catalog-products/product-115.webp" width="480" height="360" alt="Emergency Plug EV immobilisation tool" loading="lazy"><div class="category-product-meta" aria-live="polite"><span data-carousel-name>Emergency Plug EV immobilisation tool</span><small data-carousel-position>01 / 02</small></div></div>
+            <div class="category-carousel-controls"><button type="button" data-carousel-prev aria-label="Show previous energy safety product">←</button><button type="button" data-carousel-next aria-label="Show next energy safety product">→</button></div>
+          </div>
+          <div class="category-card-copy"><span>EV and battery response</span><h3>Energy safety equipment</h3><p>Vehicle immobilisation and lithium battery fire suppression equipment.</p><a href="products.html#energy-safety">Explore category ↗</a></div>
+        </article>
       </div>
     </section>
 
