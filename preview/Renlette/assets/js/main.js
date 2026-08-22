@@ -8,6 +8,7 @@
   const header = doc.querySelector("[data-header]");
   const progressBar = doc.querySelector(".scroll-progress span");
   const heroPhoto = doc.querySelector(".hero-photo");
+  const heroCopies = [...doc.querySelectorAll(".hero-copy, .catalog-hero-copy, .videos-hero-copy")];
   let ticking = false;
 
   const updateScrollEffects = () => {
@@ -21,6 +22,11 @@
     if (!reducedMotion && heroPhoto && scrollTop < window.innerHeight * 1.2) {
       const shift = Math.min(scrollTop * 0.055, 44);
       heroPhoto.style.translate = `0 ${shift}px`;
+    }
+
+    if (!reducedMotion && scrollTop < window.innerHeight * 1.2) {
+      const textShift = Math.min(scrollTop * 0.028, 18);
+      heroCopies.forEach((copy) => copy.style.setProperty("--motion-drift", `${textShift}px`));
     }
 
     ticking = false;
@@ -48,6 +54,51 @@
     }, { threshold: 0.14, rootMargin: "0px 0px -6% 0px" });
 
     revealItems.forEach((item) => revealObserver.observe(item));
+  }
+
+  /* Shared page motion: headings, labels and content groups reveal as they enter view. */
+  const motionTextItems = [...doc.querySelectorAll("main h1, main h2")]
+    .filter((item) => !item.classList.contains("reveal-lines"));
+  const motionKickerItems = [...doc.querySelectorAll(
+    ".eyebrow, .section-label, .section-heading-line, .catalog-category-head > span:first-child"
+  )].filter((item) => !item.classList.contains("reveal"));
+  const motionCardItems = [...doc.querySelectorAll(
+    ".category-card, .catalog-category-visual, .catalog-item, .video-card, .accordion-item"
+  )].filter((item) => !item.classList.contains("reveal"));
+  const motionItems = [];
+
+  const registerMotionItems = (items, className, delayStep = 0, maximumDelay = 0) => {
+    items.forEach((item, index) => {
+      item.classList.add(className);
+      if (delayStep) {
+        const delay = Math.min((index % 4) * delayStep, maximumDelay);
+        item.style.setProperty("--motion-delay", `${delay}ms`);
+      }
+      motionItems.push(item);
+    });
+  };
+
+  registerMotionItems(motionKickerItems, "motion-kicker");
+  registerMotionItems(motionTextItems, "motion-text");
+  registerMotionItems(motionCardItems, "motion-card", 70, 210);
+  heroCopies.forEach((copy) => copy.classList.add("motion-hero-copy"));
+
+  if (motionItems.length) {
+    doc.documentElement.classList.add("motion-ready");
+
+    if (reducedMotion || !("IntersectionObserver" in window)) {
+      motionItems.forEach((item) => item.classList.add("is-motion-visible"));
+    } else {
+      const motionObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          entry.target.classList.add("is-motion-visible");
+          observer.unobserve(entry.target);
+        });
+      }, { threshold: 0.08, rootMargin: "0px 0px -4% 0px" });
+
+      motionItems.forEach((item) => motionObserver.observe(item));
+    }
   }
 
   const menuToggle = doc.querySelector(".menu-toggle");
