@@ -3543,27 +3543,7 @@ h3 {
   transition: transform 260ms var(--ease);
 }
 
-/* Crop extraction remnants while preserving the original product cutouts. */
-img[src$="product-009.webp"] {
-  -webkit-clip-path: polygon(0 0, 88% 0, 88% 95%, 68% 95%, 68% 100%, 34% 100%, 34% 95%, 0 95%);
-  clip-path: polygon(0 0, 88% 0, 88% 95%, 68% 95%, 68% 100%, 34% 100%, 34% 95%, 0 95%);
-}
-
-img[src$="product-010.webp"] {
-  -webkit-clip-path: inset(0 0 5% 11%);
-  clip-path: inset(0 0 5% 11%);
-}
-
-img[src$="product-011.webp"] {
-  -webkit-clip-path: inset(5% 12% 0 0);
-  clip-path: inset(5% 12% 0 0);
-}
-
-img[src$="product-012.webp"] {
-  -webkit-clip-path: inset(5% 0 0 11%);
-  clip-path: inset(5% 0 0 11%);
-}
-
+/* Crop the remaining extraction remnant on the EV-response image. */
 img[src$="product-116.webp"] {
   -webkit-clip-path: inset(0 0 0 23%);
   clip-path: inset(0 0 0 23%);

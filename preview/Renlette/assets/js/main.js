@@ -164,8 +164,12 @@
     const nextButton = card.querySelector("[data-carousel-next]");
     const firstProduct = Number(card.dataset.productStart);
     const lastProduct = Number(card.dataset.productEnd);
+    const productFiles = (card.dataset.productFiles || "")
+      .split("|")
+      .map((value) => Number(value))
+      .filter((value) => Number.isInteger(value) && value > 0);
     const productNames = (card.dataset.productNames || "").split("|").filter(Boolean);
-    const productCount = lastProduct - firstProduct + 1;
+    const productCount = productFiles.length || (lastProduct - firstProduct + 1);
     let currentIndex = 0;
     let rotationTimer = null;
     let transitionTimer = null;
@@ -173,7 +177,7 @@
     if (!image || !name || !position || productCount < 1) return;
 
     const sourceFor = (index) => {
-      const productNumber = firstProduct + index;
+      const productNumber = productFiles[index] || (firstProduct + index);
       return `assets/images/catalog-products/product-${String(productNumber).padStart(3, "0")}.webp`;
     };
 
