@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Responsive test</title>
+  <style>
+    html, body { margin: 0; min-height: 100%; overflow: hidden; background: #e8edf1; }
+    iframe { display: block; border: 0; transform-origin: top left; background: white; }
+  </style>
+</head>
+<body>
+  <iframe id="preview" title="Responsive preview"></iframe>
+  <script>
+    const params = new URLSearchParams(location.search);
+    const width = Number(params.get("width")) || 1920;
+    const height = Number(params.get("height")) || 1080;
+    const page = params.get("page") || "index.html";
+    const frame = document.querySelector("#preview");
+    const scale = Math.min(innerWidth / width, innerHeight / height);
+    frame.src = page;
+    frame.style.width = `${width}px`;
+    frame.style.height = `${height}px`;
+    frame.style.transform = `scale(${scale})`;
+  </script>
+</body>
+</html>
