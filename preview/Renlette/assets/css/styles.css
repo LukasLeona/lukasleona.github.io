@@ -29,6 +29,7 @@
 }
 
 html {
+  overflow-x: clip;
   scroll-behavior: smooth;
   scroll-padding-top: 72px;
 }
@@ -2665,7 +2666,8 @@ h3 {
   position: relative;
   display: flex;
   min-width: 0;
-  min-height: 530px;
+  height: 580px;
+  min-height: 0;
   flex-direction: column;
   padding: clamp(22px, 2.5vw, 34px);
   overflow: hidden;
@@ -2922,7 +2924,7 @@ h3 {
   transform: rotate(4deg);
 }
 
-.catalog-hero-harness {
+.catalog-hero-hazmat {
   right: 23%;
   bottom: 1%;
   width: 52%;
@@ -4168,7 +4170,8 @@ h3 {
   }
 
   .category-card {
-    min-height: 510px;
+    height: 550px;
+    min-height: 0;
   }
 
   .category-card-media {
