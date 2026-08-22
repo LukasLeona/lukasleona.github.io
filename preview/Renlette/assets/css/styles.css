@@ -2742,7 +2742,7 @@ h3 {
 
 .motion-ready .motion-text {
   translate: 0 38px;
-  clip-path: inset(0 0 100% 0);
+  clip-path: inset(0 0 22% 0);
   transition-property: opacity, translate, clip-path;
   transition-duration: 680ms, 900ms, 900ms;
   transition-timing-function: ease, var(--ease), var(--ease);
