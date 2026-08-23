@@ -419,7 +419,7 @@
       return "For a quotation, share the equipment type, application, preferred specifications and quantity. Use the contact form as a guide, then call 02 8 732 5137 or email renlette.trading@yahoo.com.ph.";
     }
     if (/(train|training|support|after.?sales|demo)/.test(value)) {
-      return "Renlette can support customers with after-sales technical and medical training through expert partners and trainers. The right arrangement depends on the equipment and your team's needs.";
+      return "Renlette supports customers beyond delivery with product guidance and access to technical or medical training through expert partners and trainers. The right arrangement depends on the equipment and your organization's requirements.";
     }
     if (/(water|marine|boat|flood)/.test(value)) {
       return "Water and marine options include rescue boats, marine radios and related water safety equipment. Tell the team about your operating environment and crew size when requesting details.";
@@ -440,13 +440,13 @@
       return "Call 02 8 732 5137 or +63 917 790 3042. You can also email renlette.trading@yahoo.com.ph.";
     }
     if (/(equipment|product|supply|offer|catalog)/.test(value)) {
-      return "Renlette supplies equipment for firefighting, water and rope rescue, hydraulic extrication, breathing air, thermal imaging, communications, PPE, medical response and related safety work.";
+      return "Renlette is a specialized source for firefighting, medical and EMS, PPE, hazardous materials, high-angle rescue, technical rescue, thermal imaging, breathing air, communications and energy-safety equipment.";
     }
     if (/(pvstop|solar|panel)/.test(value)) {
       return "Renlette is an official PVSTOP distributor in the Philippines. PVSTOP is a light-blocking coating technology used to make solar PV systems electrically safe for emergency and maintenance work.";
     }
 
-    return "I can help with equipment categories, quotation preparation, training, location and contact details. For a specific technical recommendation, contact the Renlette team directly.";
+    return "I can help you explore Renlette's product categories, quotation process, nationwide supply and after-sales support. For a requirement-specific recommendation, contact the Renlette team directly.";
   };
 
   const sendChatMessage = (text) => {

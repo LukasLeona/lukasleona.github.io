@@ -410,7 +410,7 @@ h3 {
   max-width: 1040px;
   margin-bottom: clamp(24px, 3.5vh, 42px);
   font-family: var(--display);
-  font-size: clamp(4.7rem, 10.2vw, 10.4rem);
+  font-size: clamp(4.7rem, 8.8vw, 8.9rem);
   font-weight: 700;
   letter-spacing: -0.045em;
   line-height: 0.78;
