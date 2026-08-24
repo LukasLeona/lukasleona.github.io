@@ -13,6 +13,8 @@ A standalone interactive website configurator built with plain HTML, CSS, and Ja
 - Optional guided chatbot or AI-ready assistant preview
 - Suggested chat questions, local replies, typing state, and mobile chat behavior
 - Optional scroll progress, FAQ, inquiry form, and SEO/social setup
+- Fixed four-package costing guide from ₱3,000 to ₱15,000 with at-a-glance differences
+- Package inquiry form with selected-plan details, contact information, project brief, and EmailJS delivery
 - Accessible focus states and reduced-motion support
 - Shuffle design
 - Reset design
@@ -23,7 +25,7 @@ A standalone interactive website configurator built with plain HTML, CSS, and Ja
 ## Run
 Open `index.html` directly in your browser.
 
-For the Google Fonts to load, internet access is required. The simulator itself does not require a backend.
+Internet access is required for Google Fonts and for package-inquiry delivery through EmailJS. The visual simulator itself does not require a backend.
 
 The chatbot uses a local response function for the concept preview. AI-ready mode does not connect to an external AI service or expose an API key. A secure backend can be connected during production development.
 

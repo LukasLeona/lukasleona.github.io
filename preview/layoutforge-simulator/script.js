@@ -556,6 +556,32 @@ const colorPickerModal = $("#colorPickerModal");
 const colorPickerHex = $("#colorPickerHex");
 let activeColorTarget = "customBg";
 
+const pricingModal = $("#pricingModal");
+const pricingPackagesView = $("#pricingPackagesView");
+const packageFormView = $("#packageFormView");
+const packageSuccessView = $("#packageSuccessView");
+const packageInquiryForm = $("#packageInquiryForm");
+const packageFormStatus = $("#packageFormStatus");
+const packageSubmit = $("#packageSubmit");
+const pricingPackages = {
+  starter: { name: "Starter Website", price: "₱3,000 · Approx. $49" },
+  business: { name: "Business Website", price: "₱6,000 · Approx. $97" },
+  growth: { name: "Growth Website", price: "₱10,000 · Approx. $162" },
+  system: { name: "Full System Setup", price: "₱15,000 · Approx. $242" }
+};
+let selectedPricingPackage = "starter";
+let pricingLastFocus = null;
+let emailJsReady = false;
+
+if (window.emailjs) {
+  try {
+    window.emailjs.init("96_UPP64ognZ8mIif");
+    emailJsReady = true;
+  } catch (error) {
+    emailJsReady = false;
+  }
+}
+
 $("#colorSwatchGrid").innerHTML = colorChoices.map((color) => `<button type="button" data-picker-color="${color}" style="--choice:${color}" aria-label="Choose ${color}"><span></span></button>`).join("");
 
 function updatePickerPreview(value) {
@@ -601,6 +627,109 @@ $("#colorPickerApply").addEventListener("click", () => {
 $("#colorPickerClose").addEventListener("click", closeColorPicker);
 $("#colorPickerCancel").addEventListener("click", closeColorPicker);
 colorPickerModal.addEventListener("click", (event) => { if (event.target === colorPickerModal) closeColorPicker(); });
+
+function showPricingView(view) {
+  pricingPackagesView.hidden = view !== "packages";
+  packageFormView.hidden = view !== "form";
+  packageSuccessView.hidden = view !== "success";
+}
+
+function openPricingModal() {
+  pricingLastFocus = document.activeElement;
+  packageFormStatus.textContent = "";
+  packageFormStatus.classList.remove("error");
+  showPricingView("packages");
+  pricingModal.classList.add("show");
+  pricingModal.setAttribute("aria-hidden", "false");
+  document.body.classList.add("modal-open");
+  window.setTimeout(() => $("#pricingClose").focus(), 60);
+}
+
+function closePricingModal() {
+  pricingModal.classList.remove("show");
+  pricingModal.setAttribute("aria-hidden", "true");
+  if (!resultModal.classList.contains("show") && !colorPickerModal.classList.contains("show")) document.body.classList.remove("modal-open");
+  if (pricingLastFocus instanceof HTMLElement) pricingLastFocus.focus();
+}
+
+function selectPricingPackage(packageKey) {
+  const selectedPackage = pricingPackages[packageKey];
+  if (!selectedPackage) return;
+  selectedPricingPackage = packageKey;
+  packageInquiryForm.reset();
+  $("#selectedPackageName").textContent = selectedPackage.name;
+  $("#selectedPackagePrice").textContent = selectedPackage.price;
+  $("#selectedPackageInput").value = `${selectedPackage.name} (${selectedPackage.price})`;
+  packageFormStatus.textContent = "";
+  packageFormStatus.classList.remove("error");
+  showPricingView("form");
+  pricingModal.querySelector(".pricing-dialog").scrollTop = 0;
+  window.setTimeout(() => packageInquiryForm.elements.name.focus(), 40);
+}
+
+function showPricingPackages() {
+  showPricingView("packages");
+  pricingModal.querySelector(".pricing-dialog").scrollTop = 0;
+  window.setTimeout(() => pricingModal.querySelector(`[data-avail-package="${selectedPricingPackage}"]`).focus(), 40);
+}
+
+function showPackageSuccess() {
+  showPricingView("success");
+  pricingModal.querySelector(".pricing-dialog").scrollTop = 0;
+  window.setTimeout(() => $("#pricingSuccessClose").focus(), 40);
+}
+
+$("#pricingBtn").addEventListener("click", openPricingModal);
+$("#pricingClose").addEventListener("click", closePricingModal);
+$("#pricingBack").addEventListener("click", showPricingPackages);
+$("#pricingSuccessClose").addEventListener("click", closePricingModal);
+$("#pricingNewInquiry").addEventListener("click", showPricingPackages);
+pricingModal.addEventListener("click", (event) => {
+  if (event.target === pricingModal) {
+    closePricingModal();
+    return;
+  }
+  const availButton = event.target.closest("[data-avail-package]");
+  if (availButton) selectPricingPackage(availButton.dataset.availPackage);
+});
+
+packageInquiryForm.addEventListener("submit", async (event) => {
+  event.preventDefault();
+  const selectedPackage = pricingPackages[selectedPricingPackage];
+  const formData = new FormData(packageInquiryForm);
+  $("#packageComments").value = [
+    `LayoutForge package inquiry: ${selectedPackage.name} (${selectedPackage.price})`,
+    `Business or brand: ${formData.get("business_name") || "Not provided"}`,
+    `Existing website: ${formData.get("existing_website") || "Not provided"}`,
+    `Preferred contact: ${formData.get("preferred_contact") || "Email"}`,
+    "",
+    "Project details:",
+    formData.get("project_details")
+  ].join("\n");
+
+  if (!emailJsReady || !window.emailjs) {
+    packageFormStatus.textContent = "The inquiry service is unavailable. Please email lukemarkleona9@gmail.com.";
+    packageFormStatus.classList.add("error");
+    return;
+  }
+
+  packageSubmit.disabled = true;
+  packageSubmit.textContent = "Sending inquiry...";
+  packageFormStatus.textContent = "Sending your selected package and project details.";
+  packageFormStatus.classList.remove("error");
+
+  try {
+    await window.emailjs.sendForm("service_2ter3tn", "template_52y6bwx", packageInquiryForm);
+    packageInquiryForm.reset();
+    showPackageSuccess();
+  } catch (error) {
+    packageFormStatus.textContent = "Could not send the inquiry. Please try again or email lukemarkleona9@gmail.com.";
+    packageFormStatus.classList.add("error");
+  } finally {
+    packageSubmit.disabled = false;
+    packageSubmit.innerHTML = 'Send package inquiry <span aria-hidden="true">→</span>';
+  }
+});
 
 Object.values(colorFields).forEach((field) => field.input.addEventListener("input", () => {
   let value = field.input.value.trim();
@@ -709,8 +838,19 @@ $("#closeResultBtn").addEventListener("click", closeResult);
 $("#editBtn").addEventListener("click", closeResult);
 
 document.addEventListener("keydown", (event) => {
+  if (event.key === "Tab" && pricingModal.classList.contains("show")) {
+    const focusable = [...pricingModal.querySelectorAll('button:not([disabled]),input:not([disabled]),select:not([disabled]),textarea:not([disabled]),a[href]')]
+      .filter((element) => !element.hidden && element.offsetParent !== null);
+    if (focusable.length) {
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
+      else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
+    }
+  }
   if (event.key !== "Escape") return;
-  if (colorPickerModal.classList.contains("show")) closeColorPicker();
+  if (pricingModal.classList.contains("show")) closePricingModal();
+  else if (colorPickerModal.classList.contains("show")) closeColorPicker();
   else if (state.chatOpen) { state.chatOpen = false; updatePreview(); }
   else if (resultModal.classList.contains("show")) closeResult();
 });
