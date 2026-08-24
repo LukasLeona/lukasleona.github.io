@@ -143,11 +143,12 @@ function renderOptionCards(items, target, key, type) {
 
 function renderBodyCards() {
   bodyOptions.innerHTML = bodySections.map((item) => {
-    const selected = state.bodies.includes(item.key);
+    const sequence = state.bodies.indexOf(item.key) + 1;
+    const selected = sequence > 0;
     return `
-      <button class="option-card ${selected ? "active" : ""}" type="button" data-body-key="${item.key}" aria-pressed="${selected}">
+      <button class="option-card ${selected ? "active" : ""}" type="button" data-body-key="${item.key}" aria-pressed="${selected}" aria-label="${item.name}${selected ? `, section ${sequence} in the website sequence` : ", not selected"}">
         <div class="option-card-preview">${miniPreview("body", item.id)}</div>
-        <div><strong>${item.name}</strong><small>${item.desc}</small></div><span class="option-check" aria-hidden="true">✓</span>
+        <div><strong>${item.name}</strong><small>${item.desc}</small></div><span class="option-check option-sequence" aria-hidden="true">${selected ? sequence : ""}</span>
       </button>`;
   }).join("");
 }
