@@ -9,7 +9,7 @@ A standalone interactive website configurator built with plain HTML, CSS, and Ja
 - 16 font choices
 - 16 curated three-color palettes
 - Live website preview
-- Desktop / tablet / mobile preview modes
+- True virtual desktop (1200px), tablet (768px), and mobile (390px) preview modes
 - Optional guided chatbot or AI-ready assistant preview
 - Suggested chat questions, local replies, typing state, and mobile chat behavior
 - Optional scroll progress, FAQ, inquiry form, and SEO/social setup

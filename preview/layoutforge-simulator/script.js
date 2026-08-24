@@ -109,6 +109,7 @@ const fontSample = $("#fontSample");
 const sitePreview = $("#sitePreview");
 const resultPreview = $("#resultPreview");
 const browserFrame = $("#browserFrame");
+const previewFrameShell = $("#previewFrameShell");
 const generationOverlay = $("#generationOverlay");
 const resultModal = $("#resultModal");
 const generationRows = $$("#generationList > div");
@@ -117,6 +118,9 @@ const uploadedImages = $("#uploadedImages");
 let pageNoticeTimer = null;
 let chatReplyTimer = null;
 let viewportSyncQueued = false;
+let deviceScaleQueued = false;
+let currentPreviewScale = 1;
+const deviceWidths = { desktop: 1200, tablet: 768, mobile: 390 };
 
 function selectedPalette() {
   return state.customColors ? { name: "Your palette", colors: state.customColors } : palettes[state.palette];
@@ -296,6 +300,27 @@ function applySiteTheme(element) {
 
 function getItem(items, id) { return items.find((item) => item.id === id); }
 
+function updateDevicePreviewScale() {
+  deviceScaleQueued = false;
+  const stage = $(".preview-stage");
+  if (!stage || !previewFrameShell) return;
+  const stageStyles = window.getComputedStyle(stage);
+  const horizontalPadding = parseFloat(stageStyles.paddingLeft) + parseFloat(stageStyles.paddingRight);
+  const availableWidth = Math.max(1, stage.clientWidth - horizontalPadding);
+  const virtualWidth = deviceWidths[state.device];
+  currentPreviewScale = Math.min(1, availableWidth / virtualWidth);
+  browserFrame.style.setProperty("--preview-scale", currentPreviewScale);
+  previewFrameShell.style.width = `${virtualWidth * currentPreviewScale}px`;
+  previewFrameShell.style.height = `${browserFrame.offsetHeight * currentPreviewScale}px`;
+  queueViewportSync();
+}
+
+function queueDevicePreviewScale() {
+  if (deviceScaleQueued) return;
+  deviceScaleQueued = true;
+  window.requestAnimationFrame(updateDevicePreviewScale);
+}
+
 function syncPreviewViewport(container, preview) {
   if (!container || !preview) return;
   const maxScroll = Math.max(1, container.scrollHeight - container.clientHeight);
@@ -305,8 +330,9 @@ function syncPreviewViewport(container, preview) {
   if (!assistant) return;
   const containerRect = container.getBoundingClientRect();
   const previewRect = preview.getBoundingClientRect();
+  const previewScale = preview === sitePreview ? currentPreviewScale : 1;
   const assistantHeight = Math.max(48, assistant.offsetHeight);
-  const desiredTop = containerRect.bottom - previewRect.top - assistantHeight - 18;
+  const desiredTop = (containerRect.bottom - previewRect.top) / previewScale - assistantHeight - 18;
   const maximumTop = Math.max(72, preview.scrollHeight - assistantHeight - 18);
   assistant.style.setProperty("--assistant-offset", `${Math.min(maximumTop, Math.max(72, desiredTop))}px`);
 }
@@ -357,6 +383,7 @@ function updatePreview() {
     button.classList.toggle("active", active);
     button.setAttribute("aria-pressed", active);
   });
+  queueDevicePreviewScale();
   queueViewportSync();
 }
 
@@ -505,12 +532,16 @@ $$('.device-btn').forEach((button) => button.addEventListener("click", () => {
   button.classList.add("active");
   state.device = button.dataset.device;
   browserFrame.className = `browser-frame device-${state.device}`;
-  queueViewportSync();
+  queueDevicePreviewScale();
 }));
 
 $(".preview-stage").addEventListener("scroll", queueViewportSync, { passive: true });
 $(".result-canvas").addEventListener("scroll", queueViewportSync, { passive: true });
-window.addEventListener("resize", queueViewportSync, { passive: true });
+window.addEventListener("resize", () => { queueDevicePreviewScale(); queueViewportSync(); }, { passive: true });
+const previewFrameObserver = "ResizeObserver" in window ? new ResizeObserver(queueDevicePreviewScale) : null;
+previewFrameObserver?.observe(browserFrame);
+previewFrameObserver?.observe($(".preview-stage"));
+browserFrame.addEventListener("transitionend", queueViewportSync);
 
 function validHex(value) { return /^#[0-9a-f]{6}$/i.test(value.trim()); }
 
