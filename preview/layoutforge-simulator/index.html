@@ -85,7 +85,36 @@
         </section>
 
         <section class="control-group">
-          <div class="group-heading"><div><span class="step-number">03</span><h2>Your images</h2></div><span class="selection-status" id="imageStatus">Studio photos</span></div>
+          <div class="group-heading"><div><span class="step-number">03</span><h2>Footer</h2></div><span class="selection-status" id="footerStatus">Minimal</span></div>
+          <div class="option-grid option-grid-3" id="footerOptions"></div>
+        </section>
+
+        <section class="control-group">
+          <div class="group-heading"><div><span class="step-number">04</span><h2>Smart assistant</h2></div><span class="selection-status" id="assistantStatus">Guided chatbot</span></div>
+          <p class="field-helper">Choose whether the finished website includes a branded conversation experience. AI-ready mode uses local preview replies until a secure API is connected.</p>
+          <div class="assistant-options" id="assistantOptions" role="group" aria-label="Smart assistant type">
+            <button type="button" data-assistant="none" aria-pressed="false"><span aria-hidden="true">○</span><strong>None</strong><small>No chat launcher</small></button>
+            <button class="active" type="button" data-assistant="guided" aria-pressed="true"><span aria-hidden="true">◎</span><strong>Guided chatbot</strong><small>Local helpful replies</small></button>
+            <button type="button" data-assistant="ai" aria-pressed="false"><span aria-hidden="true">✦</span><strong>AI-ready assistant</strong><small>Prepared for an API</small></button>
+          </div>
+        </section>
+
+        <section class="control-group">
+          <div class="group-heading"><div><span class="step-number">05</span><h2>Site essentials</h2></div><span class="selection-status" id="featureStatus">4 selected</span></div>
+          <p class="field-helper">Turn practical launch features on or off. Responsive behavior, accessibility, reduced motion, and performance-minded development remain included.</p>
+          <div class="feature-builder standalone">
+            <div class="feature-toggle-grid" id="featureOptions">
+              <button class="active" type="button" data-site-feature="scrollProgress" aria-pressed="true"><span aria-hidden="true">↧</span><strong>Scroll progress</strong><small>Visible page position</small><i aria-hidden="true"></i></button>
+              <button class="active" type="button" data-site-feature="faq" aria-pressed="true"><span aria-hidden="true">?</span><strong>Helpful FAQ</strong><small>Answers key questions</small><i aria-hidden="true"></i></button>
+              <button class="active" type="button" data-site-feature="inquiry" aria-pressed="true"><span aria-hidden="true">✉</span><strong>Inquiry form</strong><small>Frontend lead capture</small><i aria-hidden="true"></i></button>
+              <button class="active" type="button" data-site-feature="seo" aria-pressed="true"><span aria-hidden="true">⌕</span><strong>SEO + social</strong><small>Metadata and sharing</small><i aria-hidden="true"></i></button>
+            </div>
+            <div class="included-standards"><span>Always included</span><b>Responsive</b><b>Accessible</b><b>Reduced motion</b><b>Performance-minded</b></div>
+          </div>
+        </section>
+
+        <section class="control-group">
+          <div class="group-heading"><div><span class="step-number">06</span><h2>Your images</h2></div><span class="selection-status" id="imageStatus">Studio photos</span></div>
           <p class="field-helper">Add your own photos and LayoutForge will place them throughout the preview.</p>
           <div class="image-upload-zone">
             <input id="imageUpload" type="file" accept="image/jpeg,image/png,image/webp,image/gif" multiple hidden>
@@ -95,36 +124,34 @@
         </section>
 
         <section class="control-group">
-          <div class="group-heading"><div><span class="step-number">04</span><h2>Footer</h2></div><span class="selection-status" id="footerStatus">Minimal</span></div>
-          <div class="option-grid option-grid-3" id="footerOptions"></div>
-        </section>
+          <div class="group-heading"><div><span class="step-number">07</span><h2>Typography / Motion</h2></div></div>
+          <div class="split-controls">
+            <div class="field-block">
+              <h3>Typography</h3>
+              <label for="fontSelect">Font family</label>
+              <select id="fontSelect">
+                <option>Poppins</option><option>Manrope</option><option>Space Grotesk</option><option>DM Sans</option>
+                <option>Inter</option><option>Montserrat</option><option>Outfit</option><option>Urbanist</option>
+                <option>Work Sans</option><option>Libre Franklin</option><option>Syne</option><option>Playfair Display</option>
+                <option>DM Serif Display</option><option>Abril Fatface</option><option>Bebas Neue</option><option>JetBrains Mono</option>
+              </select>
+              <div class="font-sample" id="fontSample"><strong>Build something remarkable.</strong><span>Shape the feeling before the first line of code.</span></div>
+            </div>
 
-        <section class="control-group split-controls">
-          <div class="field-block">
-            <div class="group-heading compact-heading"><div><span class="step-number">05</span><h2>Typography</h2></div></div>
-            <label for="fontSelect">Font family</label>
-            <select id="fontSelect">
-              <option>Poppins</option><option>Manrope</option><option>Space Grotesk</option><option>DM Sans</option>
-              <option>Inter</option><option>Montserrat</option><option>Outfit</option><option>Urbanist</option>
-              <option>Work Sans</option><option>Libre Franklin</option><option>Syne</option><option>Playfair Display</option>
-              <option>DM Serif Display</option><option>Abril Fatface</option><option>Bebas Neue</option><option>JetBrains Mono</option>
-            </select>
-            <div class="font-sample" id="fontSample"><strong>Build something remarkable.</strong><span>Shape the feeling before the first line of code.</span></div>
-          </div>
-
-          <div class="field-block">
-            <div class="group-heading compact-heading"><div><span class="step-number">06</span><h2>Motion</h2></div></div>
-            <p class="field-helper">Choose how lively the finished page should feel.</p>
-            <div class="motion-options" id="motionOptions">
-              <button type="button" data-motion="plain"><i></i><strong>Plain</strong><small>Still & focused</small></button>
-              <button type="button" class="active" data-motion="soft"><i></i><strong>Soft</strong><small>Gentle reveals</small></button>
-              <button type="button" data-motion="dynamic"><i></i><strong>Dynamic</strong><small>Expressive motion</small></button>
+            <div class="field-block">
+              <h3>Motion</h3>
+              <p class="field-helper">Choose how lively the finished page should feel.</p>
+              <div class="motion-options" id="motionOptions">
+                <button type="button" data-motion="plain"><i></i><strong>Plain</strong><small>Still & focused</small></button>
+                <button type="button" class="active" data-motion="soft"><i></i><strong>Soft</strong><small>Gentle reveals</small></button>
+                <button type="button" data-motion="dynamic"><i></i><strong>Dynamic</strong><small>Expressive motion</small></button>
+              </div>
             </div>
           </div>
         </section>
 
         <section class="control-group">
-          <div class="group-heading"><div><span class="step-number">07</span><h2>Color palette</h2></div><span class="selection-status" id="paletteStatus">Electric Lime</span></div>
+          <div class="group-heading"><div><span class="step-number">08</span><h2>Color palette</h2></div><span class="selection-status" id="paletteStatus">Electric Lime</span></div>
           <p class="field-helper">Start with a curated palette or make one entirely yours.</p>
           <div class="palette-grid" id="paletteOptions"></div>
 
@@ -136,27 +163,6 @@
               <label><span>Accent</span><button class="color-trigger" type="button" data-color-target="customAccent" aria-label="Choose accent color"><i id="customAccentSwatch" style="background:#FF6B35"></i><b>Choose</b></button><input type="text" id="customAccentHex" value="#FF6B35" maxlength="7" aria-label="Accent hex color"></label>
             </div>
             <button class="apply-palette-btn" id="applyCustomPalette" type="button">Use my colors <span aria-hidden="true">→</span></button>
-          </div>
-        </section>
-
-        <section class="control-group">
-          <div class="group-heading"><div><span class="step-number">08</span><h2>Smart assistant</h2></div><span class="selection-status" id="assistantStatus">Guided chatbot</span></div>
-          <p class="field-helper">Choose whether the finished website includes a branded conversation experience. AI-ready mode uses local preview replies until a secure API is connected.</p>
-          <div class="assistant-options" id="assistantOptions" role="group" aria-label="Smart assistant type">
-            <button type="button" data-assistant="none" aria-pressed="false"><span aria-hidden="true">○</span><strong>None</strong><small>No chat launcher</small></button>
-            <button class="active" type="button" data-assistant="guided" aria-pressed="true"><span aria-hidden="true">◎</span><strong>Guided chatbot</strong><small>Local helpful replies</small></button>
-            <button type="button" data-assistant="ai" aria-pressed="false"><span aria-hidden="true">✦</span><strong>AI-ready assistant</strong><small>Prepared for an API</small></button>
-          </div>
-
-          <div class="feature-builder">
-            <div class="feature-builder-heading"><div><strong>Site essentials</strong><span>Turn practical launch features on or off.</span></div><span id="featureStatus">4 selected</span></div>
-            <div class="feature-toggle-grid" id="featureOptions">
-              <button class="active" type="button" data-site-feature="scrollProgress" aria-pressed="true"><span aria-hidden="true">↧</span><strong>Scroll progress</strong><small>Visible page position</small><i aria-hidden="true"></i></button>
-              <button class="active" type="button" data-site-feature="faq" aria-pressed="true"><span aria-hidden="true">?</span><strong>Helpful FAQ</strong><small>Answers key questions</small><i aria-hidden="true"></i></button>
-              <button class="active" type="button" data-site-feature="inquiry" aria-pressed="true"><span aria-hidden="true">✉</span><strong>Inquiry form</strong><small>Frontend lead capture</small><i aria-hidden="true"></i></button>
-              <button class="active" type="button" data-site-feature="seo" aria-pressed="true"><span aria-hidden="true">⌕</span><strong>SEO + social</strong><small>Metadata and sharing</small><i aria-hidden="true"></i></button>
-            </div>
-            <div class="included-standards"><span>Always included</span><b>Responsive</b><b>Accessible</b><b>Reduced motion</b><b>Performance-minded</b></div>
           </div>
         </section>
 
