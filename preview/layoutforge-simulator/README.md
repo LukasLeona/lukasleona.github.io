@@ -14,6 +14,7 @@ A standalone interactive website configurator built with plain HTML, CSS, and Ja
 - Suggested chat questions, local replies, typing state, and mobile chat behavior
 - Optional scroll progress, FAQ, inquiry form, and SEO/social setup
 - Fixed four-package costing guide from ₱3,000 to ₱15,000 with at-a-glance differences
+- Advanced Automation, Full Ecommerce, and Inventory Management packages from ₱20,000 to ₱40,000
 - Package inquiry form with selected-plan details, contact information, project brief, and EmailJS delivery
 - Accessible focus states and reduced-motion support
 - Shuffle design

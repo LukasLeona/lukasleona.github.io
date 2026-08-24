@@ -558,6 +558,8 @@ let activeColorTarget = "customBg";
 
 const pricingModal = $("#pricingModal");
 const pricingPackagesView = $("#pricingPackagesView");
+const advancedPackagesView = $("#advancedPackagesView");
+const pricingViewSwitcher = $("#pricingViewSwitcher");
 const packageFormView = $("#packageFormView");
 const packageSuccessView = $("#packageSuccessView");
 const packageInquiryForm = $("#packageInquiryForm");
@@ -567,9 +569,13 @@ const pricingPackages = {
   starter: { name: "Starter Website", price: "₱3,000 · Approx. $49" },
   business: { name: "Business Website", price: "₱6,000 · Approx. $97" },
   growth: { name: "Growth Website", price: "₱10,000 · Approx. $162" },
-  system: { name: "Full System Setup", price: "₱15,000 · Approx. $242" }
+  system: { name: "Full System Setup", price: "₱15,000 · Approx. $242" },
+  automation: { name: "Automation System", price: "₱20,000 · Approx. $323" },
+  ecommerce: { name: "Full Ecommerce System", price: "₱30,000 · Approx. $485" },
+  inventory: { name: "Inventory Management", price: "₱40,000 · Approx. $647" }
 };
 let selectedPricingPackage = "starter";
+let activePricingList = "packages";
 let pricingLastFocus = null;
 let emailJsReady = false;
 
@@ -630,15 +636,25 @@ colorPickerModal.addEventListener("click", (event) => { if (event.target === col
 
 function showPricingView(view) {
   pricingPackagesView.hidden = view !== "packages";
+  advancedPackagesView.hidden = view !== "advanced";
   packageFormView.hidden = view !== "form";
   packageSuccessView.hidden = view !== "success";
+  pricingViewSwitcher.hidden = view === "form" || view === "success";
+  if (view === "packages" || view === "advanced") {
+    activePricingList = view;
+    $$('[data-pricing-view]').forEach((button) => {
+      const active = button.dataset.pricingView === view;
+      button.classList.toggle("active", active);
+      button.setAttribute("aria-selected", String(active));
+    });
+  }
 }
 
-function openPricingModal() {
+function openPricingModal(startView = "packages") {
   pricingLastFocus = document.activeElement;
   packageFormStatus.textContent = "";
   packageFormStatus.classList.remove("error");
-  showPricingView("packages");
+  showPricingView(startView === "advanced" ? "advanced" : "packages");
   pricingModal.classList.add("show");
   pricingModal.setAttribute("aria-hidden", "false");
   document.body.classList.add("modal-open");
@@ -660,6 +676,7 @@ function selectPricingPackage(packageKey) {
   $("#selectedPackageName").textContent = selectedPackage.name;
   $("#selectedPackagePrice").textContent = selectedPackage.price;
   $("#selectedPackageInput").value = `${selectedPackage.name} (${selectedPackage.price})`;
+  $("#pricingBack").textContent = activePricingList === "advanced" ? "← Compare advanced packages" : "← Compare website packages";
   packageFormStatus.textContent = "";
   packageFormStatus.classList.remove("error");
   showPricingView("form");
@@ -668,9 +685,13 @@ function selectPricingPackage(packageKey) {
 }
 
 function showPricingPackages() {
-  showPricingView("packages");
+  showPricingView(activePricingList);
   pricingModal.querySelector(".pricing-dialog").scrollTop = 0;
-  window.setTimeout(() => pricingModal.querySelector(`[data-avail-package="${selectedPricingPackage}"]`).focus(), 40);
+  window.setTimeout(() => {
+    const selectedButton = pricingModal.querySelector(`[data-avail-package="${selectedPricingPackage}"]`);
+    const activeTab = pricingModal.querySelector(`[data-pricing-view="${activePricingList}"]`);
+    (selectedButton || activeTab).focus();
+  }, 40);
 }
 
 function showPackageSuccess() {
@@ -679,11 +700,18 @@ function showPackageSuccess() {
   window.setTimeout(() => $("#pricingSuccessClose").focus(), 40);
 }
 
-$("#pricingBtn").addEventListener("click", openPricingModal);
+$("#pricingBtn").addEventListener("click", () => openPricingModal("packages"));
+$("#advancedPricingBtn").addEventListener("click", () => openPricingModal("advanced"));
 $("#pricingClose").addEventListener("click", closePricingModal);
 $("#pricingBack").addEventListener("click", showPricingPackages);
 $("#pricingSuccessClose").addEventListener("click", closePricingModal);
 $("#pricingNewInquiry").addEventListener("click", showPricingPackages);
+pricingViewSwitcher.addEventListener("click", (event) => {
+  const viewButton = event.target.closest("[data-pricing-view]");
+  if (!viewButton) return;
+  showPricingView(viewButton.dataset.pricingView);
+  pricingModal.querySelector(".pricing-dialog").scrollTop = 0;
+});
 pricingModal.addEventListener("click", (event) => {
   if (event.target === pricingModal) {
     closePricingModal();
