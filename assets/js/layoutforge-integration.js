@@ -12,6 +12,13 @@
   var packagesModal = document.getElementById("portfolioPackagesModal");
   var packagesClose = document.getElementById("portfolioPackagesClose");
   var packagesTrigger = document.getElementById("resumePackagesTrigger");
+  var packageTabs = document.querySelector(".portfolio-package-tabs");
+  var packageFootnote = document.getElementById("portfolioPackagesFootnote");
+  var packageInquiryView = document.getElementById("portfolioPackageInquiryView");
+  var packageSuccessView = document.getElementById("portfolioPackageSuccessView");
+  var packageInquiryForm = document.getElementById("portfolioPackageInquiryForm");
+  var packageFormStatus = document.getElementById("portfolioPackageFormStatus");
+  var packageSubmit = document.getElementById("portfolioPackageSubmit");
 
   if (!portfolio || !promo || !overlay || !simulatorFrame) {
     return;
@@ -27,6 +34,8 @@
   var promoClicked = false;
   var reminderCount = 0;
   var packagesLastFocus = null;
+  var activePackageCategory = "website";
+  var selectedPackageName = "";
 
   attentionAudio.preload = "auto";
   attentionAudio.volume = 0.58;
@@ -119,6 +128,19 @@
     }
   }
 
+  function hideAssistantPrompts() {
+    clearReminder();
+    hidePromo();
+
+    if (ordinaryTeaser) {
+      ordinaryTeaser.classList.remove("show");
+    }
+
+    if (chatbotPanel && chatbotPanel.classList.contains("show")) {
+      document.getElementById("chatbotClose")?.click();
+    }
+  }
+
   function nudgePromo() {
     if (promoClicked || !promoShown || !portfolioIsActive() || overlay.classList.contains("show")) {
       return;
@@ -193,8 +215,11 @@
 
   function openSimulator() {
     promoClicked = true;
-    clearReminder();
-    hidePromo();
+    hideAssistantPrompts();
+
+    if (packagesModal?.classList.contains("show")) {
+      closePackages(false);
+    }
 
     if (!simulatorFrame.getAttribute("src")) {
       simulatorFrame.setAttribute("src", simulatorFrame.getAttribute("data-src"));
@@ -214,64 +239,104 @@
 
   function switchPackageCategory(category) {
     if (!packagesModal) return;
+    activePackageCategory = category === "advanced" ? "advanced" : "website";
 
     packagesModal.querySelectorAll("[data-portfolio-package-tab]").forEach(function (button) {
-      var active = button.getAttribute("data-portfolio-package-tab") === category;
+      var active = button.getAttribute("data-portfolio-package-tab") === activePackageCategory;
       button.classList.toggle("active", active);
       button.setAttribute("aria-selected", String(active));
     });
 
     packagesModal.querySelectorAll("[data-portfolio-package-panel]").forEach(function (panel) {
-      panel.hidden = panel.getAttribute("data-portfolio-package-panel") !== category;
+      panel.hidden = panel.getAttribute("data-portfolio-package-panel") !== activePackageCategory;
     });
 
     var dialog = packagesModal.querySelector(".portfolio-packages-dialog");
     if (dialog) dialog.scrollTop = 0;
   }
 
+  function updatePackageHeader(title, description) {
+    var titleElement = document.getElementById("portfolioPackagesTitle");
+    var descriptionElement = document.getElementById("portfolioPackagesDescription");
+    if (titleElement) titleElement.textContent = title;
+    if (descriptionElement) descriptionElement.textContent = description;
+  }
+
+  function showPackageList(category) {
+    if (packageTabs) packageTabs.hidden = false;
+    if (packageFootnote) packageFootnote.hidden = false;
+    if (packageInquiryView) packageInquiryView.hidden = true;
+    if (packageSuccessView) packageSuccessView.hidden = true;
+    updatePackageHeader("Choose the right level for your project.", "Compare the core scope at a glance, then tell Luke which package you want to discuss.");
+    switchPackageCategory(category || activePackageCategory);
+  }
+
+  function showPackageForm() {
+    if (packageTabs) packageTabs.hidden = true;
+    if (packageFootnote) packageFootnote.hidden = true;
+    packagesModal.querySelectorAll("[data-portfolio-package-panel]").forEach(function (panel) { panel.hidden = true; });
+    if (packageInquiryView) packageInquiryView.hidden = false;
+    if (packageSuccessView) packageSuccessView.hidden = true;
+    updatePackageHeader("Tell Luke about your project.", "Your selected package is ready. Add the details Luke needs to review your request and reply.");
+    var dialog = packagesModal.querySelector(".portfolio-packages-dialog");
+    if (dialog) dialog.scrollTop = 0;
+    window.setTimeout(function () { packageInquiryForm?.elements.name.focus(); }, 60);
+  }
+
+  function showPackageSuccess() {
+    if (packageTabs) packageTabs.hidden = true;
+    if (packageFootnote) packageFootnote.hidden = true;
+    packagesModal.querySelectorAll("[data-portfolio-package-panel]").forEach(function (panel) { panel.hidden = true; });
+    if (packageInquiryView) packageInquiryView.hidden = true;
+    if (packageSuccessView) packageSuccessView.hidden = false;
+    updatePackageHeader("Your inquiry is on its way.", "Luke now has your selected package and project details.");
+    var dialog = packagesModal.querySelector(".portfolio-packages-dialog");
+    if (dialog) dialog.scrollTop = 0;
+    window.setTimeout(function () { document.getElementById("portfolioPackageSuccessClose")?.focus(); }, 60);
+  }
+
   function openPackages() {
     if (!packagesModal) return;
+    hideAssistantPrompts();
+    if (overlay.classList.contains("show")) closeSimulator();
     packagesLastFocus = document.activeElement;
-    switchPackageCategory("website");
+    showPackageList("website");
+    if (packageFormStatus) {
+      packageFormStatus.textContent = "";
+      packageFormStatus.classList.remove("error");
+    }
     packagesModal.classList.add("show");
     packagesModal.setAttribute("aria-hidden", "false");
     document.body.classList.add("portfolio-packages-open");
     window.setTimeout(function () { packagesClose?.focus(); }, 80);
   }
 
-  function closePackages() {
+  function closePackages(restoreFocus) {
     if (!packagesModal) return;
+    var wasOpen = packagesModal.classList.contains("show");
+    var returnFocus = packagesLastFocus;
     packagesModal.classList.remove("show");
     packagesModal.setAttribute("aria-hidden", "true");
     document.body.classList.remove("portfolio-packages-open");
-    if (packagesLastFocus instanceof HTMLElement) packagesLastFocus.focus();
+    packagesLastFocus = null;
+    if (wasOpen && restoreFocus !== false && returnFocus instanceof HTMLElement) returnFocus.focus();
+  }
+
+  function dismissCenterLayersForNavigation() {
+    hideAssistantPrompts();
+    if (packagesModal?.classList.contains("show")) closePackages(false);
+    if (overlay.classList.contains("show")) closeSimulator();
   }
 
   function startPackageInquiry(packageName) {
-    var comments = document.getElementById("comments");
-    var inquiryMessage = "Hi Luke, I'm interested in the " + packageName + " package. Please help me confirm the best scope for my project.";
-
-    if (comments) {
-      var currentMessage = comments.value.trim();
-      if (!currentMessage) {
-        comments.value = inquiryMessage;
-      } else if (currentMessage.indexOf(packageName) === -1) {
-        comments.value = currentMessage + "\n\n" + inquiryMessage;
-      }
-    }
-
-    closePackages();
-    var contactLink = document.querySelector('.menu a[href="#contact"]');
-    if (contactLink) {
-      contactLink.click();
-    } else {
-      window.location.hash = "contact";
-    }
-
-    window.setTimeout(function () {
-      var nameField = document.getElementById("name");
-      if (nameField) nameField.focus();
-    }, 650);
+    if (!packageInquiryForm) return;
+    selectedPackageName = packageName;
+    packageInquiryForm.reset();
+    document.getElementById("portfolioSelectedPackageName").textContent = packageName;
+    document.getElementById("portfolioSelectedPackageInput").value = packageName;
+    packageFormStatus.textContent = "";
+    packageFormStatus.classList.remove("error");
+    showPackageForm();
   }
 
   portfolio.addEventListener("scroll", startWorksTimer, { passive: true });
@@ -309,6 +374,13 @@
   overlayClose?.addEventListener("click", closeSimulator);
   packagesTrigger?.addEventListener("click", openPackages);
   packagesClose?.addEventListener("click", closePackages);
+
+  document.querySelectorAll(".menu > li a").forEach(function (link) {
+    link.addEventListener("click", dismissCenterLayersForNavigation, true);
+  });
+  window.addEventListener("hashchange", dismissCenterLayersForNavigation);
+  window.addEventListener("popstate", dismissCenterLayersForNavigation);
+
   packagesModal?.addEventListener("click", function (event) {
     if (event.target === packagesModal) {
       closePackages();
@@ -323,6 +395,50 @@
 
     var packageButton = event.target.closest("[data-package-name]");
     if (packageButton) startPackageInquiry(packageButton.getAttribute("data-package-name"));
+  });
+  document.getElementById("portfolioPackageBack")?.addEventListener("click", function () { showPackageList(activePackageCategory); });
+  document.getElementById("portfolioPackageSuccessClose")?.addEventListener("click", closePackages);
+  document.getElementById("portfolioPackageNewInquiry")?.addEventListener("click", function () { showPackageList(activePackageCategory); });
+
+  packageInquiryForm?.addEventListener("submit", function (event) {
+    event.preventDefault();
+
+    var formData = new FormData(packageInquiryForm);
+    document.getElementById("portfolioPackageComments").value = [
+      "Portfolio package inquiry: " + selectedPackageName,
+      "Business or brand: " + (formData.get("business_name") || "Not provided"),
+      "Existing website: " + (formData.get("existing_website") || "Not provided"),
+      "Preferred contact: " + (formData.get("preferred_contact") || "Email"),
+      "Target start or launch: " + (formData.get("target_date") || "Not provided"),
+      "Estimated budget: " + (formData.get("budget") || "Not provided"),
+      "",
+      "Project details:",
+      formData.get("project_details")
+    ].join("\n");
+
+    if (!window.emailjs) {
+      packageFormStatus.textContent = "The inquiry service is unavailable. Please email lukemarkleona9@gmail.com.";
+      packageFormStatus.classList.add("error");
+      return;
+    }
+
+    packageSubmit.disabled = true;
+    packageSubmit.innerHTML = 'Sending inquiry <i class="bi bi-arrow-repeat" aria-hidden="true"></i>';
+    packageFormStatus.textContent = "Sending your package and project details to Luke.";
+    packageFormStatus.classList.remove("error");
+
+    window.emailjs.sendForm("service_2ter3tn", "template_52y6bwx", packageInquiryForm)
+      .then(function () {
+        packageInquiryForm.reset();
+        showPackageSuccess();
+        packageSubmit.disabled = false;
+        packageSubmit.innerHTML = 'Send package inquiry <i class="bi bi-send" aria-hidden="true"></i>';
+      }, function () {
+        packageFormStatus.textContent = "Could not send the inquiry. Please try again or email lukemarkleona9@gmail.com.";
+        packageFormStatus.classList.add("error");
+        packageSubmit.disabled = false;
+        packageSubmit.innerHTML = 'Send package inquiry <i class="bi bi-send" aria-hidden="true"></i>';
+      });
   });
   document.addEventListener("keydown", function (event) {
     if (event.key === "Tab" && packagesModal?.classList.contains("show")) {

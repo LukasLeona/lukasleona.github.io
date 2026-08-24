@@ -1250,7 +1250,241 @@ html[data-theme="light"] .lumo-visualizer[data-state="speaking"] {
   line-height: 1.55;
 }
 
-.portfolio-packages-modal button:focus-visible {
+.portfolio-package-tabs[hidden],
+.portfolio-packages-footnote[hidden],
+.portfolio-package-inquiry-view[hidden],
+.portfolio-package-success-view[hidden] {
+  display: none;
+}
+
+.portfolio-package-inquiry-view {
+  max-width: 850px;
+  margin: 0 auto;
+  padding: 18px 24px 24px;
+}
+
+.portfolio-package-back {
+  padding: 5px 0;
+  color: #775a15;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  font-size: 9px;
+  font-weight: 900;
+}
+
+.portfolio-package-back:hover {
+  text-decoration: underline;
+}
+
+.portfolio-selected-package {
+  margin: 11px 0 18px;
+  padding: 15px 17px;
+  display: grid;
+  gap: 4px;
+  color: #fff;
+  background: #202329;
+  border-radius: 11px;
+}
+
+.portfolio-selected-package span,
+.portfolio-package-success-view > span {
+  color: #ebb020;
+  font-size: 7px;
+  font-weight: 900;
+  letter-spacing: 1.1px;
+}
+
+.portfolio-selected-package strong {
+  font-size: 20px;
+  letter-spacing: -.45px;
+}
+
+.portfolio-package-inquiry-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 13px;
+}
+
+.portfolio-package-inquiry-form label:not(.portfolio-package-consent) {
+  display: grid;
+  gap: 5px;
+}
+
+.portfolio-package-inquiry-form label > span {
+  color: #555a62;
+  font-size: 8px;
+  font-weight: 800;
+}
+
+.portfolio-package-inquiry-form input:not([type="checkbox"]),
+.portfolio-package-inquiry-form select,
+.portfolio-package-inquiry-form textarea {
+  width: 100%;
+  min-width: 0;
+  padding: 10px 11px;
+  color: #202329;
+  background: #fff;
+  border: 1px solid #cdced0;
+  border-radius: 8px;
+  outline: 0;
+  font: inherit;
+  font-size: 10px;
+  transition: border-color .18s ease, box-shadow .18s ease;
+}
+
+.portfolio-package-inquiry-form input:not([type="checkbox"]),
+.portfolio-package-inquiry-form select {
+  height: 40px;
+}
+
+.portfolio-package-inquiry-form textarea {
+  min-height: 104px;
+  resize: vertical;
+  line-height: 1.55;
+}
+
+.portfolio-package-inquiry-form input:focus,
+.portfolio-package-inquiry-form select:focus,
+.portfolio-package-inquiry-form textarea:focus {
+  border-color: #a87f18;
+  box-shadow: 0 0 0 3px rgba(235, 176, 32, .18);
+}
+
+.portfolio-package-form-wide {
+  grid-column: 1 / -1;
+}
+
+.portfolio-package-consent {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.portfolio-package-consent input {
+  width: 15px;
+  height: 15px;
+  margin: 1px 0 0;
+  accent-color: #ad8118;
+}
+
+.portfolio-package-consent span {
+  font-weight: 500 !important;
+  line-height: 1.5;
+}
+
+.portfolio-package-form-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.portfolio-package-form-actions > button {
+  min-height: 42px;
+  padding: 0 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  color: #181a20;
+  background: #ebb020;
+  border: 0;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 9px;
+  font-weight: 900;
+  transition: background .2s ease, transform .2s ease;
+}
+
+.portfolio-package-form-actions > button:hover {
+  background: #f1c557;
+  transform: translateY(-1px);
+}
+
+.portfolio-package-form-actions > button[disabled] {
+  cursor: wait;
+  opacity: .65;
+  transform: none;
+}
+
+.portfolio-package-form-actions p {
+  margin: 0;
+  color: #666a72;
+  font-size: 8px;
+  line-height: 1.5;
+}
+
+.portfolio-package-form-actions p.error {
+  color: #a12828;
+}
+
+.portfolio-package-success-view {
+  min-height: 410px;
+  padding: 35px 24px;
+  display: grid;
+  place-items: center;
+  align-content: center;
+  text-align: center;
+}
+
+.portfolio-package-success-mark {
+  width: 56px;
+  height: 56px;
+  margin-bottom: 14px;
+  display: grid;
+  place-items: center;
+  color: #202329;
+  background: #ebb020;
+  border-radius: 50%;
+  font-size: 24px;
+}
+
+.portfolio-package-success-view h3 {
+  max-width: 560px;
+  margin: 7px 0 9px;
+  color: #202329;
+  font-size: 28px;
+  line-height: 1.1;
+  letter-spacing: -1px;
+}
+
+.portfolio-package-success-view p {
+  max-width: 560px;
+  margin: 0;
+  color: #686c74;
+  font-size: 10px;
+  line-height: 1.65;
+}
+
+.portfolio-package-success-view > div:last-child {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+.portfolio-package-success-view > div:last-child button {
+  min-height: 40px;
+  padding: 0 15px;
+  color: #181a20;
+  background: #ebb020;
+  border: 0;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 8px;
+  font-weight: 900;
+}
+
+.portfolio-package-success-view > div:last-child button:last-child {
+  color: #2b2e34;
+  background: transparent;
+  border: 1px solid #bfc0c1;
+}
+
+.portfolio-packages-modal button:focus-visible,
+.portfolio-packages-modal input:focus-visible,
+.portfolio-packages-modal select:focus-visible,
+.portfolio-packages-modal textarea:focus-visible {
   outline: 3px solid rgba(235, 176, 32, .58);
   outline-offset: 2px;
 }
@@ -1263,6 +1497,15 @@ body.portfolio-packages-open .m-magic-cursor,
 body.portfolio-packages-open .cursor-text {
   opacity: 0 !important;
   visibility: hidden !important;
+}
+
+body.portfolio-packages-open .layoutforge-bot-promo,
+body.portfolio-packages-open .chatbot-teaser,
+body.layoutforge-simulator-open .layoutforge-bot-promo,
+body.layoutforge-simulator-open .chatbot-teaser {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
 }
 
 @media (max-width: 1050px) {
@@ -1308,6 +1551,32 @@ body.portfolio-packages-open .cursor-text {
     padding: 14px 16px 18px;
   }
 
+  .portfolio-package-inquiry-view {
+    padding: 15px 16px 20px;
+  }
+
+  .portfolio-package-inquiry-form {
+    grid-template-columns: 1fr;
+  }
+
+  .portfolio-package-form-wide {
+    grid-column: auto;
+  }
+
+  .portfolio-package-form-actions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .portfolio-package-form-actions > button {
+    width: 100%;
+  }
+
+  .portfolio-package-success-view {
+    min-height: calc(100vh - 165px);
+    padding: 28px 16px;
+  }
+
   .website-package-grid,
   .advanced-package-grid {
     grid-template-columns: 1fr;
@@ -1321,6 +1590,15 @@ body.portfolio-packages-open .cursor-text {
 @media (max-width: 420px) {
   .portfolio-package-tabs {
     grid-template-columns: 1fr;
+  }
+
+  .portfolio-package-success-view > div:last-child {
+    width: 100%;
+    flex-direction: column;
+  }
+
+  .portfolio-package-success-view > div:last-child button {
+    width: 100%;
   }
 }
 

@@ -863,6 +863,7 @@ $("#buildBtn").addEventListener("click", runGeneration);
 $("#buildBtnTop").addEventListener("click", runGeneration);
 $("#closeResultBtn").addEventListener("click", closeResult);
 $("#editBtn").addEventListener("click", closeResult);
+$("#makeItRealBtn").addEventListener("click", () => openPricingModal("packages"));
 
 document.addEventListener("keydown", (event) => {
   if (event.key === "Tab" && pricingModal.classList.contains("show")) {
