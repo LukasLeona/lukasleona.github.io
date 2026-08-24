@@ -58,6 +58,7 @@
       </a>
       <div class="topbar-copy"><span class="live-dot"></span> Website vision simulator</div>
       <div class="topbar-actions">
+        <button class="ghost-btn pricing-trigger" id="pricingBtn" type="button"><span>View packages</span></button>
         <button class="ghost-btn" id="resetBtn" type="button">Reset</button>
         <button class="ghost-btn" id="shuffleBtn" type="button">Surprise me</button>
         <button class="primary-btn compact" id="buildBtnTop" type="button">Present concept</button>
@@ -215,6 +216,68 @@
     </div>
   </div>
 
+  <div class="pricing-modal" id="pricingModal" aria-hidden="true">
+    <div class="pricing-dialog" role="dialog" aria-modal="true" aria-labelledby="pricingTitle">
+      <header class="pricing-head">
+        <div><span>Fixed website packages</span><h2 id="pricingTitle">Choose the right starting point.</h2><p>Compare the main difference in one glance, then send your project details.</p></div>
+        <button id="pricingClose" type="button" aria-label="Close website packages">×</button>
+      </header>
+
+      <div class="pricing-view" id="pricingPackagesView">
+        <div class="pricing-quick-guide" aria-label="Package difference summary"><span><b>Starter</b> gets you online</span><span><b>Business</b> generates inquiries</span><span><b>Growth</b> publishes content</span><span><b>Full System</b> manages data</span></div>
+        <div class="pricing-grid">
+          <article class="pricing-package-card">
+            <div class="package-purpose">Get online</div><h3>Starter Website</h3><div class="package-price"><strong>₱3,000</strong><span>Approx. $49</span></div>
+            <div class="package-facts"><span>5 pages</span><span>Guided chatbot</span></div>
+            <ul><li>Responsive website</li><li>Blog preview + 1 article</li><li>Preset chatbot replies</li><li>Basic SEO metadata</li><li>1 revision</li></ul>
+            <button class="package-avail-btn" type="button" data-avail-package="starter">Avail Starter <span aria-hidden="true">→</span></button>
+          </article>
+          <article class="pricing-package-card">
+            <div class="package-purpose">Generate inquiries</div><h3>Business Website</h3><div class="package-price"><strong>₱5,000</strong><span>Approx. $81</span></div>
+            <div class="package-facts"><span>7 pages</span><span>Custom chatbot</span></div>
+            <ul><li>Everything in Starter</li><li>Blog page + 3 articles</li><li>Inquiry form</li><li>SEO + social sharing</li><li>2 revisions</li></ul>
+            <button class="package-avail-btn" type="button" data-avail-package="business">Avail Business <span aria-hidden="true">→</span></button>
+          </article>
+          <article class="pricing-package-card featured"><div class="package-badge">Most popular</div>
+            <div class="package-purpose">Publish and grow</div><h3>Growth Website</h3><div class="package-price"><strong>₱7,500</strong><span>Approx. $121</span></div>
+            <div class="package-facts"><span>10 pages</span><span>AI-ready</span></div>
+            <ul><li>Everything in Business</li><li>Blog hub + 6 articles</li><li>Multiple lead forms</li><li>Advanced motion + SEO</li><li>2 revisions</li></ul>
+            <button class="package-avail-btn" type="button" data-avail-package="growth">Avail Growth <span aria-hidden="true">→</span></button>
+          </article>
+          <article class="pricing-package-card system">
+            <div class="package-purpose">Manage data</div><h3>Full System Setup</h3><div class="package-price"><strong>₱10,000</strong><span>Approx. $162</span></div>
+            <div class="package-facts"><span>10 public pages</span><span>Database</span></div>
+            <ul><li>Database blog manager</li><li>Admin login + dashboard</li><li>Up to 3 data entities</li><li>Database-connected forms</li><li>3 revisions</li></ul>
+            <button class="package-avail-btn" type="button" data-avail-package="system">Avail Full System <span aria-hidden="true">→</span></button>
+          </article>
+        </div>
+        <p class="pricing-footnote">Article setup uses client-provided content. Domain, hosting, AI usage, paid integrations, and ongoing maintenance are separate.</p>
+      </div>
+
+      <div class="pricing-view package-form-view" id="packageFormView" hidden>
+        <button class="pricing-back" id="pricingBack" type="button">← Compare packages</button>
+        <div class="selected-package-summary"><span>Your selected package</span><strong id="selectedPackageName">Starter Website</strong><b id="selectedPackagePrice">₱3,000 · Approx. $49</b></div>
+        <form class="package-inquiry-form" id="packageInquiryForm">
+          <input type="hidden" name="package" id="selectedPackageInput">
+          <input type="hidden" name="comments" id="packageComments">
+          <label><span>Full name *</span><input type="text" name="name" autocomplete="name" required></label>
+          <label><span>Email address *</span><input type="email" name="email" autocomplete="email" required></label>
+          <label><span>Phone number</span><input type="tel" name="subject" autocomplete="tel" placeholder="Optional"></label>
+          <label><span>Business or brand</span><input type="text" name="business_name" autocomplete="organization" placeholder="Optional"></label>
+          <label><span>Existing website</span><input type="url" name="existing_website" placeholder="https:// or leave blank"></label>
+          <label><span>Preferred contact</span><select name="preferred_contact"><option>Email</option><option>Phone call</option><option>Text message</option></select></label>
+          <label class="form-wide"><span>Tell Luke about your project *</span><textarea name="project_details" rows="4" placeholder="Your business, goals, pages, features, and target launch." required></textarea></label>
+          <label class="form-consent form-wide"><input type="checkbox" required><span>I confirm that the information above may be used to respond to this project inquiry.</span></label>
+          <div class="package-form-actions form-wide"><button class="primary-btn" id="packageSubmit" type="submit">Send package inquiry <span aria-hidden="true">→</span></button><p id="packageFormStatus" role="status" aria-live="polite"></p></div>
+        </form>
+      </div>
+
+      <div class="pricing-view package-success-view" id="packageSuccessView" hidden>
+        <div class="success-mark" aria-hidden="true">✓</div><span>Inquiry sent</span><h3>Thanks. Luke received your package request.</h3><p>A reply will be sent to the email address you provided. Keep exploring your LayoutForge concept while you wait.</p><div><button class="primary-btn" id="pricingSuccessClose" type="button">Return to LayoutForge</button><button class="ghost-btn" id="pricingNewInquiry" type="button">Send another inquiry</button></div>
+      </div>
+    </div>
+  </div>
+
   <div class="result-modal" id="resultModal" aria-hidden="true">
     <div class="result-shell">
       <div class="result-header">
@@ -231,6 +294,7 @@
     <div><span>Ready for the real thing?</span><strong>Planning to bring this vision to life?</strong><p>Luke can refine your idea, improve the experience, and build the responsive website behind it.</p><a href="../../index.html#contact" target="_top">Contact Luke <span aria-hidden="true">→</span></a></div>
   </aside>
 
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
   <script src="script.js"></script>
 </body>
 </html>
