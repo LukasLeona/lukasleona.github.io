@@ -69,7 +69,28 @@ const footers = [
 
 const fonts = ["Poppins", "Manrope", "Space Grotesk", "DM Sans", "Inter", "Montserrat", "Outfit", "Urbanist", "Work Sans", "Libre Franklin", "Syne", "Playfair Display", "DM Serif Display", "Abril Fatface", "Bebas Neue", "JetBrains Mono"];
 
-const state = { hero: 1, bodies: ["body1-1", "body2-1"], footer: 1, font: "Poppins", palette: 0, customColors: null, motion: "soft", device: "desktop", userImages: [], previewPage: "home", showPageNotice: false, siteMenuOpen: false };
+const state = {
+  hero: 1,
+  bodies: ["body1-1", "body2-1"],
+  footer: 1,
+  font: "Poppins",
+  palette: 0,
+  customColors: null,
+  motion: "soft",
+  device: "desktop",
+  userImages: [],
+  previewPage: "home",
+  showPageNotice: false,
+  siteMenuOpen: false,
+  assistant: "guided",
+  features: { scrollProgress: true, faq: true, inquiry: true, seo: true },
+  chatOpen: false,
+  chatMessages: [],
+  chatTyping: false,
+  inquirySent: false
+};
+
+const assistantNames = { none: "No assistant", guided: "Guided chatbot", ai: "AI-ready assistant" };
 
 const $ = (selector) => document.querySelector(selector);
 const $$ = (selector) => [...document.querySelectorAll(selector)];
@@ -94,6 +115,8 @@ const generationRows = $$("#generationList > div");
 const imageUpload = $("#imageUpload");
 const uploadedImages = $("#uploadedImages");
 let pageNoticeTimer = null;
+let chatReplyTimer = null;
+let viewportSyncQueued = false;
 
 function selectedPalette() {
   return state.customColors ? { name: "Your palette", colors: state.customColors } : palettes[state.palette];
@@ -220,10 +243,45 @@ function selectedBodyMarkup() {
   }).join("");
 }
 
+function escapeHtml(value) {
+  const characters = { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;" };
+  return String(value).replace(/[&<>"']/g, (character) => characters[character]);
+}
+
+function inquiryMarkup() {
+  if (!state.features.inquiry) return "";
+  const formContent = state.inquirySent ? `
+    <div class="inquiry-success" role="status"><strong>Your project note is ready.</strong><p>This is a concept preview, so nothing was sent. The finished form can connect securely to email, a CRM, or an automation.</p></div>
+    <button class="site-btn light" type="button" data-reset-inquiry>Write another note</button>` : `
+    <label><span>Your name</span><input name="name" type="text" autocomplete="name" placeholder="Name" required></label>
+    <label><span>Email address</span><input name="email" type="email" autocomplete="email" placeholder="you@company.com" required></label>
+    <label><span>Project type</span><select name="projectType"><option>New website</option><option>Website redesign</option><option>Brand and website</option><option>Ongoing support</option></select></label>
+    <label><span>What should the website make possible?</span><textarea name="message" placeholder="Share the goal, challenge, or idea." required></textarea></label>
+    <button class="site-btn light" type="submit">Prepare project note →</button>
+    <small>Preview form only. No information is sent or stored.</small>`;
+  return `<section class="content-section site-inquiry"><div class="site-inquiry-copy reveal-item"><span class="section-label">Start a conversation</span><h3>A clear brief starts with one useful question.</h3><p>Tell us what needs to change and what a better website should help your business do.</p></div><form class="site-inquiry-form reveal-item" data-inquiry-form>${formContent}</form></section>`;
+}
+
+function assistantMarkup() {
+  if (state.assistant === "none") return "";
+  const isAi = state.assistant === "ai";
+  const welcome = isAi
+    ? "Hi, I’m the North+Co assistant. This concept is ready for a secure AI connection. For now, I use helpful preview replies."
+    : "Hi, I’m the North+Co guide. Ask about services, timing, pricing, or how to start a project.";
+  const messages = [{ role: "assistant", text: welcome }, ...state.chatMessages]
+    .map((message) => `<div class="assistant-message ${message.role === "user" ? "user" : ""}">${escapeHtml(message.text)}</div>`)
+    .join("");
+  const typing = state.chatTyping ? `<div class="assistant-message assistant-typing" aria-label="Assistant is typing"><i></i><i></i><i></i></div>` : "";
+  if (!state.chatOpen) return `<div class="site-assistant"><button class="assistant-launcher" type="button" data-toggle-assistant aria-expanded="false" aria-label="Open ${isAi ? "AI assistant" : "website chatbot"}"><span aria-hidden="true">${isAi ? "✦" : "◎"}</span><small>How can we help?</small></button></div>`;
+  return `<div class="site-assistant"><section class="assistant-window" role="dialog" aria-label="${isAi ? "AI assistant preview" : "Website chatbot"}"><header class="assistant-head"><div class="assistant-avatar" aria-hidden="true">${isAi ? "✦" : "◎"}</div><div class="assistant-title"><strong>${isAi ? "North+Co AI" : "North+Co Guide"}</strong><small>${isAi ? "Local preview · API-ready" : "Online for preview"}</small></div><button type="button" data-minimize-assistant aria-label="Minimize assistant">−</button><button type="button" data-close-assistant aria-label="Close assistant">×</button></header><div class="assistant-messages" aria-live="polite">${messages}${typing}</div><div class="assistant-suggestions" aria-label="Suggested questions"><button type="button" data-chat-question="What services do you offer?" ${state.chatTyping ? "disabled" : ""}>Services</button><button type="button" data-chat-question="How long does a website take?" ${state.chatTyping ? "disabled" : ""}>Timeline</button><button type="button" data-chat-question="Can I request a quote?" ${state.chatTyping ? "disabled" : ""}>Request a quote</button></div><form class="assistant-form" data-assistant-form><input name="message" type="text" maxlength="160" autocomplete="off" placeholder="Type a question..." aria-label="Message the assistant" required ${state.chatTyping ? "disabled" : ""}><button type="submit" aria-label="Send message" ${state.chatTyping ? "disabled" : ""}>→</button></form></section></div>`;
+}
+
 function fullSiteMarkup() {
   photoCursor = 0;
-  const pageContent = state.previewPage === "home" ? heroMarkup(state.hero) + selectedBodyMarkup() : secondaryPageMarkup(state.previewPage);
-  return navMarkup() + pageContent + footerMarkup(state.footer);
+  const optionalFaq = state.features.faq && !state.bodies.includes("body1-9") ? body1Markup(9) : "";
+  const pageContent = state.previewPage === "home" ? heroMarkup(state.hero) + selectedBodyMarkup() + optionalFaq : secondaryPageMarkup(state.previewPage);
+  const scrollProgress = state.features.scrollProgress ? `<div class="site-scroll-progress" aria-hidden="true"><span></span></div>` : "";
+  return scrollProgress + navMarkup() + pageContent + inquiryMarkup() + footerMarkup(state.footer) + assistantMarkup();
 }
 
 function applySiteTheme(element) {
@@ -238,6 +296,34 @@ function applySiteTheme(element) {
 
 function getItem(items, id) { return items.find((item) => item.id === id); }
 
+function syncPreviewViewport(container, preview) {
+  if (!container || !preview) return;
+  const maxScroll = Math.max(1, container.scrollHeight - container.clientHeight);
+  preview.style.setProperty("--site-scroll-progress", Math.min(1, Math.max(0, container.scrollTop / maxScroll)));
+
+  const assistant = preview.querySelector(".site-assistant");
+  if (!assistant) return;
+  const containerRect = container.getBoundingClientRect();
+  const previewRect = preview.getBoundingClientRect();
+  const assistantHeight = Math.max(48, assistant.offsetHeight);
+  const desiredTop = containerRect.bottom - previewRect.top - assistantHeight - 18;
+  const maximumTop = Math.max(72, preview.scrollHeight - assistantHeight - 18);
+  assistant.style.setProperty("--assistant-offset", `${Math.min(maximumTop, Math.max(72, desiredTop))}px`);
+}
+
+function syncViewportFeatures() {
+  viewportSyncQueued = false;
+  syncPreviewViewport($(".preview-stage"), sitePreview);
+  if (resultModal.classList.contains("show")) syncPreviewViewport($(".result-canvas"), resultPreview);
+  $$(".assistant-messages").forEach((messages) => { messages.scrollTop = messages.scrollHeight; });
+}
+
+function queueViewportSync() {
+  if (viewportSyncQueued) return;
+  viewportSyncQueued = true;
+  window.requestAnimationFrame(syncViewportFeatures);
+}
+
 function updatePreview() {
   sitePreview.innerHTML = fullSiteMarkup();
   applySiteTheme(sitePreview);
@@ -250,14 +336,28 @@ function updatePreview() {
   $("#bodyStatus").textContent = `${state.bodies.length} selected`;
   $("#footerStatus").textContent = getItem(footers, state.footer).name;
   $("#paletteStatus").textContent = selectedPalette().name;
-  $("#previewMeta").textContent = `${state.previewPage === "home" ? "Home" : state.previewPage[0].toUpperCase() + state.previewPage.slice(1)} · ${state.font} · ${selectedPalette().name} · ${state.motion[0].toUpperCase() + state.motion.slice(1)} motion`;
-  $("#combinationLabel").textContent = `${getItem(heroes, state.hero).name} · ${state.bodies.length} body section${state.bodies.length === 1 ? "" : "s"} · ${state.motion[0].toUpperCase() + state.motion.slice(1)}`;
+  $("#assistantStatus").textContent = assistantNames[state.assistant];
+  const selectedFeatureCount = Object.values(state.features).filter(Boolean).length;
+  $("#featureStatus").textContent = `${selectedFeatureCount} selected`;
+  $("#previewMeta").textContent = `${state.previewPage === "home" ? "Home" : state.previewPage[0].toUpperCase() + state.previewPage.slice(1)} · ${state.font} · ${selectedPalette().name} · ${assistantNames[state.assistant]}`;
+  $("#combinationLabel").textContent = `${getItem(heroes, state.hero).name} · ${state.bodies.length} section${state.bodies.length === 1 ? "" : "s"} · ${assistantNames[state.assistant]}`;
   renderOptionCards(heroes, heroOptions, "hero", "hero");
   renderBodyCards();
   renderOptionCards(footers, footerOptions, "footer", "footer");
   renderPalettes();
   renderUploadedImages();
   $$("[data-motion]").forEach((button) => button.classList.toggle("active", button.dataset.motion === state.motion));
+  $$("[data-assistant]").forEach((button) => {
+    const active = button.dataset.assistant === state.assistant;
+    button.classList.toggle("active", active);
+    button.setAttribute("aria-pressed", active);
+  });
+  $$("[data-site-feature]").forEach((button) => {
+    const active = Boolean(state.features[button.dataset.siteFeature]);
+    button.classList.toggle("active", active);
+    button.setAttribute("aria-pressed", active);
+  });
+  queueViewportSync();
 }
 
 function clearPageNoticeTimer() {
@@ -290,7 +390,66 @@ function openPreviewPage(page, fromResultPreview) {
   window.requestAnimationFrame(() => scrollContainer?.scrollTo({ top: 0, behavior: state.motion === "plain" ? "auto" : "smooth" }));
 }
 
+function clearChatReplyTimer() {
+  if (!chatReplyTimer) return;
+  window.clearTimeout(chatReplyTimer);
+  chatReplyTimer = null;
+}
+
+function assistantResponse(message) {
+  const question = message.toLowerCase();
+  if (question.includes("service") || question.includes("offer")) return "We bring together brand direction, website design, creative development, and launch support. The mix depends on what your business needs most.";
+  if (question.includes("long") || question.includes("time") || question.includes("week")) return "Most focused website projects take four to eight weeks. Content readiness, page count, and integrations can change the schedule.";
+  if (question.includes("price") || question.includes("cost") || question.includes("quote")) return "Pricing is shaped around scope, content, and technical needs. Use the inquiry form to prepare a project note for a tailored quote.";
+  if (question.includes("book") || question.includes("start") || question.includes("contact")) return "Start with the inquiry form below or choose Let’s talk in the navigation. A clear goal and a short description are enough for the first conversation.";
+  if (question.includes("where") || question.includes("location")) return "North+Co is based in Manila and works with clients worldwide.";
+  if (question.includes("work") || question.includes("portfolio")) return "Open the Work page to see the project direction, visual system, and results-focused layouts included in this concept.";
+  return "I can help with services, project timing, quotes, selected work, or how to begin. Try one of the suggested questions below.";
+}
+
+function sendAssistantMessage(message) {
+  const cleanedMessage = message.trim().slice(0, 160);
+  if (!cleanedMessage || state.assistant === "none" || state.chatTyping) return;
+  clearChatReplyTimer();
+  state.chatOpen = true;
+  state.chatMessages.push({ role: "user", text: cleanedMessage });
+  state.chatTyping = true;
+  updatePreview();
+  const activeAssistant = state.assistant;
+  chatReplyTimer = window.setTimeout(() => {
+    chatReplyTimer = null;
+    if (state.assistant !== activeAssistant) return;
+    state.chatMessages.push({ role: "assistant", text: assistantResponse(cleanedMessage) });
+    state.chatTyping = false;
+    updatePreview();
+  }, 720);
+}
+
+function selectAssistant(mode) {
+  clearChatReplyTimer();
+  state.assistant = mode;
+  state.chatOpen = mode !== "none";
+  state.chatMessages = [];
+  state.chatTyping = false;
+  updatePreview();
+}
+
 document.addEventListener("click", (event) => {
+  const assistantChoice = event.target.closest("[data-assistant]");
+  if (assistantChoice) { selectAssistant(assistantChoice.dataset.assistant); return; }
+  const siteFeature = event.target.closest("[data-site-feature]");
+  if (siteFeature) {
+    const feature = siteFeature.dataset.siteFeature;
+    state.features[feature] = !state.features[feature];
+    if (feature === "inquiry" && !state.features.inquiry) state.inquirySent = false;
+    updatePreview();
+    return;
+  }
+  if (event.target.closest("[data-toggle-assistant]")) { state.chatOpen = true; updatePreview(); return; }
+  if (event.target.closest("[data-minimize-assistant], [data-close-assistant]")) { state.chatOpen = false; updatePreview(); return; }
+  const suggestedQuestion = event.target.closest("[data-chat-question]");
+  if (suggestedQuestion) { sendAssistantMessage(suggestedQuestion.dataset.chatQuestion); return; }
+  if (event.target.closest("[data-reset-inquiry]")) { state.inquirySent = false; updatePreview(); return; }
   const bodyOption = event.target.closest("[data-body-key]");
   if (bodyOption) {
     const key = bodyOption.dataset.bodyKey;
@@ -325,6 +484,20 @@ document.addEventListener("click", (event) => {
   if (colorTrigger) openColorPicker(colorTrigger.dataset.colorTarget);
 });
 
+document.addEventListener("submit", (event) => {
+  const assistantForm = event.target.closest("[data-assistant-form]");
+  if (assistantForm) {
+    event.preventDefault();
+    sendAssistantMessage(assistantForm.elements.message.value);
+    return;
+  }
+  if (event.target.closest("[data-inquiry-form]")) {
+    event.preventDefault();
+    state.inquirySent = true;
+    updatePreview();
+  }
+});
+
 fontSelect.addEventListener("change", () => { state.font = fontSelect.value; updatePreview(); });
 
 $$('.device-btn').forEach((button) => button.addEventListener("click", () => {
@@ -332,7 +505,12 @@ $$('.device-btn').forEach((button) => button.addEventListener("click", () => {
   button.classList.add("active");
   state.device = button.dataset.device;
   browserFrame.className = `browser-frame device-${state.device}`;
+  queueViewportSync();
 }));
+
+$(".preview-stage").addEventListener("scroll", queueViewportSync, { passive: true });
+$(".result-canvas").addEventListener("scroll", queueViewportSync, { passive: true });
+window.addEventListener("resize", queueViewportSync, { passive: true });
 
 function validHex(value) { return /^#[0-9a-f]{6}$/i.test(value.trim()); }
 
@@ -426,6 +604,7 @@ $("#applyCustomPalette").addEventListener("click", () => {
 
 function shuffleDesign() {
   clearPageNoticeTimer();
+  clearChatReplyTimer();
   state.hero = 1 + Math.floor(Math.random() * heroes.length);
   state.bodies = [...bodySections].sort(() => Math.random() - .5).slice(0, 1 + Math.floor(Math.random() * 3)).map((item) => item.key);
   state.footer = 1 + Math.floor(Math.random() * footers.length);
@@ -433,6 +612,12 @@ function shuffleDesign() {
   state.customColors = null;
   state.font = fonts[Math.floor(Math.random() * fonts.length)];
   state.motion = ["plain", "soft", "dynamic"][Math.floor(Math.random() * 3)];
+  state.assistant = ["none", "guided", "ai"][Math.floor(Math.random() * 3)];
+  state.features = { scrollProgress: Math.random() > .35, faq: Math.random() > .35, inquiry: Math.random() > .35, seo: Math.random() > .2 };
+  state.chatOpen = false;
+  state.chatMessages = [];
+  state.chatTyping = false;
+  state.inquirySent = false;
   state.previewPage = "home";
   state.showPageNotice = false;
   fontSelect.value = state.font;
@@ -441,7 +626,8 @@ function shuffleDesign() {
 
 function resetDesign() {
   clearPageNoticeTimer();
-  Object.assign(state, { hero: 1, bodies: ["body1-1", "body2-1"], footer: 1, font: "Poppins", palette: 0, customColors: null, motion: "soft", device: "desktop", userImages: [], previewPage: "home", showPageNotice: false, siteMenuOpen: false });
+  clearChatReplyTimer();
+  Object.assign(state, { hero: 1, bodies: ["body1-1", "body2-1"], footer: 1, font: "Poppins", palette: 0, customColors: null, motion: "soft", device: "desktop", userImages: [], previewPage: "home", showPageNotice: false, siteMenuOpen: false, assistant: "guided", features: { scrollProgress: true, faq: true, inquiry: true, seo: true }, chatOpen: false, chatMessages: [], chatTyping: false, inquirySent: false });
   fontSelect.value = state.font;
   $$('.device-btn').forEach((button) => button.classList.toggle("active", button.dataset.device === "desktop"));
   browserFrame.className = "browser-frame device-desktop";
@@ -453,10 +639,12 @@ function openResult() {
   applySiteTheme(resultPreview);
   const names = ["northco", "formahouse", "atlasworks", "novastudio", "commonground", "madeclear"];
   $("#resultAddress").textContent = `${names[Math.floor(Math.random() * names.length)]}.layoutforge.site`;
-  $("#resultSummary").textContent = `${getItem(heroes, state.hero).name} · ${state.bodies.length} body section${state.bodies.length === 1 ? "" : "s"} · ${getItem(footers, state.footer).name} · ${state.font} · ${selectedPalette().name}`;
+  const selectedFeatureCount = Object.values(state.features).filter(Boolean).length;
+  $("#resultSummary").textContent = `${getItem(heroes, state.hero).name} · ${getItem(footers, state.footer).name} · ${assistantNames[state.assistant]} · ${selectedFeatureCount} site essential${selectedFeatureCount === 1 ? "" : "s"}`;
   resultModal.classList.add("show");
   resultModal.setAttribute("aria-hidden", "false");
   document.body.classList.add("modal-open");
+  queueViewportSync();
 }
 
 function closeResult() {
@@ -491,6 +679,7 @@ $("#editBtn").addEventListener("click", closeResult);
 document.addEventListener("keydown", (event) => {
   if (event.key !== "Escape") return;
   if (colorPickerModal.classList.contains("show")) closeColorPicker();
+  else if (state.chatOpen) { state.chatOpen = false; updatePreview(); }
   else if (resultModal.classList.contains("show")) closeResult();
 });
 

@@ -3,14 +3,17 @@
 A standalone interactive website configurator built with plain HTML, CSS, and JavaScript.
 
 ## Features
-- 3 hero layouts
-- 3 Body Section 1 layouts
-- 3 Body Section 2 layouts
-- 3 footer layouts
-- 5 font choices
-- 10 curated three-color palettes
+- 9 hero layouts
+- 18 combinable body sections
+- 6 footer layouts
+- 16 font choices
+- 16 curated three-color palettes
 - Live website preview
 - Desktop / tablet / mobile preview modes
+- Optional guided chatbot or AI-ready assistant preview
+- Suggested chat questions, local replies, typing state, and mobile chat behavior
+- Optional scroll progress, FAQ, inquiry form, and SEO/social setup
+- Accessible focus states and reduced-motion support
 - Shuffle design
 - Reset design
 - Simulated website-generation sequence
@@ -21,6 +24,8 @@ A standalone interactive website configurator built with plain HTML, CSS, and Ja
 Open `index.html` directly in your browser.
 
 For the Google Fonts to load, internet access is required. The simulator itself does not require a backend.
+
+The chatbot uses a local response function for the concept preview. AI-ready mode does not connect to an external AI service or expose an API key. A secure backend can be connected during production development.
 
 ## Files
 - `index.html`
