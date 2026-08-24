@@ -93,6 +93,7 @@ const resultModal = $("#resultModal");
 const generationRows = $$("#generationList > div");
 const imageUpload = $("#imageUpload");
 const uploadedImages = $("#uploadedImages");
+let pageNoticeTimer = null;
 
 function selectedPalette() {
   return state.customColors ? { name: "Your palette", colors: state.customColors } : palettes[state.palette];
@@ -240,6 +241,10 @@ function getItem(items, id) { return items.find((item) => item.id === id); }
 function updatePreview() {
   sitePreview.innerHTML = fullSiteMarkup();
   applySiteTheme(sitePreview);
+  if (resultModal.classList.contains("show")) {
+    resultPreview.innerHTML = fullSiteMarkup();
+    applySiteTheme(resultPreview);
+  }
   fontSample.style.fontFamily = `"${state.font}", sans-serif`;
   $("#heroStatus").textContent = getItem(heroes, state.hero).name;
   $("#bodyStatus").textContent = `${state.bodies.length} selected`;
@@ -253,6 +258,36 @@ function updatePreview() {
   renderPalettes();
   renderUploadedImages();
   $$("[data-motion]").forEach((button) => button.classList.toggle("active", button.dataset.motion === state.motion));
+}
+
+function clearPageNoticeTimer() {
+  if (!pageNoticeTimer) return;
+  window.clearTimeout(pageNoticeTimer);
+  pageNoticeTimer = null;
+}
+
+function dismissPageNotice() {
+  clearPageNoticeTimer();
+  if (!state.showPageNotice) return;
+  state.showPageNotice = false;
+  updatePreview();
+}
+
+function schedulePageNoticeDismiss() {
+  clearPageNoticeTimer();
+  if (!state.showPageNotice) return;
+  pageNoticeTimer = window.setTimeout(dismissPageNotice, 5000);
+}
+
+function openPreviewPage(page, fromResultPreview) {
+  state.previewPage = page;
+  state.showPageNotice = page !== "home";
+  state.siteMenuOpen = false;
+  updatePreview();
+  schedulePageNoticeDismiss();
+
+  const scrollContainer = fromResultPreview ? $(".result-canvas") : $(".preview-stage");
+  window.requestAnimationFrame(() => scrollContainer?.scrollTo({ top: 0, behavior: state.motion === "plain" ? "auto" : "smooth" }));
 }
 
 document.addEventListener("click", (event) => {
@@ -280,9 +315,9 @@ document.addEventListener("click", (event) => {
   const motion = event.target.closest("[data-motion]");
   if (motion) { state.motion = motion.dataset.motion; updatePreview(); return; }
   const pageLink = event.target.closest("[data-preview-page]");
-  if (pageLink) { state.previewPage = pageLink.dataset.previewPage; state.showPageNotice = state.previewPage !== "home"; state.siteMenuOpen = false; updatePreview(); return; }
+  if (pageLink) { openPreviewPage(pageLink.dataset.previewPage, Boolean(pageLink.closest("#resultPreview"))); return; }
   if (event.target.closest("[data-toggle-site-menu]")) { state.siteMenuOpen = !state.siteMenuOpen; updatePreview(); return; }
-  if (event.target.closest("[data-dismiss-page-notice]")) { state.showPageNotice = false; updatePreview(); return; }
+  if (event.target.closest("[data-dismiss-page-notice]")) { dismissPageNotice(); return; }
   const removeImage = event.target.closest("[data-remove-image]");
   if (removeImage) { state.userImages.splice(Number(removeImage.dataset.removeImage), 1); updatePreview(); return; }
   if (event.target.closest("[data-clear-images]")) { state.userImages = []; updatePreview(); return; }
@@ -390,6 +425,7 @@ $("#applyCustomPalette").addEventListener("click", () => {
 });
 
 function shuffleDesign() {
+  clearPageNoticeTimer();
   state.hero = 1 + Math.floor(Math.random() * heroes.length);
   state.bodies = [...bodySections].sort(() => Math.random() - .5).slice(0, 1 + Math.floor(Math.random() * 3)).map((item) => item.key);
   state.footer = 1 + Math.floor(Math.random() * footers.length);
@@ -404,6 +440,7 @@ function shuffleDesign() {
 }
 
 function resetDesign() {
+  clearPageNoticeTimer();
   Object.assign(state, { hero: 1, bodies: ["body1-1", "body2-1"], footer: 1, font: "Poppins", palette: 0, customColors: null, motion: "soft", device: "desktop", userImages: [], previewPage: "home", showPageNotice: false, siteMenuOpen: false });
   fontSelect.value = state.font;
   $$('.device-btn').forEach((button) => button.classList.toggle("active", button.dataset.device === "desktop"));
