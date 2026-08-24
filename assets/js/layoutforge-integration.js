@@ -9,6 +9,9 @@
   var overlay = document.getElementById("layoutforgePortfolioOverlay");
   var overlayClose = document.getElementById("layoutforgeOverlayClose");
   var simulatorFrame = document.getElementById("layoutforgeSimulatorFrame");
+  var packagesModal = document.getElementById("portfolioPackagesModal");
+  var packagesClose = document.getElementById("portfolioPackagesClose");
+  var packagesTrigger = document.getElementById("resumePackagesTrigger");
 
   if (!portfolio || !promo || !overlay || !simulatorFrame) {
     return;
@@ -23,6 +26,7 @@
   var promoShown = false;
   var promoClicked = false;
   var reminderCount = 0;
+  var packagesLastFocus = null;
 
   attentionAudio.preload = "auto";
   attentionAudio.volume = 0.58;
@@ -208,6 +212,68 @@
     document.body.classList.remove("layoutforge-simulator-open");
   }
 
+  function switchPackageCategory(category) {
+    if (!packagesModal) return;
+
+    packagesModal.querySelectorAll("[data-portfolio-package-tab]").forEach(function (button) {
+      var active = button.getAttribute("data-portfolio-package-tab") === category;
+      button.classList.toggle("active", active);
+      button.setAttribute("aria-selected", String(active));
+    });
+
+    packagesModal.querySelectorAll("[data-portfolio-package-panel]").forEach(function (panel) {
+      panel.hidden = panel.getAttribute("data-portfolio-package-panel") !== category;
+    });
+
+    var dialog = packagesModal.querySelector(".portfolio-packages-dialog");
+    if (dialog) dialog.scrollTop = 0;
+  }
+
+  function openPackages() {
+    if (!packagesModal) return;
+    packagesLastFocus = document.activeElement;
+    switchPackageCategory("website");
+    packagesModal.classList.add("show");
+    packagesModal.setAttribute("aria-hidden", "false");
+    document.body.classList.add("portfolio-packages-open");
+    window.setTimeout(function () { packagesClose?.focus(); }, 80);
+  }
+
+  function closePackages() {
+    if (!packagesModal) return;
+    packagesModal.classList.remove("show");
+    packagesModal.setAttribute("aria-hidden", "true");
+    document.body.classList.remove("portfolio-packages-open");
+    if (packagesLastFocus instanceof HTMLElement) packagesLastFocus.focus();
+  }
+
+  function startPackageInquiry(packageName) {
+    var comments = document.getElementById("comments");
+    var inquiryMessage = "Hi Luke, I'm interested in the " + packageName + " package. Please help me confirm the best scope for my project.";
+
+    if (comments) {
+      var currentMessage = comments.value.trim();
+      if (!currentMessage) {
+        comments.value = inquiryMessage;
+      } else if (currentMessage.indexOf(packageName) === -1) {
+        comments.value = currentMessage + "\n\n" + inquiryMessage;
+      }
+    }
+
+    closePackages();
+    var contactLink = document.querySelector('.menu a[href="#contact"]');
+    if (contactLink) {
+      contactLink.click();
+    } else {
+      window.location.hash = "contact";
+    }
+
+    window.setTimeout(function () {
+      var nameField = document.getElementById("name");
+      if (nameField) nameField.focus();
+    }, 650);
+  }
+
   portfolio.addEventListener("scroll", startWorksTimer, { passive: true });
   portfolio.addEventListener("wheel", startWorksTimer, { passive: true });
   portfolio.addEventListener("touchmove", startWorksTimer, { passive: true });
@@ -241,7 +307,46 @@
   });
 
   overlayClose?.addEventListener("click", closeSimulator);
+  packagesTrigger?.addEventListener("click", openPackages);
+  packagesClose?.addEventListener("click", closePackages);
+  packagesModal?.addEventListener("click", function (event) {
+    if (event.target === packagesModal) {
+      closePackages();
+      return;
+    }
+
+    var tab = event.target.closest("[data-portfolio-package-tab]");
+    if (tab) {
+      switchPackageCategory(tab.getAttribute("data-portfolio-package-tab"));
+      return;
+    }
+
+    var packageButton = event.target.closest("[data-package-name]");
+    if (packageButton) startPackageInquiry(packageButton.getAttribute("data-package-name"));
+  });
   document.addEventListener("keydown", function (event) {
+    if (event.key === "Tab" && packagesModal?.classList.contains("show")) {
+      var focusable = Array.from(packagesModal.querySelectorAll('button:not([disabled]), a[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled])'))
+        .filter(function (element) { return !element.hidden && element.offsetParent !== null; });
+
+      if (focusable.length) {
+        var first = focusable[0];
+        var last = focusable[focusable.length - 1];
+        if (event.shiftKey && document.activeElement === first) {
+          event.preventDefault();
+          last.focus();
+        } else if (!event.shiftKey && document.activeElement === last) {
+          event.preventDefault();
+          first.focus();
+        }
+      }
+    }
+
+    if (event.key === "Escape" && packagesModal?.classList.contains("show")) {
+      closePackages();
+      return;
+    }
+
     if (event.key === "Escape" && overlay.classList.contains("show")) {
       closeSimulator();
     }

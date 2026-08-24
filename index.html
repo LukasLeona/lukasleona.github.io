@@ -507,6 +507,113 @@
       <iframe id="layoutforgeSimulatorFrame" title="Luke's website vision simulator" loading="lazy" data-src="preview/layoutforge-simulator/index.html"></iframe>
     </div>
 
+    <div class="portfolio-packages-modal" id="portfolioPackagesModal" aria-hidden="true">
+      <div class="portfolio-packages-dialog" role="dialog" aria-modal="true" aria-labelledby="portfolioPackagesTitle">
+        <div class="portfolio-packages-head">
+          <div>
+            <span>FIXED WEBSITE AND SYSTEM PACKAGES</span>
+            <h2 id="portfolioPackagesTitle">Choose the right level for your project.</h2>
+            <p id="portfolioPackagesDescription">Compare the core scope at a glance, then tell Luke which package you want to discuss.</p>
+          </div>
+          <button type="button" id="portfolioPackagesClose" aria-label="Close packages"><i class="bi bi-x-lg" aria-hidden="true"></i></button>
+        </div>
+
+        <div class="portfolio-package-tabs" role="tablist" aria-label="Package categories">
+          <button class="active" type="button" role="tab" aria-selected="true" aria-controls="portfolioWebsitePackages" data-portfolio-package-tab="website"><span>Website packages</span><small>₱3,000 to ₱15,000</small></button>
+          <button type="button" role="tab" aria-selected="false" aria-controls="portfolioAdvancedPackages" data-portfolio-package-tab="advanced"><span>Advanced packages</span><small>₱20,000 to ₱40,000</small></button>
+        </div>
+
+        <div class="portfolio-package-panel" id="portfolioWebsitePackages" role="tabpanel" data-portfolio-package-panel="website">
+          <div class="portfolio-package-grid website-package-grid">
+            <article class="portfolio-package-card">
+              <span class="portfolio-package-purpose">Get online</span><h3>Starter Website</h3><div class="portfolio-package-price"><strong>₱3,000</strong><small>Approx. $49</small></div>
+              <div class="portfolio-package-tags"><span>5 pages</span><span>Guided chatbot</span></div>
+              <ul><li>Responsive website</li><li>Blog preview + 1 article</li><li>Basic SEO metadata</li><li>3 revisions</li></ul>
+              <button type="button" data-package-name="Starter Website (₱3,000)">Avail Starter <i class="bi bi-arrow-right" aria-hidden="true"></i></button>
+            </article>
+            <article class="portfolio-package-card">
+              <span class="portfolio-package-purpose">Generate inquiries</span><h3>Business Website</h3><div class="portfolio-package-price"><strong>₱6,000</strong><small>Approx. $97</small></div>
+              <div class="portfolio-package-tags"><span>7 pages</span><span>Custom chatbot</span></div>
+              <ul><li>Everything in Starter</li><li>Blog page + 3 articles</li><li>Inquiry form</li><li>4 revisions</li></ul>
+              <button type="button" data-package-name="Business Website (₱6,000)">Avail Business <i class="bi bi-arrow-right" aria-hidden="true"></i></button>
+            </article>
+            <article class="portfolio-package-card featured"><span class="portfolio-package-badge">Most popular</span>
+              <span class="portfolio-package-purpose">Publish and grow</span><h3>Growth Website</h3><div class="portfolio-package-price"><strong>₱10,000</strong><small>Approx. $162</small></div>
+              <div class="portfolio-package-tags"><span>10 pages</span><span>AI-ready</span></div>
+              <ul><li>Everything in Business</li><li>Blog hub + 6 articles</li><li>Advanced motion + SEO</li><li>5 revisions</li></ul>
+              <button type="button" data-package-name="Growth Website (₱10,000)">Avail Growth <i class="bi bi-arrow-right" aria-hidden="true"></i></button>
+            </article>
+            <article class="portfolio-package-card dark-card">
+              <span class="portfolio-package-purpose">Manage data</span><h3>Full System Setup</h3><div class="portfolio-package-price"><strong>₱15,000</strong><small>Approx. $242</small></div>
+              <div class="portfolio-package-tags"><span>Database</span><span>Admin dashboard</span></div>
+              <ul><li>Database blog manager</li><li>Admin login and dashboard</li><li>Database-connected forms</li><li>7 revisions</li></ul>
+              <button type="button" data-package-name="Full System Setup (₱15,000)">Avail Full System <i class="bi bi-arrow-right" aria-hidden="true"></i></button>
+            </article>
+          </div>
+        </div>
+
+        <div class="portfolio-package-panel" id="portfolioAdvancedPackages" role="tabpanel" data-portfolio-package-panel="advanced" hidden>
+          <div class="portfolio-package-grid advanced-package-grid">
+            <article class="portfolio-package-card">
+              <span class="portfolio-package-purpose">Connect operations</span><h3>Automation System</h3><div class="portfolio-package-price"><strong>₱20,000</strong><small>Approx. $323</small></div>
+              <div class="portfolio-package-tags"><span>3 workflows</span><span>Dashboard</span></div>
+              <ul><li>Database-backed workflow dashboard</li><li>Up to 3 business automations</li><li>Email notifications and activity log</li><li>8 revisions</li></ul>
+              <button type="button" data-package-name="Automation System (₱20,000)">Avail Automation <i class="bi bi-arrow-right" aria-hidden="true"></i></button>
+            </article>
+            <article class="portfolio-package-card featured"><span class="portfolio-package-badge">Online selling</span>
+              <span class="portfolio-package-purpose">Sell end to end</span><h3>Full Ecommerce System</h3><div class="portfolio-package-price"><strong>₱30,000</strong><small>Approx. $485</small></div>
+              <div class="portfolio-package-tags"><span>Online store</span><span>Checkout</span></div>
+              <ul><li>Product catalog and shopping cart</li><li>One payment gateway integration</li><li>Order management dashboard</li><li>9 revisions</li></ul>
+              <button type="button" data-package-name="Full Ecommerce System (₱30,000)">Avail Ecommerce <i class="bi bi-arrow-right" aria-hidden="true"></i></button>
+            </article>
+            <article class="portfolio-package-card dark-card">
+              <span class="portfolio-package-purpose">Control stock</span><h3>Inventory Management</h3><div class="portfolio-package-price"><strong>₱40,000</strong><small>Approx. $647</small></div>
+              <div class="portfolio-package-tags"><span>Stock database</span><span>Reports</span></div>
+              <ul><li>SKU and product database</li><li>Stock movement and supplier records</li><li>Low-stock alerts and reporting</li><li>10 revisions</li></ul>
+              <button type="button" data-package-name="Inventory Management (₱40,000)">Avail Inventory <i class="bi bi-arrow-right" aria-hidden="true"></i></button>
+            </article>
+          </div>
+        </div>
+
+        <div class="portfolio-packages-footnote" id="portfolioPackagesFootnote">Domain, hosting, payment-provider fees, paid integrations, third-party subscriptions, content creation beyond the listed scope, and ongoing maintenance are separate.</div>
+
+        <div class="portfolio-package-inquiry-view" id="portfolioPackageInquiryView" hidden>
+          <button class="portfolio-package-back" id="portfolioPackageBack" type="button"><i class="bi bi-arrow-left" aria-hidden="true"></i> Compare packages</button>
+          <div class="portfolio-selected-package">
+            <span>YOUR SELECTED PACKAGE</span>
+            <strong id="portfolioSelectedPackageName">Starter Website</strong>
+          </div>
+
+          <form class="portfolio-package-inquiry-form" id="portfolioPackageInquiryForm">
+            <input type="hidden" name="package" id="portfolioSelectedPackageInput">
+            <input type="hidden" name="comments" id="portfolioPackageComments">
+            <label><span>Full name *</span><input type="text" name="name" autocomplete="name" required></label>
+            <label><span>Email address *</span><input type="email" name="email" autocomplete="email" required></label>
+            <label><span>Phone number</span><input type="tel" name="subject" autocomplete="tel" placeholder="Optional"></label>
+            <label><span>Business or brand</span><input type="text" name="business_name" autocomplete="organization" placeholder="Optional"></label>
+            <label><span>Existing website</span><input type="url" name="existing_website" placeholder="https:// or leave blank"></label>
+            <label><span>Preferred contact</span><select name="preferred_contact"><option>Email</option><option>Phone call</option><option>Text message</option></select></label>
+            <label><span>Target start or launch</span><input type="text" name="target_date" placeholder="Example: October 2026"></label>
+            <label><span>Estimated budget</span><input type="text" name="budget" placeholder="Package price or planned range"></label>
+            <label class="portfolio-package-form-wide"><span>Tell Luke about your project *</span><textarea name="project_details" rows="4" placeholder="Describe your business, goals, required pages, features, and any important integrations." required></textarea></label>
+            <label class="portfolio-package-consent portfolio-package-form-wide"><input type="checkbox" required><span>I confirm that this information may be used to respond to my project inquiry.</span></label>
+            <div class="portfolio-package-form-actions portfolio-package-form-wide">
+              <button type="submit" id="portfolioPackageSubmit">Send package inquiry <i class="bi bi-send" aria-hidden="true"></i></button>
+              <p id="portfolioPackageFormStatus" role="status" aria-live="polite"></p>
+            </div>
+          </form>
+        </div>
+
+        <div class="portfolio-package-success-view" id="portfolioPackageSuccessView" hidden>
+          <div class="portfolio-package-success-mark" aria-hidden="true"><i class="bi bi-check2"></i></div>
+          <span>INQUIRY SENT</span>
+          <h3>Thanks. Luke received your package request.</h3>
+          <p>A reply will be sent to the email address you provided. You can continue exploring the portfolio while you wait.</p>
+          <div><button type="button" id="portfolioPackageSuccessClose">Return to portfolio</button><button type="button" id="portfolioPackageNewInquiry">Send another inquiry</button></div>
+        </div>
+      </div>
+    </div>
+
     <!--  Hero Start  -->
     <section id="hero" class="section hero w-100">
 
@@ -2708,11 +2815,7 @@
 
           </div>
 
-          <button
-            type="button"
-            class="resume-layoutforge-ad layoutforge-open-trigger"
-            aria-label="Try the LayoutForge website vision simulator"
-          >
+          <aside class="resume-layoutforge-ad" aria-label="Explore LayoutForge and Luke's website packages">
             <span class="resume-layoutforge-cat" aria-hidden="true">
               <span class="resume-cat-ear resume-cat-ear-left"></span>
               <span class="resume-cat-ear resume-cat-ear-right"></span>
@@ -2733,12 +2836,19 @@
               <span>Mix layouts, colors, typography, and features before committing to a build.</span>
             </span>
 
-            <span class="resume-layoutforge-ad-action">
-              <img src="preview/layoutforge-simulator/assets/layoutforge-logo.svg" alt="">
-              <span><b>Try LayoutForge</b><small>Interactive simulator</small></span>
-              <i class="bi bi-arrow-right" aria-hidden="true"></i>
+            <span class="resume-layoutforge-ad-actions">
+              <button type="button" class="resume-layoutforge-ad-action layoutforge-open-trigger" aria-label="Try the LayoutForge website vision simulator">
+                <img src="preview/layoutforge-simulator/assets/layoutforge-logo.svg" alt="">
+                <span><b>Try LayoutForge</b><small>Interactive simulator</small></span>
+                <i class="bi bi-arrow-right" aria-hidden="true"></i>
+              </button>
+              <button type="button" class="resume-layoutforge-packages-action" id="resumePackagesTrigger">
+                <i class="bi bi-grid-3x3-gap" aria-hidden="true"></i>
+                <span><b>View packages</b><small>₱3K to ₱40K</small></span>
+                <i class="bi bi-arrow-up-right" aria-hidden="true"></i>
+              </button>
             </span>
-          </button>
+          </aside>
 
         </article>
 
