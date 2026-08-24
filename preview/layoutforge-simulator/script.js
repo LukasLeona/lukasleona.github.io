@@ -701,7 +701,6 @@ function showPackageSuccess() {
 }
 
 $("#pricingBtn").addEventListener("click", () => openPricingModal("packages"));
-$("#advancedPricingBtn").addEventListener("click", () => openPricingModal("advanced"));
 $("#pricingClose").addEventListener("click", closePricingModal);
 $("#pricingBack").addEventListener("click", showPricingPackages);
 $("#pricingSuccessClose").addEventListener("click", closePricingModal);

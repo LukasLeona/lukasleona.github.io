@@ -33,8 +33,6 @@ img { max-width: 100%; }
 .ghost-btn:hover { border-color: rgba(255,255,255,.45); transform: translateY(-1px); }
 .pricing-trigger { color:#f3cb69; border-color:rgba(231,185,78,.48); background:rgba(231,185,78,.08); }
 .pricing-trigger:hover { color:#fff0bd; border-color:#e7b94e; background:rgba(231,185,78,.15); }
-.advanced-pricing-trigger { color:#b9c9ff; border-color:rgba(117,148,255,.42); background:rgba(82,113,255,.08); }
-.advanced-pricing-trigger:hover { color:#e2e9ff; border-color:#839cff; background:rgba(82,113,255,.16); }
 .primary-btn { min-height: 46px; padding: 0 22px; display: inline-flex; align-items: center; justify-content: center; gap: 16px; color: #151515; background: var(--yellow); border-radius: 9px; box-shadow: 0 8px 24px rgba(231,185,78,.2); font-size: 13px; font-weight: 800; }
 .primary-btn:hover { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(231,185,78,.3); }
 .primary-btn.compact { min-height: 38px; padding: 0 17px; }
