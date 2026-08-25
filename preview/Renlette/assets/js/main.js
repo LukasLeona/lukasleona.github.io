@@ -246,6 +246,7 @@
   const catalogSearch = doc.querySelector("[data-catalog-search]");
   const catalogItems = [...doc.querySelectorAll(".catalog-item")];
   const catalogSections = [...doc.querySelectorAll("[data-catalog-section]")];
+  const catalogSubsections = [...doc.querySelectorAll("[data-catalog-subsection]")];
   const catalogCount = doc.querySelector("[data-catalog-count]");
   const catalogEmpty = doc.querySelector("[data-catalog-empty]");
   const clearCatalogButton = doc.querySelector("[data-clear-catalog]");
@@ -264,6 +265,10 @@
       section.hidden = !section.querySelector(".catalog-item:not([hidden])");
     });
 
+    catalogSubsections.forEach((subsection) => {
+      subsection.hidden = !subsection.querySelector(".catalog-item:not([hidden])");
+    });
+
     if (catalogCount) {
       catalogCount.textContent = query
         ? `Showing ${visibleCount} of ${catalogItems.length} product types`
@@ -280,6 +285,107 @@
     catalogSearch.focus();
   });
   if (catalogItems.length) updateCatalog();
+
+  const bocheProductDetails = {
+    "boche-structural": {
+      title: "BOCHE structural firefighting boots",
+      image: "assets/images/catalog-products/product-117.webp",
+      standard: "Model-specific certification available on request",
+      summary: "A high-visibility BOCHE structural firefighting boot offered by Renlette for departments seeking protective footwear with fast adjustment and a rugged operational outsole.",
+      specs: [["Category", "Structural PPE"], ["Closure", "Dial assisted"], ["Availability", "On request"]],
+      features: ["Black protective upper", "High-visibility yellow panels", "Dial-assisted adjustment", "Reinforced toe construction", "Rugged lug outsole", "Contact Renlette for the current technical sheet"]
+    },
+    "typhon-ir1": {
+      title: "BOCHE TYPHON IR1",
+      image: "assets/images/catalog-products/product-118.webp",
+      standard: "EN 15090:2012 · F2A SRC HI3 CI AN",
+      summary: "A tall leather firefighting boot combining traditional lacing with a removable central zipper for secure adjustment, fast access and structural-fire protection.",
+      specs: [["Sizes", "EU 35-50"], ["Weight", "2 kg"], ["Upper height", "27 cm"]],
+      features: ["2.2 ± 0.2 mm fire-resistant waterproof grain leather", "Waterproof and breathable Sympatex lining", "Removable central zipper with fire-resistant laces", "D3O ankle protection", "Light XXL fiberglass safety toe", "Heat- and slip-resistant nitrile outsole with stainless-steel midsole"]
+    },
+    "loxo-protect": {
+      title: "BOCHE LOXO PROTECT",
+      image: "assets/images/catalog-products/product-119.webp",
+      standard: "EN 15090:2012 · F2A SRC HI3 CI AN",
+      summary: "A compact high-visibility firefighting boot with the BOA Fit System, designed for fast adjustment, flexibility and comfort without conventional laces.",
+      specs: [["Sizes", "EU 35-50"], ["Weight", "2 kg"], ["Upper height", "21 cm"]],
+      features: ["BOA Fit System with protective dial cover", "2.2 ± 0.2 mm fire-resistant waterproof grain leather", "Waterproof and breathable Sympatex lining", "D3O ankle protection", "Light XXL fiberglass safety toe", "Nitrile outsole with flexible metal-free Pro Tector Z midsole"]
+    },
+    "joker-v3-ar": {
+      title: "BOCHE JOKER V3 AR",
+      image: "assets/images/catalog-products/product-120.webp",
+      standard: "EN 15090:2012 · F2A SRC HI3 CI AN",
+      summary: "A tall pull-on firefighting boot with high-visibility panels, articulated ankle protection and dual pull loops for straightforward donning.",
+      specs: [["Sizes", "EU 35-50"], ["Weight", "2.3 kg"], ["Upper height", "30 cm"]],
+      features: ["2.2 ± 0.2 mm fire-resistant waterproof grain leather", "Waterproof and breathable Sympatex lining", "D3O ankle protection", "High-visibility ankle panels", "Light XXL fiberglass safety toe", "Heat- and slip-resistant nitrile outsole with stainless-steel midsole"]
+    },
+    "java-v2": {
+      title: "BOCHE JAVA V2",
+      image: "assets/images/catalog-products/product-121.webp",
+      standard: "EN 15090:2012 · F2A SRC HI3 CI",
+      summary: "A tall pull-on firefighting boot focused on lightness and comfort, with a simple shaft, protective leather construction and easy-grip boot puller.",
+      specs: [["Sizes", "EU 35-50"], ["Weight", "2.1 kg"], ["Upper height", "33 cm"]],
+      features: ["2.2 ± 0.2 mm fire-resistant waterproof grain leather", "Waterproof and breathable Sympatex lining", "Pull-on design with boot puller", "Light XXL fiberglass safety toe", "Heat- and slip-resistant nitrile outsole", "Protective stainless-steel midsole and fire-resistant aramid threads"]
+    }
+  };
+
+  const productDialog = doc.querySelector("[data-product-dialog]");
+  const productDialogImage = productDialog?.querySelector("[data-product-dialog-image]");
+  const productDialogTitle = productDialog?.querySelector("[data-product-dialog-title]");
+  const productDialogStandard = productDialog?.querySelector("[data-product-dialog-standard]");
+  const productDialogSummary = productDialog?.querySelector("[data-product-dialog-summary]");
+  const productDialogSpecs = productDialog?.querySelector("[data-product-dialog-specs]");
+  const productDialogFeatures = productDialog?.querySelector("[data-product-dialog-features]");
+  const productDialogCta = productDialog?.querySelector("[data-product-dialog-cta]");
+
+  const openProductDialog = (productKey) => {
+    const details = bocheProductDetails[productKey];
+    if (!details || !productDialog) return;
+
+    if (productDialogImage) {
+      productDialogImage.src = details.image;
+      productDialogImage.alt = details.title;
+    }
+    if (productDialogTitle) productDialogTitle.textContent = details.title;
+    if (productDialogStandard) productDialogStandard.textContent = details.standard;
+    if (productDialogSummary) productDialogSummary.textContent = details.summary;
+    if (productDialogSpecs) {
+      productDialogSpecs.replaceChildren(...details.specs.map(([label, value]) => {
+        const wrapper = doc.createElement("div");
+        const term = doc.createElement("dt");
+        const description = doc.createElement("dd");
+        term.textContent = label;
+        description.textContent = value;
+        wrapper.append(term, description);
+        return wrapper;
+      }));
+    }
+    if (productDialogFeatures) {
+      productDialogFeatures.replaceChildren(...details.features.map((feature) => {
+        const item = doc.createElement("li");
+        item.textContent = feature;
+        return item;
+      }));
+    }
+    if (productDialogCta) {
+      productDialogCta.href = `index.html?equipment=${encodeURIComponent(details.title)}#contact`;
+    }
+
+    doc.documentElement.classList.add("product-dialog-open");
+    productDialog.showModal();
+  };
+
+  doc.querySelectorAll("[data-product-detail]").forEach((button) => {
+    button.addEventListener("click", () => openProductDialog(button.dataset.productDetail));
+  });
+
+  productDialog?.addEventListener("click", (event) => {
+    if (event.target === productDialog) productDialog.close();
+  });
+
+  productDialog?.addEventListener("close", () => {
+    doc.documentElement.classList.remove("product-dialog-open");
+  });
 
   const equipmentField = doc.querySelector("#equipment");
   const messageField = doc.querySelector("#message");
