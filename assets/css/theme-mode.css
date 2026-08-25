@@ -302,6 +302,12 @@ html[data-theme="light"] #portfolio .portfolio-v2-filter a.active {
   border-color: rgba(193, 137, 3, .34);
 }
 
+html[data-theme="light"] #portfolio .portfolio-demo-note {
+  color: #565b64;
+  background: rgba(213, 157, 20, .075);
+  border-color: rgba(193, 137, 3, .28);
+}
+
 /* The browser/card previews intentionally remain dark for contrast. */
 
 /* =========================================================
