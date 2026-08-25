@@ -260,6 +260,33 @@ body.layoutforge-simulator-open #main > section {
   pointer-events: none;
 }
 
+html[data-theme="light"] .layoutforge-portfolio-overlay {
+  color: #14161a;
+  background: #eef0f3;
+  border: 1px solid rgba(20, 22, 26, .12);
+}
+
+html[data-theme="light"] .layoutforge-overlay-bar {
+  color: #14161a;
+  background: rgba(255, 253, 248, .98);
+  border-bottom-color: rgba(20, 22, 26, .12);
+  box-shadow: 0 8px 24px rgba(20, 22, 26, .06);
+}
+
+html[data-theme="light"] .layoutforge-overlay-bar small {
+  color: #5b616b;
+}
+
+html[data-theme="light"] .layoutforge-overlay-actions a {
+  color: #775100;
+}
+
+html[data-theme="light"] .layoutforge-overlay-actions button {
+  color: #14161a;
+  background: #f0eee8;
+  border-color: rgba(20, 22, 26, .12);
+}
+
 /* Lumo's Works-section suggestion */
 .layoutforge-bot-promo {
   position: absolute;

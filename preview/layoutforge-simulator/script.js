@@ -1,3 +1,24 @@
+function applyLayoutForgeTheme(theme) {
+  const nextTheme = theme === "light" ? "light" : "dark";
+  document.documentElement.setAttribute("data-theme", nextTheme);
+  const themeMeta = document.querySelector('meta[name="theme-color"]');
+  if (themeMeta) themeMeta.setAttribute("content", nextTheme === "light" ? "#fffdf8" : "#111318");
+}
+
+const requestedLayoutForgeTheme = new URLSearchParams(window.location.search).get("theme");
+if (requestedLayoutForgeTheme === "light" || requestedLayoutForgeTheme === "dark") {
+  applyLayoutForgeTheme(requestedLayoutForgeTheme);
+}
+
+window.addEventListener("message", (event) => {
+  if (event.source !== window.parent || event.data?.type !== "layoutforge:set-theme") return;
+  applyLayoutForgeTheme(event.data.theme);
+});
+
+if (window.parent !== window) {
+  window.parent.postMessage({ type: "layoutforge:theme-ready" }, "*");
+}
+
 const palettes = [
   { name: "Electric Lime", colors: ["#F5F5F0", "#111111", "#DFFF00"] },
   { name: "Warm Clay", colors: ["#F4EDE4", "#201813", "#D47855"] },

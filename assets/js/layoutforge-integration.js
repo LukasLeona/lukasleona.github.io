@@ -222,12 +222,15 @@
     }
 
     if (!simulatorFrame.getAttribute("src")) {
-      simulatorFrame.setAttribute("src", simulatorFrame.getAttribute("data-src"));
+      var simulatorUrl = new URL(simulatorFrame.getAttribute("data-src"), document.baseURI);
+      simulatorUrl.searchParams.set("theme", currentPortfolioTheme());
+      simulatorFrame.setAttribute("src", simulatorUrl.href);
     }
 
     overlay.classList.add("show");
     overlay.setAttribute("aria-hidden", "false");
     document.body.classList.add("layoutforge-simulator-open");
+    syncSimulatorTheme();
     window.setTimeout(function () { overlayClose?.focus(); }, 180);
   }
 
@@ -235,6 +238,18 @@
     overlay.classList.remove("show");
     overlay.setAttribute("aria-hidden", "true");
     document.body.classList.remove("layoutforge-simulator-open");
+  }
+
+  function currentPortfolioTheme() {
+    return document.documentElement.getAttribute("data-theme") === "light" ? "light" : "dark";
+  }
+
+  function syncSimulatorTheme() {
+    if (!simulatorFrame.contentWindow) return;
+    simulatorFrame.contentWindow.postMessage({
+      type: "layoutforge:set-theme",
+      theme: currentPortfolioTheme()
+    }, "*");
   }
 
   function switchPackageCategory(category) {
@@ -355,7 +370,11 @@
       cancelWorksTimer();
     }
   });
-  sectionObserver.observe(portfolio, { attributes: true, attributeFilter: ["class"] });
+  try {
+    sectionObserver.observe(portfolio, { attributes: true, attributeFilter: ["class"] });
+  } catch (error) {
+    // Navigation still works if a browser blocks observation during page setup.
+  }
 
   document.addEventListener("pointerdown", prepareAudio, { once: true, passive: true });
   document.addEventListener("keydown", prepareAudio, { once: true });
@@ -372,6 +391,22 @@
   });
 
   overlayClose?.addEventListener("click", closeSimulator);
+  simulatorFrame.addEventListener("load", syncSimulatorTheme);
+  if (document.documentElement) {
+    try {
+      new MutationObserver(syncSimulatorTheme).observe(document.documentElement, {
+        attributes: true,
+        attributeFilter: ["data-theme"]
+      });
+    } catch (error) {
+      // The frame is also synchronized on open and load.
+    }
+  }
+  window.addEventListener("message", function (event) {
+    if (event.source === simulatorFrame.contentWindow && event.data?.type === "layoutforge:theme-ready") {
+      syncSimulatorTheme();
+    }
+  });
   packagesTrigger?.addEventListener("click", openPackages);
   packagesClose?.addEventListener("click", closePackages);
 

@@ -1132,3 +1132,205 @@ html[data-theme="light"] #resume .resume-data-dashboard .data-chart-bars {
 }
 
 html[data-theme="light"] .left-side .menu-profile-name { color:#22242a !important; }
+
+/* =========================================================
+   DAY MODE CONTRAST + RESPONSIVE COMPLETION
+   Keeps the light palette readable after the newer shell and
+   mobile hero styles that load later in the cascade.
+========================================================= */
+
+html[data-theme="light"] {
+  --day-ink: #14161a;
+  --day-muted: #505660;
+  --day-gold: #9b6900;
+  --day-gold-fill: #bd8500;
+  --day-line: rgba(20, 22, 26, .14);
+}
+
+html[data-theme="light"] body,
+html[data-theme="light"] #main > section {
+  color: var(--day-ink) !important;
+}
+
+html[data-theme="light"] #about.about-v2 {
+  --about-gold: var(--day-gold);
+  --about-muted: var(--day-muted);
+  --about-text: #30343b;
+}
+
+html[data-theme="light"] #resume.resume-v2 {
+  --resume-gold: var(--day-gold);
+  --resume-muted: var(--day-muted);
+  --resume-text: #30343b;
+}
+
+html[data-theme="light"] #portfolio.portfolio-v2 {
+  --portfolio-gold: var(--day-gold);
+  --portfolio-muted: var(--day-muted);
+}
+
+html[data-theme="light"] #blog.blog-v2 {
+  --blog-gold: var(--day-gold);
+  --blog-muted: var(--day-muted);
+}
+
+html[data-theme="light"] #contact.contact-v2 {
+  --contact-gold: var(--day-gold);
+  --contact-muted: var(--day-muted);
+  --contact-text: #30343b;
+}
+
+html[data-theme="light"] .base-color,
+html[data-theme="light"] .subtitle,
+html[data-theme="light"] .heading-meta-container .description,
+html[data-theme="light"] #date b,
+html[data-theme="light"] .menu li a:hover,
+html[data-theme="light"] .menu li a.active,
+html[data-theme="light"] .menu li a:hover span,
+html[data-theme="light"] .menu li a.active span,
+html[data-theme="light"] .menu li a:hover i,
+html[data-theme="light"] .menu li a.active i {
+  color: var(--day-gold) !important;
+}
+
+html[data-theme="light"] .menu li a,
+html[data-theme="light"] .menu li a span,
+html[data-theme="light"] .social a,
+html[data-theme="light"] .right-side .social-box .social a {
+  color: #4c5159 !important;
+}
+
+html[data-theme="light"] .primary-button,
+html[data-theme="light"] .left-side a.download-cv {
+  color: #111317 !important;
+  background: var(--day-gold-fill) !important;
+  border-color: var(--day-gold-fill) !important;
+}
+
+html[data-theme="light"] #about h1,
+html[data-theme="light"] #about h2,
+html[data-theme="light"] #about h3,
+html[data-theme="light"] #about h4,
+html[data-theme="light"] #about h5,
+html[data-theme="light"] #about h6,
+html[data-theme="light"] #resume h1,
+html[data-theme="light"] #resume h2,
+html[data-theme="light"] #resume h3,
+html[data-theme="light"] #resume h4,
+html[data-theme="light"] #resume h5,
+html[data-theme="light"] #resume h6,
+html[data-theme="light"] #portfolio h1,
+html[data-theme="light"] #portfolio h2,
+html[data-theme="light"] #portfolio h3,
+html[data-theme="light"] #portfolio h4,
+html[data-theme="light"] #portfolio h5,
+html[data-theme="light"] #portfolio h6,
+html[data-theme="light"] #blog h1,
+html[data-theme="light"] #blog h2,
+html[data-theme="light"] #blog h3,
+html[data-theme="light"] #blog h4,
+html[data-theme="light"] #blog h5,
+html[data-theme="light"] #blog h6,
+html[data-theme="light"] #contact h1,
+html[data-theme="light"] #contact h2,
+html[data-theme="light"] #contact h3,
+html[data-theme="light"] #contact h4,
+html[data-theme="light"] #contact h5,
+html[data-theme="light"] #contact h6 {
+  color: var(--day-ink) !important;
+}
+
+@media (max-width: 991px) {
+  html[data-theme="light"] #main > section#hero {
+    background:
+      radial-gradient(circle at 12% 18%, rgba(187, 133, 0, .16), transparent 27%),
+      radial-gradient(circle at 92% 78%, rgba(187, 133, 0, .08), transparent 30%),
+      linear-gradient(145deg, #fffdf7 0%, #f8f6ef 64%, #eef1f4 100%) !important;
+  }
+
+  html[data-theme="light"] #hero::after {
+    background: radial-gradient(circle, rgba(187, 133, 0, .12), rgba(187, 133, 0, .035) 43%, transparent 71%);
+  }
+
+  html[data-theme="light"] #hero .hero-main-title,
+  html[data-theme="light"] #hero .hero-title-line,
+  html[data-theme="light"] #hero .hero-mobile-capabilities strong {
+    color: var(--day-ink) !important;
+  }
+
+  html[data-theme="light"] #hero .hero-name,
+  html[data-theme="light"] #hero .hero-role-line,
+  html[data-theme="light"] #hero .hero-mobile-capabilities span {
+    color: var(--day-gold) !important;
+  }
+
+  html[data-theme="light"] #hero .hero-mobile-capabilities {
+    background: rgba(255, 255, 255, .86) !important;
+    border-color: var(--day-line) !important;
+    box-shadow: 0 18px 42px rgba(24, 27, 33, .09) !important;
+  }
+
+  html[data-theme="light"] #hero .hero-mobile-capabilities div + div {
+    border-left-color: var(--day-line) !important;
+  }
+
+  html[data-theme="light"] #hero .hero-footer .social a {
+    color: #4c5159 !important;
+  }
+
+  html[data-theme="light"] .left-side {
+    border-color: rgba(20, 22, 26, .11) !important;
+    box-shadow: -22px 0 55px rgba(23, 26, 32, .16) !important;
+  }
+
+  html[data-theme="light"] .menu-overlay {
+    background: rgba(224, 228, 234, .84) !important;
+  }
+
+  html[data-theme="light"] .mobile-menu-drawer-header {
+    background: rgba(255, 255, 255, .98) !important;
+    border-bottom-color: rgba(20, 22, 26, .1) !important;
+  }
+
+  html[data-theme="light"] .mobile-menu-drawer-header strong,
+  html[data-theme="light"] .mobile-theme-setting-copy strong {
+    color: var(--day-ink) !important;
+  }
+
+  html[data-theme="light"] .left-side .menu-content-align,
+  html[data-theme="light"] .mobile-theme-setting,
+  html[data-theme="light"] .left-side .menu-footer {
+    background: #f7f6f2 !important;
+    border-color: rgba(20, 22, 26, .1) !important;
+  }
+
+  html[data-theme="light"] .left-side .menu .list-group-item a {
+    color: #363b43 !important;
+    background: rgba(20, 22, 26, .018) !important;
+    border-color: rgba(20, 22, 26, .07) !important;
+  }
+
+  html[data-theme="light"] .left-side .menu .list-group-item a::after {
+    color: rgba(20, 22, 26, .38) !important;
+  }
+
+  html[data-theme="light"] .left-side .menu .list-group-item a i,
+  html[data-theme="light"] .left-side .menu .list-group-item a.active span,
+  html[data-theme="light"] .left-side .menu .list-group-item a.active i,
+  html[data-theme="light"] .mobile-menu-drawer-header span,
+  html[data-theme="light"] .mobile-theme-setting-copy > i {
+    color: var(--day-gold) !important;
+  }
+
+  html[data-theme="light"] .left-side .menu .list-group-item a.active,
+  html[data-theme="light"] .left-side .menu .list-group-item a:hover {
+    background: rgba(187, 133, 0, .09) !important;
+    border-color: rgba(155, 105, 0, .34) !important;
+  }
+
+  html[data-theme="light"] .left-side .menu-footer .social a {
+    color: #363b43 !important;
+    background: #fff !important;
+    border-color: rgba(20, 22, 26, .1) !important;
+  }
+}
