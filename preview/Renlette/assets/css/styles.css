@@ -3610,6 +3610,280 @@ img[src$="product-116.webp"] {
   color: var(--blue-700);
 }
 
+.catalog-item .detail-button {
+  width: fit-content;
+  margin-top: auto;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.68);
+  font: inherit;
+  font-size: 0.6rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-align: left;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: color 180ms ease, transform 180ms var(--ease);
+}
+
+.catalog-item .detail-button:hover,
+.catalog-item .detail-button:focus-visible {
+  color: var(--cyan-300);
+  transform: translateX(3px);
+}
+
+.catalog-subsection {
+  width: min(100%, var(--content));
+  margin: clamp(80px, 9vw, 140px) auto 0;
+  padding-top: clamp(42px, 5vw, 72px);
+  border-top: 1px solid var(--line-dark);
+  scroll-margin-top: 88px;
+}
+
+.catalog-subsection[hidden] {
+  display: none;
+}
+
+.catalog-subsection-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(280px, 0.55fr);
+  gap: 20px clamp(28px, 7vw, 110px);
+  align-items: end;
+  margin-bottom: clamp(34px, 5vw, 58px);
+}
+
+.catalog-subsection-head > span {
+  grid-column: 1 / -1;
+  color: var(--cyan-300);
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
+.catalog-subsection-head h3 {
+  margin: 0;
+  font-family: var(--display);
+  font-size: clamp(3.3rem, 5.4vw, 6rem);
+  font-weight: 700;
+  letter-spacing: -0.045em;
+  line-height: 0.84;
+  text-transform: uppercase;
+}
+
+.catalog-subsection-head p {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.62);
+  font-size: 0.84rem;
+  line-height: 1.7;
+}
+
+.boche-catalog-items .catalog-item-media {
+  background:
+    radial-gradient(circle at 38% 46%, rgba(39, 188, 235, 0.15), transparent 58%),
+    linear-gradient(145deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.012));
+}
+
+.product-dialog-open {
+  overflow: hidden;
+}
+
+.product-detail-dialog {
+  width: min(1080px, calc(100% - 40px));
+  max-width: none;
+  max-height: min(880px, calc(100svh - 40px));
+  margin: auto;
+  padding: 0;
+  overflow: auto;
+  border: 0;
+  background: var(--ice-100);
+  color: var(--ink);
+  box-shadow: 0 40px 100px rgba(0, 0, 0, 0.45);
+}
+
+.product-detail-dialog::backdrop {
+  background: rgba(1, 11, 22, 0.82);
+  backdrop-filter: blur(10px);
+}
+
+.product-detail-shell {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(330px, 0.9fr) minmax(0, 1.1fr);
+  min-height: 650px;
+}
+
+.product-dialog-close {
+  position: absolute;
+  z-index: 5;
+  top: 18px;
+  right: 18px;
+  display: grid;
+  width: 44px;
+  height: 44px;
+  place-items: center;
+  border: 1px solid rgba(4, 16, 30, 0.18);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.82);
+  color: var(--ink);
+  font-size: 1.65rem;
+  line-height: 1;
+  cursor: pointer;
+  backdrop-filter: blur(12px);
+}
+
+.product-dialog-media {
+  position: relative;
+  display: grid;
+  min-height: 650px;
+  place-items: center;
+  overflow: hidden;
+  background:
+    linear-gradient(rgba(82, 190, 225, 0.09) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(82, 190, 225, 0.09) 1px, transparent 1px),
+    radial-gradient(circle at 44% 45%, #153553, #071526 68%);
+  background-size: 52px 52px, 52px 52px, 100% 100%;
+}
+
+.product-dialog-media img {
+  width: 90%;
+  height: 82%;
+  object-fit: contain;
+  filter: drop-shadow(0 28px 30px rgba(0, 0, 0, 0.38));
+}
+
+.product-dialog-content {
+  display: flex;
+  flex-direction: column;
+  padding: clamp(48px, 5vw, 74px) clamp(34px, 5vw, 68px) 48px;
+}
+
+.product-dialog-brand {
+  color: var(--blue-700);
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
+.product-dialog-content h2 {
+  max-width: 540px;
+  margin: 14px 0 16px;
+  font-family: var(--display);
+  font-size: clamp(3rem, 5vw, 5.3rem);
+  font-weight: 700;
+  letter-spacing: -0.045em;
+  line-height: 0.84;
+  text-transform: uppercase;
+}
+
+.product-dialog-standard {
+  width: fit-content;
+  margin: 0 0 20px;
+  padding: 8px 11px;
+  background: var(--navy-950);
+  color: var(--cyan-300);
+  font-size: 0.64rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.product-dialog-summary {
+  margin: 0 0 26px;
+  color: #53697c;
+  font-size: 0.86rem;
+  line-height: 1.7;
+}
+
+.product-dialog-specs {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin: 0 0 28px;
+  border-top: 1px solid rgba(4, 16, 30, 0.14);
+  border-left: 1px solid rgba(4, 16, 30, 0.14);
+}
+
+.product-dialog-specs > div {
+  padding: 14px;
+  border-right: 1px solid rgba(4, 16, 30, 0.14);
+  border-bottom: 1px solid rgba(4, 16, 30, 0.14);
+}
+
+.product-dialog-specs dt {
+  margin-bottom: 6px;
+  color: #6a8192;
+  font-size: 0.54rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.product-dialog-specs dd {
+  margin: 0;
+  font-family: var(--display);
+  font-size: 1.2rem;
+  font-weight: 700;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.product-dialog-features h3 {
+  margin: 0 0 12px;
+  font-size: 0.66rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.product-dialog-features ul {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 9px 22px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.product-dialog-features li {
+  position: relative;
+  padding-left: 14px;
+  color: #53697c;
+  font-size: 0.72rem;
+  line-height: 1.45;
+}
+
+.product-dialog-features li::before {
+  position: absolute;
+  top: 0.6em;
+  left: 0;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--blue-600);
+  content: "";
+}
+
+.product-dialog-cta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 22px;
+  margin-top: auto;
+  padding: 17px 18px;
+  background: var(--navy-950);
+  color: var(--white);
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.product-dialog-cta:hover {
+  background: var(--blue-700);
+  color: var(--white);
+}
+
 .catalog-cutout-stage {
   position: sticky;
   top: 94px;
