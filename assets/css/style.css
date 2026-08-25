@@ -3881,25 +3881,6 @@ textarea:-moz-placeholder {
   opacity: 0;
 }
 
-.cursor-text {
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 1032;
-  pointer-events: none;
-  visibility: hidden;
-  opacity: 1;
-
-  color: #ebb020;
-  font-size: 13px;
-  font-weight: 700;
-  letter-spacing: 1.5px;
-  white-space: nowrap;
-
-  transform: translate3d(0, 0, 0);
-  transition: opacity 0.2s ease;
-}
-
 /*------------------------- ColorPallet -------------------------*/
 .color-switcher .color-pallet {
   background-color: white;

@@ -1609,32 +1609,14 @@ function mouseMagicCursor() {
 
   const innerCursor = document.querySelector(".mmc-inner");
   const outerCursor = document.querySelector(".mmc-outer");
-  const cursorText = document.querySelector(".cursor-text");
 
   if (
     !innerCursor ||
     !outerCursor ||
-    !cursorText ||
     window.innerWidth <= 991
   ) {
     return;
   }
-
-  const cursorMessages = [
-    "HIRE ME 🥺",
-    "PLEASE 🥺",
-    "I'LL DO MY BEST 🌟",
-    "PROMISE 🤞"
-  ];
-
-  let currentMessage = 0;
-
-  cursorText.textContent = cursorMessages[currentMessage];
-
-  const messageInterval = setInterval(function () {
-    currentMessage = (currentMessage + 1) % cursorMessages.length;
-    cursorText.textContent = cursorMessages[currentMessage];
-  }, 2000);
 
   window.addEventListener("mousemove", function (event) {
     const mouseX = event.clientX;
@@ -1645,9 +1627,6 @@ function mouseMagicCursor() {
 
     outerCursor.style.transform =
       `translate3d(${mouseX}px, ${mouseY}px, 0)`;
-
-    cursorText.style.transform =
-      `translate3d(${mouseX + 20}px, ${mouseY + 16}px, 0)`;
   });
 
   document
@@ -1656,28 +1635,16 @@ function mouseMagicCursor() {
     element.addEventListener("mouseenter", function () {
       innerCursor.classList.add("mmc-hover");
       outerCursor.classList.add("mmc-hover");
-
-      // Hide text when hovering clickable items
-      cursorText.style.opacity = "0";
     });
 
     element.addEventListener("mouseleave", function () {
       innerCursor.classList.remove("mmc-hover");
       outerCursor.classList.remove("mmc-hover");
-
-      // Show text again
-      cursorText.style.opacity = "1";
     });
   });
 
   innerCursor.style.visibility = "visible";
   outerCursor.style.visibility = "visible";
-  cursorText.style.visibility = "visible";
-  cursorText.style.opacity = "1";
-
-  window.addEventListener("beforeunload", function () {
-    clearInterval(messageInterval);
-  });
 }
 /*-------------------------
    Interactive Hero Portrait
