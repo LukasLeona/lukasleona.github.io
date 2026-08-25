@@ -357,6 +357,11 @@ img { max-width: 100%; }
   .assistant-options,.feature-toggle-grid { grid-template-columns:1fr; }.assistant-options button { min-height:68px; padding:10px 12px 10px 52px; position:relative; }.assistant-options button > span { position:absolute; left:12px; margin:0; }.feature-builder { padding:12px; }
   .pricing-trigger span { font-size:0; }.pricing-trigger span::after { content:"Packages"; font-size:10px; }.pricing-view-switcher { grid-template-columns:1fr; }.pricing-quick-guide,.pricing-modal .advanced-guide { grid-template-columns:1fr; }.pricing-quick-guide span { min-height:45px; border-right:0; border-bottom:1px solid rgba(255,255,255,.1); }.pricing-quick-guide span:last-child { border-bottom:0; }.package-success-view > div:last-child { width:100%; flex-direction:column; }.package-success-view > div:last-child button { width:100%; }
 }
+@media (max-width: 360px) {
+  .topbar { gap:10px; }
+  .brand { min-width:0; flex:0 0 auto; }
+  .brand-text { display:none; }
+}
 @media (prefers-reduced-motion: reduce) {
   *,*::before,*::after { scroll-behavior:auto !important; animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important; }
 }

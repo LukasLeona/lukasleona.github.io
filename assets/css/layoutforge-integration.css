@@ -896,6 +896,34 @@ html[data-theme="light"] .lumo-visualizer[data-state="speaking"] {
   }
 }
 
+@media (max-width: 360px) {
+  #resume .resume-layoutforge-ad {
+    min-height: 0;
+    padding: 16px 12px 78px;
+  }
+
+  #resume .resume-layoutforge-ad-action {
+    grid-template-columns: 34px minmax(0, 1fr) 12px;
+    gap: 7px;
+  }
+
+  #resume .resume-layoutforge-ad-action img {
+    width: 34px;
+    height: 34px;
+  }
+
+  #resume .resume-layoutforge-packages-action {
+    grid-template-columns: 22px minmax(0, 1fr) 12px;
+    gap: 6px;
+  }
+
+  #resume .resume-layoutforge-cat {
+    left: -3px;
+    bottom: -8px;
+    scale: .64;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   #resume .resume-layoutforge-cat,
   #resume .resume-cat-eye {
@@ -1520,10 +1548,19 @@ body.layoutforge-simulator-open .chatbot-teaser {
   body.portfolio-packages-open .menu-toggle,
   body.portfolio-packages-open .right-side,
   body.portfolio-packages-open .next-prev-page,
-  body.portfolio-packages-open .global-chatbot {
+  body.portfolio-packages-open .global-chatbot,
+  body.layoutforge-simulator-open > header,
+  body.layoutforge-simulator-open .menu-toggle,
+  body.layoutforge-simulator-open .right-side,
+  body.layoutforge-simulator-open .next-prev-page,
+  body.layoutforge-simulator-open .global-chatbot {
     opacity: 0 !important;
     visibility: hidden !important;
     pointer-events: none !important;
+  }
+
+  #layoutforgePortfolioOverlay #layoutforgeOverlayClose {
+    display: none !important;
   }
 }
 
