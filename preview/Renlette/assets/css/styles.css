@@ -3934,6 +3934,40 @@ img[src$="product-116.webp"] {
   color: var(--white);
 }
 
+.link-arrow {
+  position: relative;
+  display: inline-block;
+  width: 1.05em;
+  height: 0.78em;
+  margin-left: 0.42em;
+  flex: 0 0 auto;
+  vertical-align: -0.05em;
+}
+
+.link-arrow::before,
+.link-arrow::after {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  content: "";
+}
+
+.link-arrow::before {
+  width: 100%;
+  height: 1.5px;
+  background: currentColor;
+  transform: translateY(-50%);
+}
+
+.link-arrow::after {
+  width: 0.4em;
+  height: 0.4em;
+  border-top: 1.5px solid currentColor;
+  border-right: 1.5px solid currentColor;
+  transform: translateY(-50%) rotate(45deg);
+  transform-origin: 72% 28%;
+}
+
 @media (max-height: 620px) and (min-width: 761px) {
   .product-detail-dialog {
     width: min(1080px, calc(100% - 12px));
@@ -5412,13 +5446,15 @@ img[src$="product-116.webp"] {
   }
 
   .product-detail-dialog {
-    width: calc(100% - 12px);
-    height: calc(100svh - 12px);
+    width: calc(100% - 24px);
+    height: fit-content;
+    max-height: calc(100svh - 20px);
   }
 
   .product-detail-shell {
     grid-template-columns: 1fr;
-    grid-template-rows: clamp(118px, 24svh, 210px) minmax(0, 1fr);
+    grid-template-rows: clamp(118px, 24svh, 210px) auto;
+    height: auto;
     min-height: 0;
   }
 
@@ -5441,6 +5477,7 @@ img[src$="product-116.webp"] {
   }
 
   .product-dialog-content {
+    overflow: visible;
     padding: 14px 18px 12px;
   }
 
@@ -5505,7 +5542,7 @@ img[src$="product-116.webp"] {
   }
 
   .product-dialog-cta {
-    margin-top: auto;
+    margin-top: 18px;
     padding: 9px 11px;
     font-size: 0.54rem;
   }
@@ -5527,6 +5564,32 @@ img[src$="product-116.webp"] {
 
   .product-dialog-content h2 {
     font-size: clamp(1.8rem, 7.5svh, 2.65rem);
+  }
+}
+
+@media (min-width: 761px) and (max-width: 960px) and (max-height: 620px) and (orientation: landscape) {
+  .product-detail-dialog {
+    width: calc(100% - 24px);
+    height: fit-content;
+    max-height: calc(100svh - 20px);
+  }
+
+  .product-detail-shell {
+    grid-template-rows: 1fr;
+    grid-template-columns: minmax(230px, 0.72fr) minmax(0, 1.28fr);
+    height: auto;
+  }
+
+  .product-dialog-media {
+    height: auto;
+  }
+
+  .product-dialog-content {
+    overflow: visible;
+  }
+
+  .product-dialog-cta {
+    margin-top: 14px;
   }
 }
 
