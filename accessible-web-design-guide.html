@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en-PH">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Accessible Web Design Guide: Faster Sites for All | Luke Leona</title>
+  <meta name="description" content="A practical accessible web design guide covering semantic HTML, keyboard use, color contrast, forms, content, performance, and inclusive testing.">
+  <meta name="author" content="Luke Mark Leona"><meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:none">
+  <link rel="canonical" href="https://lukasleona.com/accessible-web-design-guide.html">
+  <meta property="og:locale" content="en_PH"><meta property="og:type" content="article"><meta property="og:site_name" content="Luke Mark Leona Portfolio"><meta property="og:title" content="Accessible Web Design: Build Faster Websites for Everyone"><meta property="og:description" content="Practical foundations for websites that are easier to perceive, navigate, understand, and use."><meta property="og:url" content="https://lukasleona.com/accessible-web-design-guide.html">
+  <meta name="twitter:card" content="summary"><meta name="twitter:title" content="Accessible Web Design Guide"><meta name="twitter:description" content="Semantic structure, keyboard access, readable content, fast delivery, and inclusive testing.">
+  <link rel="icon" href="assets/img/favicon.png"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css?family=Muli:400,600,700|Poppins:500,600,700&display=swap" rel="stylesheet"><link rel="stylesheet" href="assets/css/blog-article.css">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"BlogPosting","headline":"Accessible Web Design: Build Faster Websites for Everyone","description":"A practical accessible web design guide covering semantic HTML, keyboard use, color contrast, forms, content, performance, and inclusive testing.","datePublished":"2026-08-27T00:00:00+08:00","dateModified":"2026-08-27T00:00:00+08:00","inLanguage":"en-PH","articleSection":"Web Accessibility","keywords":["accessible web design","web accessibility guide","inclusive website design","semantic HTML","website accessibility Philippines"],"mainEntityOfPage":"https://lukasleona.com/accessible-web-design-guide.html","author":{"@type":"Person","name":"Luke Mark Leona","url":"https://lukasleona.com/"},"publisher":{"@type":"Person","name":"Luke Mark Leona","url":"https://lukasleona.com/"}}
+  </script>
+</head>
+<body class="article-page">
+  <a class="article-skip-link" href="#article-content">Skip to article</a>
+  <nav class="article-nav" aria-label="Primary"><div class="article-nav-inner"><a class="article-brand" href="index.html"><span class="article-brand-mark" aria-hidden="true">L</span><span class="article-brand-name">Luke Mark Leona</span></a><a class="article-back" href="index.html#blog">← Back to journal</a></div></nav>
+  <main>
+    <article>
+      <header class="article-hero" data-index="03">
+        <p class="article-kicker">Web accessibility · Performance</p><h1>Accessible web design: build faster websites for everyone</h1>
+        <p class="article-deck">Accessibility is not a final checklist for a small group of users. It is a way of designing content and interactions that remain clear across different abilities, devices, environments, and connection speeds.</p>
+        <div class="article-meta"><span>Luke Mark Leona</span><span><time datetime="2026-08-27">27 August 2026</time></span><span>9 min read</span></div>
+      </header>
+
+      <div class="article-main" id="article-content">
+        <details class="article-toc" open><summary>In this article</summary><nav aria-label="Table of contents"><a href="#meaning">What accessibility means</a><a href="#structure">Use semantic structure</a><a href="#keyboard">Support keyboard navigation</a><a href="#visual">Design readable interfaces</a><a href="#content">Write accessible content and forms</a><a href="#performance">Connect accessibility and speed</a><a href="#testing">Use layered testing</a></nav></details>
+        <div class="article-content">
+          <p>An accessible website helps people perceive the content, operate the interface, understand what is happening, and continue using it with different technologies. That includes permanent disabilities, temporary injuries, age-related changes, situational limits, small screens, bright sunlight, noisy rooms, and slow connections.</p>
+
+          <section id="meaning">
+            <p class="article-section-label">01 · Inclusion</p><h2>Accessibility improves the path to the same goal</h2>
+            <p>A customer may browse with a screen reader, keyboard, voice control, magnification, captions, high contrast settings, or a mobile device held in one hand. The goal remains the same: understand the service, compare information, complete a form, make a purchase, or contact the business.</p>
+            <p>Designing for access does not mean creating a separate “accessible version.” It means making the primary experience flexible enough to work in multiple ways.</p>
+            <div class="article-quote"><blockquote>Accessibility is successful when different people can reach the same information and complete the same important task with dignity.</blockquote></div>
+          </section>
+
+          <section id="structure">
+            <p class="article-section-label">02 · Semantics</p><h2>Start with meaningful HTML before adding visual effects</h2>
+            <p>Semantic HTML gives browsers and assistive technologies a reliable description of the page. Use headings for headings, buttons for actions, links for navigation, labels for form controls, lists for related items, and landmarks for major regions.</p>
+            <div class="article-grid">
+              <div class="article-card"><span>HEADINGS</span><h3>Create a logical outline</h3><p>Use one descriptive H1 and nested headings that explain each section without relying on size alone.</p></div>
+              <div class="article-card"><span>LANDMARKS</span><h3>Describe page regions</h3><p>Header, nav, main, article, aside, and footer help users move through long pages.</p></div>
+              <div class="article-card"><span>CONTROLS</span><h3>Use the native element</h3><p>A real button already supports focus, keyboard activation, and a recognizable role.</p></div>
+              <div class="article-card"><span>LANGUAGE</span><h3>Declare and change it</h3><p>Set the page language and identify passages that switch languages when relevant.</p></div>
+            </div>
+            <p>ARIA can fill specific gaps, but it does not repair the behavior of the wrong HTML element. Prefer native semantics whenever they can express the interaction.</p>
+          </section>
+
+          <section id="keyboard">
+            <p class="article-section-label">03 · Operation</p><h2>Every important action should work with a keyboard</h2>
+            <p>Use the Tab key to move through interactive elements, Shift + Tab to move backward, Enter or Space to activate appropriate controls, and Escape to close temporary layers. The focus indicator should always be visible, and the sequence should follow the visual and reading order.</p>
+            <ul>
+              <li>Provide a skip link so repeated navigation can be bypassed.</li>
+              <li>Do not remove focus outlines unless replacing them with an equally visible treatment.</li>
+              <li>Avoid positive tabindex values that create an artificial order.</li>
+              <li>Keep focus inside an open modal, then return it to the control that opened the modal.</li>
+              <li>Ensure menus, accordions, sliders, and custom widgets follow familiar keyboard patterns.</li>
+              <li>Give people enough time, and allow moving or updating content to be paused when needed.</li>
+            </ul>
+            <div class="article-note"><strong>Quick test</strong>Put the mouse aside and complete the primary customer journey using only the keyboard. Every focus position should be visible and every action reachable.</div>
+          </section>
+
+          <section id="visual">
+            <p class="article-section-label">04 · Perception</p><h2>Readable design does not depend on perfect vision or perfect conditions</h2>
+            <p>Use sufficient contrast between text and its background. Do not use color as the only sign of an error, status, or selected state. Keep body text comfortably sized, line length moderate, line height generous, and paragraphs easy to scan.</p>
+            <div class="article-table-wrap"><table class="article-table"><thead><tr><th>Design choice</th><th>Accessible approach</th></tr></thead><tbody>
+              <tr><td>Form error</td><td>Use a clear message, visible state, and programmatic connection to the field—not a red border alone</td></tr>
+              <tr><td>Icon button</td><td>Provide a recognizable icon, adequate target size, and an accessible name</td></tr>
+              <tr><td>Motion</td><td>Respect reduced-motion preferences and avoid animation required to understand content</td></tr>
+              <tr><td>Responsive layout</td><td>Allow zoom and reflow without hiding content or forcing two-dimensional scrolling</td></tr>
+            </tbody></table></div>
+            <p>Images should have alternative text when they communicate information. Decorative images should be ignored by assistive technology. In an image-free editorial design like this journal, typography and structure can carry the hierarchy without adding decorative downloads.</p>
+          </section>
+
+          <section id="content">
+            <p class="article-section-label">05 · Understanding</p><h2>Clear writing and forgiving forms are accessibility features</h2>
+            <p>Use specific link text, descriptive headings, familiar words, and short sentences where complexity is unnecessary. Explain abbreviations and put the most important information early. These practices support comprehension and also make content easier to scan and search.</p>
+            <p>For forms, show a persistent label for every field. State the expected format before an error occurs. Group related controls, identify required fields consistently, preserve valid entries after an error, and explain how to correct the problem. Avoid asking for information the business does not need.</p>
+            <p>Good accessible content also supports <a href="why-seo-visibility-matters.html">search visibility</a>: meaningful titles, headings, link text, and page structure help both readers and search engines understand the page.</p>
+          </section>
+
+          <section id="performance">
+            <p class="article-section-label">06 · Speed</p><h2>Performance expands access across devices and connections</h2>
+            <p>A slow website can exclude users with limited data, older hardware, unstable connectivity, or assistive technology that must process an unnecessarily complex page. Speed is not a substitute for accessibility, but the two often support each other.</p>
+            <ol class="article-steps">
+              <li><strong>Ship less.</strong> Remove unused scripts, styles, trackers, widgets, and oversized media.</li>
+              <li><strong>Prioritize the page purpose.</strong> Deliver essential content and the primary action first.</li>
+              <li><strong>Reserve layout space.</strong> Prevent content from shifting while assets load.</li>
+              <li><strong>Use resilient interactions.</strong> Keep core information and navigation available when optional scripts fail.</li>
+              <li><strong>Test realistic conditions.</strong> Include mid-range mobile devices, slower networks, zoom, and assistive technology.</li>
+            </ol>
+            <p>A strong <a href="your-website-digital-home.html">business website</a> should help customers act without demanding expensive hardware or a perfect connection.</p>
+          </section>
+
+          <section id="testing">
+            <p class="article-section-label">07 · Quality</p><h2>Combine automated checks with human testing</h2>
+            <p>Automated tools can detect some missing labels, invalid markup, contrast failures, and naming problems. They cannot decide whether alternative text is useful, the reading order makes sense, instructions are understandable, or a workflow is practical with a screen reader.</p>
+            <ol>
+              <li>Validate semantic structure and programmatic names.</li>
+              <li>Complete key journeys with a keyboard and visible focus.</li>
+              <li>Test zoom, text resizing, reflow, contrast, and reduced motion.</li>
+              <li>Use at least one screen reader to review major pages and forms.</li>
+              <li>Include people with disabilities in usability testing when possible and compensate their expertise.</li>
+              <li>Retest after meaningful design, content, or platform changes.</li>
+            </ol>
+            <p>Accessibility is an ongoing quality practice. Document decisions, include acceptance criteria in new work, and assign responsibility so improvements survive beyond a single audit.</p>
+          </section>
+        </div>
+
+        <section class="article-takeaways" aria-labelledby="takeaways-title"><h2 id="takeaways-title">Key takeaways</h2><ul><li>Use semantic HTML and native controls as the foundation.</li><li>Make every primary journey operable and understandable without a mouse.</li><li>Support readable contrast, zoom, reflow, reduced motion, and clear errors.</li><li>Improve performance and test with both tools and real human interaction.</li></ul></section>
+        <p class="article-byline"><strong>About the author:</strong> Luke Mark Leona builds responsive, accessible, search-friendly websites alongside automation, integration, and data solutions.</p>
+      </div>
+    </article>
+
+    <section class="article-related" aria-labelledby="related-title"><div class="article-related-heading"><h2 id="related-title">Continue reading</h2><a href="index.html#blog">View all articles →</a></div><div class="article-related-grid"><a class="article-related-card" href="your-website-digital-home.html"><span>Web strategy</span><strong>Why every business needs a strong website</strong></a><a class="article-related-card" href="why-seo-visibility-matters.html"><span>SEO &amp; growth</span><strong>Build visibility around useful, structured content</strong></a><a class="article-related-card" href="api-integration-explained.html"><span>Software integration</span><strong>Connect business tools with reliable data flows</strong></a></div></section>
+  </main>
+  <footer class="article-footer"><div class="article-footer-inner"><span>© 2026 Luke Mark Leona</span><a href="index.html#contact">Discuss an accessible website →</a></div></footer>
+</body>
+</html>
