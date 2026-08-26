@@ -178,6 +178,9 @@
 
     const sourceFor = (index) => {
       const productNumber = productFiles[index] || (firstProduct + index);
+      if (productNumber >= 118 && productNumber <= 121) {
+        return `assets/images/catalog-products/product-${productNumber}-boche-v2.png`;
+      }
       return `assets/images/catalog-products/product-${String(productNumber).padStart(3, "0")}.webp`;
     };
 
@@ -297,7 +300,7 @@
     },
     "typhon-ir1": {
       title: "BOCHE TYPHON IR1",
-      image: "assets/images/catalog-products/product-118.webp",
+      image: "assets/images/catalog-products/product-118-boche-v2.png",
       standard: "EN 15090:2012 · F2A SRC HI3 CI AN",
       summary: "A tall leather firefighting boot combining traditional lacing with a removable central zipper for secure adjustment, fast access and structural-fire protection.",
       specs: [["Sizes", "EU 35-50"], ["Weight", "2 kg"], ["Upper height", "27 cm"]],
@@ -305,7 +308,7 @@
     },
     "loxo-protect": {
       title: "BOCHE LOXO PROTECT",
-      image: "assets/images/catalog-products/product-119.webp",
+      image: "assets/images/catalog-products/product-119-boche-v2.png",
       standard: "EN 15090:2012 · F2A SRC HI3 CI AN",
       summary: "A compact high-visibility firefighting boot with the BOA Fit System, designed for fast adjustment, flexibility and comfort without conventional laces.",
       specs: [["Sizes", "EU 35-50"], ["Weight", "2 kg"], ["Upper height", "21 cm"]],
@@ -313,7 +316,7 @@
     },
     "joker-v3-ar": {
       title: "BOCHE JOKER V3 AR",
-      image: "assets/images/catalog-products/product-120.webp",
+      image: "assets/images/catalog-products/product-120-boche-v2.png",
       standard: "EN 15090:2012 · F2A SRC HI3 CI AN",
       summary: "A tall pull-on firefighting boot with high-visibility panels, articulated ankle protection and dual pull loops for straightforward donning.",
       specs: [["Sizes", "EU 35-50"], ["Weight", "2.3 kg"], ["Upper height", "30 cm"]],
@@ -321,7 +324,7 @@
     },
     "java-v2": {
       title: "BOCHE JAVA V2",
-      image: "assets/images/catalog-products/product-121.webp",
+      image: "assets/images/catalog-products/product-121-boche-v2.png",
       standard: "EN 15090:2012 · F2A SRC HI3 CI",
       summary: "A tall pull-on firefighting boot focused on lightness and comfort, with a simple shaft, protective leather construction and easy-grip boot puller.",
       specs: [["Sizes", "EU 35-50"], ["Weight", "2.1 kg"], ["Upper height", "33 cm"]],
