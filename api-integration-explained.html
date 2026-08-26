@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en-PH">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>API Integration Explained for Small Business | Luke Leona</title>
+  <meta name="description" content="Learn how API integration connects business tools, reduces duplicate data entry, improves workflows, and what to plan before connecting your systems.">
+  <meta name="author" content="Luke Mark Leona"><meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:none">
+  <link rel="canonical" href="https://lukasleona.com/api-integration-explained.html">
+  <meta property="og:locale" content="en_PH"><meta property="og:type" content="article"><meta property="og:site_name" content="Luke Mark Leona Portfolio"><meta property="og:title" content="API Integration Explained: How Business Tools Work Together"><meta property="og:description" content="A plain-language guide to connected systems, reliable data flow, and less duplicate work."><meta property="og:url" content="https://lukasleona.com/api-integration-explained.html">
+  <meta name="twitter:card" content="summary"><meta name="twitter:title" content="API Integration Explained for Small Business"><meta name="twitter:description" content="Understand APIs, webhooks, workflow design, security, and integration costs.">
+  <link rel="icon" href="assets/img/favicon.png"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css?family=Muli:400,600,700|Poppins:500,600,700&display=swap" rel="stylesheet"><link rel="stylesheet" href="assets/css/blog-article.css">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"BlogPosting","headline":"API Integration Explained: How Business Tools Work Together","description":"Learn how API integration connects business tools, reduces duplicate data entry, improves workflows, and what to plan before connecting your systems.","datePublished":"2026-08-27T00:00:00+08:00","dateModified":"2026-08-27T00:00:00+08:00","inLanguage":"en-PH","articleSection":"Software Integration","keywords":["API integration","API integration Philippines","business systems integration","webhook automation","connect business apps"],"mainEntityOfPage":"https://lukasleona.com/api-integration-explained.html","author":{"@type":"Person","name":"Luke Mark Leona","url":"https://lukasleona.com/"},"publisher":{"@type":"Person","name":"Luke Mark Leona","url":"https://lukasleona.com/"}}
+  </script>
+</head>
+<body class="article-page">
+  <a class="article-skip-link" href="#article-content">Skip to article</a>
+  <nav class="article-nav" aria-label="Primary"><div class="article-nav-inner"><a class="article-brand" href="index.html"><span class="article-brand-mark" aria-hidden="true">L</span><span class="article-brand-name">Luke Mark Leona</span></a><a class="article-back" href="index.html#blog">← Back to journal</a></div></nav>
+  <main>
+    <article>
+      <header class="article-hero" data-index="02">
+        <p class="article-kicker">Software integration · Business systems</p><h1>API integration explained: how business tools work together</h1>
+        <p class="article-deck">An API lets one system request data or an action from another. A good integration turns that capability into a reliable business process with clear ownership.</p>
+        <div class="article-meta"><span>Luke Mark Leona</span><span><time datetime="2026-08-27">27 August 2026</time></span><span>8 min read</span></div>
+      </header>
+
+      <div class="article-main" id="article-content">
+        <details class="article-toc" open><summary>In this article</summary><nav aria-label="Table of contents"><a href="#api">What an API does</a><a href="#value">Where integrations create value</a><a href="#example">A practical example</a><a href="#methods">API, webhook, and file sync</a><a href="#reliability">Design for reliability</a><a href="#planning">Plan an integration project</a></nav></details>
+        <div class="article-content">
+          <p>A customer submits a form. Someone copies the details into a spreadsheet, creates a contact in another app, sends an email, and reminds a teammate to follow up. Each step seems small, but repeated copying costs time and creates opportunities for mistakes. <strong>API integration allows those tools to exchange approved information directly.</strong></p>
+
+          <section id="api">
+            <p class="article-section-label">01 · Basics</p><h2>An API is a documented way for software to communicate</h2>
+            <p>Think of an application programming interface as a service counter. The system publishes which requests are allowed, what information each request needs, and what response it will return. The requesting software does not need access to the other application's internal code.</p>
+            <p>A customer platform might allow an authorized integration to create a contact, find a record, update a status, or retrieve recent activity. Authentication proves which application is asking. Permissions control what it can do. Request and response formats keep the exchange predictable.</p>
+            <div class="article-grid">
+              <div class="article-card"><span>REQUEST</span><h3>Ask for a defined action</h3><p>Examples include retrieving an order, creating a lead, or updating a delivery status.</p></div>
+              <div class="article-card"><span>RESPONSE</span><h3>Receive a structured result</h3><p>The other system returns the requested data, a confirmation, or a useful error.</p></div>
+              <div class="article-card"><span>AUTHENTICATION</span><h3>Prove identity</h3><p>Tokens or signed requests identify the integration without exposing a user's password.</p></div>
+              <div class="article-card"><span>PERMISSION</span><h3>Limit access</h3><p>The connection should receive only the capabilities required by the workflow.</p></div>
+            </div>
+          </section>
+
+          <section id="value">
+            <p class="article-section-label">02 · Business value</p><h2>Integration reduces handoffs between disconnected tools</h2>
+            <p>The strongest integration projects solve an operational problem rather than connecting systems for its own sake.</p>
+            <ul>
+              <li><strong>Reduce duplicate entry:</strong> capture customer or order data once and reuse it where authorized.</li>
+              <li><strong>Improve response time:</strong> notify the right person as soon as a qualifying event happens.</li>
+              <li><strong>Keep status consistent:</strong> update connected systems when a payment, order, ticket, or task changes.</li>
+              <li><strong>Create better reporting:</strong> combine selected records into a clear operational view.</li>
+              <li><strong>Support customer experience:</strong> send accurate confirmations and progress updates from the source of truth.</li>
+            </ul>
+            <p>Integration does not automatically fix a confusing process. If two teams use different definitions or nobody owns an exception, moving data faster may only move the confusion faster.</p>
+          </section>
+
+          <section id="example">
+            <p class="article-section-label">03 · Example</p><h2>From website inquiry to qualified follow-up</h2>
+            <p>Consider a service business receiving inquiries through its <a href="your-website-digital-home.html">website</a>. A useful workflow might validate the form, create or update a customer record, classify the service requested, alert the appropriate owner, and send a confirmation with a reference number.</p>
+            <ol class="article-steps">
+              <li><strong>Form submitted.</strong> Required fields and consent are checked before processing.</li>
+              <li><strong>Existing record searched.</strong> The workflow avoids creating an obvious duplicate.</li>
+              <li><strong>Lead created or updated.</strong> Source, service, date, and message are stored in defined fields.</li>
+              <li><strong>Owner assigned.</strong> Rules use service type, location, workload, or another approved factor.</li>
+              <li><strong>Confirmation sent.</strong> The customer receives accurate expectations without exposing internal data.</li>
+              <li><strong>Outcome recorded.</strong> Follow-up status returns to reporting so the team can measure performance.</li>
+            </ol>
+            <p>An <a href="ai-automation-for-small-businesses-philippines.html">AI automation step</a> could summarize or classify a free-text message, but the integration should validate the result before it changes a critical record.</p>
+          </section>
+
+          <section id="methods">
+            <p class="article-section-label">04 · Options</p><h2>APIs, webhooks, scheduled syncs, and files solve different needs</h2>
+            <div class="article-table-wrap"><table class="article-table"><thead><tr><th>Method</th><th>How it works</th><th>Useful when</th></tr></thead><tbody>
+              <tr><td>API request</td><td>One system actively asks another for data or an action</td><td>An immediate lookup, creation, or update is needed</td></tr>
+              <tr><td>Webhook</td><td>A system sends an event when something changes</td><td>The workflow should react quickly without constant checking</td></tr>
+              <tr><td>Scheduled sync</td><td>A process checks and reconciles records at intervals</td><td>Near-real-time exchange is unnecessary or unavailable</td></tr>
+              <tr><td>File exchange</td><td>Systems import and export a defined CSV or similar file</td><td>A legacy tool has limited connectivity and batch updates are acceptable</td></tr>
+            </tbody></table></div>
+            <p>The best method depends on the tools, required speed, volume, reliability, and maintenance budget. Sometimes a careful daily sync is better than a fragile real-time connection.</p>
+          </section>
+
+          <section id="reliability">
+            <p class="article-section-label">05 · Engineering</p><h2>A reliable integration expects errors and makes them recoverable</h2>
+            <p>Networks fail, services slow down, permissions expire, fields change, and duplicate events arrive. Production integrations need to recognize these conditions without silently losing or corrupting data.</p>
+            <div class="article-note"><strong>Operational checklist</strong>Validate inputs, use least-privilege credentials, store secrets securely, set timeouts, retry safe operations carefully, prevent duplicates, log useful context, alert an owner, and document recovery.</div>
+            <p>Data mapping deserves special attention. Decide which system owns each field, how identifiers match, which direction changes travel, and what happens when both systems edit the same record. A source-of-truth table can prevent future disputes.</p>
+            <p>Security is part of reliability. Rotate credentials when appropriate, restrict who can change the workflow, review third-party access, and avoid collecting information the process does not need.</p>
+          </section>
+
+          <section id="planning">
+            <p class="article-section-label">06 · Planning</p><h2>Plan around the process, data, and ongoing ownership</h2>
+            <p>Integration cost is shaped by more than the number of apps. Important factors include API availability, authentication, record volume, data quality, custom rules, historical migration, test environments, monitoring, and the consequence of a failure.</p>
+            <ol>
+              <li>Map the current workflow and measure its delay, effort, and error rate.</li>
+              <li>Name the source of truth for each important field.</li>
+              <li>Confirm the official integration capabilities and limits of every system.</li>
+              <li>Define success cases, validation rules, exceptions, and rollback paths.</li>
+              <li>Test with realistic non-sensitive data before a limited release.</li>
+              <li>Assign an owner for monitoring, credentials, changes, and incident response.</li>
+            </ol>
+            <div class="article-quote"><blockquote>A good integration feels invisible during normal work and understandable when something goes wrong.</blockquote></div>
+          </section>
+        </div>
+
+        <section class="article-takeaways" aria-labelledby="takeaways-title"><h2 id="takeaways-title">Key takeaways</h2><ul><li>APIs provide a controlled way for software systems to request data and actions.</li><li>Begin with an operational problem and a clearly owned source of truth.</li><li>Choose real-time or scheduled exchange based on actual business needs.</li><li>Design authentication, validation, monitoring, error recovery, and maintenance from the start.</li></ul></section>
+        <p class="article-byline"><strong>About the author:</strong> Luke Mark Leona develops API integrations, n8n automations, websites, and data solutions for connected business workflows.</p>
+      </div>
+    </article>
+
+    <section class="article-related" aria-labelledby="related-title"><div class="article-related-heading"><h2 id="related-title">Continue reading</h2><a href="index.html#blog">View all articles →</a></div><div class="article-related-grid"><a class="article-related-card" href="ai-automation-for-small-businesses-philippines.html"><span>AI automation</span><strong>Practical automation for Philippine small businesses</strong></a><a class="article-related-card" href="data-analysis-for-smarter-business-decisions.html"><span>Data &amp; analytics</span><strong>Use connected data for better decisions</strong></a><a class="article-related-card" href="your-website-digital-home.html"><span>Web strategy</span><strong>Make your website a useful business system</strong></a></div></section>
+  </main>
+  <footer class="article-footer"><div class="article-footer-inner"><span>© 2026 Luke Mark Leona</span><a href="index.html#contact">Discuss an integration project →</a></div></footer>
+</body>
+</html>
