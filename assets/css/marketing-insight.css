@@ -111,11 +111,11 @@ button, a { -webkit-tap-highlight-color: transparent; }
 
 .mi-shell { width: min(1180px, calc(100% - 48px)); margin-inline: auto; }
 .mi-hero { padding: 78px 0 42px; }
-.mi-hero-grid { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(280px, .8fr); gap: 64px; align-items: end; }
+.mi-hero-grid { display: grid; grid-template-columns: minmax(0, 930px); gap: 26px; align-items: start; }
 .mi-kicker { margin: 0 0 18px; color: var(--mi-green); font-size: 10px; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; }
 .mi-title { max-width: 830px; margin: 0; font: 700 clamp(48px, 6.7vw, 88px)/.94 Manrope, sans-serif; letter-spacing: -.065em; }
 .mi-title em { color: var(--mi-green); font-style: normal; }
-.mi-deck { margin: 0; color: var(--mi-muted); font-size: 18px; line-height: 1.7; }
+.mi-deck { max-width: 780px; margin: 0; color: var(--mi-muted); font-size: 18px; line-height: 1.7; }
 .mi-hero-meta { display: flex; flex-wrap: wrap; gap: 18px; margin-top: 28px; }
 .mi-hero-meta span { display: inline-flex; align-items: center; gap: 7px; color: var(--mi-muted); font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; }
 .mi-hero-meta i { color: var(--mi-green); font-size: 14px; }

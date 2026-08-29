@@ -351,16 +351,16 @@ body.article-page {
 
 .article-hero {
   display: grid;
-  grid-template-columns: minmax(0, 1.08fr) minmax(280px, 0.92fr);
-  column-gap: clamp(36px, 7vw, 96px);
+  grid-template-columns: minmax(0, 940px);
+  row-gap: 0;
   align-items: start;
   padding-bottom: 34px;
   border-bottom: 0;
 }
 .article-hero .article-kicker { grid-column: 1; }
-.article-hero h1 { grid-column: 1; grid-row: 2 / span 2; }
-.article-hero .article-deck { grid-column: 2; grid-row: 2; margin-top: 6px; }
-.article-hero .article-meta { grid-column: 2; grid-row: 3; align-self: end; }
+.article-hero h1 { grid-column: 1; grid-row: auto; }
+.article-hero .article-deck { grid-column: 1; grid-row: auto; max-width: 780px; margin-top: 28px; }
+.article-hero .article-meta { grid-column: 1; grid-row: auto; align-self: auto; }
 
 .article-hero-figure {
   width: min(calc(100% - 40px), var(--article-shell));
