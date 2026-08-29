@@ -5157,8 +5157,17 @@
       <p>Notes on AI automation, software integration, accessible websites, data, marketing, SEO, and the community experiences that shape how I work.</p>
     </div>
 
-    <div class="blog-topic-nav" aria-label="Topics covered">
-      <span>AI automation</span><span>APIs</span><span>Web accessibility</span><span>Marketing</span><span>Data</span><span>SEO</span><span>Career</span>
+    <div class="blog-topic-toolbar">
+      <div class="blog-topic-toolbar-label"><i class="bi bi-grid-3x3-gap" aria-hidden="true"></i><span>Explore the journal</span></div>
+      <ul class="blog-topic-filter" aria-label="Filter articles by topic">
+        <li><button class="active" type="button" data-blog-filter="all" aria-pressed="true"><span>All</span><small>08</small></button></li>
+        <li><button type="button" data-blog-filter="systems" aria-pressed="false"><span>Systems</span><small>02</small></button></li>
+        <li><button type="button" data-blog-filter="web" aria-pressed="false"><span>Web</span><small>02</small></button></li>
+        <li><button type="button" data-blog-filter="data" aria-pressed="false"><span>Data</span><small>02</small></button></li>
+        <li><button type="button" data-blog-filter="seo" aria-pressed="false"><span>SEO</span><small>01</small></button></li>
+        <li><button type="button" data-blog-filter="career" aria-pressed="false"><span>Career</span><small>01</small></button></li>
+      </ul>
+      <p class="sr-only" id="blogFilterStatus" aria-live="polite">Showing all 8 articles</p>
     </div>
 
     <div class="blog-photo-grid">
@@ -5750,6 +5759,7 @@
     );
 
   </script>
+  <script src="assets/js/blog-filter.js"></script>
 
 </body>
 
