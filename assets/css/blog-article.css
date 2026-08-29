@@ -288,6 +288,24 @@ body.article-page {
 .article-byline strong { color: var(--article-text); }
 
 .article-related { padding: 0 0 96px; }
+.article-cta {
+  width: min(calc(100% - 40px), var(--article-shell));
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 28px;
+  align-items: center;
+  margin: 0 auto 70px;
+  padding: 28px 30px;
+  border: 1px solid rgba(235, 176, 32, 0.38);
+  border-radius: 18px;
+  background: var(--article-surface);
+}
+.article-cta-eyebrow { display: block; margin-bottom: 8px; color: var(--article-gold); font-size: 11px; font-weight: 800; letter-spacing: 0.13em; text-transform: uppercase; }
+.article-cta h2 { margin: 0; font-family: "Poppins", system-ui, sans-serif; font-size: clamp(21px, 2.6vw, 30px); font-weight: 600; letter-spacing: -0.025em; line-height: 1.3; }
+.article-cta-actions { display: flex; flex-wrap: wrap; gap: 10px; justify-content: flex-end; }
+.article-cta-button { min-height: 44px; display: inline-flex; align-items: center; justify-content: center; padding: 0 19px; border: 1px solid var(--article-gold); border-radius: 999px; color: var(--article-gold) !important; font-size: 13px; font-weight: 800; text-decoration: none; transition: transform 180ms ease; }
+.article-cta-button-primary { color: #171717 !important; background: var(--article-gold); }
+.article-cta-button:hover { transform: translateY(-2px); }
 .article-related-heading { display: flex; align-items: end; justify-content: space-between; gap: 24px; margin-bottom: 24px; }
 .article-related h2 { margin: 0; font-family: "Poppins", system-ui, sans-serif; font-size: clamp(28px, 4vw, 40px); }
 .article-related-heading > a { color: var(--article-gold); font-size: 14px; font-weight: 800; text-decoration: none; }
@@ -327,6 +345,8 @@ body.article-page {
   .article-related-heading,
   .article-footer-inner { align-items: flex-start; flex-direction: column; }
   .article-footer-inner { justify-content: center; padding: 28px 0; }
+  .article-cta { grid-template-columns: 1fr; width: min(calc(100% - 28px), var(--article-shell)); padding: 24px; }
+  .article-cta-actions { justify-content: flex-start; }
 }
 
 @media (prefers-reduced-motion: reduce) {
