@@ -4320,8 +4320,8 @@ and
   position: absolute;
   top: 34px;
   bottom: 34px;
-  left: 7px;
-  width: 1px;
+  left: 6px;
+  width: 2px;
   background: linear-gradient(
     180deg,
     transparent,
@@ -4350,7 +4350,8 @@ and
 }
 
 #resume .career-detail > .career-point {
-  align-self: start;
+  align-self: center;
+  justify-self: stretch;
   min-height: 76px;
   margin: 0 16px 0 24px;
   padding: 13px 11px 13px 14px;
@@ -4365,8 +4366,9 @@ and
   top: 50%;
   left: -17px;
   width: 17px;
-  height: 1px;
-  background: rgba(235, 176, 32, .48);
+  height: 2px;
+  background: linear-gradient(90deg, var(--resume-gold), rgba(235, 176, 32, .42));
+  transform: translateY(-50%);
 }
 
 #resume .career-detail > .career-point .career-dot {
@@ -4411,7 +4413,8 @@ and
 
 #resume .career-detail:hover > .career-point {
   background: rgba(235, 176, 32, .055);
-  transform: translateX(3px);
+  box-shadow: inset 3px 0 0 rgba(235, 176, 32, .62),
+    inset 0 1px 0 rgba(255, 255, 255, .035);
 }
 
 @media (max-width: 991px) {
