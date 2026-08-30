@@ -5195,67 +5195,7 @@ function interactiveResume() {
 
 
     /* =====================================================
-       7. EXPERIENCE TIMELINE
-    ===================================================== */
-
-    var careerButtons =
-        resumeSection.querySelectorAll(
-            ".career-point"
-        );
-
-    var careerPanels =
-        resumeSection.querySelectorAll(
-            ".career-detail"
-        );
-
-
-    careerButtons.forEach(function(button) {
-
-        button.addEventListener(
-            "click",
-            function() {
-
-                var careerName =
-                    button.dataset.career;
-
-
-                careerButtons.forEach(
-                    function(item) {
-
-                        item.classList.remove(
-                            "active"
-                        );
-
-                    }
-                );
-
-
-                careerPanels.forEach(
-                    function(panel) {
-
-                        panel.classList.toggle(
-                            "active",
-                            panel.dataset.careerPanel ===
-                            careerName
-                        );
-
-                    }
-                );
-
-
-                button.classList.add(
-                    "active"
-                );
-
-            }
-        );
-
-    });
-
-
-
-    /* =====================================================
-       8. SCROLL REVEAL
+       7. SCROLL REVEAL
     ===================================================== */
 
     var revealItems =
