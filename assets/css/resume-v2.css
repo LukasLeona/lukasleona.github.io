@@ -3520,6 +3520,99 @@ and
 
 }
 
+/* One-time cursor tour for the interactive capability demos. */
+
+.resume-guided-cursor {
+  position: fixed;
+  z-index: 10050;
+  left: 0;
+  top: 0;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  opacity: 0;
+  color: #ebb020;
+  pointer-events: none;
+  transform: translate(-4px, -4px) scale(.78);
+  transform-origin: 4px 4px;
+  transition:
+    left .82s cubic-bezier(.22, .8, .28, 1),
+    top .82s cubic-bezier(.22, .8, .28, 1),
+    opacity .18s ease,
+    transform .18s ease;
+  filter: drop-shadow(0 5px 12px rgba(0, 0, 0, .48));
+}
+
+.resume-guided-cursor.is-positioning {
+  transition: none;
+}
+
+.resume-guided-cursor.is-visible {
+  opacity: 1;
+  transform: translate(-4px, -4px) scale(1);
+}
+
+.resume-guided-cursor > i {
+  display: block;
+  font-size: 29px;
+  line-height: 1;
+  -webkit-text-stroke: 1px rgba(25, 25, 27, .82);
+  transition: transform .16s ease;
+}
+
+.resume-guided-cursor > span {
+  padding: 5px 7px;
+  border: 1px solid rgba(235, 176, 32, .5);
+  border-radius: 999px;
+  background: rgba(31, 31, 34, .96);
+  color: #f7c64b;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 1.2px;
+  line-height: 1;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, .3);
+}
+
+.resume-guided-cursor.is-clicking > i {
+  transform: scale(.76) translate(2px, 2px);
+}
+
+.resume-guided-cursor.is-dragging {
+  transition:
+    left .12s linear,
+    top .12s linear,
+    opacity .18s ease,
+    transform .18s ease;
+}
+
+#resume .resume-guided-target {
+  outline: 2px solid rgba(235, 176, 32, .88);
+  outline-offset: 4px;
+  animation: resumeGuidedTargetPulse .72s ease both;
+}
+
+@keyframes resumeGuidedTargetPulse {
+  0% {
+    outline-offset: 10px;
+    outline-color: rgba(235, 176, 32, 0);
+  }
+
+  55% {
+    outline-color: rgba(235, 176, 32, .9);
+  }
+
+  100% {
+    outline-offset: 4px;
+    outline-color: rgba(235, 176, 32, .52);
+  }
+}
+
+@media (prefers-reduced-motion: reduce), (pointer: coarse) {
+  .resume-guided-cursor {
+    display: none !important;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
 
   #resume .resume-guide-icon,

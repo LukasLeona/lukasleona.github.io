@@ -4504,7 +4504,7 @@ function interactiveResume() {
 
         button.addEventListener(
             "click",
-            function() {
+            function(event) {
 
                 markResumeInteraction();
 
@@ -4512,6 +4512,13 @@ function interactiveResume() {
                     button.dataset.service,
                     false
                 );
+
+                if (event.detail !== 0) {
+                    scheduleGuidedDemo(
+                        button.dataset.service,
+                        button
+                    );
+                }
 
             }
         );
@@ -4564,7 +4571,480 @@ function interactiveResume() {
 
 
     /* =====================================================
-       2. RESPONSIVE WEBSITE DEMO
+       2. ONE-TIME GUIDED DEMO CURSOR
+    ===================================================== */
+
+    var guidedDemoStorageKey =
+        "lukas-resume-guided-demos-v1";
+
+    var guidedDemoSeen = {};
+
+    try {
+        guidedDemoSeen = JSON.parse(
+            window.sessionStorage.getItem(
+                guidedDemoStorageKey
+            ) || "{}"
+        );
+    } catch (error) {
+        guidedDemoSeen = {};
+    }
+
+    var guidedDemoConfig = {
+        web: {
+            selector:
+                '.resume-device-btn[data-device="tablet"]',
+            action: "click"
+        },
+        design: {
+            selector:
+                ".resume-design-slider",
+            action: "drag"
+        },
+        data: {
+            selector:
+                '.data-demo-btn[data-chart-view="customers"]',
+            action: "click"
+        },
+        support: {
+            selector:
+                ".resume-task-demo-btn",
+            action: "click"
+        }
+    };
+
+    var guidedDemoCursor = null;
+    var guidedDemoTimers = [];
+    var guidedDemoObserver = null;
+    var guidedWorkspaceObserver = null;
+    var guidedDemoActiveService = "";
+    var guidedDemoTarget = null;
+
+    function supportsGuidedDemo() {
+        return !window.matchMedia(
+            "(prefers-reduced-motion: reduce)"
+        ).matches && window.matchMedia(
+            "(pointer: fine)"
+        ).matches;
+    }
+
+    function rememberGuidedDemo(serviceName) {
+        guidedDemoSeen[serviceName] = true;
+
+        try {
+            window.sessionStorage.setItem(
+                guidedDemoStorageKey,
+                JSON.stringify(guidedDemoSeen)
+            );
+        } catch (error) {
+            /* Session storage can be unavailable in private contexts. */
+        }
+    }
+
+    function queueGuidedDemoStep(callback, delay) {
+        var timer = window.setTimeout(
+            callback,
+            delay
+        );
+
+        guidedDemoTimers.push(timer);
+        return timer;
+    }
+
+    function clearGuidedDemoSteps() {
+        guidedDemoTimers.forEach(function(timer) {
+            window.clearTimeout(timer);
+        });
+
+        guidedDemoTimers = [];
+
+        if (guidedDemoObserver) {
+            guidedDemoObserver.disconnect();
+            guidedDemoObserver = null;
+        }
+    }
+
+    function getGuidedDemoCursor() {
+        if (guidedDemoCursor) {
+            return guidedDemoCursor;
+        }
+
+        guidedDemoCursor = document.createElement("div");
+        guidedDemoCursor.className =
+            "resume-guided-cursor";
+        guidedDemoCursor.setAttribute(
+            "aria-hidden",
+            "true"
+        );
+        guidedDemoCursor.innerHTML =
+            '<i class="bi bi-cursor-fill"></i>' +
+            '<span>DEMO</span>';
+
+        document.body.appendChild(
+            guidedDemoCursor
+        );
+
+        return guidedDemoCursor;
+    }
+
+    function setGuidedCursorPosition(cursor, point) {
+        cursor.style.left = point.x + "px";
+        cursor.style.top = point.y + "px";
+    }
+
+    function getElementCenter(element) {
+        var rect = element.getBoundingClientRect();
+
+        return {
+            x: rect.left + (rect.width / 2),
+            y: rect.top + (rect.height / 2)
+        };
+    }
+
+    function getRangePoint(range, value) {
+        var rect = range.getBoundingClientRect();
+        var minimum = Number(range.min || 0);
+        var maximum = Number(range.max || 100);
+        var ratio = (value - minimum) /
+            Math.max(maximum - minimum, 1);
+
+        return {
+            x: rect.left + (rect.width * ratio),
+            y: rect.top + (rect.height / 2)
+        };
+    }
+
+    function isGuidedTargetVisible(target) {
+        var rect = target.getBoundingClientRect();
+
+        return rect.width > 0 &&
+            rect.height > 0 &&
+            rect.bottom > 12 &&
+            rect.top < window.innerHeight - 12;
+    }
+
+    function hideGuidedDemoCursor() {
+        if (guidedDemoCursor) {
+            guidedDemoCursor.classList.remove(
+                "is-visible",
+                "is-clicking",
+                "is-dragging"
+            );
+        }
+
+        if (guidedDemoTarget) {
+            guidedDemoTarget.classList.remove(
+                "resume-guided-target"
+            );
+        }
+
+        guidedDemoTarget = null;
+        guidedDemoActiveService = "";
+    }
+
+    function cancelGuidedDemo() {
+        clearGuidedDemoSteps();
+        hideGuidedDemoCursor();
+    }
+
+    function finishGuidedDemo(delay) {
+        queueGuidedDemoStep(function() {
+            hideGuidedDemoCursor();
+        }, delay || 650);
+    }
+
+    function playGuidedClick(target, cursor) {
+        cursor.classList.add("is-clicking");
+        target.classList.add("resume-guided-target");
+
+        queueGuidedDemoStep(function() {
+            target.click();
+            cursor.classList.remove("is-clicking");
+            finishGuidedDemo(700);
+        }, 180);
+    }
+
+    function playGuidedDrag(target, cursor) {
+        var startValue = Number(target.value || 50);
+        var endValue = startValue >= 72 ? 28 : 78;
+        var step = 0;
+        var totalSteps = 12;
+
+        cursor.classList.add(
+            "is-clicking",
+            "is-dragging"
+        );
+        target.classList.add("resume-guided-target");
+
+        function moveRange() {
+            if (guidedDemoActiveService !== "design") {
+                return;
+            }
+
+            step += 1;
+
+            var progress = step / totalSteps;
+            var value = Math.round(
+                startValue +
+                ((endValue - startValue) * progress)
+            );
+
+            target.value = value;
+            target.dispatchEvent(
+                new Event("input", {
+                    bubbles: true
+                })
+            );
+
+            setGuidedCursorPosition(
+                cursor,
+                getRangePoint(target, value)
+            );
+
+            if (step < totalSteps) {
+                queueGuidedDemoStep(
+                    moveRange,
+                    55
+                );
+                return;
+            }
+
+            cursor.classList.remove(
+                "is-clicking",
+                "is-dragging"
+            );
+            finishGuidedDemo(700);
+        }
+
+        queueGuidedDemoStep(
+            moveRange,
+            120
+        );
+    }
+
+    function beginGuidedDemo(
+        serviceName,
+        triggerButton,
+        target,
+        config
+    ) {
+        if (
+            guidedDemoActiveService !== serviceName ||
+            !target.closest(
+                ".resume-service-panel.active"
+            )
+        ) {
+            return;
+        }
+
+        rememberGuidedDemo(serviceName);
+
+        var cursor = getGuidedDemoCursor();
+        var triggerRect =
+            triggerButton.getBoundingClientRect();
+        var startPoint = {
+            x: triggerRect.right - 8,
+            y: triggerRect.top +
+                (triggerRect.height / 2)
+        };
+        var targetPoint = config.action === "drag"
+            ? getRangePoint(
+                target,
+                Number(target.value || 50)
+            )
+            : getElementCenter(target);
+
+        guidedDemoTarget = target;
+
+        cursor.classList.add("is-positioning");
+        setGuidedCursorPosition(
+            cursor,
+            startPoint
+        );
+        void cursor.offsetWidth;
+        cursor.classList.remove("is-positioning");
+        cursor.classList.add("is-visible");
+
+        queueGuidedDemoStep(function() {
+            setGuidedCursorPosition(
+                cursor,
+                targetPoint
+            );
+        }, 180);
+
+        queueGuidedDemoStep(function() {
+            if (
+                guidedDemoActiveService !== serviceName
+            ) {
+                return;
+            }
+
+            if (config.action === "drag") {
+                playGuidedDrag(target, cursor);
+                return;
+            }
+
+            playGuidedClick(target, cursor);
+        }, 1100);
+    }
+
+    function scheduleGuidedDemo(
+        serviceName,
+        triggerButton
+    ) {
+        if (guidedWorkspaceObserver) {
+            guidedWorkspaceObserver.disconnect();
+            guidedWorkspaceObserver = null;
+        }
+
+        cancelGuidedDemo();
+
+        var config = guidedDemoConfig[serviceName];
+
+        if (
+            !config ||
+            guidedDemoSeen[serviceName] ||
+            !supportsGuidedDemo()
+        ) {
+            return;
+        }
+
+        var panel = resumeSection.querySelector(
+            '[data-service-panel="' +
+            serviceName +
+            '"]'
+        );
+        var target = panel &&
+            panel.querySelector(config.selector);
+
+        if (!panel || !target) {
+            return;
+        }
+
+        guidedDemoActiveService = serviceName;
+
+        function beginWhenReady() {
+            beginGuidedDemo(
+                serviceName,
+                triggerButton,
+                target,
+                config
+            );
+        }
+
+        if (isGuidedTargetVisible(target)) {
+            queueGuidedDemoStep(
+                beginWhenReady,
+                520
+            );
+            return;
+        }
+
+        if ("IntersectionObserver" in window) {
+            guidedDemoObserver =
+                new IntersectionObserver(
+                    function(entries) {
+                        if (
+                            entries[0] &&
+                            entries[0].isIntersecting
+                        ) {
+                            guidedDemoObserver.disconnect();
+                            guidedDemoObserver = null;
+                            queueGuidedDemoStep(
+                                beginWhenReady,
+                                320
+                            );
+                        }
+                    },
+                    {
+                        threshold: 0.5
+                    }
+                );
+
+            guidedDemoObserver.observe(target);
+        }
+    }
+
+    function noteManualDemoInteraction(event) {
+        if (!event.isTrusted) {
+            return;
+        }
+
+        var panel = event.target.closest(
+            ".resume-service-panel"
+        );
+
+        if (
+            panel &&
+            guidedDemoConfig[
+                panel.dataset.servicePanel
+            ]
+        ) {
+            rememberGuidedDemo(
+                panel.dataset.servicePanel
+            );
+        }
+
+        cancelGuidedDemo();
+    }
+
+    resumeSection.addEventListener(
+        "pointerdown",
+        noteManualDemoInteraction,
+        true
+    );
+
+    resumeSection.addEventListener(
+        "keydown",
+        noteManualDemoInteraction,
+        true
+    );
+
+    var guidedDemoWorkspace =
+        resumeSection.querySelector(
+            ".resume-capability-workspace"
+        );
+
+    if (
+        guidedDemoWorkspace &&
+        supportsGuidedDemo() &&
+        "IntersectionObserver" in window
+    ) {
+        guidedWorkspaceObserver =
+            new IntersectionObserver(
+                function(entries) {
+                    if (
+                        !entries[0] ||
+                        !entries[0].isIntersecting
+                    ) {
+                        return;
+                    }
+
+                    var activeButton =
+                        resumeSection.querySelector(
+                            ".resume-capability-tab.active"
+                        );
+
+                    if (activeButton) {
+                        scheduleGuidedDemo(
+                            activeButton.dataset.service,
+                            activeButton
+                        );
+                    }
+                },
+                {
+                    threshold: 0.4
+                }
+            );
+
+        guidedWorkspaceObserver.observe(
+            guidedDemoWorkspace
+        );
+    }
+
+
+
+    /* =====================================================
+       3. RESPONSIVE WEBSITE DEMO
     ===================================================== */
 
     var deviceButtons =
@@ -4624,7 +5104,7 @@ function interactiveResume() {
 
 
     /* =====================================================
-       3. DESIGN BEFORE / AFTER
+       4. DESIGN BEFORE / AFTER
     ===================================================== */
 
     var designSlider =
@@ -4666,7 +5146,7 @@ function interactiveResume() {
 
 
     /* =====================================================
-       4. DATA DASHBOARD DEMO - DATA CAPABILITY ONLY
+       5. DATA DASHBOARD DEMO - DATA CAPABILITY ONLY
     ===================================================== */
 
     var dataDashboard = document.getElementById("resumeDataDashboard");
@@ -4834,7 +5314,7 @@ function interactiveResume() {
 
 
     /* =====================================================
-       5. WEB VA TASK DEMO
+       6. WEB VA TASK DEMO
     ===================================================== */
 
     var taskDemoButton =
@@ -4926,7 +5406,7 @@ function interactiveResume() {
 
 
     /* =====================================================
-       6. CLIENT PROBLEM SELECTOR
+       7. CLIENT PROBLEM SELECTOR
     ===================================================== */
 
     var problemButtons =
