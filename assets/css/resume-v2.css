@@ -4303,3 +4303,181 @@ and
     border-radius: 13px;
   }
 }
+
+/* Keep each timeline label aligned with its complete experience card. */
+
+#resume .career-history {
+  display: block;
+}
+
+#resume .career-details {
+  position: relative;
+  padding: 4px 0;
+}
+
+#resume .career-details::before {
+  content: "";
+  position: absolute;
+  top: 34px;
+  bottom: 34px;
+  left: 7px;
+  width: 1px;
+  background: linear-gradient(
+    180deg,
+    transparent,
+    rgba(235, 176, 32, .68) 8%,
+    rgba(235, 176, 32, .3) 92%,
+    transparent
+  );
+}
+
+#resume .career-detail,
+#resume .career-detail.active {
+  position: relative;
+  grid-template-columns:
+    170px
+    minmax(135px, .65fr)
+    minmax(250px, 1.35fr)
+    minmax(190px, .9fr);
+  gap: 0;
+  align-items: stretch;
+  padding: 0;
+  overflow: visible;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+#resume .career-detail > .career-point {
+  align-self: start;
+  min-height: 76px;
+  margin: 0 16px 0 24px;
+  padding: 13px 11px 13px 14px;
+  transition: border-color .25s ease,
+    background .25s ease,
+    transform .25s ease;
+}
+
+#resume .career-detail > .career-point::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: -17px;
+  width: 17px;
+  height: 1px;
+  background: rgba(235, 176, 32, .48);
+}
+
+#resume .career-detail > .career-point .career-dot {
+  left: -23px;
+}
+
+#resume .career-detail-meta,
+#resume .career-detail-main,
+#resume .career-learning {
+  min-width: 0;
+  background: var(--resume-card-soft);
+  transition: border-color .25s ease,
+    background .25s ease;
+}
+
+#resume .career-detail-meta {
+  padding: 27px 20px;
+  border: 1px solid var(--resume-border);
+  border-right: 0;
+  border-radius: 16px 0 0 16px;
+}
+
+#resume .career-detail-main {
+  padding: 27px 24px;
+  border: 1px solid var(--resume-border);
+  border-right: 0;
+  border-radius: 0;
+}
+
+#resume .career-learning {
+  padding: 27px 20px;
+  border: 1px solid var(--resume-border);
+  border-radius: 0 16px 16px 0;
+}
+
+#resume .career-detail:hover > .career-point,
+#resume .career-detail:hover > .career-detail-meta,
+#resume .career-detail:hover > .career-detail-main,
+#resume .career-detail:hover > .career-learning {
+  border-color: rgba(235, 176, 32, .25);
+}
+
+#resume .career-detail:hover > .career-point {
+  background: rgba(235, 176, 32, .055);
+  transform: translateX(3px);
+}
+
+@media (max-width: 991px) {
+  #resume .career-detail,
+  #resume .career-detail.active {
+    grid-template-columns: 122px minmax(0, 1fr);
+  }
+
+  #resume .career-detail > .career-point {
+    grid-column: 1;
+    grid-row: 1 / 4;
+    margin-right: 12px;
+  }
+
+  #resume .career-detail-meta,
+  #resume .career-detail-main,
+  #resume .career-learning {
+    grid-column: 2;
+    padding: 20px;
+  }
+
+  #resume .career-detail-meta {
+    border-right: 1px solid var(--resume-border);
+    border-bottom: 0;
+    border-radius: 14px 14px 0 0;
+  }
+
+  #resume .career-detail-main {
+    border-right: 1px solid var(--resume-border);
+    border-top: 0;
+    border-bottom: 0;
+  }
+
+  #resume .career-learning {
+    border-radius: 0 0 14px 14px;
+  }
+}
+
+@media (max-width: 575px) {
+  #resume .career-details::before {
+    left: 4px;
+  }
+
+  #resume .career-detail,
+  #resume .career-detail.active {
+    grid-template-columns: 84px minmax(0, 1fr);
+  }
+
+  #resume .career-detail > .career-point {
+    min-height: 68px;
+    margin: 0 8px 0 15px;
+    padding: 10px 6px 10px 8px;
+  }
+
+  #resume .career-detail > .career-point::before {
+    left: -10px;
+    width: 10px;
+  }
+
+  #resume .career-detail > .career-point .career-dot {
+    left: -14px;
+  }
+
+  #resume .career-detail-meta,
+  #resume .career-detail-main,
+  #resume .career-learning {
+    padding: 16px 13px;
+  }
+}
