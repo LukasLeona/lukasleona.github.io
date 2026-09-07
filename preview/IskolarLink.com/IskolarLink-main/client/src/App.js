@@ -129,8 +129,8 @@ function App() {
 
   return (
     <Router>
-      
-       
+      <a className="skip-link" href="#main-content">Skip to main content</a>
+
       <Navbar
         expand="xl"
         collapseOnSelect
@@ -196,6 +196,7 @@ function App() {
         </Container>
       </Navbar>
 
+      <div id="main-content">
       <Routes>
         <Route path="/cosoa" exact element={<COSOA />} />
         <Route path="/cosoa/home" exact element={<COSOA_Home />} />
@@ -230,6 +231,7 @@ function App() {
         <Route path="/forgot_password/:email/:code" exact element={<ResetPasswordPage/>}/>
         
       </Routes>
+      </div>
 
       <footer className="site-footer">
         <Container>
@@ -276,5 +278,3 @@ function App() {
 }
 
 export default App;
-
- 
