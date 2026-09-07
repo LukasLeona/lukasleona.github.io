@@ -1,81 +1,74 @@
-import React, {useState} from 'react';
-import { Container, Col, Row, Image, Button , Carousel} from 'react-bootstrap';
+import React from 'react';
+import { Container, Col, Row, Image } from 'react-bootstrap';
 import './Hero.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
 import { AuthContext } from '../../helpers/AuthContent'
 import { useContext } from 'react';
-import {useNavigate} from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { FiArrowDown, FiArrowRight, FiCheckCircle } from 'react-icons/fi';
 
 const publicImage = (filename) =>
   `${process.env.PUBLIC_URL}/${filename}`;
 
-  const Hero = () => {
-    const [index, setIndex] = useState(0);
+const Hero = () => {
+  const publicUrl = process.env.PUBLIC_URL;
 
-    const handleSelect = (selectedIndex, e) => {
-      setIndex(selectedIndex);
-    };
+  return (
+    <section className="home-hero" aria-labelledby="home-hero-title">
+      <Container className="home-hero__inner">
+        <div className="home-hero__copy">
+          <div className="home-hero__eyebrow">
+            <span className="home-hero__eyebrow-dot" aria-hidden="true" />
+            The student organization hub of PUP
+          </div>
+          <h1 id="home-hero-title">
+            Find your people.<br />
+            <span>Build your campus story.</span>
+          </h1>
+          <p>
+            Discover accredited organizations, manage applications, and stay connected
+            to the communities shaping student life at the Polytechnic University of the Philippines.
+          </p>
 
-    const navigate = useNavigate();
+          <div className="home-hero__actions">
+            <Link className="home-button home-button--gold" to="/organizations">
+              Explore organizations <FiArrowRight aria-hidden="true" />
+            </Link>
+            <Link className="home-button home-button--ghost" to="/appdocs">
+              View application guide
+            </Link>
+          </div>
 
-    const handleButtonClick = () => {
-      navigate('/organizations');
-    };
-
-  
-    const publicUrl = process.env.PUBLIC_URL;
-
-const backgroundImages = [
-  `url("${publicUrl}/Media/1.png")`,
-  `url("${publicUrl}/Media/2.png")`,
-  `url("${publicUrl}/Media/3.png")`,
-  `url("${publicUrl}/Media/4.png")`,
-  `url("${publicUrl}/Media/5.png")`,
-  `url("${publicUrl}/Media/6.png")`,
-  `url("${publicUrl}/Media/7.png")`,
-  `url("${publicUrl}/Media/8.png")`,
-  `url("${publicUrl}/Media/9.png")`,
-  `url("${publicUrl}/Media/22.png")`,
-  `url("${publicUrl}/Media/23.png")`,
-  `url("${publicUrl}/Media/24.png")`,
-];
-
-    const slides = backgroundImages.map((image, idx) => (
-      <Carousel.Item key={idx}>
-        <div className="d-flex flex-column justify-content-center align-items-center vh-100" style={{ backgroundImage: image, backgroundRepeat: 'no-repeat', backgroundSize: 'cover' }}>
-          <Container className="px-5">
-            <Col xs={6}>
-            <h1 className="Inter-b text-52px text-white">Your Campus Journey Matters to Us.</h1>
-            </Col>
-            <p className="hero-p Inter-normal text-white pt-2 pb-3">
-              Revolutionize student organization management with <span className='Inter-b'>IskolarLink</span>:<br />
-              Your one-stop solution for streamlining COSOA applications and student<br />
-              membership management online!
-            </p>
-            <Button variant="secondary" className="py-2 px-3 Inter text-15px" onClick={handleButtonClick}>Get Started</Button>
-          </Container>
+          <ul className="home-hero__trust" aria-label="IskolarLink benefits">
+            <li><FiCheckCircle aria-hidden="true" /> Verified organizations</li>
+            <li><FiCheckCircle aria-hidden="true" /> One connected platform</li>
+          </ul>
         </div>
-      </Carousel.Item>
-    ));
 
-    return (
-      <div className="vh-100">
-        <Carousel
-          activeIndex={index}
-          onSelect={handleSelect}
-          slide={true}
-          controls={false}
-          fade={true}
-          indicators={false}
-          interval={1500}
-          pause={false}
-        >
-          {slides}
-        </Carousel>
-      </div>
-    );
-  };
+        <div className="home-hero__visual" aria-label="PUP students connecting on campus">
+          <figure className="home-hero__photo home-hero__photo--main">
+            <img src={`${publicUrl}/Media/20.png`} alt="PUP students sharing organization materials" />
+          </figure>
+          <figure className="home-hero__photo home-hero__photo--top">
+            <img src={`${publicUrl}/Media/12.png`} alt="Students at a campus service window" />
+          </figure>
+          <figure className="home-hero__photo home-hero__photo--bottom">
+            <img src={`${publicUrl}/Media/21.png`} alt="A student organization celebrating together" />
+          </figure>
+          <div className="home-hero__badge">
+            <span>Made for every</span>
+            <strong>Iskolar ng Bayan</strong>
+          </div>
+        </div>
+      </Container>
+
+      <a className="home-hero__scroll" href="#home-actions" aria-label="Scroll to explore IskolarLink">
+        <FiArrowDown aria-hidden="true" />
+      </a>
+    </section>
+  );
+};
 
 const HeroVariant = ({ h1Text, pText }) => {
   return (
