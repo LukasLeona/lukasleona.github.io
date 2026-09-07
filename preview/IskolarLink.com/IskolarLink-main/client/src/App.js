@@ -1,10 +1,11 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import axios from 'axios';
-import { saveAs } from 'file-saver';
-import { Navbar, Container, Nav, Button, Row, Col, Modal, NavDropdown, Offcanvas, Image} from 'react-bootstrap';
+import { Navbar, Container, Nav } from 'react-bootstrap';
 import { HashRouter as Router, Route, Routes } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { LinkContainer } from 'react-router-bootstrap';
+import { FiFacebook, FiInstagram, FiMail, FiTwitter } from 'react-icons/fi';
 import COSOA from './Pages/COSOA';
 import COSOA_Home from './Pages/COSOA_Portal/COSOA_Home';
 import COSOA_Dashboard from './Pages/COSOA_Portal/COSOA_Dashboard';
@@ -23,7 +24,6 @@ import RevalidationStatus from './Pages/Organization_Portal/RevalidationStatus';
 import OrgSettings from './Pages/Organization_Portal/Settings';
 import OrgFeedback from './Pages/Organization_Portal/Feedback';
 import StudentFeedback from './Pages/Student_Portal/Feedback';
-import MainMenu1 from './components/mainMenu';
 import MainMenu2 from './components/mainMenu';
 import CosoaMenu from './components/cosoaMenu';
 import WebAdminMenu from './components/webAdminMenu';
@@ -34,18 +34,14 @@ import StudSettings from './Pages/Student_Portal/Settings';
 import Org_Profile from './components/Org_Profile';
 import Student_Profile from './Pages/Student_Portal/Student_Profile';
 import OrgMenu from './components/orgMenu';
-import { useNavigate } from 'react-router-dom';
 import COSOASettings from './Pages/COSOA_Portal/COSOA_Settings';
 import S_Membership from './Pages/Student_Portal/S_Membership';
 import O_Membership from './Pages/Organization_Portal/O_Membership';
 import Official_Members from './Pages/Organization_Portal/Official_Members';
 import Admin_Dashboard from './Pages/Admin_Portal/Admin_Dashboard';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import COSOA_Accesibility from './Pages/COSOA_Portal/COSOA_Accesibility';
 import User_Feedback from './Pages/Admin_Portal/User_Feedback';
 import Terms from './Pages/Terms';
-import { Link } from 'react-router-dom';
-import { AccreditationStatusProvider } from './helpers/AccreditationStatusContext';
 import WhoWeAre from './Pages/WhoWeAre';
 import Verification from './Pages/Student_Portal/Verification_Page';
 import ForgotPassword from './components/ForgotPassword';
@@ -55,7 +51,7 @@ function App() {
 
   axios.defaults.withCredentials = true;
 
-  const {auth, menu, handleMenuChange} = useContext(AuthContext);
+  const {auth, menu} = useContext(AuthContext);
   const {authState, setAuthState} = auth;
   const {activeMenu, setActiveMenu} = menu;
 
@@ -116,46 +112,15 @@ function App() {
     }, [authState.role])
 
 
-    const [scrolling, setScrolling] = useState(false);
-    const [initialScroll, setInitialScroll] = useState(true);
-    const [scrollTimeout, setScrollTimeout] = useState(null);
-    
-    
-    const handleScroll = () => {
-      const scrolled = window.scrollY > 100;
-      setScrolling(scrolled);
-  
-      if (initialScroll && scrolled) {
-        setInitialScroll(false);
-      }
-  
-      /*
-      if (scrolled) {
-        setInitialScroll(false);
-      } else {
-        setInitialScroll(true);
-      }
-      */
-  
-      clearTimeout(scrollTimeout);
-      const timeout = setTimeout(() => {
-        setScrolling(false);
-      }, 400);
-  
-      setScrollTimeout(timeout);
-    };
-  
-    useEffect(() => {
-      window.addEventListener('scroll', handleScroll);
-  
-      return () => {
-        window.removeEventListener('scroll', handleScroll);
-        clearTimeout(scrollTimeout);
-      };
-    }, [initialScroll, scrollTimeout]);
-  
-   
-    const navbarClass = initialScroll  ? 'fixed-top'  : scrolling  ? 'fixed-top glass-morphism transparent-navbar shadow'  : 'fixed-top glass-morphism transparent-navbar shadow';
+  const [hasScrolled, setHasScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => setHasScrolled(window.scrollY > 24);
+    handleScroll();
+    window.addEventListener('scroll', handleScroll, { passive: true });
+
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
   
 
   const [showLogin, setShowLogin] = useState(false);
@@ -166,42 +131,43 @@ function App() {
     <Router>
       
        
-      <Navbar expand="lg" className={navbarClass}>
-        <Container>
-          <LinkContainer to="/">
-          <Nav.Link>
-          <Navbar.Brand className="Urbanist navbar-brand">
-            <span className="text-white">Iskolar</span>
-            <span className="text-white">Link</span>
-          </Navbar.Brand>
-          </Nav.Link>
-          </LinkContainer>
-          <Navbar.Toggle aria-controls="basic-navbar-nav" />
-          <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="mx-auto Inter p-3">
+      <Navbar
+        expand="xl"
+        collapseOnSelect
+        className={`site-navbar fixed-top${hasScrolled ? ' is-scrolled' : ''}`}
+        aria-label="Main navigation"
+      >
+        <Container className="site-navbar__inner">
+          <Link className="site-navbar__brand" to="/" aria-label="IskolarLink home">
+            <img src={require('./logo.svg').default} alt="" width="38" height="38" />
+            <span>Iskolar<strong>Link</strong></span>
+          </Link>
+          <Navbar.Toggle aria-controls="site-navigation" aria-label="Toggle navigation" />
+          <Navbar.Collapse id="site-navigation">
+            <Nav className="site-navbar__links mx-auto Inter">
               <LinkContainer to="/cosoa">
-              <Nav.Link href="#" className="text-white nav-link ms-4">
+              <Nav.Link className="site-navbar__link">
                 PUP COSOA
               </Nav.Link>
               </LinkContainer>
               <LinkContainer to="/organizations">
-              <Nav.Link href="#" className="text-white nav-link ms-4">
-                Accredited Organizations
+              <Nav.Link className="site-navbar__link">
+                Organizations
               </Nav.Link>
               </LinkContainer>
               <LinkContainer to="/appdocs">
-              <Nav.Link href="#" className="text-white nav-link ms-4">
-                Application Documents
+              <Nav.Link className="site-navbar__link">
+                Application guide
               </Nav.Link>
               </LinkContainer>
               <LinkContainer to="/faqs">
-              <Nav.Link href="#" className="text-white nav-link ms-4">
+              <Nav.Link className="site-navbar__link">
                 FAQs
               </Nav.Link>
               </LinkContainer>
             </Nav>
 
-            <Nav className="ms-auto ">
+            <Nav className="site-navbar__account ms-auto">
             
             {authState.status ? (
               // menu depends on activeMenu which has three value (main, cosoa, webadmin)
@@ -265,94 +231,44 @@ function App() {
         
       </Routes>
 
-      <footer className="footer bg-dark text-white py-4 border-bottom Inter">
+      <footer className="site-footer">
         <Container>
+          <div className="site-footer__main">
+            <div className="site-footer__about">
+              <Link className="site-footer__brand" to="/">
+                <img src={require('./logo.svg').default} alt="" width="42" height="42" />
+                <span>Iskolar<strong>Link</strong></span>
+              </Link>
+              <p>A connected home for PUP students, organizations, and the communities they build together.</p>
+            </div>
 
-          <Row className="text-center d-flex justify-content-center align-items-center flex-column flex-md-row">
-            <Col xs={12} md={3} className="text-start">
-              {/* Logo */}
-              <Navbar.Brand className="footer-brand text-white Urbanist my-0" href="#">
-                <Image src={require('./logo.svg').default} alt="Logo" width="40" height="40" />
-                IskolarLink
-              </Navbar.Brand>
-            </Col>
-            <Col xs={12} md={6} className="text-center mt-3 mt-md-0">
-              {/* Footer Navigation Links (Vertical for small screens) */}
-            <ul
-  className="nav d-flex flex-column flex-md-row"
-  style={{ listStyleType: 'none' }}
->
-  <li className="nav-item">
-    <Link className="nav-link text-muted" to="/cosoa">
-      PUP COSOA
-    </Link>
-  </li>
+            <nav className="site-footer__nav" aria-label="Footer navigation">
+              <strong>Explore</strong>
+              <Link to="/cosoa">PUP COSOA</Link>
+              <Link to="/organizations">Accredited organizations</Link>
+              <Link to="/appdocs">Application documents</Link>
+              <Link to="/faqs">Frequently asked questions</Link>
+            </nav>
 
-  <li className="nav-item">
-    <Link className="nav-link text-muted" to="/organizations">
-      Accredited Organizations
-    </Link>
-  </li>
-
-  <li className="nav-item">
-    <Link className="nav-link text-muted" to="/appdocs">
-      Application Documents
-    </Link>
-  </li>
-
-  <li className="nav-item">
-    <Link className="nav-link text-muted" to="/faqs">
-      FAQs
-    </Link>
-  </li>
-</ul>
-
-
-
-            </Col>
-            <Col xs={12} md={3} className="mt-3 mt-md-0 text-end">
-              {/* Social Media Icons */}
-              <div className="social-icons d-flex justify-content-center justify-content-md-end">
-                <a href="https://www.facebook.com/iskolarlink" target='_blank' className="social-icon">
-                  <i className="fab fa-facebook text-white"></i>
-                </a>
-                <a href="mailto:iskolarlink@gmail.com" target='_blank' className="social-icon">
-                  <i className="fas fa-envelope text-white"></i>
-                </a>
-                <a href="https://twitter.com/IskolarLink" target='_blank' className="social-icon">
-                  <i className="fab fa-twitter text-white"></i>
-                </a>
-                <a href="https://www.instagram.com/iskolarlink/" target='_blank' className="social-icon">
-                  <i className="fab fa-instagram text-white"></i>
-                </a>
+            <div className="site-footer__connect">
+              <strong>Stay connected</strong>
+              <p>Follow IskolarLink for organization updates and campus opportunities.</p>
+              <div className="site-footer__socials">
+                <a href="https://www.facebook.com/iskolarlink" target="_blank" rel="noreferrer" aria-label="IskolarLink on Facebook"><FiFacebook /></a>
+                <a href="mailto:iskolarlink@gmail.com" aria-label="Email IskolarLink"><FiMail /></a>
+                <a href="https://twitter.com/IskolarLink" target="_blank" rel="noreferrer" aria-label="IskolarLink on X"><FiTwitter /></a>
+                <a href="https://www.instagram.com/iskolarlink/" target="_blank" rel="noreferrer" aria-label="IskolarLink on Instagram"><FiInstagram /></a>
               </div>
-           
-            </Col>
-          </Row>
-          
-          <hr className="bg-muted flex-grow-1" />
-          <Row>
-            <Col className="text-start bg-dark text-muted">
-              <p>&copy; 2023 IskolarLink All Rights Reserved.</p>
-            </Col>
-            <Col className="text-center text-md-right mt-3 mt-md-0">
-              {/* Privacy Policy and Terms & Conditions Links */}
-              <div className="data-footer d-flex justify-content-center justify-content-md-end">
-                <Link to="/terms" target='_top' className="nav-link text-muted">
-                  Privacy Policy
-                </Link>
-                <Link to="/terms#terms-and-conditions" target='_top' className="nav-link text-muted ms-2 me-1">
-                  Terms & Conditions
-                </Link>
-                
-              </div>
-            </Col>
-          </Row>
-          <Row className='text-end'>
-            <a href="https://www.ssltrust.com.au/security-report?domain=iskolarlink.com" rel="nofollow" target="new">
-              <Image src="https://seals.ssltrust.com.au/report_medium.png" style={{border:"0px"}}/>
-            </a>
-          </Row>
+            </div>
+          </div>
+
+          <div className="site-footer__bottom">
+            <p>&copy; 2026 IskolarLink. All rights reserved.</p>
+            <div>
+              <Link to="/terms">Privacy policy</Link>
+              <Link to="/terms#terms-and-conditions">Terms &amp; conditions</Link>
+            </div>
+          </div>
         </Container>
       </footer>
     </Router>
