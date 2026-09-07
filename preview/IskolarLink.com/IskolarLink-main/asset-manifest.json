@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/preview/IskolarLink.com/IskolarLink-main/static/css/main.9e373e2b.css",
-    "main.js": "/preview/IskolarLink.com/IskolarLink-main/static/js/main.2bea80bb.js",
+    "main.css": "/preview/IskolarLink.com/IskolarLink-main/static/css/main.b208db92.css",
+    "main.js": "/preview/IskolarLink.com/IskolarLink-main/static/js/main.0b11854c.js",
     "static/js/787.c4e7f8f9.chunk.js": "/preview/IskolarLink.com/IskolarLink-main/static/js/787.c4e7f8f9.chunk.js",
     "static/media/Inter-VariableFont_slnt,wght.ttf": "/preview/IskolarLink.com/IskolarLink-main/static/media/Inter-VariableFont_slnt,wght.853e01975d2783d9fa29.ttf",
     "static/media/Login.png": "/preview/IskolarLink.com/IskolarLink-main/static/media/Login.ce33e0bfcd40249ec6d5.png",
@@ -9,12 +9,12 @@
     "static/media/Urbanist-VariableFont_wght.ttf": "/preview/IskolarLink.com/IskolarLink-main/static/media/Urbanist-VariableFont_wght.7209716a3a23e09247b8.ttf",
     "static/media/logo.svg": "/preview/IskolarLink.com/IskolarLink-main/static/media/logo.345aea57a0ba5534a8b099e293809266.svg",
     "index.html": "/preview/IskolarLink.com/IskolarLink-main/index.html",
-    "main.9e373e2b.css.map": "/preview/IskolarLink.com/IskolarLink-main/static/css/main.9e373e2b.css.map",
-    "main.2bea80bb.js.map": "/preview/IskolarLink.com/IskolarLink-main/static/js/main.2bea80bb.js.map",
+    "main.b208db92.css.map": "/preview/IskolarLink.com/IskolarLink-main/static/css/main.b208db92.css.map",
+    "main.0b11854c.js.map": "/preview/IskolarLink.com/IskolarLink-main/static/js/main.0b11854c.js.map",
     "787.c4e7f8f9.chunk.js.map": "/preview/IskolarLink.com/IskolarLink-main/static/js/787.c4e7f8f9.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.9e373e2b.css",
-    "static/js/main.2bea80bb.js"
+    "static/css/main.b208db92.css",
+    "static/js/main.0b11854c.js"
   ]
 }

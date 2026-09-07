@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, render, screen, within } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { MemoryRouter } from 'react-router-dom';
 import LandingPage from './LandingPage';
@@ -44,7 +44,8 @@ test('opens campus moments in an accessible photo viewer', async () => {
 
   fireEvent.click(screen.getByRole('button', { name: /view larger: a campus full of possibilities/i }));
 
-  expect(screen.getByRole('dialog')).toBeInTheDocument();
-  expect(screen.getByText('A campus full of possibilities')).toBeInTheDocument();
+  const photoViewer = screen.getByRole('dialog');
+  expect(photoViewer).toBeInTheDocument();
+  expect(within(photoViewer).getByText('A campus full of possibilities')).toBeInTheDocument();
   expect(screen.getByRole('button', { name: /view next photo/i })).toBeInTheDocument();
 });
