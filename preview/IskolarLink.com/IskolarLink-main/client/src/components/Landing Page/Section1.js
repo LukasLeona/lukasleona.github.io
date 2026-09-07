@@ -1,50 +1,67 @@
-import React, { useState,useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import { FiBookOpen, FiLayers, FiUsers } from 'react-icons/fi';
 import Stat_Card from '../Stat_Card';
-import { Container, Row, Col, Card } from 'react-bootstrap';
 import '../general.css';
-import axios from 'axios'
 
 const Section1 = () => {
-  const [section1, setSection1] = useState({});
+  const [communityStats, setCommunityStats] = useState({});
 
-  useEffect(()=> {
+  useEffect(() => {
+    let isMounted = true;
+
     axios.get(`${process.env.REACT_APP_BASE_URL}/landingpage/section2`)
-    .then((res)=>{
-      setSection1(res.data)
-    })
-  },[])
-    
-    return (
-      <div className="m-5 d-flex align-items-center">
-        <Container>
-          <Row className="mb-4">
-            <Col className="text-center">
-              <h1 className="Poppins text-black text-36px">Be part of Iskolar ng Bayan Family.<br/>
-              <span className="text-red">Join an organization.</span>
-              <span className="text-yellow"> Get Accredited!</span></h1>
-              <p className="text-16px text-subtitleblack Inter-normal">Explore your interests, make valuable connections, and elevate your campus life.</p>
-            </Col>
-          </Row>
-          <Row className='d-flex justify-content-center'>
-              <Stat_Card
-                imgSrc="./s1-icon1.png"
-                subtitle="Student Organizations"
-                numcount={section1.orgs}
-              />
-              <Stat_Card
-                imgSrc="./s1-icon2.png"
-                subtitle="Users"
-                numcount={section1.students}
-              />
-              <Stat_Card 
-                imgSrc="./s1-icon3.png"
-                subtitle="Academic Programs"
-                numcount={section1.academics}
-              />
-          </Row>
-        </Container>
+      .then((res) => {
+        if (isMounted) setCommunityStats(res.data || {});
+      })
+      .catch(() => {
+        if (isMounted) setCommunityStats({});
+      });
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
+  const stats = [
+    {
+      icon: FiUsers,
+      label: 'Student organizations',
+      value: communityStats.orgs,
+      note: 'Communities to explore',
+    },
+    {
+      icon: FiLayers,
+      label: 'Registered users',
+      value: communityStats.students,
+      note: 'Iskolars staying connected',
+    },
+    {
+      icon: FiBookOpen,
+      label: 'Academic programs',
+      value: communityStats.academics,
+      note: 'Disciplines represented',
+    },
+  ];
+
+  return (
+    <section className="home-section home-community" aria-labelledby="home-community-title">
+      <div className="home-shell">
+        <div className="home-community__intro">
+          <span className="home-kicker">One campus, many communities</span>
+          <h2 id="home-community-title">There is a place for every Iskolar.</h2>
+          <p>
+            Meet people beyond your classroom, turn shared interests into meaningful projects,
+            and help shape a more connected PUP community.
+          </p>
+        </div>
+
+        <div className="home-community__stats" aria-label="IskolarLink community statistics">
+          {stats.map((stat) => <Stat_Card key={stat.label} {...stat} />)}
+        </div>
       </div>
-    );
-  };
-  
-  export default Section1;
+    </section>
+  );
+};
+
+export default Section1;

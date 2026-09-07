@@ -1,49 +1,46 @@
-import React, { useState, useEffect } from 'react';
-import { Card, Col } from 'react-bootstrap';
+import React, { useEffect, useState } from 'react';
 import './general.css';
 
-const Stat_Card = ({ imgSrc, subtitle, numcount }) => {
-    const [count, setCount] = useState(0);
+const Stat_Card = ({ icon: Icon, label, value, note }) => {
+    const [count, setCount] = useState(null);
 
     useEffect(() => {
-        if (numcount) {
-            const end = parseInt(numcount.toString().replace(/[^\d]/g, ''), 10);
-            if (count >= end || isNaN(end)) return;
+        const target = Number.parseInt(String(value).replace(/[^\d]/g, ''), 10);
 
-            // Calculate the increment value as a tenth of the difference
-            // between the current count and the end value
-            const increment = Math.max(Math.ceil((end - count) / 10), 1);
-
-            // Use requestAnimationFrame for a smoother and more optimized animation
-            const frame = () => {
-                setCount(previousCount => {
-                    // Determine the next count
-                    const nextCount = previousCount + increment;
-                    // If the next count is less than the end, continue counting, else stop at the end number
-                    return nextCount < end ? nextCount : end;
-                });
-            };
-
-            const animationFrameId = window.requestAnimationFrame(frame);
-            return () => window.cancelAnimationFrame(animationFrameId);
+        if (!Number.isFinite(target)) {
+            setCount(null);
+            return undefined;
         }
-    }, [count, numcount]); // Depend on count and numcount to trigger the effect
+
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            setCount(target);
+            return undefined;
+        }
+
+        let frameId;
+        const startedAt = performance.now();
+        const duration = 900;
+
+        const updateCount = (now) => {
+            const progress = Math.min((now - startedAt) / duration, 1);
+            const eased = 1 - Math.pow(1 - progress, 3);
+            setCount(Math.round(target * eased));
+            if (progress < 1) frameId = window.requestAnimationFrame(updateCount);
+        };
+
+        frameId = window.requestAnimationFrame(updateCount);
+        return () => window.cancelAnimationFrame(frameId);
+    }, [value]);
 
     return (
-        <Col fluid="true" className='text-center' style={{ width: '100%', maxWidth: '40vh', margin: '0 0' }}>
-            {/* Adjusted styles to control width and center the column */}
-            <Card className="align-items-center rounded-0 shadow py-4">
-                {/* Reduced maxHeight and maxWidth values */}
-                <Card.Img variant="top" src={imgSrc} style={{ width: '20%', maxWidth: '25%', margin: '0 auto' }} />
-                {/* Updated styling for the image to be responsive */}
-                <Card.Body className="pt-2">
-                    <Card.Title style={{ fontSize: '2.5em', marginBottom: '0.5rem' }}>{count}</Card.Title>
-                    {/* Adjusted fontSize and added margin */}
-                    <Card.Subtitle style={{ fontSize: '1.2em' }}>{subtitle}</Card.Subtitle>
-                    {/* Adjusted fontSize */}
-                </Card.Body>
-            </Card>
-        </Col>
+        <article className="home-stat-card">
+            <span className="home-stat-card__icon" aria-hidden="true"><Icon /></span>
+            <div className="home-stat-card__value" aria-label={count === null ? 'Live count unavailable' : `${count} ${label}`}>
+                {count === null ? '—' : count.toLocaleString()}
+            </div>
+            <h3>{label}</h3>
+            <p>{note}</p>
+        </article>
     );
 };
 
