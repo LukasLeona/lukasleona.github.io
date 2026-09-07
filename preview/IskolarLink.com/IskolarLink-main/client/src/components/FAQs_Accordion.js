@@ -1,63 +1,65 @@
 import React from 'react';
-import { Accordion, Container } from 'react-bootstrap';
+import { Accordion } from 'react-bootstrap';
 import './general.css';
 
-const FAQs_Accordion = () => {
+const questions = [
+  {
+    question: 'Do we have to follow specific formats for application requirements?',
+    answer: 'Yes. Use the official templates so reviewers can check every requirement consistently.',
+    link: 'https://bit.ly/ANR-2023-Templates',
+    linkLabel: 'View official templates',
+  },
+  {
+    question: 'Do we need a Table of Amendments if our CBL has no revisions?',
+    answer: 'No. You only need to accomplish the Table of Amendments when your Constitution and By-Laws includes changes.',
+  },
+  {
+    question: 'Are all student organizations required to file for accreditation or revalidation?',
+    answer: 'Yes. This is required under Title 7 of the 2019 Revised Student Handbook.',
+    link: 'https://drive.google.com/file/d/0B1BuDAuN0r8SX1BWX2NSN3FURzg/view?resourcekey=0-oi8lUy9PCFysh0FDyL5ipw',
+    linkLabel: 'Read the Student Handbook',
+  },
+  {
+    question: 'What happens if an organization does not file?',
+    answer: 'An organization that is not accredited or revalidated may not legally conduct activities for the current and succeeding academic years.',
+  },
+  {
+    question: 'Do student publications follow the same requirements?',
+    answer: 'No. Student publications are not required to conform to the COSOA accreditation and revalidation requirements.',
+  },
+  {
+    question: 'What if the organization has no funds or assets to turn over?',
+    answer: 'Submit a written letter to the Office of Student Services stating that the organization did not acquire or own funds or assets.',
+  },
+  {
+    question: 'Is an acknowledgement of turnover still needed when the officers are unchanged?',
+    answer: 'Yes. Submit the Turnover of Assets and Funds with the same signatories and include their terms of office.',
+  },
+  {
+    question: 'Are at least 15 members required for accreditation?',
+    answer: 'Yes. The minimum includes executive officers such as the president, vice president, secretary, and treasurer.',
+  },
+];
+
+const FAQs_Accordion = ({ limit }) => {
+  const visibleQuestions = Number.isInteger(limit) ? questions.slice(0, limit) : questions;
+
   return (
-    <Container fluid className='px-5 ms-auto'>
-      <Accordion defaultActiveKey="0" className='mx-5 px-5'>
-          <Accordion.Item eventKey="0">
-            <Accordion.Header>Do we have to follow certain formats in terms of the content for the requirements?</Accordion.Header>
-            <Accordion.Body>
-              <p>You may access the released templates through this link or by navigating to Application Documents webpage:</p>
-              <a href="https://bit.ly/ANR-2023-Templates" target='_blank'>View Document</a>
-            </Accordion.Body>
-          </Accordion.Item>
-          <Accordion.Item eventKey="1">
-            <Accordion.Header>Do we need to accomplish the Table of Amendments if we do not have any amendments or revisions in our CBL?</Accordion.Header>
-            <Accordion.Body>
-              <p>No, you do not have to.</p>
-            </Accordion.Body>
-          </Accordion.Item>
-          <Accordion.Item eventKey="2">
-            <Accordion.Header>Are all student organizations required to file for Accreditation/Revalidation?</Accordion.Header>
-            <Accordion.Body>
-              <p>Yes, as stated in Title 7 of the 2019 Revised Student Handbook.</p>
-              <a href="https://drive.google.com/file/d/0B1BuDAuN0r8SX1BWX2NSN3FURzg/view?resourcekey=0-oi8lUy9PCFysh0FDyL5ipw" target='_blank'>View Document</a>
-            </Accordion.Body>
-          </Accordion.Item>
-          <Accordion.Item eventKey="3">
-            <Accordion.Header>What will happen if an organization failed to file for Accreditation/Revalidation?</Accordion.Header>
-            <Accordion.Body>
-              <p>Any organization that fails to be Accredited or Revalidated shall deem its conduct illegal for the current and succeeding academic years.</p>
-            </Accordion.Body>
-          </Accordion.Item>
-          <Accordion.Item eventKey="4">
-            <Accordion.Header>Do Student Publications need to conform with the requirements set by the SC COSOA for the Accreditation/Revalidation?</Accordion.Header>
-            <Accordion.Body>
-              <p>No, they don't have to.</p>
-            </Accordion.Body>
-          </Accordion.Item>
-          <Accordion.Item eventKey="5">
-            <Accordion.Header>What if we do not have any funds and assets to turn over?</Accordion.Header>
-            <Accordion.Body>
-              <p>If there are no funds and assets to turnover, you should accomplish the written letter to oss stating that you didn’t acquire or own any funds or assets.</p>
-            </Accordion.Body>
-          </Accordion.Item>
-          <Accordion.Item eventKey="6">
-            <Accordion.Header>Will there be an acknowledgement of turn over if we still have the same set of officers from the previous term?</Accordion.Header>
-            <Accordion.Body>
-              <p>Yes, there will still be the provision of Turnover of Assets and Funds, but with same set of signatories with the inclusion of their terms of office.</p>
-            </Accordion.Body>
-          </Accordion.Item>
-          <Accordion.Item eventKey="7">
-            <Accordion.Header>Are we required to have at least fifteen (15) members when we file for Accreditation?</Accordion.Header>
-            <Accordion.Body>
-              <p>Yes. Fifteen (15) members are required for student organizations applying for Accreditation. The Executive Officers (President, Vice President/s, Secretary/ies, Treasurer, etc.) shall also be counted.</p>
-            </Accordion.Body>
-          </Accordion.Item>
-        </Accordion>
-    </Container>
+    <Accordion className="iskolar-accordion" defaultActiveKey="0">
+      {visibleQuestions.map((item, index) => (
+        <Accordion.Item eventKey={String(index)} key={item.question}>
+          <Accordion.Header>{item.question}</Accordion.Header>
+          <Accordion.Body>
+            <p>{item.answer}</p>
+            {item.link && (
+              <a href={item.link} target="_blank" rel="noreferrer">
+                {item.linkLabel}
+              </a>
+            )}
+          </Accordion.Body>
+        </Accordion.Item>
+      ))}
+    </Accordion>
   );
 };
 
