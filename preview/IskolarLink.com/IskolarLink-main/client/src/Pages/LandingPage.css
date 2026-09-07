@@ -561,6 +561,133 @@
     font-size: 0.92rem;
 }
 
+.home-cosoa {
+    position: relative;
+    background: #fff8e8;
+}
+
+.home-cosoa__layout {
+    display: grid;
+    grid-template-columns: minmax(0, 0.92fr) minmax(22rem, 1.08fr);
+    gap: clamp(3rem, 7vw, 7rem);
+    align-items: center;
+}
+
+.home-cosoa__visual {
+    position: relative;
+    min-height: 35rem;
+}
+
+.home-cosoa__visual::before {
+    content: '';
+    position: absolute;
+    top: -1.25rem;
+    left: -1.25rem;
+    width: 44%;
+    height: 40%;
+    border-radius: 1.5rem 0 0 0;
+    background-image: radial-gradient(#a4771b 1px, transparent 1px);
+    background-size: 0.7rem 0.7rem;
+    opacity: 0.32;
+}
+
+.home-cosoa__visual > img {
+    position: absolute;
+    inset: 1.5rem 0 0 1.5rem;
+    width: calc(100% - 1.5rem);
+    height: calc(100% - 1.5rem);
+    object-fit: cover;
+    border-radius: 1.6rem;
+    box-shadow: 0 1.6rem 3.5rem rgba(83, 48, 16, 0.14);
+}
+
+.home-cosoa__stamp {
+    position: absolute;
+    right: -1.2rem;
+    bottom: 2.2rem;
+    display: grid;
+    min-width: 8.2rem;
+    padding: 1rem 1.2rem;
+    color: #fff;
+    border: 0.3rem solid #fff8e8;
+    border-radius: 1rem;
+    background: #7a0a16;
+    font-family: Urbanist, Inter, sans-serif;
+    transform: rotate(-3deg);
+}
+
+.home-cosoa__stamp span {
+    color: #ffd457;
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0.13em;
+}
+
+.home-cosoa__stamp strong {
+    font-size: 1.5rem;
+    letter-spacing: -0.03em;
+}
+
+.home-cosoa__content h2 {
+    max-width: 38rem;
+    margin: 0;
+    color: #251718;
+    font-family: Urbanist, Inter, sans-serif;
+    font-size: clamp(2.45rem, 5vw, 4rem);
+    font-weight: 850;
+    letter-spacing: -0.048em;
+    line-height: 1;
+}
+
+.home-cosoa__content > p {
+    max-width: 39rem;
+    margin: 1.4rem 0 0;
+    color: #6a5b5d;
+    font-family: Inter, sans-serif;
+    font-size: 1rem;
+    line-height: 1.75;
+}
+
+.home-cosoa__responsibilities {
+    display: grid;
+    gap: 1.1rem;
+    margin-top: 2rem;
+}
+
+.home-cosoa__responsibilities article {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.95rem;
+    align-items: start;
+}
+
+.home-cosoa__responsibilities article > span {
+    display: grid;
+    width: 2.65rem;
+    height: 2.65rem;
+    place-items: center;
+    color: #7a0a16;
+    border-radius: 0.75rem;
+    background: rgba(122, 10, 22, 0.09);
+    font-size: 1.1rem;
+}
+
+.home-cosoa__responsibilities h3 {
+    margin: 0;
+    color: #302124;
+    font-family: Inter, sans-serif;
+    font-size: 0.95rem;
+    font-weight: 800;
+}
+
+.home-cosoa__responsibilities p {
+    margin: 0.25rem 0 0;
+    color: #756669;
+    font-family: Inter, sans-serif;
+    font-size: 0.88rem;
+    line-height: 1.5;
+}
+
 @media (max-width: 991.98px) {
     .home-actions__grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -592,6 +719,18 @@
 
     .home-gallery__item:first-child {
         grid-column: span 2;
+    }
+
+    .home-cosoa__layout {
+        grid-template-columns: 1fr;
+    }
+
+    .home-cosoa__visual {
+        min-height: 29rem;
+    }
+
+    .home-cosoa__stamp {
+        right: 1.5rem;
     }
 }
 
@@ -692,6 +831,21 @@
     .home-gallery-modal__bar {
         gap: 0.75rem;
         padding: 0.8rem;
+    }
+
+    .home-cosoa__visual {
+        min-height: 22rem;
+    }
+
+    .home-cosoa__visual > img {
+        inset: 0.8rem 0 0 0.8rem;
+        width: calc(100% - 0.8rem);
+        height: calc(100% - 0.8rem);
+    }
+
+    .home-cosoa__stamp {
+        right: 0.5rem;
+        bottom: 1rem;
     }
 }
 
