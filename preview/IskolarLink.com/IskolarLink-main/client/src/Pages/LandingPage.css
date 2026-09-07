@@ -688,6 +688,234 @@
     line-height: 1.5;
 }
 
+.home-application {
+    color: #fff;
+    background:
+        radial-gradient(circle at 100% 10%, rgba(255, 197, 35, 0.14), transparent 28rem),
+        #650710;
+}
+
+.home-application .home-kicker {
+    color: #ffd457;
+}
+
+.home-application .home-section-heading h2 {
+    color: #fff;
+}
+
+.home-application .home-section-heading--split > p {
+    color: rgba(255, 255, 255, 0.68);
+}
+
+.home-application__workspace {
+    display: grid;
+    grid-template-columns: 18rem minmax(0, 1fr);
+    gap: 1rem;
+    margin-top: 2.75rem;
+}
+
+.home-application__selector {
+    display: grid;
+    gap: 0.75rem;
+    align-content: start;
+}
+
+.home-application__selector button {
+    position: relative;
+    display: grid;
+    gap: 0.15rem;
+    min-height: 8.5rem;
+    padding: 1.2rem;
+    color: rgba(255, 255, 255, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: 1rem;
+    background: rgba(255, 255, 255, 0.055);
+    text-align: left;
+    transition: color 160ms ease, border-color 160ms ease, background-color 160ms ease;
+}
+
+.home-application__selector button.is-active {
+    color: #3e100d;
+    border-color: #ffc523;
+    background: #ffc523;
+}
+
+.home-application__selector button > span {
+    align-self: end;
+    font-family: Inter, sans-serif;
+    font-size: 0.75rem;
+    font-weight: 700;
+}
+
+.home-application__selector button > strong {
+    font-family: Urbanist, Inter, sans-serif;
+    font-size: 1.35rem;
+    font-weight: 850;
+}
+
+.home-application__selector button > svg {
+    position: absolute;
+    top: 1.15rem;
+    right: 1.15rem;
+}
+
+.home-application__detail {
+    display: grid;
+    grid-template-columns: minmax(18rem, 0.85fr) minmax(0, 1.15fr);
+    gap: clamp(2rem, 5vw, 5rem);
+    min-height: 24rem;
+    padding: clamp(1.5rem, 4vw, 3rem);
+    color: #261719;
+    border-radius: 1.35rem;
+    background: #fff9e9;
+    animation: home-panel-enter 280ms ease both;
+}
+
+.home-application__detail--cream {
+    background: #f6ede8;
+}
+
+.home-application__summary > span {
+    color: #8b0e1b;
+    font-family: Inter, sans-serif;
+    font-size: 0.77rem;
+    font-weight: 800;
+    letter-spacing: 0.11em;
+    text-transform: uppercase;
+}
+
+.home-application__summary h3 {
+    margin: 0.65rem 0 0;
+    font-family: Urbanist, Inter, sans-serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 850;
+    letter-spacing: -0.04em;
+    line-height: 1;
+}
+
+.home-application__summary > p {
+    margin: 1rem 0 0;
+    color: #6d5e60;
+    font-family: Inter, sans-serif;
+    font-size: 0.92rem;
+    line-height: 1.65;
+}
+
+.home-application__summary ul {
+    display: grid;
+    gap: 0.55rem;
+    margin: 1.25rem 0 0;
+    padding: 0;
+    list-style: none;
+}
+
+.home-application__summary li {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    color: #4b3c3e;
+    font-family: Inter, sans-serif;
+    font-size: 0.87rem;
+}
+
+.home-application__summary li svg {
+    color: #8b0e1b;
+    stroke-width: 3;
+}
+
+.home-application__count {
+    display: flex;
+    gap: 0.8rem;
+    align-items: center;
+    margin-top: 1.6rem;
+}
+
+.home-application__count strong {
+    color: #7a0a16;
+    font-family: Urbanist, Inter, sans-serif;
+    font-size: 3rem;
+    font-weight: 850;
+    letter-spacing: -0.05em;
+    line-height: 1;
+}
+
+.home-application__count span {
+    color: #746568;
+    font-family: Inter, sans-serif;
+    font-size: 0.75rem;
+    line-height: 1.35;
+}
+
+.home-application__steps {
+    display: grid;
+    gap: 0;
+    align-content: center;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.home-application__steps li {
+    position: relative;
+    display: grid;
+    grid-template-columns: auto auto 1fr;
+    gap: 0.8rem;
+    align-items: start;
+    padding: 1rem 0;
+    border-bottom: 1px solid rgba(74, 42, 46, 0.13);
+}
+
+.home-application__steps li:last-child {
+    border-bottom: 0;
+}
+
+.home-application__step-icon {
+    display: grid;
+    width: 2.7rem;
+    height: 2.7rem;
+    place-items: center;
+    color: #fff;
+    border-radius: 0.75rem;
+    background: #7a0a16;
+}
+
+.home-application__step-number {
+    padding-top: 0.25rem;
+    color: #9a898c;
+    font-family: Inter, sans-serif;
+    font-size: 0.73rem;
+    font-weight: 800;
+}
+
+.home-application__steps strong {
+    display: block;
+    font-family: Inter, sans-serif;
+    font-size: 0.93rem;
+}
+
+.home-application__steps p {
+    margin: 0.25rem 0 0;
+    color: #756669;
+    font-family: Inter, sans-serif;
+    font-size: 0.82rem;
+    line-height: 1.5;
+}
+
+.home-application__footer {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 1.25rem;
+    margin-top: 1.5rem;
+}
+
+.home-application__footer p {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.7);
+    font-family: Inter, sans-serif;
+    font-size: 0.9rem;
+}
+
 @media (max-width: 991.98px) {
     .home-actions__grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -731,6 +959,18 @@
 
     .home-cosoa__stamp {
         right: 1.5rem;
+    }
+
+    .home-application__workspace {
+        grid-template-columns: 1fr;
+    }
+
+    .home-application__selector {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .home-application__selector button {
+        min-height: 7rem;
     }
 }
 
@@ -780,6 +1020,10 @@
 
     .home-journey__switcher {
         align-self: flex-start;
+    }
+
+    .home-application__detail {
+        grid-template-columns: 1fr;
     }
 }
 
@@ -847,17 +1091,36 @@
         right: 0.5rem;
         bottom: 1rem;
     }
+
+    .home-application__selector {
+        grid-template-columns: 1fr;
+    }
+
+    .home-application__selector button {
+        min-height: 6.5rem;
+    }
+
+    .home-application__footer {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .home-application__footer .home-button {
+        width: 100%;
+    }
 }
 
 @media (prefers-reduced-motion: reduce) {
     .home-action-card,
     .home-action-card::after,
     .home-journey__switcher button,
-    .home-gallery__item img {
+    .home-gallery__item img,
+    .home-application__selector button {
         transition: none;
     }
 
-    .home-journey__panel {
+    .home-journey__panel,
+    .home-application__detail {
         animation: none;
     }
 }
