@@ -3,6 +3,7 @@ import Hero from '../components/HeroVariant/Hero';
 import QuickActions from '../components/Landing Page/QuickActions';
 import Section1 from '../components/Landing Page/Section1';
 import AudienceJourney from '../components/Landing Page/AudienceJourney';
+import CampusGallery from '../components/Landing Page/CampusGallery';
 import Section2 from '../components/Landing Page/Section2';
 import Section4 from '../components/Landing Page/Section4';
 import Section5 from '../components/Landing Page/Section5';
@@ -14,6 +15,7 @@ function LandingPage() {
       <QuickActions />
       <Section1 />
       <AudienceJourney />
+      <CampusGallery />
       <Section2 />
       <Section4 />
       <Section5 />
