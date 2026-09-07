@@ -1,3 +1,192 @@
+.home-page {
+    overflow: hidden;
+    background: #fff;
+}
+
+.home-shell {
+    width: min(100% - 3rem, 74rem);
+    margin-inline: auto;
+}
+
+.home-section {
+    padding-block: clamp(4.5rem, 8vw, 7rem);
+}
+
+.home-kicker {
+    display: inline-block;
+    margin-bottom: 0.7rem;
+    color: #8b0e1b;
+    font-family: Inter, sans-serif;
+    font-size: 0.82rem;
+    font-weight: 800;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+}
+
+.home-section-heading h2 {
+    max-width: 42rem;
+    margin: 0;
+    color: #211516;
+    font-family: Urbanist, Inter, sans-serif;
+    font-size: clamp(2.35rem, 5vw, 4rem);
+    font-weight: 850;
+    letter-spacing: -0.045em;
+    line-height: 1;
+}
+
+.home-section-heading--split {
+    display: grid;
+    grid-template-columns: minmax(0, 1.25fr) minmax(17rem, 0.75fr);
+    gap: 2rem;
+    align-items: end;
+}
+
+.home-section-heading--split > p {
+    max-width: 27rem;
+    margin: 0 0 0.3rem auto;
+    color: #6a5b5d;
+    font-family: Inter, sans-serif;
+    font-size: 1rem;
+    line-height: 1.7;
+}
+
+.home-actions {
+    position: relative;
+    background: #fffdf8;
+}
+
+.home-actions__grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1rem;
+    margin-top: 2.5rem;
+}
+
+.home-action-card {
+    --action-accent: #7a0a16;
+    position: relative;
+    display: flex;
+    min-height: 17rem;
+    flex-direction: column;
+    padding: 1.5rem;
+    overflow: hidden;
+    color: #2b2021;
+    border: 1px solid #eadfe0;
+    border-radius: 1.25rem;
+    background: #fff;
+    text-decoration: none;
+    box-shadow: 0 0.55rem 1.8rem rgba(56, 20, 24, 0.05);
+    transition: transform 200ms ease, border-color 200ms ease, box-shadow 200ms ease;
+}
+
+.home-action-card::after {
+    content: '';
+    position: absolute;
+    right: -2.5rem;
+    bottom: -2.5rem;
+    width: 7rem;
+    height: 7rem;
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--action-accent) 9%, transparent);
+    transition: transform 240ms ease;
+}
+
+.home-action-card:hover {
+    color: #2b2021;
+    border-color: color-mix(in srgb, var(--action-accent) 32%, #eadfe0);
+    box-shadow: 0 1rem 2.4rem rgba(56, 20, 24, 0.11);
+    transform: translateY(-0.35rem);
+}
+
+.home-action-card:hover::after {
+    transform: scale(1.25);
+}
+
+.home-action-card--gold { --action-accent: #c88400; }
+.home-action-card--navy { --action-accent: #1c4774; }
+.home-action-card--green { --action-accent: #19704a; }
+
+.home-action-card__icon {
+    display: grid;
+    width: 3rem;
+    height: 3rem;
+    place-items: center;
+    color: #fff;
+    border-radius: 0.85rem;
+    background: var(--action-accent);
+    font-size: 1.3rem;
+}
+
+.home-action-card__content {
+    display: grid;
+    gap: 0.7rem;
+    margin-top: auto;
+}
+
+.home-action-card__content strong {
+    font-family: Urbanist, Inter, sans-serif;
+    font-size: 1.35rem;
+    font-weight: 800;
+    letter-spacing: -0.025em;
+}
+
+.home-action-card__content > span {
+    color: #746668;
+    font-family: Inter, sans-serif;
+    font-size: 0.92rem;
+    line-height: 1.55;
+}
+
+.home-action-card__arrow {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    color: var(--action-accent);
+    font-size: 1.15rem;
+}
+
+@media (max-width: 991.98px) {
+    .home-actions__grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 767.98px) {
+    .home-shell {
+        width: min(100% - 2rem, 74rem);
+    }
+
+    .home-section-heading--split {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .home-section-heading--split > p {
+        margin-left: 0;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .home-section {
+        padding-block: 4rem;
+    }
+
+    .home-actions__grid {
+        grid-template-columns: 1fr;
+    }
+
+    .home-action-card {
+        min-height: 13.5rem;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .home-action-card,
+    .home-action-card::after {
+        transition: none;
+    }
+}
+
 .s1-icon {
     height: 75px;
     width: 75px;
