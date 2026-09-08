@@ -1,6 +1,6 @@
 (function () {
   const toolbar = document.querySelector(".blog-topic-filter");
-  const topics = ["systems", "systems", "web", "data", "web", "data", "seo", "career"];
+  const topics = ["career", "systems", "systems", "web", "data", "web", "data", "seo", "career"];
   const cards = Array.from(document.querySelectorAll(".blog-photo-card"));
   if (!toolbar || !cards.length) return;
 
