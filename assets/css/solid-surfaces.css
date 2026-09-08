@@ -1,0 +1,33 @@
+/* Flat surface direction: keep depth through borders and spacing, not color gradients. */
+
+/* Hero */
+#hero,
+#main > section#hero {
+  background: #0d0e10 !important;
+}
+
+#hero::before,
+#hero::after {
+  content: none !important;
+  display: none !important;
+  background: none !important;
+  animation: none !important;
+}
+
+#hero .hero-work-btn {
+  background: #ebb020 !important;
+}
+
+#hero .hero-work-btn:hover,
+#hero .hero-work-btn:focus-visible {
+  background: #f3bd37 !important;
+}
+
+html[data-theme="light"] #hero,
+html[data-theme="light"] #main > section#hero {
+  background: #f5f4ef !important;
+}
+
+html[data-theme="light"] #hero .hero-work-btn {
+  background: #d99a00 !important;
+}
