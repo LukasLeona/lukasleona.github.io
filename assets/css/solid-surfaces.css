@@ -31,3 +31,29 @@ html[data-theme="light"] #main > section#hero {
 html[data-theme="light"] #hero .hero-work-btn {
   background: #d99a00 !important;
 }
+
+/* About */
+#about .about-v2-image-overlay {
+  background: rgba(12, 13, 15, .2) !important;
+}
+
+#about .about-v2-tools {
+  background: var(--about-card-soft) !important;
+}
+
+#about .about-tool-card::before {
+  content: none !important;
+  background: none !important;
+}
+
+#about .about-v2-why {
+  background: var(--about-card-soft) !important;
+}
+
+#about .about-v2-final {
+  background: var(--about-card) !important;
+}
+
+html[data-theme="light"] #about .about-v2-image-overlay {
+  background: rgba(25, 28, 33, .18) !important;
+}
