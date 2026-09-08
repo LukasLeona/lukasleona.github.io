@@ -123,3 +123,27 @@ html[data-theme="light"] #resume .data-scatter-plot {
   background: #f4f6f9 !important;
   background-image: none !important;
 }
+
+/* Side menu: a flat active marker is clearer than a blended highlight. */
+.left-side .menu a:hover,
+.left-side .menu a:focus-visible {
+  background: rgba(235, 176, 32, .07) !important;
+}
+
+.left-side .menu a.active,
+body.layout-collapsed .left-side .menu a.active,
+body.layout-expanded .left-side .menu a.active,
+body.blog-single-page .left-side .menu a.active {
+  border-color: rgba(235, 176, 32, .28) !important;
+  background: rgba(235, 176, 32, .13) !important;
+}
+
+html[data-theme="light"] .left-side .menu a:hover,
+html[data-theme="light"] .left-side .menu a:focus-visible {
+  background: rgba(187, 133, 0, .055) !important;
+}
+
+html[data-theme="light"] .left-side .menu a.active {
+  border-color: rgba(155, 105, 0, .34) !important;
+  background: rgba(187, 133, 0, .1) !important;
+}
