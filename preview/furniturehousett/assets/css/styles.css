@@ -453,7 +453,10 @@ main > section:not(.hero) h2 {
 
 .collection-list {
   margin-top: clamp(4rem, 8vw, 7rem);
+  margin-bottom: 0;
+  padding: 0;
   border-top: 1px solid var(--line);
+  list-style: none;
 }
 
 .collection-row {
@@ -954,6 +957,12 @@ main > section:not(.hero) h2 {
   background: var(--ember);
 }
 
+body.menu-open .chat-launcher {
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+}
+
 .chat-launcher-icon {
   display: grid;
   width: 2.55rem;
@@ -1272,9 +1281,11 @@ main > section:not(.hero) h2 {
 
   .site-menu {
     position: fixed;
-    inset: 0;
+    inset: 0 auto auto 0;
     z-index: -1;
     display: grid;
+    width: 100vw;
+    height: 100svh;
     align-content: center;
     justify-items: start;
     gap: 1rem;
