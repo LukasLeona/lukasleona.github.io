@@ -458,7 +458,7 @@ footer, .data-footer {
 .site-navbar {
   min-height: 5.25rem;
   padding-block: 0.75rem;
-  background: linear-gradient(180deg, rgba(24, 4, 7, 0.72), rgba(24, 4, 7, 0));
+  background: rgba(36, 6, 9, 0.88);
   transition: min-height 180ms ease, padding 180ms ease, background-color 180ms ease, box-shadow 180ms ease;
 }
 

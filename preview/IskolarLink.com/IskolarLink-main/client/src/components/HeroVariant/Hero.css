@@ -5,9 +5,7 @@
     min-height: 46rem;
     overflow: hidden;
     color: #fff;
-    background:
-        radial-gradient(circle at 12% 12%, rgba(255, 210, 64, 0.2), transparent 24rem),
-        linear-gradient(125deg, #4c020b 0%, var(--hero-maroon) 58%, #951725 100%);
+    background: var(--hero-maroon);
 }
 
 .home-hero::before,

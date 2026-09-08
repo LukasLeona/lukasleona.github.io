@@ -305,7 +305,7 @@
     position: absolute;
     inset: auto 0 0;
     height: 40%;
-    background: linear-gradient(transparent, rgba(28, 8, 11, 0.7));
+    background: rgba(28, 8, 11, 0.66);
 }
 
 .home-journey__photo > span {
@@ -445,7 +445,7 @@
     content: '';
     position: absolute;
     inset: 40% 0 0;
-    background: linear-gradient(transparent, rgba(26, 5, 8, 0.82));
+    background: rgba(26, 5, 8, 0.76);
 }
 
 .home-gallery__item:hover img,
@@ -586,9 +586,8 @@
     width: 44%;
     height: 40%;
     border-radius: 1.5rem 0 0 0;
-    background-image: radial-gradient(#a4771b 1px, transparent 1px);
-    background-size: 0.7rem 0.7rem;
-    opacity: 0.32;
+    background: #a4771b;
+    opacity: 0.14;
 }
 
 .home-cosoa__visual > img {
@@ -690,9 +689,7 @@
 
 .home-application {
     color: #fff;
-    background:
-        radial-gradient(circle at 100% 10%, rgba(255, 197, 35, 0.14), transparent 28rem),
-        #650710;
+    background: #650710;
 }
 
 .home-application .home-kicker {
@@ -1016,9 +1013,7 @@
     overflow: hidden;
     color: #fff;
     border-radius: 1.5rem;
-    background:
-        radial-gradient(circle at 85% -30%, rgba(255, 197, 35, 0.34), transparent 18rem),
-        #241719;
+    background: #241719;
 }
 
 .home-final-cta::after {
