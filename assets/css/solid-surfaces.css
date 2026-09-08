@@ -57,3 +57,69 @@ html[data-theme="light"] #hero .hero-work-btn {
 html[data-theme="light"] #about .about-v2-image-overlay {
   background: rgba(25, 28, 33, .18) !important;
 }
+
+/* Resume */
+#resume .resume-service-lab,
+#resume .resume-live-dashboard,
+#resume .education-premium-card,
+#resume .resume-recommendation {
+  background: var(--resume-card-soft) !important;
+}
+
+#resume .resume-browser-page,
+#resume .data-demo-chart,
+#resume .design-after {
+  background: #17181b !important;
+}
+
+#resume .data-chart-grid,
+#resume .honor-shine {
+  background: none !important;
+  background-image: none !important;
+}
+
+#resume .data-chart-bars span,
+#resume .resume-dashboard-bar u {
+  background: var(--resume-gold) !important;
+}
+
+#resume .resume-data-dashboard {
+  background: #191b20 !important;
+}
+
+#resume .resume-data-dashboard .data-demo-metrics article::after {
+  background: rgba(110, 214, 255, .1) !important;
+}
+
+#resume .resume-data-dashboard .data-chart-bars,
+#resume .data-scatter-plot {
+  background: rgba(0, 0, 0, .08) !important;
+  background-image: none !important;
+}
+
+#resume .resume-data-dashboard .data-chart-bars span {
+  background: var(--data-blue) !important;
+}
+
+#resume .resume-data-dashboard .data-chart-bars span:nth-child(2n) {
+  background: var(--data-cyan) !important;
+}
+
+#resume .data-percentage-ring {
+  background: var(--ring-color) !important;
+}
+
+#resume .career-timeline::before,
+#resume .career-details::before,
+#resume .career-detail > .career-point::before {
+  background: rgba(235, 176, 32, .42) !important;
+}
+
+html[data-theme="light"] #resume .resume-browser-page,
+html[data-theme="light"] #resume .data-demo-chart,
+html[data-theme="light"] #resume .resume-data-dashboard,
+html[data-theme="light"] #resume .resume-data-dashboard .data-chart-bars,
+html[data-theme="light"] #resume .data-scatter-plot {
+  background: #f4f6f9 !important;
+  background-image: none !important;
+}
