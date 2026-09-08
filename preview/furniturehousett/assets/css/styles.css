@@ -845,6 +845,25 @@ main > section:not(.hero) h2 {
   margin: 0;
 }
 
+@media (max-width: 70rem) {
+  .section-intro {
+    grid-template-columns: 0.55fr 1.7fr;
+  }
+
+  .section-intro > p:last-child {
+    grid-column: 2;
+  }
+
+  .editorial {
+    grid-template-columns: 0.9fr 1.1fr;
+  }
+
+  .editorial-visual img {
+    width: min(60rem, 74vw);
+    transform: translateX(-5%);
+  }
+}
+
 @media (max-width: 52rem) {
   .nav-shell {
     min-height: 4.6rem;
@@ -869,6 +888,14 @@ main > section:not(.hero) h2 {
     height: 2px;
     background: currentColor;
     transition: transform 220ms ease;
+  }
+
+  .menu-toggle[aria-expanded="true"] span:not(.sr-only):nth-last-child(2) {
+    transform: translateY(0.22rem) rotate(45deg);
+  }
+
+  .menu-toggle[aria-expanded="true"] span:not(.sr-only):last-child {
+    transform: translateY(-0.22rem) rotate(-45deg);
   }
 
   .site-menu {
@@ -903,6 +930,16 @@ main > section:not(.hero) h2 {
     padding-bottom: 3.25rem;
   }
 
+  .hero::before {
+    background-position: 60% 50%;
+  }
+
+  .hero::after {
+    background:
+      linear-gradient(180deg, rgba(10, 11, 9, 0.48) 0%, rgba(10, 11, 9, 0.04) 31%, rgba(10, 11, 9, 0.86) 100%),
+      linear-gradient(90deg, rgba(9, 10, 8, 0.25), transparent);
+  }
+
   .hero h1 {
     font-size: clamp(3.8rem, 19vw, 6rem);
     line-height: 0.84;
@@ -910,6 +947,162 @@ main > section:not(.hero) h2 {
 
   .scroll-cue {
     display: none;
+  }
+
+  main > section:not(.hero) {
+    padding-block: clamp(4.5rem, 18vw, 7rem);
+  }
+
+  .section-intro,
+  .about,
+  .visit,
+  .questions {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .section-intro > p:last-child,
+  .contact-ledger {
+    grid-column: 1;
+  }
+
+  .collection-list {
+    margin-top: 3.5rem;
+  }
+
+  .collection-row {
+    grid-template-columns: 2.3rem 1fr auto;
+    gap: 0.7rem;
+    min-height: 8.5rem;
+  }
+
+  .collection-row:hover {
+    padding-inline: 0;
+    background: transparent;
+    color: inherit;
+  }
+
+  .collection-row:hover p {
+    color: #62645d;
+  }
+
+  .collection-row h3 {
+    font-size: clamp(2.2rem, 12vw, 4rem);
+  }
+
+  .collection-row p {
+    display: none;
+  }
+
+  .collection-number {
+    margin-top: 0.45rem;
+  }
+
+  .editorial {
+    grid-template-columns: 1fr;
+    min-height: 51rem;
+    padding-bottom: 0 !important;
+  }
+
+  .editorial-copy {
+    padding-bottom: 2rem;
+  }
+
+  .editorial-visual {
+    align-self: end;
+    margin: 0 -18% 0 -24% !important;
+  }
+
+  .editorial-visual img {
+    width: 145%;
+    transform: none;
+  }
+
+  .editorial-watermark {
+    bottom: 1.1rem;
+    font-size: 40vw;
+  }
+
+  .ticker > div {
+    animation-duration: 22s;
+  }
+
+  .about-facts {
+    grid-template-columns: 1fr;
+    margin-top: 2.5rem !important;
+  }
+
+  .about-facts div {
+    display: grid;
+    grid-template-columns: 0.8fr 1.2fr;
+    gap: 1.5rem;
+    align-items: end;
+    padding: 1.5rem 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .about-facts div + div {
+    padding-left: 0;
+    border-left: 0;
+  }
+
+  .about-facts dd {
+    margin: 0;
+  }
+
+  .visit-kicker {
+    display: grid;
+    grid-template-columns: 1fr auto auto;
+    gap: 0.75rem;
+    align-items: center;
+  }
+
+  .visit-kicker .eyebrow {
+    margin: 0;
+  }
+
+  .contact-ledger {
+    grid-template-columns: 1fr;
+    margin-top: 2rem !important;
+  }
+
+  .contact-ledger a:nth-child(even) {
+    padding-left: 0;
+    border-left: 0;
+  }
+
+  .contact-ledger a:nth-child(even):hover,
+  .contact-ledger a:hover {
+    padding-left: 0.5rem;
+  }
+
+  .questions-heading h2 {
+    max-width: none;
+  }
+
+  .faq-list summary {
+    min-height: 4.8rem;
+    gap: 1rem;
+  }
+
+  .site-footer {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+
+  .site-footer > *,
+  .footer-brand {
+    width: 100%;
+    max-width: none;
+    justify-self: stretch;
+  }
+
+  .footer-brand p {
+    max-width: 12ch;
+  }
+
+  .footer-bottom {
+    grid-column: 1;
   }
 }
 
@@ -920,6 +1113,23 @@ main > section:not(.hero) h2 {
 
   .button {
     width: 100%;
+  }
+
+  .visit-actions {
+    display: grid;
+  }
+
+  .visit-kicker span {
+    display: none;
+  }
+
+  .footer-links {
+    grid-template-columns: 1fr;
+  }
+
+  .footer-bottom {
+    display: grid;
+    gap: 0.5rem;
   }
 }
 
