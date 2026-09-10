@@ -22,10 +22,16 @@ html {
 body {
   margin: 0;
   background: var(--ink);
+  background-image: repeating-linear-gradient(135deg, rgba(255, 255, 255, 0.018) 0 1px, transparent 1px 12px);
   color: var(--paper-bright);
   font-family: Inter, "Segoe UI", Arial, sans-serif;
   font-size: 1rem;
   line-height: 1.6;
+}
+
+::selection {
+  background: var(--yellow);
+  color: var(--ink);
 }
 
 img {
@@ -112,11 +118,31 @@ a {
 
 .desktop-nav a,
 .header-cta {
+  position: relative;
   font-size: 0.84rem;
   font-weight: 800;
   letter-spacing: 0.04em;
   text-decoration: none;
   text-transform: uppercase;
+}
+
+.desktop-nav a::after {
+  position: absolute;
+  right: 0;
+  bottom: -0.55rem;
+  left: 0;
+  height: 2px;
+  background: var(--yellow);
+  content: "";
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 220ms ease;
+}
+
+.desktop-nav a:hover::after,
+.desktop-nav a:focus-visible::after {
+  transform: scaleX(1);
+  transform-origin: left;
 }
 
 .header-cta {
@@ -233,6 +259,21 @@ h2 {
   letter-spacing: 0.04em;
   text-decoration: none;
   text-transform: uppercase;
+  transition: border-color 180ms ease, color 180ms ease, background-color 180ms ease, transform 180ms ease;
+}
+
+.button > span:last-child {
+  transition: transform 180ms ease;
+}
+
+.button:hover,
+.button:focus-visible {
+  transform: translateY(-3px);
+}
+
+.button:hover > span:last-child,
+.button:focus-visible > span:last-child {
+  transform: translate(0.25rem, -0.15rem);
 }
 
 .button-primary {
@@ -264,6 +305,35 @@ h2 {
   color: var(--yellow);
 }
 
+.performance-strip {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  background: var(--yellow);
+  color: var(--ink);
+}
+
+.performance-strip span {
+  position: relative;
+  display: grid;
+  min-height: 4.25rem;
+  place-items: center;
+  padding: 0.75rem 1rem;
+  border-right: 1px solid rgba(0, 0, 0, 0.24);
+  font-size: 0.72rem;
+  font-weight: 950;
+  letter-spacing: 0.1em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.performance-strip span::before {
+  width: 0.55rem;
+  height: 0.55rem;
+  border: 2px solid var(--ink);
+  content: "";
+  transform: rotate(45deg);
+}
+
 .scroll-cue {
   position: absolute;
   bottom: 1.6rem;
@@ -276,9 +346,25 @@ h2 {
 }
 
 .section {
+  position: relative;
   width: min(var(--max-width), calc(100% - 2.5rem));
   margin-inline: auto;
   padding: clamp(5rem, 10vw, 9rem) 0;
+}
+
+.section-heading {
+  position: relative;
+}
+
+.section-heading::before {
+  position: absolute;
+  top: 0.2rem;
+  left: -3.25rem;
+  color: var(--yellow);
+  content: attr(data-index);
+  font-family: Impact, "Arial Black", sans-serif;
+  font-size: 1.4rem;
+  letter-spacing: 0.04em;
 }
 
 .section-intro,
@@ -304,11 +390,29 @@ h2 {
 }
 
 .story {
+  position: relative;
   background: var(--paper);
   color: var(--ink);
+  overflow: clip;
+}
+
+.story::after {
+  position: absolute;
+  top: -3rem;
+  right: -2rem;
+  color: rgba(7, 7, 7, 0.05);
+  content: "JVT";
+  font-family: Impact, "Arial Black", sans-serif;
+  font-size: clamp(12rem, 30vw, 28rem);
+  font-style: italic;
+  letter-spacing: -0.08em;
+  line-height: 0.8;
+  pointer-events: none;
 }
 
 .story-copy {
+  position: relative;
+  z-index: 1;
   max-width: 52rem;
 }
 
@@ -391,6 +495,20 @@ h2 {
     align-items: start;
   }
 
+  .performance-strip {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .performance-strip span:last-child {
+    grid-column: 1 / -1;
+  }
+
+  .section-heading::before {
+    position: static;
+    display: block;
+    margin-bottom: 1.5rem;
+  }
+
   .concept-note {
     grid-column: 1;
   }
@@ -429,6 +547,10 @@ h2 {
 
   .button {
     width: 100%;
+  }
+
+  .performance-strip span {
+    min-height: 4.75rem;
   }
 }
 
