@@ -15,6 +15,11 @@
   const chatForm = document.querySelector("[data-chat-form]");
   const chatInput = document.querySelector("[data-chat-input]");
   const chatQuestions = [...document.querySelectorAll("[data-chat-question]")];
+  const heroMedia = document.querySelector(".hero-media");
+  const navLinks = [...document.querySelectorAll('nav a[href^="#"]')];
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  let fitmentTimer;
+  let scrollQueued = false;
 
   const fitments = {
     honda160: {
@@ -88,8 +93,9 @@
       option.setAttribute("aria-pressed", String(isActive));
     });
 
+    window.clearTimeout(fitmentTimer);
     image.style.opacity = "0";
-    window.setTimeout(() => {
+    fitmentTimer = window.setTimeout(() => {
       image.src = fitment.image;
       image.alt = fitment.alt;
       image.style.opacity = "1";
@@ -154,7 +160,7 @@
     chatTyping.hidden = false;
     chatMessages.scrollTop = chatMessages.scrollHeight;
 
-    const delay = window.matchMedia("(prefers-reduced-motion: reduce)").matches ? 0 : 520;
+    const delay = reduceMotion ? 0 : 520;
     window.setTimeout(() => {
       chatTyping.hidden = true;
       appendChatMessage(getLocalChatResponse(cleanMessage), "assistant");
@@ -209,7 +215,21 @@
   });
 
   document.addEventListener("keydown", (event) => {
-    if (event.key === "Escape" && menuToggle?.getAttribute("aria-expanded") === "true") {
+    const menuIsOpen = menuToggle?.getAttribute("aria-expanded") === "true";
+
+    if (event.key === "Tab" && menuIsOpen && mobileMenu) {
+      const links = [...mobileMenu.querySelectorAll("a")];
+      const firstLink = links[0];
+      const lastLink = links.at(-1);
+
+      if (event.shiftKey && document.activeElement === firstLink) {
+        event.preventDefault();
+        lastLink.focus();
+      } else if (!event.shiftKey && document.activeElement === lastLink) {
+        event.preventDefault();
+        firstLink.focus();
+      }
+    } else if (event.key === "Escape" && menuIsOpen) {
       setMenu(false);
       menuToggle.focus();
     } else if (event.key === "Escape" && chatWindow && !chatWindow.hidden) {
@@ -217,6 +237,62 @@
     }
   });
 
-  window.addEventListener("scroll", updateHeader, { passive: true });
-  updateHeader();
+  const revealItems = [...document.querySelectorAll(
+    ".section-heading, .fitment-explorer, .system-panel, .story-copy, .timeline li, .buyer-guide-intro, .buyer-steps li, .faq details, .contact-heading, .contact-primary, .contact-grid article"
+  )];
+
+  revealItems.forEach((item, index) => {
+    item.dataset.reveal = "";
+    item.style.setProperty("--reveal-delay", `${(index % 4) * 55}ms`);
+  });
+
+  if ("IntersectionObserver" in window && !reduceMotion) {
+    const revealObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add("is-visible");
+        observer.unobserve(entry.target);
+      });
+    }, { rootMargin: "0px 0px -8%", threshold: 0.12 });
+
+    revealItems.forEach((item) => revealObserver.observe(item));
+
+    const sectionObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        navLinks.forEach((link) => {
+          const isCurrent = link.getAttribute("href") === `#${entry.target.id}`;
+          if (isCurrent) link.setAttribute("aria-current", "true");
+          else link.removeAttribute("aria-current");
+        });
+      });
+    }, { rootMargin: "-30% 0px -58%", threshold: 0 });
+
+    document.querySelectorAll("#fitment, #systems, #story, #contact").forEach((section) => sectionObserver.observe(section));
+  } else {
+    revealItems.forEach((item) => item.classList.add("is-visible"));
+  }
+
+  const handleScroll = () => {
+    if (scrollQueued) return;
+    scrollQueued = true;
+
+    window.requestAnimationFrame(() => {
+      updateHeader();
+      if (!reduceMotion && heroMedia && window.scrollY < window.innerHeight * 1.2) {
+        const shift = Math.min(window.scrollY * 0.08, 48);
+        heroMedia.style.setProperty("--hero-shift", `${shift}px`);
+      }
+      scrollQueued = false;
+    });
+  };
+
+  window.addEventListener("resize", () => {
+    if (window.innerWidth > 820 && menuToggle?.getAttribute("aria-expanded") === "true") {
+      setMenu(false);
+    }
+  });
+
+  window.addEventListener("scroll", handleScroll, { passive: true });
+  handleScroll();
 })();
