@@ -266,6 +266,51 @@
       </section>
     </main>
 
+    <aside class="chatbot" data-chatbot>
+      <button class="chat-launcher" type="button" aria-expanded="false" aria-controls="jvt-chat-window" data-chat-launcher>
+        <span class="launcher-signal" aria-hidden="true"></span>
+        <span>Ask JVT</span>
+        <span aria-hidden="true">↗</span>
+      </button>
+      <section class="chat-window" id="jvt-chat-window" role="dialog" aria-label="JVT website assistant" data-chat-window hidden>
+        <header class="chat-header">
+          <div>
+            <span class="chat-status" aria-hidden="true"></span>
+            <div>
+              <strong>JVT Fitment Desk</strong>
+              <small>Website guide</small>
+            </div>
+          </div>
+          <div class="chat-controls">
+            <button type="button" title="Minimize chat" aria-label="Minimize chat" data-chat-minimize>−</button>
+            <button type="button" title="Close chat" aria-label="Close chat" data-chat-close>×</button>
+          </div>
+        </header>
+        <div class="chat-body" data-chat-body>
+          <div class="chat-messages" data-chat-messages aria-live="polite">
+            <div class="chat-message chat-message-assistant">
+              <span>JVT</span>
+              <p>Tell me your scooter model or choose a question below. I can guide you to the right page or contact channel.</p>
+            </div>
+          </div>
+          <div class="typing-indicator" data-typing hidden aria-label="JVT assistant is typing">
+            <span></span><span></span><span></span>
+          </div>
+          <div class="chat-suggestions" aria-label="Suggested questions">
+            <button type="button" data-chat-question="Which pulley set fits my scooter?">Check my fitment</button>
+            <button type="button" data-chat-question="Where can I buy JVT parts?">Where to buy</button>
+            <button type="button" data-chat-question="Where is JVT Philippines located?">Visit JVT</button>
+          </div>
+          <form class="chat-form" data-chat-form>
+            <label class="sr-only" for="chat-input">Ask about JVT parts, fitment, or contact details</label>
+            <input id="chat-input" name="message" type="text" autocomplete="off" placeholder="Type your question" maxlength="220" data-chat-input>
+            <button type="submit" aria-label="Send message"><span>Send</span><span aria-hidden="true">↗</span></button>
+          </form>
+          <p class="chat-disclaimer">Local website guide. Product advice and availability must be confirmed with JVT Philippines.</p>
+        </div>
+      </section>
+    </aside>
+
     <footer class="site-footer">
       <div class="brand footer-brand" aria-label="JVT Philippines">
         <span class="brand-mark">JVT</span>
