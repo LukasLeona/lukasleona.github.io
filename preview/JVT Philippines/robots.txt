@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://lukasleona.github.io/preview/JVT%20Philippines/sitemap.xml
