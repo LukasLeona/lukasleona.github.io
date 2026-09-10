@@ -735,6 +735,7 @@ h2 {
 }
 
 .story,
+.buyer-guide,
 .contact,
 .site-footer {
   padding: clamp(5rem, 10vw, 9rem) max(1.25rem, calc((100vw - var(--max-width)) / 2));
@@ -814,11 +815,107 @@ h2 {
   font-size: 0.9rem;
 }
 
-.contact {
+.buyer-guide {
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+  align-items: end;
+  gap: clamp(3rem, 8vw, 8rem);
+  background: var(--ink-soft);
+}
+
+.buyer-guide-intro p:last-child {
+  max-width: 32rem;
+  color: var(--muted);
+}
+
+.buyer-steps {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1px;
+  margin: 0;
+  padding: 1px;
+  background: var(--line);
+  list-style: none;
+}
+
+.buyer-steps li {
+  display: grid;
+  min-height: 12rem;
+  padding: 1.25rem;
+  background: var(--ink);
+}
+
+.buyer-steps span {
+  color: var(--yellow);
+  font-family: Impact, "Arial Black", sans-serif;
+  font-size: 1.5rem;
+}
+
+.buyer-steps strong {
+  align-self: end;
+  font-size: 1rem;
+  text-transform: uppercase;
+}
+
+.buyer-steps small {
+  color: var(--muted);
+  font-size: 0.78rem;
+}
+
+.faq {
+  display: grid;
+  grid-template-columns: minmax(17rem, 0.55fr) minmax(0, 1fr);
+  align-items: start;
+  gap: clamp(3rem, 8vw, 8rem);
+}
+
+.faq-list {
+  border-top: 1px solid var(--line);
+}
+
+.faq details {
+  border-bottom: 1px solid var(--line);
+}
+
+.faq summary {
   display: grid;
   grid-template-columns: 1fr auto;
-  align-items: end;
-  gap: 3rem;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 1.4rem 0;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 850;
+  list-style: none;
+}
+
+.faq summary::-webkit-details-marker {
+  display: none;
+}
+
+.faq summary span:last-child {
+  color: var(--yellow);
+  font-family: Impact, "Arial Black", sans-serif;
+  font-size: 1.8rem;
+  line-height: 1;
+  transition: transform 180ms ease;
+}
+
+.faq details[open] summary span:last-child {
+  transform: rotate(45deg);
+}
+
+.faq details p {
+  max-width: 46rem;
+  margin: -0.4rem 2.5rem 1.5rem 0;
+  color: var(--muted);
+}
+
+.contact {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(18rem, 0.55fr);
+  align-items: start;
+  gap: clamp(3rem, 8vw, 7rem);
   background: var(--red);
 }
 
@@ -830,6 +927,78 @@ h2 {
   max-width: 14ch;
 }
 
+.contact-heading > p:last-child {
+  max-width: 38rem;
+  color: rgba(255, 255, 255, 0.82);
+}
+
+.contact-primary {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.button-dark {
+  background: var(--ink);
+  color: var(--paper-bright);
+}
+
+.button-light {
+  border-color: rgba(255, 255, 255, 0.62);
+  color: var(--paper-bright);
+}
+
+.contact-grid {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: 1.1fr 1fr 1.4fr 0.8fr;
+  gap: 1px;
+  margin-top: 1rem;
+  background: rgba(255, 255, 255, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.contact-grid article {
+  min-width: 0;
+  padding: 1.25rem;
+  background: rgba(113, 0, 9, 0.34);
+}
+
+.contact-grid a {
+  display: block;
+  width: fit-content;
+  margin-top: 0.35rem;
+  font-weight: 800;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2rem;
+}
+
+.contact-grid address,
+.contact-grid p,
+.contact-grid small {
+  margin: 0;
+  font-style: normal;
+}
+
+.contact-grid small {
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.contact-label {
+  margin-bottom: 1rem !important;
+  color: rgba(255, 255, 255, 0.66);
+  font-size: 0.68rem;
+  font-weight: 900;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
+.contact-link {
+  margin-top: 0.85rem !important;
+  font-size: 0.76rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
 .site-footer {
   display: grid;
   grid-template-columns: auto 1fr;
@@ -837,6 +1006,20 @@ h2 {
   align-items: start;
   color: var(--muted);
   font-size: 0.85rem;
+}
+
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem 1.25rem;
+}
+
+.footer-links a {
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-decoration: none;
+  text-transform: uppercase;
 }
 
 .site-footer p {
@@ -889,6 +1072,10 @@ h2 {
 
   .story-grid {
     grid-template-columns: 1fr;
+  }
+
+  .contact-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
@@ -985,6 +1172,8 @@ h2 {
 
   .section-intro,
   .section-systems,
+  .buyer-guide,
+  .faq,
   .contact,
   .site-footer {
     grid-template-columns: 1fr;
@@ -1049,6 +1238,15 @@ h2 {
   .timeline li {
     grid-template-columns: 4rem 1fr;
     gap: 1rem;
+  }
+
+  .buyer-steps,
+  .contact-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .buyer-steps li {
+    min-height: 10rem;
   }
 }
 
