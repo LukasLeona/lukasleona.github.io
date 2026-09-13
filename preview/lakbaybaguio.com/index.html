@@ -37,6 +37,7 @@
       <nav class="main-nav" id="mainNav" aria-label="Primary navigation">
         <a href="#planner">Plan a trip</a>
         <a href="#destinations">Destinations</a>
+        <a href="#community">Nearby</a>
         <a href="#how-it-works">How it works</a>
         <a href="#travel-notes">Travel notes</a>
       </nav>
@@ -335,6 +336,143 @@
       </div>
     </section>
 
+    <section class="community-section" id="community" aria-labelledby="communityTitle">
+      <div class="container">
+        <div class="community-heading reveal">
+          <div>
+            <div class="eyebrow"><span></span> Meet, with privacy first</div>
+            <h2 id="communityTitle">Travel nearby. Chat anonymously.</h2>
+            <p>Discover active travelers using approximate distance bands, then send a chat request without sharing your real name or exact location.</p>
+          </div>
+          <span class="community-mode-badge" id="communityModeBadge">Preview mode</span>
+        </div>
+
+        <div class="community-safety-note reveal" role="note">
+          <span aria-hidden="true">⌾</span>
+          <p><strong>Your exact position stays private.</strong> Nearby results only show broad distance ranges. You can stop sharing, block, report, or end a conversation at any time.</p>
+        </div>
+
+        <div class="community-switcher" id="communitySwitcher" aria-label="Community views">
+          <button class="active" type="button" data-community-view="nearby" aria-pressed="true">Nearby</button>
+          <button type="button" data-community-view="chats" aria-pressed="false">Chats <span class="community-unread" id="communityUnread" hidden>0</span></button>
+        </div>
+
+        <div class="community-layout" id="communityLayout" data-view="nearby">
+          <article class="nearby-panel" id="nearbyPanel">
+            <div class="community-panel-head">
+              <div>
+                <small>NEARBY RADAR</small>
+                <h3>Who is exploring around you?</h3>
+              </div>
+              <button class="community-text-button" id="stopRadar" type="button" hidden>Stop sharing</button>
+            </div>
+
+            <div class="nearby-onboarding" id="nearbyOnboarding">
+              <div class="anonymous-card">
+                <div>
+                  <small>Your anonymous name</small>
+                  <strong id="anonymousAlias">PineFox47</strong>
+                </div>
+                <button id="shuffleAlias" type="button" aria-label="Generate another anonymous name" title="Generate another name">↻</button>
+              </div>
+
+              <label class="nearby-consent">
+                <input id="nearbyConsent" type="checkbox" />
+                <span>I understand that Lakbay uses my location only to calculate approximate nearby distance while radar is active.</span>
+              </label>
+
+              <button class="button button-primary nearby-start-button" id="startRadar" type="button" disabled>
+                <span aria-hidden="true">⌾</span> Turn on nearby radar
+              </button>
+              <p class="community-setup-note" id="communitySetupNote">Preview mode uses clearly labeled sample travelers. Connect the included Supabase setup to enable real-time discovery and chat.</p>
+            </div>
+
+            <div class="radar-stage" id="radarStage" aria-label="Nearby radar is off">
+              <span class="radar-ring radar-ring-one"></span>
+              <span class="radar-ring radar-ring-two"></span>
+              <span class="radar-ring radar-ring-three"></span>
+              <span class="radar-self"><i></i><small>You</small></span>
+              <div class="radar-dots" id="radarDots" aria-hidden="true"></div>
+            </div>
+
+            <div class="nearby-results-head">
+              <div><strong>Nearby travelers</strong><small id="nearbyStatus" role="status" aria-live="polite">Radar is off</small></div>
+              <button class="community-icon-button" id="refreshNearby" type="button" aria-label="Refresh nearby travelers" title="Refresh" disabled>↻</button>
+            </div>
+            <div class="nearby-list" id="nearbyList">
+              <div class="community-empty-state">
+                <span aria-hidden="true">⌁</span>
+                <strong>No location is being shared</strong>
+                <p>Turn on radar when you are ready to discover nearby travelers.</p>
+              </div>
+            </div>
+          </article>
+
+          <article class="chats-panel" id="chatsPanel">
+            <div class="chat-sidebar">
+              <div class="community-panel-head">
+                <div><small>MESSAGES</small><h3>Your conversations</h3></div>
+                <span class="online-indicator" id="chatConnectionState"><i></i> Preview</span>
+              </div>
+
+              <div class="chat-requests" id="chatRequests" hidden></div>
+
+              <button class="conversation-card kabsat-conversation" id="openKabsatFromChats" type="button">
+                <span class="conversation-avatar"><img src="assets/img/kabsat-avatar.svg" alt="" /></span>
+                <span><strong>Kabsat</strong><small>Your local travel companion</small></span>
+                <i aria-hidden="true">›</i>
+              </button>
+
+              <div class="conversation-list" id="conversationList">
+                <div class="community-empty-state compact">
+                  <strong>No traveler chats yet</strong>
+                  <p>Use Nearby to send someone a chat request.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="chat-room" id="chatRoom">
+              <div class="chat-room-head">
+                <button class="chat-back-button" id="chatBack" type="button" aria-label="Back to conversations">←</button>
+                <span class="conversation-avatar" id="activeChatAvatar" aria-hidden="true">🌲</span>
+                <div><strong id="activeChatName">Select a conversation</strong><small id="activeChatStatus">Anonymous traveler</small></div>
+                <button class="community-icon-button" id="toggleSafetyActions" type="button" aria-label="Conversation safety options" title="Safety options" disabled>•••</button>
+              </div>
+
+              <div class="chat-safety-actions" id="chatSafetyActions" hidden>
+                <label>
+                  <span>Report reason</span>
+                  <select id="reportReason">
+                    <option value="harassment">Harassment</option>
+                    <option value="spam">Spam or scam</option>
+                    <option value="unsafe">Unsafe behavior</option>
+                    <option value="other">Other</option>
+                  </select>
+                </label>
+                <button id="reportUser" type="button">Report</button>
+                <button id="endChat" type="button">End chat</button>
+                <button class="danger" id="blockUser" type="button">Block</button>
+              </div>
+
+              <div class="chat-messages" id="chatMessages" role="log" aria-live="polite" aria-relevant="additions">
+                <div class="community-empty-state">
+                  <span aria-hidden="true">✦</span>
+                  <strong>Private by design</strong>
+                  <p>Chat uses generated names. Avoid sharing your phone number, hotel room, or exact live location.</p>
+                </div>
+              </div>
+
+              <form class="community-chat-form" id="communityChatForm">
+                <label class="sr-only" for="communityChatInput">Message anonymous traveler</label>
+                <input id="communityChatInput" type="text" maxlength="600" autocomplete="off" placeholder="Select a conversation first…" disabled />
+                <button type="submit" aria-label="Send message" disabled>➜</button>
+              </form>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
     <section class="how-section" id="how-it-works">
       <div class="container how-layout">
         <div class="how-copy reveal">
@@ -441,6 +579,29 @@
     </div>
   </footer>
 
+  <nav class="mobile-tab-bar" id="mobileTabBar" aria-label="Mobile navigation">
+    <button class="mobile-tab active" type="button" data-mobile-tab="home" data-target="top" aria-current="page">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 10.5 12 3l8.5 7.5v9a1.5 1.5 0 0 1-1.5 1.5h-4.5v-6h-5v6H5a1.5 1.5 0 0 1-1.5-1.5z"/></svg>
+      <span>Home</span>
+    </button>
+    <button class="mobile-tab" type="button" data-mobile-tab="explore" data-target="destinations">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m16.5 16.5 4 4"/></svg>
+      <span>Explore</span>
+    </button>
+    <button class="mobile-tab mobile-tab-primary" type="button" data-mobile-tab="plan" data-target="planner">
+      <span class="mobile-tab-primary-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3v3M18 3v3M4 9h16M6 5h12a2 2 0 0 1 2 2v13H4V7a2 2 0 0 1 2-2Z"/><path d="m9 14 2 2 4-4"/></svg></span>
+      <span>Plan</span>
+    </button>
+    <button class="mobile-tab" type="button" data-mobile-tab="nearby" data-target="community">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="2"/><circle cx="12" cy="12" r="6"/><path d="M4.2 4.2a11 11 0 0 0 0 15.6M19.8 4.2a11 11 0 0 1 0 15.6"/></svg>
+      <span>Nearby</span>
+    </button>
+    <button class="mobile-tab" type="button" data-mobile-tab="chats" data-target="community">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3h11A2.5 2.5 0 0 1 20 5.5v8a2.5 2.5 0 0 1-2.5 2.5H10l-5.5 4v-4.8A2.5 2.5 0 0 1 4 13.7Z"/></svg>
+      <span>Chats</span><i class="mobile-tab-badge" id="mobileChatBadge" hidden>0</i>
+    </button>
+  </nav>
+
   <section class="kabsat-bot" id="kabsatBot" aria-label="Kabsat, your Baguio travel companion">
     <button class="kabsat-teaser" id="kabsatTeaser" type="button" aria-label="Open Kabsat chat" hidden>
       <span class="kabsat-teaser-sparkle" aria-hidden="true">✦</span>
@@ -493,5 +654,7 @@
   <script src="assets/js/data.js"></script>
   <script src="assets/js/app.js"></script>
   <script src="assets/js/bot.js"></script>
+  <script src="assets/js/community-config.js"></script>
+  <script src="assets/js/community.js"></script>
 </body>
 </html>

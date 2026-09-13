@@ -30,6 +30,8 @@ Opening `index.html` directly also works for most features, but Live Server is r
 - Mobile step navigation that highlights the current section while scrolling
 - Restored information, travel-reminder, call-to-action, and full footer sections
 - Kabsat, a Taglish emotional-support and travel-companion bot with quick replies, Baguio-curse conversation, trip-aware reactions, mute controls, and a guided breathing pause
+- Mobile app-style navigation with Home, Explore, Plan, Nearby, and Chats tabs
+- Privacy-first anonymous traveler discovery and real-time chat frontend
 
 ## Color palette
 
@@ -105,6 +107,35 @@ The avatar is located at:
 assets/img/kabsat-avatar.svg
 ```
 
+## Mobile navigation
+
+Phones up to `760px` wide use a fixed five-button navigation bar:
+
+- **Home** returns to the landing content.
+- **Explore** opens destination search and filters.
+- **Plan** is the emphasized primary action and opens a generated itinerary on a second tap when one is available.
+- **Nearby** opens the opt-in traveler radar.
+- **Chats** opens chat requests, conversations, and the Kabsat shortcut.
+
+The navigation respects device safe-area insets. Kabsat and toast messages are repositioned above it so controls do not overlap.
+
+## Anonymous nearby chat
+
+The community interface starts in clearly labeled **Preview mode**. Preview travelers are sample UI data, and preview messages never leave the browser.
+
+To enable real-time nearby discovery and chat:
+
+1. Create a Supabase project.
+2. Open the Supabase SQL editor and run `supabase/community.sql`.
+3. In Supabase Authentication, enable **Anonymous Sign-Ins**.
+4. Edit `assets/js/community-config.js`.
+5. Add the project URL and browser-safe publishable key, then set `enabled: true`.
+6. Serve the website over HTTPS or `localhost`; browser geolocation will not work on an ordinary insecure HTTP origin.
+
+The SQL setup includes Row Level Security, anonymous profiles, opt-in presence, coarse-distance lookup, chat requests, conversations, messages, blocks, reports, basic request/message rate limits, and realtime subscriptions. The browser client never receives another traveler's coordinates. Presence older than two minutes is excluded from discovery.
+
+For production, add CAPTCHA or another edge-level abuse-control layer to anonymous sign-in, a moderation workflow for reports, and a trusted scheduled call to `cleanup_stale_presence()`. Never place a Supabase `service_role` or secret key in browser JavaScript.
+
 ## Data and fare notes
 
 `assets/js/data.js` contains:
@@ -136,7 +167,11 @@ lakbay-baguio/
     └── js/
         ├── data.js
         ├── app.js
-        └── bot.js
+        ├── bot.js
+        ├── community-config.js
+        └── community.js
+└── supabase/
+    └── community.sql
 ```
 
 ## Mobile printing

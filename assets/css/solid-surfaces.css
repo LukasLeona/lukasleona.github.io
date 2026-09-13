@@ -3,32 +3,89 @@
 /* Hero */
 #hero,
 #main > section#hero {
+  --hero-star: rgba(238, 240, 244, .58);
+  --hero-star-accent: rgba(235, 176, 32, .82);
+  --hero-star-faint: rgba(238, 240, 244, .26);
   background: #0d0e10 !important;
 }
 
-#hero::before,
-#hero::after {
+#hero::before {
   content: none !important;
   display: none !important;
   background: none !important;
   animation: none !important;
 }
 
+#hero::after {
+  content: "" !important;
+  position: absolute !important;
+  inset: auto !important;
+  top: 4% !important;
+  left: 3% !important;
+  z-index: 1 !important;
+  display: block !important;
+  width: 2px !important;
+  height: 2px !important;
+  border-radius: 50% !important;
+  background: var(--hero-star-accent) !important;
+  box-shadow:
+    7vw 8vh 0 var(--hero-star),
+    16vw 20vh 0 var(--hero-star-faint),
+    26vw 10vh 0 var(--hero-star-accent),
+    35vw 27vh 0 var(--hero-star),
+    44vw 6vh 0 var(--hero-star-faint),
+    54vw 18vh 0 var(--hero-star),
+    65vw 9vh 0 var(--hero-star-accent),
+    76vw 23vh 0 var(--hero-star-faint),
+    86vw 7vh 0 var(--hero-star),
+    11vw 39vh 0 var(--hero-star-accent),
+    22vw 52vh 0 var(--hero-star),
+    32vw 42vh 0 var(--hero-star-faint),
+    47vw 57vh 0 var(--hero-star-accent),
+    59vw 39vh 0 var(--hero-star-faint),
+    72vw 50vh 0 var(--hero-star),
+    84vw 38vh 0 var(--hero-star-accent),
+    6vw 68vh 0 var(--hero-star-faint),
+    18vw 78vh 0 var(--hero-star),
+    39vw 71vh 0 var(--hero-star-accent),
+    57vw 82vh 0 var(--hero-star),
+    69vw 67vh 0 var(--hero-star-faint),
+    81vw 79vh 0 var(--hero-star-accent),
+    90vw 61vh 0 var(--hero-star);
+  pointer-events: none !important;
+  opacity: .82 !important;
+  animation: none !important;
+  mask-image: none !important;
+  -webkit-mask-image: none !important;
+}
+
 #hero .hero-work-btn {
+  color: #17181b !important;
   background: #ebb020 !important;
 }
 
 #hero .hero-work-btn:hover,
 #hero .hero-work-btn:focus-visible {
+  color: #111214 !important;
   background: #f3bd37 !important;
+}
+
+#hero .hero-work-arrow,
+#hero .hero-work-btn:hover .hero-work-arrow,
+#hero .hero-work-btn:focus-visible .hero-work-arrow {
+  color: #17181b !important;
 }
 
 html[data-theme="light"] #hero,
 html[data-theme="light"] #main > section#hero {
+  --hero-star: rgba(69, 73, 81, .4);
+  --hero-star-accent: rgba(187, 133, 0, .65);
+  --hero-star-faint: rgba(69, 73, 81, .18);
   background: #f5f4ef !important;
 }
 
 html[data-theme="light"] #hero .hero-work-btn {
+  color: #111317 !important;
   background: #d99a00 !important;
 }
 
