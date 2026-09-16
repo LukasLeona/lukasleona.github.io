@@ -1,179 +1,118 @@
 # Lakbay Baguio
 
-A responsive, single-page Baguio itinerary planner built with HTML, CSS, and vanilla JavaScript.
+Lakbay Baguio is now a mobile-first Next.js application with five independent product areas:
 
-## Open the project
+- **Home** — brand story, pending itinerary, restaurant discovery, restaurant-owner inquiry, and Kabsat
+- **Explore** — searchable parks and attractions, restaurants, and hotels
+- **Plan** — an itinerary generator that clusters stops and saves a pending trip locally
+- **Nearby** — time-limited traveler discovery with a privacy-safe MapLibre map
+- **Chats** — anonymous requests, conversations, real-time messages, unread counts, and safety actions
 
-1. Extract the project folder.
-2. Open it in VS Code.
-3. Run `index.html` with the Live Server extension.
+The original static `index.html`, `assets/`, and `v2/` folders remain in the repository as migration references. The Next.js application in `app/`, `components/`, and `lib/` is the new entry point.
 
-Opening `index.html` directly also works for most features, but Live Server is recommended for Google Maps previews, browser location access, and local testing.
+## Requirements
 
-## Main features
+- Node.js **20.9 or newer** (Node 22 LTS is recommended)
+- npm
+- A Supabase project for live Nearby, Chats, and restaurant inquiries
 
-- Sticky three-step navigation that follows the active planner section
-- Trip planning for 1 to 5 days
-- Victory Liner, Gov. Pack, Genesis Transport, and JoyBus starting points
-- Early-arrival baggage-storage suggestions for supported terminals
-- 48 destination cards with a working horizontal carousel and touch swiping
-- Destination-name overlays that remain visible after photos are replaced
-- Improved Must visit badges and highly visible selected states
-- Selected-place chips that wrap, scroll vertically, and never require sideways scrolling
-- Individual remove buttons and Clear all
-- Automatic destination selection by travel theme
-- Route ordering based on distance, time windows, and visit duration
-- Night-only scheduling for Baguio Night Market
-- Walk, jeepney, and taxi icons, fare estimates, and step-by-step directions
-- Google Maps destination previews and external multi-stop route links
-- Local browser saving, itinerary copying, desktop printing / PDF saving, and mobile responsiveness
-- Mobile step navigation that highlights the current section while scrolling
-- Restored information, travel-reminder, call-to-action, and full footer sections
-- Kabsat, a Taglish emotional-support and travel-companion bot with quick replies, Baguio-curse conversation, trip-aware reactions, mute controls, and a guided breathing pause
-- Mobile app-style navigation with Home, Explore, Plan, Nearby, and Chats tabs
-- Privacy-first anonymous traveler discovery and real-time chat frontend
+The project uses Next.js 16 App Router, TypeScript, React, Supabase, MapLibre GL, and Lucide icons.
 
-## Color palette
+## Local development
 
-```text
-#819A91  Primary sage
-#A7C1A8  Secondary sage
-#D1D8BE  Soft sage
-#EEEFE0  Cream background
-#FFA02E  Orange highlight
-#FFEF91  Yellow highlight
+```bash
+npm install
+copy .env.example .env.local
+npm run dev
 ```
 
-## Destination image size
+Open `http://localhost:3000`.
 
-Replace destination images inside:
+Without Supabase environment values, Nearby and Chats run in a non-persistent preview mode. This makes the full UI reviewable while clearly labeling that it is not live.
 
-```text
-assets/img/destinations/
+Useful checks:
+
+```bash
+npm run lint
+npm run build
+npm audit
 ```
 
-Recommended dimensions:
+## Environment variables
 
-```text
-800 × 500 pixels
+Copy `.env.example` to `.env.local` and set:
+
+```dotenv
+NEXT_PUBLIC_SUPABASE_URL=https://YOUR_PROJECT.supabase.co
+NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=YOUR_PUBLISHABLE_KEY
+SUPABASE_SERVICE_ROLE_KEY=YOUR_SERVER_ONLY_SERVICE_ROLE_KEY
+NEXT_PUBLIC_MAP_STYLE_URL=https://demotiles.maplibre.org/style.json
 ```
 
-A larger `1200 × 750` image also works. Keep the same filename and use an 8:5 landscape ratio. CSS uses `object-fit: cover`, so images crop neatly without changing card dimensions.
+`NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` is browser-safe when Row Level Security is correctly configured. `SUPABASE_SERVICE_ROLE_KEY` is server-only and must never be prefixed with `NEXT_PUBLIC_`, copied into browser code, or committed.
 
-Examples:
+For production, replace the development map style with a production-ready MapLibre-compatible provider and follow that provider's attribution and usage requirements.
 
-```text
-assets/img/destinations/burnham-park.jpg
-assets/img/destinations/camp-john-hay.jpg
-assets/img/destinations/igorot-stone-kingdom.jpg
-```
-
-Destination labels are HTML text, not part of the photos, so names remain visible after images are replaced.
-
-## Google Maps
-
-The project uses:
-
-- Standard Google Maps search URLs
-- Google Maps directions URLs for each route leg
-- Multi-stop Google Maps URLs for each itinerary day
-- A no-key Google Maps place preview iframe
-
-A paid Google Maps API key is not required for the current implementation. The embedded preview shows a selected place, while the route buttons open full directions in Google Maps.
-
-## Kabsat travel companion
-
-Kabsat is a fully local, scripted bot. It does not require an API key, internet connection, or paid AI service. It includes:
-
-- A floating avatar with short speech-bubble messages that pop out beside it
-- Several rotating Taglish prompts per visit, with click-to-open chat behavior
-- Taglish comfort, solo-trip, couple-trip, barkada, food, weather, and itinerary messages
-- An interactive Baguio-curse conversation
-- Context messages when destinations are selected or an itinerary is generated
-- A 30-second guided breathing pause
-- Mute and close controls
-- Mobile-friendly chat layout
-- A clear notice that it is not professional counseling or live transport advice
-
-Edit its messages and conversation branches inside:
-
-```text
-assets/js/bot.js
-```
-
-The avatar is located at:
-
-```text
-assets/img/kabsat-avatar.svg
-```
-
-## Mobile navigation
-
-Phones up to `760px` wide use a fixed five-button navigation bar:
-
-- **Home** returns to the landing content.
-- **Explore** opens destination search and filters.
-- **Plan** is the emphasized primary action and opens a generated itinerary on a second tap when one is available.
-- **Nearby** opens the opt-in traveler radar.
-- **Chats** opens chat requests, conversations, and the Kabsat shortcut.
-
-The navigation respects device safe-area insets. Kabsat and toast messages are repositioned above it so controls do not overlap.
-
-## Anonymous nearby chat
-
-The community interface starts in clearly labeled **Preview mode**. Preview travelers are sample UI data, and preview messages never leave the browser.
-
-To enable real-time nearby discovery and chat:
+## Supabase setup
 
 1. Create a Supabase project.
-2. Open the Supabase SQL editor and run `supabase/community.sql`.
-3. In Supabase Authentication, enable **Anonymous Sign-Ins**.
-4. Edit `assets/js/community-config.js`.
-5. Add the project URL and browser-safe publishable key, then set `enabled: true`.
-6. Serve the website over HTTPS or `localhost`; browser geolocation will not work on an ordinary insecure HTTP origin.
+2. Open **Authentication → Providers → Anonymous Sign-Ins** and enable anonymous sign-ins.
+3. Run [`supabase/community.sql`](supabase/community.sql) in the SQL editor.
+4. Add the three Supabase values to `.env.local`.
+5. Restart the Next.js development server.
 
-The SQL setup includes Row Level Security, anonymous profiles, opt-in presence, coarse-distance lookup, chat requests, conversations, messages, blocks, reports, basic request/message rate limits, and realtime subscriptions. The browser client never receives another traveler's coordinates. Presence older than two minutes is excluded from discovery.
+The SQL installs PostGIS and creates:
 
-For production, add CAPTCHA or another edge-level abuse-control layer to anonymous sign-in, a moderation workflow for reports, and a trusted scheduled call to `cleanup_stale_presence()`. Never place a Supabase `service_role` or secret key in browser JavaScript.
+- anonymous profiles
+- protected exact presence
+- nearby discovery RPCs
+- chat requests and conversations
+- conversation messages and Realtime publication
+- blocks, reports, chat ending, and basic request/message rate limits
+- restaurant inquiries readable only through the server-side service role
 
-## Data and fare notes
+## Nearby privacy model
 
-`assets/js/data.js` contains:
+- Exact coordinates are stored only in the protected `presence` table.
+- The browser cannot select from `presence` directly.
+- Other travelers receive a distance band and coordinates rounded to a coarse map cell, not exact coordinates.
+- Presence is discoverable only while fresh and is refreshed by an active page heartbeat.
+- The user chooses a 15, 30, or 60 minute visibility window and can go offline immediately.
+- Discovery is limited to roughly 5 km and excludes blocked users.
+- Starting a conversation requires an accepted request.
 
-- Attractions and side trips
-- Approximate coordinates
-- Planning hours
-- Suggested visit durations
-- Activity suggestions
-- General jeepney-loading guidance
-- Terminal baggage suggestions
+This is a safer baseline, not a substitute for a formal privacy and abuse review before public launch. Production should also add server-side moderation operations, retention/deletion policies, monitoring, and scheduled stale-presence cleanup.
 
-Transport instructions, attraction hours, storage availability, and fares can change. The interface deliberately labels them as estimates and tells tourists to verify details locally.
+## Restaurant inquiries
 
-## Files
+Restaurant owners use `/partner`. The form posts to `/api/restaurant-inquiries`, which:
+
+- validates required values on the server
+- uses a honeypot for simple bot traffic
+- limits repeated submissions from the same email
+- writes with a server-only Supabase client
+- makes no promise of automatic or paid placement
+
+No inquiry data is stored when Supabase is not configured; the UI returns a clear setup message instead.
+
+## Project map
 
 ```text
-lakbay-baguio/
-├── index.html
-├── README.md
-└── assets/
-    ├── css/
-    │   └── style.css
-    ├── img/
-    │   ├── logo.svg
-    │   ├── favicon.svg
-    │   ├── kabsat-avatar.svg
-    │   └── destinations/
-    └── js/
-        ├── data.js
-        ├── app.js
-        ├── bot.js
-        ├── community-config.js
-        └── community.js
-└── supabase/
-    └── community.sql
+app/
+  api/restaurant-inquiries/route.ts
+  chats/page.tsx
+  explore/page.tsx
+  nearby/page.tsx
+  partner/page.tsx
+  plan/page.tsx
+  globals.css
+  layout.tsx
+  page.tsx
+components/
+lib/
+  supabase/
+public/assets/img/
+supabase/community.sql
 ```
 
-## Mobile printing
-
-The Print / Save PDF control is hidden on narrow mobile screens because browser printing support is inconsistent across mobile devices. Tourists can still copy the complete itinerary on mobile. On desktop and supported tablets, the print button opens the system print dialog, where the plan can be saved as a PDF.
+Kabsat is imported only by `app/page.tsx`, so it is intentionally absent from Explore, Plan, Nearby, Chats, and Partner.

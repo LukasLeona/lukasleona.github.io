@@ -280,6 +280,14 @@
       await refreshNearby();
       startPresenceHeartbeat();
     } catch (error) {
+      if (state.backendReady && state.client) {
+        try { await state.client.rpc("set_presence_offline"); } catch { /* Stale presence is excluded after two minutes. */ }
+      }
+      state.radarActive = false;
+      state.position = null;
+      state.nearby = [];
+      setRadarActiveUI(false);
+      renderNearby();
       setRadarBusy(false, locationErrorMessage(error));
       showToast(locationErrorMessage(error));
     }
@@ -290,14 +298,21 @@
     state.radarActive = false;
     state.position = null;
     state.nearby = [];
+    let stopError = null;
 
     if (state.backendReady && state.client) {
-      try { await state.client.rpc("set_presence_offline"); } catch { /* Stale presence expires automatically. */ }
+      try {
+        const { error } = await state.client.rpc("set_presence_offline");
+        if (error) stopError = error;
+      } catch (error) {
+        stopError = error;
+      }
     }
 
     setRadarActiveUI(false);
     renderNearby();
     ui.nearbyStatus.textContent = "Radar is off";
+    if (stopError) throw stopError;
   }
 
   function setRadarBusy(busy, status) {
@@ -389,6 +404,22 @@
 
     try {
       await initializeBackend();
+      await loadIncomingRequests();
+      const reciprocalRequest = state.incomingRequests.find((request) => request.sender_id === person.user_id);
+      if (reciprocalRequest) {
+        const { data: conversationId, error: acceptError } = await state.client.rpc("respond_to_chat_request", {
+          p_request_id: reciprocalRequest.request_id,
+          p_accept: true
+        });
+        if (acceptError) throw acceptError;
+        await loadCommunityData();
+        const conversation = state.conversations.find((item) => item.conversation_id === conversationId);
+        if (conversation) {
+          updateCommunityView("chats", true);
+          await openConversation(conversation);
+        }
+        return;
+      }
       const { error } = await state.client.rpc("request_chat", { p_target_user_id: person.user_id });
       if (error) throw error;
       button.textContent = "Requested";
@@ -482,6 +513,7 @@
     state.presenceTimer = window.setInterval(async () => {
       if (!state.radarActive || document.hidden) return;
       try {
+        state.position = await getApproximatePosition();
         await publishPresence();
         await refreshNearby();
       } catch {
@@ -754,9 +786,7 @@
     }
     ui.blockUser.disabled = false;
 
-    state.activeConversation = null;
-    state.messages = [];
-    ui.chatsPanel.classList.remove("room-open");
+    resetChatRoom();
     await loadCommunityData();
     if (state.radarActive) await refreshNearby();
     showToast("Traveler blocked.");
@@ -780,11 +810,31 @@
     }
 
     ui.endChat.disabled = false;
+    resetChatRoom();
+    await loadCommunityData();
+    showToast("Conversation ended.");
+  }
+
+  function resetChatRoom() {
     state.activeConversation = null;
     state.messages = [];
     ui.chatsPanel.classList.remove("room-open");
-    await loadCommunityData();
-    showToast("Conversation ended.");
+    ui.activeChatName.textContent = "Select a conversation";
+    ui.activeChatStatus.textContent = "Anonymous traveler";
+    ui.activeChatAvatar.textContent = "🌲";
+    ui.activeChatAvatar.style.removeProperty("--avatar-bg");
+    ui.toggleSafety.disabled = true;
+    ui.safetyActions.hidden = true;
+    ui.input.value = "";
+    ui.input.disabled = true;
+    ui.input.placeholder = "Select a conversation first…";
+    $("button[type='submit']", ui.form).disabled = true;
+    ui.messages.innerHTML = `
+      <div class="community-empty-state">
+        <span aria-hidden="true">✦</span>
+        <strong>Private by design</strong>
+        <p>Chat uses generated names. Avoid sharing your phone number, hotel room, or exact live location.</p>
+      </div>`;
   }
 
   function setUnreadCount(count) {

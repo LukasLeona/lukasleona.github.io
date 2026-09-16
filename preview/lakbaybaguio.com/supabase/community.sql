@@ -1,7 +1,7 @@
 -- Lakbay Baguio anonymous nearby chat
 -- Run this entire file in the Supabase SQL editor, then enable Anonymous Sign-Ins.
 -- Exact coordinates are stored only in the protected presence table. The public
--- API returns coarse distance bands and never returns latitude or longitude.
+-- API returns distance bands plus coordinates rounded to a coarse map cell.
 
 begin;
 
@@ -94,6 +94,24 @@ create table if not exists public.reports (
   check (reporter_id <> reported_id)
 );
 
+create table if not exists public.restaurant_inquiries (
+  id uuid primary key default gen_random_uuid(),
+  restaurant_name text not null check (char_length(restaurant_name) between 2 and 100),
+  contact_name text not null check (char_length(contact_name) between 2 and 80),
+  email text not null check (char_length(email) between 5 and 160),
+  phone text check (phone is null or char_length(phone) <= 30),
+  address text not null check (char_length(address) between 5 and 240),
+  social_url text check (social_url is null or char_length(social_url) <= 300),
+  message text not null check (char_length(message) between 20 and 1200),
+  status text not null default 'new' check (status in ('new', 'reviewing', 'contacted', 'declined', 'featured')),
+  consented_at timestamptz not null,
+  created_at timestamptz not null default now(),
+  reviewed_at timestamptz
+);
+
+create index if not exists restaurant_inquiries_email_created_idx
+  on public.restaurant_inquiries (email, created_at desc);
+
 alter table public.profiles enable row level security;
 alter table public.presence enable row level security;
 alter table public.chat_requests enable row level security;
@@ -102,6 +120,7 @@ alter table public.conversation_members enable row level security;
 alter table public.messages enable row level security;
 alter table public.blocks enable row level security;
 alter table public.reports enable row level security;
+alter table public.restaurant_inquiries enable row level security;
 
 create or replace function public.can_access_conversation(p_conversation_id uuid)
 returns boolean
@@ -234,12 +253,11 @@ language sql
 security definer
 set search_path = public
 as $$
-  update public.presence
-  set is_discoverable = false, last_seen = now()
-  where user_id = auth.uid();
+  delete from public.presence where user_id = auth.uid();
 $$;
 
 drop function if exists public.nearby_profiles(double precision, double precision, integer);
+drop function if exists public.nearby_profiles(integer);
 
 create or replace function public.nearby_profiles(p_radius_meters integer default 5000)
 returns table (
@@ -247,6 +265,8 @@ returns table (
   alias text,
   avatar_seed integer,
   distance_band text,
+  display_latitude double precision,
+  display_longitude double precision,
   last_seen timestamptz
 )
 language sql
@@ -266,6 +286,7 @@ as $$
       p.alias,
       p.avatar_seed,
       pr.last_seen,
+      pr.location,
       st_distance(pr.location, origin.point) as distance_meters
     from public.presence pr
     join public.profiles p on p.user_id = pr.user_id
@@ -291,6 +312,8 @@ as $$
       when distance_meters < 3000 then '1.5–3 km'
       else '3–5 km'
     end as distance_band,
+    round(st_y(candidates.location::geometry)::numeric, 2)::double precision as display_latitude,
+    round(st_x(candidates.location::geometry)::numeric, 2)::double precision as display_longitude,
     candidates.last_seen
   from candidates
   order by distance_meters
@@ -301,7 +324,7 @@ create or replace function public.request_chat(p_target_user_id uuid)
 returns uuid
 language plpgsql
 security definer
-set search_path = public
+set search_path = public, extensions
 as $$
 declare
   v_request_id uuid;
@@ -310,10 +333,15 @@ begin
     raise exception 'Invalid chat request';
   end if;
   if not exists (
-    select 1 from public.presence
-    where user_id = p_target_user_id
-      and is_discoverable
-      and last_seen > now() - interval '2 minutes'
+    select 1
+    from public.presence mine
+    join public.presence target on target.user_id = p_target_user_id
+    where mine.user_id = auth.uid()
+      and mine.is_discoverable
+      and target.is_discoverable
+      and mine.last_seen > now() - interval '2 minutes'
+      and target.last_seen > now() - interval '2 minutes'
+      and st_dwithin(mine.location, target.location, 5000)
   ) then
     raise exception 'That traveler is no longer available';
   end if;
@@ -589,7 +617,10 @@ create trigger messages_rate_limit
   for each row execute function public.enforce_message_rate_limit();
 
 revoke all on public.profiles, public.presence, public.chat_requests, public.conversations,
-  public.conversation_members, public.messages, public.blocks, public.reports from anon, authenticated;
+  public.conversation_members, public.messages, public.blocks, public.reports,
+  public.restaurant_inquiries from anon, authenticated;
+
+grant all on public.restaurant_inquiries to service_role;
 
 grant select, insert, update on public.profiles to authenticated;
 grant select on public.chat_requests, public.conversations, public.conversation_members to authenticated;
@@ -630,14 +661,24 @@ grant execute on function public.cleanup_stale_presence() to service_role;
 
 do $$
 begin
-  alter publication supabase_realtime add table public.messages;
-exception when duplicate_object then null;
+  if exists (select 1 from pg_publication where pubname = 'supabase_realtime')
+    and not exists (
+      select 1 from pg_publication_tables
+      where pubname = 'supabase_realtime' and schemaname = 'public' and tablename = 'messages'
+    ) then
+    alter publication supabase_realtime add table public.messages;
+  end if;
 end $$;
 
 do $$
 begin
-  alter publication supabase_realtime add table public.chat_requests;
-exception when duplicate_object then null;
+  if exists (select 1 from pg_publication where pubname = 'supabase_realtime')
+    and not exists (
+      select 1 from pg_publication_tables
+      where pubname = 'supabase_realtime' and schemaname = 'public' and tablename = 'chat_requests'
+    ) then
+    alter publication supabase_realtime add table public.chat_requests;
+  end if;
 end $$;
 
 commit;
