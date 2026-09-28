@@ -1044,6 +1044,20 @@ html[data-theme="light"] .lumo-visualizer[data-state="speaking"] {
   line-height: 1.55;
 }
 
+.portfolio-packages-page-link {
+  color: #71520b;
+  font-weight: 800;
+  text-decoration: underline;
+  text-decoration-color: rgba(137, 104, 21, .38);
+  text-underline-offset: 3px;
+}
+
+.portfolio-packages-page-link:hover,
+.portfolio-packages-page-link:focus-visible {
+  color: #3f2d05;
+  text-decoration-color: currentColor;
+}
+
 .portfolio-packages-head > button {
   width: 38px;
   height: 38px;
