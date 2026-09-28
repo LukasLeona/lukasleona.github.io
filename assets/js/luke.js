@@ -3427,7 +3427,7 @@ function portfolioChatbot() {
     ) {
       return {
         messages: [
-          "Luke’s website projects generally range from ₱3,000 to ₱10,000, depending on the number of pages, design complexity, forms, integrations, content, and turnaround time.",
+          "Luke’s website packages range from ₱5,000 to ₱20,000, depending on the number of pages, design complexity, forms, integrations, content, and turnaround time.",
           "Share the type of website you need and Luke can give you a clearer estimate."
         ],
         action: {
