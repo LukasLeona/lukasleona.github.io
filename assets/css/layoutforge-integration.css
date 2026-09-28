@@ -1378,14 +1378,36 @@ html[data-theme="light"] .lumo-visualizer[data-state="speaking"] {
   width: 100%;
   min-width: 0;
   padding: 10px 11px;
-  color: #202329;
-  background: #fff;
-  border: 1px solid #cdced0;
+  color: #202329 !important;
+  -webkit-text-fill-color: #202329;
+  caret-color: #202329;
+  background: #fff !important;
+  border: 1px solid #cdced0 !important;
   border-radius: 8px;
   outline: 0;
   font: inherit;
   font-size: 10px;
   transition: border-color .18s ease, box-shadow .18s ease;
+}
+
+.portfolio-package-inquiry-form input::placeholder,
+.portfolio-package-inquiry-form textarea::placeholder {
+  color: #747982 !important;
+  -webkit-text-fill-color: #747982;
+  opacity: 1;
+}
+
+.portfolio-package-inquiry-form select option {
+  color: #202329;
+  background: #fff;
+}
+
+.portfolio-package-inquiry-form input:-webkit-autofill,
+.portfolio-package-inquiry-form input:-webkit-autofill:hover,
+.portfolio-package-inquiry-form input:-webkit-autofill:focus,
+.portfolio-package-inquiry-form textarea:-webkit-autofill {
+  -webkit-text-fill-color: #202329 !important;
+  box-shadow: 0 0 0 1000px #fff inset !important;
 }
 
 .portfolio-package-inquiry-form input:not([type="checkbox"]),
