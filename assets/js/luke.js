@@ -3506,7 +3506,7 @@ function portfolioChatbot() {
     ) {
       return {
         messages: [
-          "For web work, start with Slow Pour, Lakbay Baguio, LayoutLetter, Cloud Chaser, or MeBS Construction.",
+          "For web work, start with Baguio Itinerary Generator, FORMA, Canyon Ranch, Cloud Chaser, or Slow Pour.",
           "For analytics, the LET and Spending Behavior case studies show Luke’s data workflow and interpretation."
         ],
         action: {
@@ -3522,12 +3522,12 @@ function portfolioChatbot() {
     ) {
       return {
         messages: [
-          "Lakbay Baguio is a travel-planning web experience for discovering local places and creating a Baguio itinerary.",
+          "Baguio Itinerary Generator is a travel-planning web experience for discovering local places and creating a practical trip plan.",
           "It also includes a friendly emotional-support style guide that adds personality to the trip-planning experience."
         ],
         action: {
-          label: "Open Lakbay Baguio",
-          href: "preview/lakbaybaguio.com/index.html",
+          label: "Open Baguio Itinerary Generator",
+          href: "https://baguiobuddy.com",
           external: true
         }
       };
@@ -5819,7 +5819,7 @@ function interactivePortfolio() {
     fire:{category:"WEB • LMS • SEO",title:"Fire & Rescue Academy",summary:"A professional digital training platform for emergency-services education, course delivery, and online discoverability.",contribution:["Responsive website development","LMS course structure and delivery","SEO and content optimization","Technical troubleshooting"],stack:["WordPress CMS","Tutor LMS","CSS3","SEO"],links:[{label:"Visit Live",url:"https://fireandrescueacademy.com/",external:true}]},
     iskolar:{category:"WEB • PLATFORM",title:"IskolarLink",summary:"A student information and coordination platform that brings academic communication and workflows into one clearer environment.",contribution:["React front-end development","Information architecture","Responsive implementation","Academic workflow presentation"],stack:["React.js","JavaScript ES6+","UI Structure"],links:[{label:"Open Project",url:"preview/IskolarLink.com/IskolarLink-main/#/",external:true}]},
     corporate:{category:"WEB • CORPORATE",title:"Disaster Response & Training",summary:"A professional corporate website for a disaster-response and training organization.",contribution:["Website design and development","Responsive implementation","Content structure","Digital presence improvements"],stack:["WordPress CMS","Responsive","Content"],links:[{label:"Visit Live",url:"https://conquerorscc.com/",external:true}]},
-    lakbay:{category:"WEB • TRAVEL APP",title:"Lakbay Baguio",summary:"A Baguio itinerary experience with local discovery, trip planning, and a conversational emotional-support concept.",contribution:["Travel-focused UI","Interactive itinerary flow","Responsive front end","Conversational support concept"],stack:["HTML5","CSS3","JavaScript ES6+"],links:[{label:"Open Project",url:"preview/lakbaybaguio.com/index.html",external:true}]},
+    lakbay:{category:"WEB • TRAVEL APP",title:"Baguio Itinerary Generator",summary:"A Baguio itinerary experience with local discovery, trip planning, and a conversational emotional-support concept.",contribution:["Travel-focused UI","Interactive itinerary flow","Responsive front end","Conversational support concept"],stack:["HTML5","CSS3","JavaScript ES6+"],links:[{label:"Open Project",url:"https://baguiobuddy.com",external:true}]},
     mebs:{category:"WEB • CONSTRUCTION",title:"MeBS Construction",summary:"A modern construction-company website focused on engineering credibility and project presentation.",contribution:["Website repurposing","Industry-specific content adaptation","Responsive UI refinement","Brand interaction improvements"],stack:["HTML5","CSS3","JavaScript ES6+","UI/UX"],links:[{label:"Open Project",url:"preview/mebsconstruction.com/index.html",external:true}]},
     cloudchaser:{category:"WEB • TRAVEL",title:"Cloud Chaser",summary:"A polished travel-agency experience for curated Philippine and Asian trips.",contribution:["Travel website repurposing","Itinerary content structure","Responsive refinement","Conversion improvements"],stack:["HTML5","CSS3","JavaScript ES6+","Travel UX"],links:[{label:"Open Trips",url:"preview/cloudchaser.com/trips.html",external:true}]},
     renlette:{category:"WEB • RESCUE, SAFETY & PPE",title:"Renlette Trading",summary:"A responsive supplier website for rescue, firefighting, construction PPE, medical, and emergency equipment across the Philippines.",contribution:["Industry-focused website structure","Responsive product and service presentation","Clear inquiry pathways","Safety-supply brand experience"],stack:["HTML5","CSS3","JavaScript ES6+","Responsive UI"],links:[{label:"Open Project",url:"/preview/Renlette/index.html",external:true}]},
