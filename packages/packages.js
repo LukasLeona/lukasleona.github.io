@@ -33,7 +33,7 @@
     ].join("\n");
 
     if (!window.emailjs) {
-      status.textContent = "The inquiry service is unavailable. Please email lukemarkleona9@gmail.com.";
+      status.textContent = "The inquiry service is unavailable. Please email luke@lukasleona.com.";
       status.className = "error";
       return;
     }
@@ -51,7 +51,7 @@
         submit.disabled = false;
         submit.innerHTML = 'Send package inquiry <i class="bi bi-send" aria-hidden="true"></i>';
       }, function () {
-        status.textContent = "Could not send the inquiry. Please try again or email lukemarkleona9@gmail.com.";
+        status.textContent = "Could not send the inquiry. Please try again or email luke@lukasleona.com.";
         status.className = "error";
         submit.disabled = false;
         submit.innerHTML = 'Send package inquiry <i class="bi bi-send" aria-hidden="true"></i>';

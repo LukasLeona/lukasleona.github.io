@@ -756,7 +756,7 @@ packageInquiryForm.addEventListener("submit", async (event) => {
   ].join("\n");
 
   if (!emailJsReady || !window.emailjs) {
-    packageFormStatus.textContent = "The inquiry service is unavailable. Please email lukemarkleona9@gmail.com.";
+    packageFormStatus.textContent = "The inquiry service is unavailable. Please email luke@lukasleona.com.";
     packageFormStatus.classList.add("error");
     return;
   }
@@ -771,7 +771,7 @@ packageInquiryForm.addEventListener("submit", async (event) => {
     packageInquiryForm.reset();
     showPackageSuccess();
   } catch (error) {
-    packageFormStatus.textContent = "Could not send the inquiry. Please try again or email lukemarkleona9@gmail.com.";
+    packageFormStatus.textContent = "Could not send the inquiry. Please try again or email luke@lukasleona.com.";
     packageFormStatus.classList.add("error");
   } finally {
     packageSubmit.disabled = false;

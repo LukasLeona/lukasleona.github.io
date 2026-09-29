@@ -452,7 +452,7 @@
     ].join("\n");
 
     if (!window.emailjs) {
-      packageFormStatus.textContent = "The inquiry service is unavailable. Please email lukemarkleona9@gmail.com.";
+      packageFormStatus.textContent = "The inquiry service is unavailable. Please email luke@lukasleona.com.";
       packageFormStatus.classList.add("error");
       return;
     }
@@ -469,7 +469,7 @@
         packageSubmit.disabled = false;
         packageSubmit.innerHTML = 'Send package inquiry <i class="bi bi-send" aria-hidden="true"></i>';
       }, function () {
-        packageFormStatus.textContent = "Could not send the inquiry. Please try again or email lukemarkleona9@gmail.com.";
+        packageFormStatus.textContent = "Could not send the inquiry. Please try again or email luke@lukasleona.com.";
         packageFormStatus.classList.add("error");
         packageSubmit.disabled = false;
         packageSubmit.innerHTML = 'Send package inquiry <i class="bi bi-send" aria-hidden="true"></i>';
