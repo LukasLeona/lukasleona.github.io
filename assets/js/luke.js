@@ -2244,6 +2244,60 @@ function portfolioChatbot() {
     });
   }
 
+  function isPortfolioRelatedQuestion(value) {
+    return /\b(luke|lumo|lukas|portfolio|project|website|web app|service|skill|resume|cv|hire|rate|price|pricing|package|contact|availability|available|automation|dashboard|data|seo|design|support|baguio|buddy|forma|canyon|cloud chaser|renlette|mountain province|mebs|slow pour|layoutletter|marketing|prospect|readystation|ready station|disaster response|iskolar|fire and rescue|terra amore|signal desk|linaw|layoutforge)\b/i.test(String(value || ""));
+  }
+
+  function limitReplyText(value, maxSentences, maxCharacters) {
+    const text = String(value || "").replace(/\s+/g, " ").trim();
+
+    if (!text) {
+      return "";
+    }
+
+    const sentences = text.match(/[^.!?]+(?:[.!?]+|$)/g) || [text];
+    let limited = sentences.slice(0, maxSentences).join(" ").replace(/\s+/g, " ").trim();
+
+    if (limited.length <= maxCharacters) {
+      return limited;
+    }
+
+    const punctuationCut = Math.max(
+      limited.lastIndexOf(". ", maxCharacters),
+      limited.lastIndexOf("! ", maxCharacters),
+      limited.lastIndexOf("? ", maxCharacters)
+    );
+
+    if (punctuationCut > Math.floor(maxCharacters * 0.55)) {
+      return limited.slice(0, punctuationCut + 1).trim();
+    }
+
+    const wordCut = limited.lastIndexOf(" ", maxCharacters - 1);
+    return limited.slice(0, wordCut > 0 ? wordCut : maxCharacters - 1).trim().replace(/[,;:]$/, "") + "…";
+  }
+
+  function appendFormattedChatText(container, value) {
+    String(value || "").split(/(\*\*[^*]+\*\*|\n)/g).forEach(function (part) {
+      if (!part) {
+        return;
+      }
+
+      if (part === "\n") {
+        container.appendChild(document.createElement("br"));
+        return;
+      }
+
+      if (part.slice(0, 2) === "**" && part.slice(-2) === "**") {
+        const strong = document.createElement("strong");
+        strong.textContent = part.slice(2, -2);
+        container.appendChild(strong);
+        return;
+      }
+
+      container.appendChild(document.createTextNode(part));
+    });
+  }
+
   function rememberMessage(role, content) {
     conversationHistory.push({ role: role, content: content });
 
@@ -3289,7 +3343,7 @@ function portfolioChatbot() {
 
     const bubble = document.createElement("div");
     bubble.className = "chat-message-bubble";
-    bubble.textContent = text;
+    appendFormattedChatText(bubble, text);
     message.appendChild(bubble);
 
     messages.appendChild(message);
@@ -3702,7 +3756,7 @@ function portfolioChatbot() {
     ) {
       return {
         messages: [
-          "Luke’s portfolio includes six web projects, two data case studies, two content experiences, and a creative collection.",
+          "Luke’s portfolio includes 24 projects across web, automation, data, content, and creative work.",
           "All projects are visible by default, and you can still filter them by category."
         ],
         action: {
@@ -3775,7 +3829,11 @@ function portfolioChatbot() {
       }
 
       const generatedReply = {
-        messages: [reply.slice(0, 600)],
+        messages: [limitReplyText(
+          reply,
+          isPortfolioRelatedQuestion(question) ? 4 : 2,
+          isPortfolioRelatedQuestion(question) ? 760 : 360
+        )],
         generated: true
       };
 

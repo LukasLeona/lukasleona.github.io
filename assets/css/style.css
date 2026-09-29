@@ -8244,6 +8244,11 @@ and
   overflow-wrap: anywhere;
 }
 
+.chat-message-bubble strong {
+  color: #fff;
+  font-weight: 700;
+}
+
 .chatbot-quick-actions {
   margin: 8px 0 18px 36px;
   display: grid;

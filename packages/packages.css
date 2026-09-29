@@ -165,11 +165,18 @@ main, footer { width: min(1220px, calc(100% - 40px)); margin: 0 auto; }
 .work-card.is-next { z-index: 3; opacity: .6; filter: saturate(.72) brightness(.72); transform: translate(calc(-50% + 310px), -50%) scale(.83) rotateY(-12deg) rotate(3deg); }
 .work-card.is-far-prev { transform: translate(calc(-50% - 510px), -50%) scale(.65) rotateY(18deg); }
 .work-card.is-far-next { transform: translate(calc(-50% + 510px), -50%) scale(.65) rotateY(-18deg); }
-.work-card > a { position: relative; display: block; width: 100%; height: 100%; color: #fff; }
-.work-card img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform .7s cubic-bezier(.2,.75,.2,1); }
-.work-card.is-active:hover img { transform: scale(1.045); }
+.work-card > a { position: relative; z-index: 2; display: block; width: 100%; height: 100%; color: #fff; }
+.work-card-preview { position: absolute; z-index: 1; inset: 0 39px 0 0; overflow: hidden; background: #ececec; }
+.work-card-browserbar { position: relative; z-index: 2; height: 30px; padding: 0 9px; display: flex; align-items: center; gap: 5px; color: #777b84; background: #f5f5f3; border-bottom: 1px solid rgba(0,0,0,.09); }
+.work-card-browserbar span { width: 6px; height: 6px; background: #c3c5c9; border-radius: 50%; }
+.work-card-browserbar span:first-child { background: #e6ae28; }
+.work-card-browserbar small { min-width: 0; margin-left: 5px; overflow: hidden; font-size: 6px; font-weight: 800; letter-spacing: .11em; text-overflow: ellipsis; white-space: nowrap; }
+.work-card-viewport { position: absolute; inset: 30px 0 0; overflow: hidden; background: linear-gradient(145deg, #e8e9eb, #cfd1d5); }
+.work-card-viewport iframe { position: absolute; top: 0; left: 0; width: 1280px; min-height: 900px; border: 0; background: #fff; transform-origin: 0 0; pointer-events: none; }
+.work-card-media { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform .7s cubic-bezier(.2,.75,.2,1); }
+.work-card.is-active:hover .work-card-media { transform: scale(1.045); }
 .work-card-shade { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(7,8,10,.3), transparent 34%, rgba(6,7,9,.22) 48%, rgba(6,7,9,.96) 100%); }
-.work-card-top { position: absolute; top: 0; right: 39px; left: 0; padding: 20px; display: flex; align-items: center; justify-content: space-between; gap: 14px; }
+.work-card-top { position: absolute; top: 30px; right: 39px; left: 0; padding: 16px 20px; display: flex; align-items: center; justify-content: space-between; gap: 14px; }
 .work-card-top small { padding: 6px 9px; background: rgba(12,13,16,.72); border: 1px solid rgba(255,255,255,.16); border-radius: 999px; backdrop-filter: blur(10px); font-size: 8px; font-weight: 700; letter-spacing: .08em; }
 .work-card-top i { width: 33px; height: 33px; display: grid; place-items: center; background: rgba(12,13,16,.72); border: 1px solid rgba(255,255,255,.16); border-radius: 50%; backdrop-filter: blur(10px); }
 .work-card-copy { position: absolute; right: 52px; bottom: 24px; left: 23px; display: grid; }
@@ -185,7 +192,8 @@ main, footer { width: min(1220px, calc(100% - 40px)); margin: 0 auto; }
 .work-carousel-progress { display: flex; align-items: center; gap: 8px; color: #777a82; font-size: 9px; font-weight: 700; letter-spacing: .08em; }
 .work-carousel-progress span:first-child { color: #fff; }
 .work-carousel-progress i { width: 35px; height: 1px; background: #44474e; }
-.work-carousel-dots { display: flex; align-items: center; }
+.work-carousel-dots { max-width: 220px; display: flex; align-items: center; overflow-x: auto; scroll-behavior: smooth; scrollbar-width: none; }
+.work-carousel-dots::-webkit-scrollbar { display: none; }
 .work-carousel-dots button { position: relative; width: 17px; height: 44px; padding: 0; background: transparent; border: 0; cursor: pointer; transition: width .2s ease; }
 .work-carousel-dots button::after { content: ""; position: absolute; top: 50%; left: 50%; width: 7px; height: 7px; background: #4f5259; border-radius: 99px; transform: translate(-50%, -50%); transition: width .2s ease, background .2s ease; }
 .work-carousel-dots button[aria-current="true"] { width: 30px; }
@@ -275,7 +283,8 @@ footer a { color: #c6c8cd; }
   .work-card-rail { width: 35px; }
   .work-carousel-controls { margin-top: 13px; gap: 13px; }
   .work-carousel-arrow { width: 44px; height: 44px; }
-  .work-carousel-progress { display: none; }
+  .work-carousel-progress { display: flex; }
+  .work-carousel-dots { display: none; }
   .package-form { padding: 20px 17px; grid-template-columns: 1fr; border-radius: 16px; }
   .package-form label > span { font-size: 10px; }
   .package-form input:not([type="checkbox"]), .package-form select, .package-form textarea { padding: 12px; font-size: 16px; }
@@ -291,5 +300,5 @@ footer a { color: #c6c8cd; }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { transition: none !important; }
-  .package-card:hover, .section-cta:hover, .work-card.is-active:hover img { transform: none; }
+  .package-card:hover, .section-cta:hover, .work-card.is-active:hover .work-card-media { transform: none; }
 }

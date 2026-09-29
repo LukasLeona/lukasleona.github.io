@@ -111,6 +111,38 @@ function cleanHistory(history) {
     .filter(Boolean);
 }
 
+function isPortfolioRelatedQuestion(value) {
+  return /\b(luke|lumo|lukas|portfolio|project|website|web app|service|skill|resume|cv|hire|rate|price|pricing|package|contact|availability|available|automation|dashboard|data|seo|design|support|baguio|buddy|forma|canyon|cloud chaser|renlette|mountain province|mebs|slow pour|layoutletter|marketing|prospect|readystation|ready station|disaster response|iskolar|fire and rescue|terra amore|signal desk|linaw|layoutforge)\b/i.test(String(value || ""));
+}
+
+function limitReplyText(value, maxSentences, maxCharacters) {
+  const text = String(value || "").replace(/\s+/g, " ").trim();
+
+  if (!text) {
+    return "";
+  }
+
+  const sentences = text.match(/[^.!?]+(?:[.!?]+|$)/g) || [text];
+  let limited = sentences.slice(0, maxSentences).join(" ").replace(/\s+/g, " ").trim();
+
+  if (limited.length <= maxCharacters) {
+    return limited;
+  }
+
+  const punctuationCut = Math.max(
+    limited.lastIndexOf(". ", maxCharacters),
+    limited.lastIndexOf("! ", maxCharacters),
+    limited.lastIndexOf("? ", maxCharacters)
+  );
+
+  if (punctuationCut > Math.floor(maxCharacters * 0.55)) {
+    return limited.slice(0, punctuationCut + 1).trim();
+  }
+
+  const wordCut = limited.lastIndexOf(" ", maxCharacters - 1);
+  return limited.slice(0, wordCut > 0 ? wordCut : maxCharacters - 1).trim().replace(/[,;:]$/, "") + "…";
+}
+
 function getPhilippinesDate() {
   return new Intl.DateTimeFormat("en-PH", {
     timeZone: "Asia/Manila",
@@ -124,16 +156,18 @@ function getPhilippinesDate() {
   }).format(new Date());
 }
 
-function buildInstructions(page) {
+function buildInstructions(page, genericQuestion) {
   return [
     "You are Lumo, the conversational AI assistant on Luke Mark Leona's professional portfolio.",
-    "Be friendly, concise, accurate, and useful. Answer in no more than 120 words unless the visitor explicitly asks for more detail.",
+    genericQuestion
+      ? "This is a general-knowledge question unrelated to Luke's portfolio. Answer it directly in no more than two short sentences and 45 words total."
+      : "This question relates to Luke or his portfolio. Be friendly and useful, using no more than four short sentences and 90 words total.",
     "Luke is a Philippines-based software engineer, web developer, data professional, SEO specialist, and AI/automation specialist.",
     "Luke graduated from the Polytechnic University of the Philippines in Manila in 2024 with a Bachelor of Science in Information Technology and the honor Magna Cum Laude.",
     "Luke is a member of Python Philippines and serves as a volunteer Marketing Co-Lead, contributing to community campaigns, event communication, coordination, and analytics.",
     "Luke works as a software engineer and has practical experience supporting enterprise systems, databases, integrations, testing, deployment, and workflow improvements.",
     "Luke can help with responsive websites, frontend implementation, WordPress, data analytics, dashboards, SEO, automation, and technical support.",
-    "His website projects generally range from PHP 3,000 to PHP 10,000 depending on scope. His professional hourly rate starts at USD 6.",
+    "Luke's website packages start at PHP 5,000, with Business at PHP 8,000, Growth at PHP 10,000, and Full System Setup at PHP 20,000. His professional hourly rate starts at USD 6.",
     "If the visitor wants to hire Luke, ask for the project goal, required features, timeline, and budget, then direct them to the Contact section.",
     "You may answer normal conversational and general-knowledge questions, but keep the conversation naturally connected to the portfolio when appropriate.",
     "Do not invent Luke's clients, credentials, availability, project results, prices, contact information, or personal details.",
@@ -211,6 +245,8 @@ module.exports = async function handler(req, res) {
     return res.status(400).json({ error: "A message is required." });
   }
 
+  const genericQuestion = !isPortfolioRelatedQuestion(message);
+
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), 15000);
 
@@ -224,10 +260,10 @@ module.exports = async function handler(req, res) {
         },
         body: JSON.stringify({
           model: model,
-          system_instruction: buildInstructions(page),
+          system_instruction: buildInstructions(page, genericQuestion),
           input: buildGeminiInput(history, message),
           generation_config: {
-            max_output_tokens: 300,
+            max_output_tokens: genericQuestion ? 120 : 260,
             thinking_level: "low"
           },
           store: false
@@ -257,7 +293,9 @@ module.exports = async function handler(req, res) {
       return res.status(502).json({ error: "The assistant returned an empty response." });
     }
 
-    return res.status(200).json({ reply: reply.slice(0, 1200) });
+    return res.status(200).json({
+      reply: limitReplyText(reply, genericQuestion ? 2 : 4, genericQuestion ? 360 : 760)
+    });
   } catch (error) {
     const timedOut = error && error.name === "AbortError";
     console.error(timedOut ? "Lumo Gemini request timed out." : "Lumo request failed unexpectedly.");
