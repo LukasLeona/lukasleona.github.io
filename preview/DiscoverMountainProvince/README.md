@@ -25,11 +25,11 @@ Then open `http://localhost:8080` in a browser.
 - `assets/favicon.svg` - palette-matched browser icon
 - `site.webmanifest` - basic installable-site metadata
 
-## Hero sound behavior
+## Media behavior
 
-Visitors now enter the hero immediately without an opening prompt. The site attempts to begin the original hero soundtrack automatically and the header speaker control mutes or restores it. Browsers that block unprompted audio will keep the film playing silently until the visitor selects the speaker. Its volume fades out when the hero leaves the screen and fades back in when the visitor returns.
+All website videos are permanently muted and the sound prompt and speaker control have been removed. On desktop, the hero and culture films may play silently; on mobile, video autoplay and motion are disabled to keep the experience static.
 
-The ritual-dance film begins automatically, muted, when its culture section enters view. It loops inline and includes its own play/pause control.
+The desktop ritual-dance film remains user-controllable through its play/pause control.
 
 ## Customize
 

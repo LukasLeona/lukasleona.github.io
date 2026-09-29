@@ -166,26 +166,22 @@ main, footer { width: min(1220px, calc(100% - 40px)); margin: 0 auto; }
 .work-card.is-far-prev { transform: translate(calc(-50% - 510px), -50%) scale(.65) rotateY(18deg); }
 .work-card.is-far-next { transform: translate(calc(-50% + 510px), -50%) scale(.65) rotateY(-18deg); }
 .work-card > a { position: relative; z-index: 2; display: block; width: 100%; height: 100%; color: #fff; }
-.work-card-preview { position: absolute; z-index: 1; inset: 0 39px 0 0; overflow: hidden; background: #ececec; }
+.work-card-preview { position: absolute; z-index: 1; inset: 0; overflow: hidden; background: #ececec; }
 .work-card-browserbar { position: relative; z-index: 2; height: 30px; padding: 0 9px; display: flex; align-items: center; gap: 5px; color: #777b84; background: #f5f5f3; border-bottom: 1px solid rgba(0,0,0,.09); }
 .work-card-browserbar span { width: 6px; height: 6px; background: #c3c5c9; border-radius: 50%; }
 .work-card-browserbar span:first-child { background: #e6ae28; }
 .work-card-browserbar small { min-width: 0; margin-left: 5px; overflow: hidden; font-size: 6px; font-weight: 800; letter-spacing: .11em; text-overflow: ellipsis; white-space: nowrap; }
 .work-card-viewport { position: absolute; inset: 30px 0 0; overflow: hidden; background: linear-gradient(145deg, #e8e9eb, #cfd1d5); }
 .work-card-viewport iframe { position: absolute; top: 0; left: 0; width: 1280px; min-height: 900px; border: 0; background: #fff; transform-origin: 0 0; pointer-events: none; }
-.work-card-media { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform .7s cubic-bezier(.2,.75,.2,1); }
-.work-card.is-active:hover .work-card-media { transform: scale(1.045); }
 .work-card-shade { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(7,8,10,.3), transparent 34%, rgba(6,7,9,.22) 48%, rgba(6,7,9,.96) 100%); }
-.work-card-top { position: absolute; top: 30px; right: 39px; left: 0; padding: 16px 20px; display: flex; align-items: center; justify-content: space-between; gap: 14px; }
+.work-card-top { position: absolute; top: 30px; right: 0; left: 0; padding: 16px 20px; display: flex; align-items: center; justify-content: space-between; gap: 14px; }
 .work-card-top small { padding: 6px 9px; background: rgba(12,13,16,.72); border: 1px solid rgba(255,255,255,.16); border-radius: 999px; backdrop-filter: blur(10px); font-size: 8px; font-weight: 700; letter-spacing: .08em; }
 .work-card-top i { width: 33px; height: 33px; display: grid; place-items: center; background: rgba(12,13,16,.72); border: 1px solid rgba(255,255,255,.16); border-radius: 50%; backdrop-filter: blur(10px); }
-.work-card-copy { position: absolute; right: 52px; bottom: 24px; left: 23px; display: grid; }
+.work-card-copy { position: absolute; right: 23px; bottom: 24px; left: 23px; display: grid; }
 .work-card-copy small { color: #f4c754; font-size: 8px; font-weight: 800; letter-spacing: .13em; }
 .work-card-copy strong { margin-top: 7px; font-size: 25px; line-height: 1.12; letter-spacing: -.035em; }
 .work-card-copy em { max-width: 270px; margin-top: 8px; color: #d0d2d6; font-size: 10px; font-style: normal; line-height: 1.55; }
 .work-card-copy b { width: max-content; margin-top: 17px; padding: 9px 12px; display: inline-flex; align-items: center; gap: 8px; color: #17181b; background: var(--gold); border-radius: 8px; font-size: 9px; }
-.work-card-rail { position: absolute; top: 0; right: 0; bottom: 0; width: 39px; padding: 14px 0; display: flex; align-items: center; justify-content: center; background: rgba(8,9,11,.92); border-left: 1px solid rgba(255,255,255,.13); font-size: 8px; font-weight: 700; letter-spacing: .12em; writing-mode: vertical-rl; transform: rotate(180deg); }
-
 .work-carousel-controls { min-height: 58px; margin-top: 18px; display: flex; align-items: center; justify-content: center; gap: 18px; }
 .work-carousel-arrow { width: 46px; height: 46px; display: grid; place-items: center; color: #f4f1e9; background: #1b1d22; border: 1px solid rgba(255,255,255,.14); border-radius: 50%; cursor: pointer; transition: color .2s ease, background .2s ease, border-color .2s ease, transform .2s ease; }
 .work-carousel-arrow:hover, .work-carousel-arrow:focus-visible { color: #15161a; background: var(--gold); border-color: var(--gold); transform: translateY(-2px); }
@@ -246,6 +242,8 @@ footer a { color: #c6c8cd; }
   .work-card.is-next { transform: translate(calc(-50% + 185px), -50%) scale(.78) rotateY(-9deg) rotate(3deg); }
 }
 @media (max-width: 620px) {
+  html { scroll-behavior: auto !important; }
+  *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
   .packages-header, main, footer { width: min(100% - 24px, 1220px); }
   .packages-header { min-height: 66px; gap: 12px; }
   .packages-brand { font-size: 18px; }
@@ -271,16 +269,15 @@ footer a { color: #c6c8cd; }
   .work-showcase-section { padding: 59px 0 51px; }
   .work-showcase-head > a { min-height: 44px; padding: 0 2px; font-size: 11px; }
   .work-carousel { margin-top: 21px; }
-  .work-carousel-stage { height: 442px; margin: 0 -4px; border-radius: 20px; }
+  .work-carousel-stage { height: 442px; margin: 0 -4px; border-radius: 20px; perspective: none; }
   .work-card { width: min(318px, calc(100% - 30px)); height: 402px; border-radius: 19px; }
-  .work-card.is-prev { opacity: .34; transform: translate(calc(-50% - 118px), -50%) scale(.8) rotate(-4deg); }
-  .work-card.is-next { opacity: .34; transform: translate(calc(-50% + 118px), -50%) scale(.8) rotate(4deg); }
-  .work-card-top { right: 35px; padding: 17px; }
-  .work-card-copy { right: 46px; bottom: 20px; left: 18px; }
+  .work-card { transition: none; }
+  .work-card.is-prev, .work-card.is-next, .work-card.is-far-prev, .work-card.is-far-next { opacity: 0; transform: translate(-50%, -50%) scale(.96); }
+  .work-card-top { right: 0; padding: 17px; }
+  .work-card-copy { right: 18px; bottom: 20px; left: 18px; }
   .work-card-copy strong { font-size: 23px; }
   .work-card-copy em { font-size: 10px; }
   .work-card-copy b { min-height: 40px; margin-top: 14px; padding: 10px 12px; font-size: 10px; }
-  .work-card-rail { width: 35px; }
   .work-carousel-controls { margin-top: 13px; gap: 13px; }
   .work-carousel-arrow { width: 44px; height: 44px; }
   .work-carousel-progress { display: flex; }
@@ -300,5 +297,5 @@ footer a { color: #c6c8cd; }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { transition: none !important; }
-  .package-card:hover, .section-cta:hover, .work-card.is-active:hover .work-card-media { transform: none; }
+  .package-card:hover, .section-cta:hover { transform: none; }
 }

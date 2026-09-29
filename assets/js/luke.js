@@ -14,6 +14,25 @@ var $lastWindowWidth = 0;
 var $lastHash = 0;
 var $isfirefox= 0;
 
+var lukasMobileStaticView = window.matchMedia && window.matchMedia('(max-width: 575px)').matches;
+
+if (lukasMobileStaticView) {
+    document.documentElement.classList.add('mobile-static-view');
+
+    document.addEventListener('play', function(event) {
+        if (event.target instanceof HTMLMediaElement && event.target.autoplay) {
+            event.target.pause();
+        }
+    }, true);
+
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('video[autoplay]').forEach(function(video) {
+            video.removeAttribute('autoplay');
+            video.pause();
+        });
+    });
+}
+
 $(document).ready(function() {
 
     "use strict";

@@ -3,18 +3,19 @@ document.documentElement.classList.add("js");
 const hero = document.querySelector("[data-hero]");
 const heroVideo = document.querySelector("[data-hero-video]");
 const header = document.querySelector("[data-header]");
-const soundToggle = document.querySelector("[data-sound-toggle]");
-const soundInvite = document.querySelector("[data-sound-invite]");
 const videoToggle = document.querySelector("[data-video-toggle]");
 const menuToggle = document.querySelector("[data-menu-toggle]");
 const navigation = document.querySelector("[data-nav]");
 const progressBar = document.querySelector(".scroll-progress span");
 const cultureVideo = document.querySelector("[data-culture-video]");
 const cultureVideoToggle = document.querySelector("[data-culture-video-toggle]");
+const mobileStatic = window.matchMedia("(max-width: 767px)").matches;
 
-let soundEnabled = false;
-let heroIsVisible = true;
-let volumeFrame = 0;
+if (mobileStatic) {
+  document.addEventListener("play", (event) => {
+    if (event.target instanceof HTMLMediaElement) event.target.pause();
+  }, true);
+}
 
 const safePlay = async () => {
   try {
@@ -27,59 +28,6 @@ const safePlay = async () => {
     return false;
   }
 };
-
-const fadeVolume = (target, duration = 500, onComplete) => {
-  cancelAnimationFrame(volumeFrame);
-  const initial = heroVideo.volume;
-  const difference = target - initial;
-  const startedAt = performance.now();
-
-  const step = (time) => {
-    const progress = Math.min((time - startedAt) / duration, 1);
-    const eased = 1 - Math.pow(1 - progress, 3);
-    heroVideo.volume = Math.max(0, Math.min(1, initial + difference * eased));
-
-    if (progress < 1) {
-      volumeFrame = requestAnimationFrame(step);
-    } else if (onComplete) {
-      onComplete();
-    }
-  };
-
-  volumeFrame = requestAnimationFrame(step);
-};
-
-const updateSoundUI = () => {
-  soundToggle.classList.toggle("is-on", soundEnabled);
-  soundToggle.setAttribute("aria-label", soundEnabled ? "Turn hero sound off" : "Turn hero sound on");
-  soundInvite.classList.toggle("is-hidden", soundEnabled);
-};
-
-const setSound = async (enabled) => {
-  soundEnabled = enabled;
-
-  if (enabled) {
-    heroVideo.volume = 0;
-    heroVideo.muted = false;
-    const playing = await safePlay();
-
-    if (!playing) {
-      soundEnabled = false;
-      heroVideo.muted = true;
-    } else if (heroIsVisible) {
-      fadeVolume(0.68, 700);
-    }
-  } else {
-    fadeVolume(0, 350, () => {
-      heroVideo.muted = true;
-    });
-  }
-
-  updateSoundUI();
-};
-
-soundToggle.addEventListener("click", () => setSound(!soundEnabled));
-soundInvite.addEventListener("click", () => setSound(true));
 
 videoToggle.addEventListener("click", async () => {
   if (heroVideo.paused) {
@@ -137,25 +85,12 @@ const cultureVideoObserver = new IntersectionObserver(
   { threshold: [0, 0.05, 0.2, 0.6] }
 );
 
-cultureVideoObserver.observe(cultureVideo);
-
-const heroSoundObserver = new IntersectionObserver(
-  ([entry]) => {
-    heroIsVisible = entry.intersectionRatio >= 0.3;
-
-    if (!soundEnabled) return;
-
-    if (heroIsVisible) {
-      heroVideo.muted = false;
-      fadeVolume(0.68, 600);
-    } else {
-      fadeVolume(0, 450);
-    }
-  },
-  { threshold: [0, 0.3, 0.65] }
-);
-
-heroSoundObserver.observe(hero);
+if (mobileStatic) {
+  cultureVideo.removeAttribute("autoplay");
+  cultureVideo.pause();
+} else {
+  cultureVideoObserver.observe(cultureVideo);
+}
 
 // Header, reading progress, and active navigation.
 const onScroll = () => {
@@ -580,25 +515,21 @@ placeDialog.addEventListener("cancel", () => document.body.classList.remove("dia
 
 document.querySelector("[data-year]").textContent = new Date().getFullYear();
 
-// Enter the homepage immediately. Try the soundtrack first, then keep the film
-// moving silently when the browser's autoplay policy blocks unprompted audio.
+// Keep every visit silent. On mobile the hero remains a static poster.
 const startDirectExperience = async () => {
-  heroVideo.volume = 0.68;
-  heroVideo.muted = false;
-  const startedWithSound = await safePlay();
+  heroVideo.volume = 0;
+  heroVideo.muted = true;
 
-  if (startedWithSound) {
-    soundEnabled = true;
+  if (mobileStatic) {
+    heroVideo.removeAttribute("autoplay");
+    heroVideo.pause();
+    videoToggle.hidden = true;
   } else {
-    heroVideo.muted = true;
     await safePlay();
     videoToggle.classList.remove("is-paused");
     videoToggle.querySelector("span").textContent = "Pause film";
     videoToggle.setAttribute("aria-label", "Pause background film");
-    soundEnabled = false;
   }
-
-  updateSoundUI();
 };
 
 startDirectExperience();

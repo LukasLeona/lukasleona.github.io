@@ -4,7 +4,14 @@
   const header = document.querySelector('.site-header');
   const menuToggle = document.querySelector('.menu-toggle');
   const navLinks = document.querySelector('.nav-links');
-  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const mobileStatic = window.matchMedia('(max-width: 767px)').matches;
+  const reducedMotion = mobileStatic || window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (mobileStatic) {
+    document.addEventListener('play', (event) => {
+      if (event.target instanceof HTMLMediaElement) event.target.pause();
+    }, true);
+  }
 
   const setHeaderState = () => {
     if (!header || header.classList.contains('header-solid')) return;
@@ -56,52 +63,25 @@
 
   const hero = document.querySelector('.hero');
   const heroVideo = document.querySelector('.hero-video');
-  const soundButton = document.querySelector('.sound-control');
-  const soundLabel = document.querySelector('.sound-label');
-  const soundGate = document.querySelector('.sound-gate');
-  const enterSound = document.querySelector('[data-enter-sound]');
-  const enterSilent = document.querySelector('[data-enter-silent]');
-  let wantsSound = true;
-  let heroVisible = true;
-
-  const updateSoundUI = () => {
-    if (!heroVideo || !soundButton) return;
-    const isMuted = heroVideo.muted || heroVideo.volume === 0;
-    soundButton.classList.toggle('muted', isMuted);
-    soundButton.setAttribute('aria-label', isMuted ? 'Turn hero sound on' : 'Mute hero sound');
-    soundButton.setAttribute('aria-pressed', String(!isMuted));
-    if (soundLabel) soundLabel.textContent = isMuted ? 'Sound off' : 'Sound on';
-  };
-
-  const dismissGate = () => {
-    soundGate?.classList.remove('show');
-    soundGate?.setAttribute('aria-hidden', 'true');
-  };
 
   if (heroVideo) {
-    heroVideo.muted = false;
-    heroVideo.volume = 0.72;
-    const attempt = heroVideo.play();
-    if (attempt?.catch) {
-      attempt.catch(() => {
-        heroVideo.muted = true;
-        heroVideo.play().catch(() => {});
-        soundGate?.classList.add('show');
-        soundGate?.setAttribute('aria-hidden', 'false');
-        updateSoundUI();
-      });
+    heroVideo.muted = true;
+    heroVideo.volume = 0;
+    if (mobileStatic) {
+      heroVideo.removeAttribute('autoplay');
+      heroVideo.pause();
+    } else {
+      heroVideo.play().catch(() => {});
     }
 
-    if (hero) {
+    if (hero && !mobileStatic) {
       const heroObserver = new IntersectionObserver(([entry]) => {
-        heroVisible = entry.isIntersecting && entry.intersectionRatio > 0.28;
+        const heroVisible = entry.isIntersecting && entry.intersectionRatio > 0.28;
         if (heroVisible) {
           heroVideo.play().catch(() => {});
-          heroVideo.muted = !wantsSound;
         } else {
-          heroVideo.muted = true;
+          heroVideo.pause();
         }
-        updateSoundUI();
       }, { threshold: [0, .28, .6] });
       heroObserver.observe(hero);
     }
@@ -155,34 +135,6 @@
     updateHeroStory();
   }
 
-  soundButton?.addEventListener('click', () => {
-    if (!heroVideo) return;
-    wantsSound = heroVideo.muted;
-    heroVideo.muted = !wantsSound || !heroVisible;
-    heroVideo.play().catch(() => {});
-    updateSoundUI();
-  });
-  enterSound?.addEventListener('click', () => {
-    wantsSound = true;
-    if (heroVideo) {
-      heroVideo.muted = false;
-      heroVideo.volume = .72;
-      heroVideo.play().catch(() => {});
-    }
-    dismissGate();
-    updateSoundUI();
-  });
-  enterSilent?.addEventListener('click', () => {
-    wantsSound = false;
-    if (heroVideo) {
-      heroVideo.muted = true;
-      heroVideo.play().catch(() => {});
-    }
-    dismissGate();
-    updateSoundUI();
-  });
-  updateSoundUI();
-
   const scrollVideoObserver = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
       const video = entry.target;
@@ -193,7 +145,15 @@
       }
     });
   }, { threshold: [0, .22, .55] });
-  document.querySelectorAll('video[data-scroll-video]').forEach((video) => scrollVideoObserver.observe(video));
+  document.querySelectorAll('video[data-scroll-video]').forEach((video) => {
+    video.muted = true;
+    if (mobileStatic) {
+      video.removeAttribute('autoplay');
+      video.pause();
+    } else {
+      scrollVideoObserver.observe(video);
+    }
+  });
 
   const cinematicCtas = document.querySelectorAll('[data-cinematic-cta]');
   if (cinematicCtas.length) {

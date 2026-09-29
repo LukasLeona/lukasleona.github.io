@@ -812,3 +812,7 @@ body::after {
 @media (max-width: 760px) {
   .subpage-hero--open .subpage-hero-copy { width: 100%; padding: 0 0 12px; }
 }
+@media (max-width: 767px) {
+  html { scroll-behavior: auto !important; }
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}

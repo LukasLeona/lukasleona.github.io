@@ -9,6 +9,7 @@
   var carousel = document.getElementById("workCarousel");
 
   if (carousel) {
+    var staticMobile = window.matchMedia && window.matchMedia("(max-width: 620px)").matches;
     var portfolioProjects = [
       { title: "Baguio Itinerary Generator", type: "Travel app", label: "BAGUIOBUDDY.COM", description: "Personalized trip planning and local discovery.", href: "https://baguiobuddy.com", preview: "/preview/lakbaybaguio.com/index.html" },
       { title: "FORMA: Architecture Studio", type: "Architecture", label: "FORMA STUDIO", description: "Cinematic storytelling shaped around space and material.", href: "/preview/FORMA-Architecture/index.html", preview: "/preview/FORMA-Architecture/index.html" },
@@ -32,8 +33,7 @@
       { title: "Spending Behavior Analysis", type: "Customer analytics", label: "DATA CASE STUDY", description: "Segmentation, purchase relationships, and transaction forecasting.", href: "/customer-spending-analysis.html", preview: "/customer-spending-analysis.html" },
       { title: "Campaign Landing Experience", type: "Campaign", label: "CONVERSION EXPERIENCE", description: "A focused campaign page with responsive visual hierarchy.", href: "http://paidmediasandbox.3jzvudtzb5-dv13xg0776gq.p.temp-site.link/luke/mood/v2-20off/v2startup.html", preview: "http://paidmediasandbox.3jzvudtzb5-dv13xg0776gq.p.temp-site.link/luke/mood/v2-20off/v2startup.html" },
       { title: "Interactive Campaign Blog", type: "Content", label: "VISUAL STORYTELLING", description: "Interactive promotional content built around a visual story.", href: "https://va-0097.github.io/Mood/", preview: "https://va-0097.github.io/Mood/" },
-      { title: "LayoutForge", type: "Design tool", label: "WEBSITE VISION SIMULATOR", description: "Explore layouts, typography, palettes, imagery, and motion.", href: "/preview/layoutforge-simulator/index.html", preview: "/preview/layoutforge-simulator/index.html" },
-      { title: "Creative Collection", type: "Visual & motion", label: "SELECTED CREATIVE WORK", description: "Campaign graphics, motion, social assets, and AI-assisted work.", href: "/index.html#portfolio", preview: "/assets/img/webdesigner/graphic1.gif", media: true }
+      { title: "LayoutForge", type: "Design tool", label: "WEBSITE VISION SIMULATOR", description: "Explore layouts, typography, palettes, imagery, and motion.", href: "/preview/layoutforge-simulator/index.html", preview: "/preview/layoutforge-simulator/index.html" }
     ];
     var stage = carousel.querySelector(".work-carousel-stage");
     var dotsContainer = carousel.querySelector(".work-carousel-dots");
@@ -53,30 +53,23 @@
       preview.className = "work-card-preview";
       preview.setAttribute("aria-hidden", "true");
 
-      if (project.media) {
-        var media = document.createElement("img");
-        media.className = "work-card-media";
-        media.src = project.preview;
-        media.alt = "";
-        media.loading = "lazy";
-        media.decoding = "async";
-        preview.appendChild(media);
-      } else {
-        var browserBar = document.createElement("div");
-        var viewport = document.createElement("div");
-        var frame = document.createElement("iframe");
+      var browserBar = document.createElement("div");
+      var viewport = document.createElement("div");
+      var frame = document.createElement("iframe");
 
-        browserBar.className = "work-card-browserbar";
-        browserBar.innerHTML = "<span></span><span></span><span></span><small>LIVE PROJECT PREVIEW</small>";
-        viewport.className = "work-card-viewport";
-        frame.dataset.previewSrc = project.preview;
-        frame.title = project.title + " live website preview";
-        frame.loading = "lazy";
-        frame.tabIndex = -1;
-        viewport.appendChild(frame);
-        preview.appendChild(browserBar);
-        preview.appendChild(viewport);
+      browserBar.className = "work-card-browserbar";
+      browserBar.innerHTML = "<span></span><span></span><span></span><small>PROJECT PREVIEW</small>";
+      viewport.className = "work-card-viewport";
+      frame.dataset.previewSrc = project.preview;
+      frame.title = project.title + " website preview";
+      frame.loading = "lazy";
+      frame.tabIndex = -1;
+      if (staticMobile) {
+        frame.addEventListener("load", function () { makePreviewStatic(frame); });
       }
+      viewport.appendChild(frame);
+      preview.appendChild(browserBar);
+      preview.appendChild(viewport);
 
       link.href = project.href;
       link.target = "_blank";
@@ -84,8 +77,7 @@
       link.innerHTML =
         '<span class="work-card-shade" aria-hidden="true"></span>' +
         '<span class="work-card-top"><small>' + number + " / " + project.type.toUpperCase() + '</small><i class="bi bi-arrow-up-right" aria-hidden="true"></i></span>' +
-        '<span class="work-card-copy"><small>' + project.label + "</small><strong>" + project.title + "</strong><em>" + project.description + '</em><b>View project <i class="bi bi-arrow-right" aria-hidden="true"></i></b></span>' +
-        '<span class="work-card-rail">' + (project.media ? "VIEW COLLECTION" : "LIVE PREVIEW") + "</span>";
+        '<span class="work-card-copy"><small>' + project.label + "</small><strong>" + project.title + "</strong><em>" + project.description + '</em><b>View project <i class="bi bi-arrow-right" aria-hidden="true"></i></b></span>';
 
       article.appendChild(preview);
       article.appendChild(link);
@@ -108,6 +100,35 @@
     var positionClasses = ["is-active", "is-prev", "is-next", "is-far-prev", "is-far-next"];
 
     total.textContent = String(cards.length).padStart(2, "0");
+
+    function makePreviewStatic(frame) {
+      if (!staticMobile) {
+        return;
+      }
+
+      try {
+        var previewDocument = frame.contentDocument;
+
+        if (!previewDocument || !previewDocument.head) {
+          return;
+        }
+
+        if (!previewDocument.getElementById("packages-mobile-static-preview")) {
+          var style = previewDocument.createElement("style");
+          style.id = "packages-mobile-static-preview";
+          style.textContent = "html{scroll-behavior:auto!important}*,*::before,*::after{animation:none!important;transition:none!important}";
+          previewDocument.head.appendChild(style);
+        }
+
+        previewDocument.querySelectorAll("video, audio").forEach(function (media) {
+          media.muted = true;
+          media.removeAttribute("autoplay");
+          media.pause();
+        });
+      } catch (error) {
+        // Cross-origin previews cannot be modified; the carousel itself remains static.
+      }
+    }
 
     function hydratePreview(card) {
       var frame = card.querySelector("iframe[data-preview-src]");
