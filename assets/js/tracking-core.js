@@ -118,6 +118,52 @@
     };
   }
 
+  function isLikelyAutomated(navigatorObject) {
+    if (!navigatorObject) return false;
+    if (navigatorObject.webdriver === true) return true;
+
+    return /(bot|crawler|spider|headless|preview|facebookexternalhit|whatsapp|slackbot|discordbot|telegrambot)/i
+      .test(String(navigatorObject.userAgent || ""));
+  }
+
+  function isAllowedHost(hostname, allowedHosts) {
+    var normalizedHost = String(hostname || "").toLowerCase().replace(/\.$/, "");
+    return Array.isArray(allowedHosts) && allowedHosts.some(function (allowedHost) {
+      return normalizedHost === String(allowedHost || "").toLowerCase();
+    });
+  }
+
+  function readTimestamp(storage, key) {
+    try {
+      var stored = Number(storage.getItem(key));
+      return Number.isFinite(stored) && stored > 0 ? stored : 0;
+    } catch (error) {
+      return 0;
+    }
+  }
+
+  function isOutsideCooldown(storage, key, cooldownMs, now) {
+    var previousTimestamp = readTimestamp(storage, key);
+    return !previousTimestamp || (now || Date.now()) - previousTimestamp >= cooldownMs;
+  }
+
+  function markNotification(storage, key, now) {
+    try {
+      storage.setItem(key, String(now || Date.now()));
+      return true;
+    } catch (error) {
+      return false;
+    }
+  }
+
+  function clearNotificationMark(storage, key) {
+    try {
+      storage.removeItem(key);
+    } catch (error) {
+      // Storage can be unavailable in hardened privacy modes.
+    }
+  }
+
   return {
     isValidMeasurementId: isValidMeasurementId,
     prefersNoTracking: prefersNoTracking,
@@ -127,6 +173,12 @@
     classifyDevice: classifyDevice,
     getReferrerSource: getReferrerSource,
     formatManilaTime: formatManilaTime,
-    buildEventContext: buildEventContext
+    buildEventContext: buildEventContext,
+    isLikelyAutomated: isLikelyAutomated,
+    isAllowedHost: isAllowedHost,
+    readTimestamp: readTimestamp,
+    isOutsideCooldown: isOutsideCooldown,
+    markNotification: markNotification,
+    clearNotificationMark: clearNotificationMark
   };
 }));
