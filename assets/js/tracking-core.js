@@ -172,6 +172,81 @@
     }
   }
 
+  function getControlLabel(element) {
+    if (!element) return "Unknown control";
+
+    return cleanText(
+      element.getAttribute("aria-label") ||
+      element.getAttribute("title") ||
+      element.value ||
+      element.textContent ||
+      element.getAttribute("name") ||
+      element.id ||
+      "Unknown control",
+      100
+    );
+  }
+
+  function getControlPlacement(element) {
+    if (!element) return "Page";
+    if (element.dataset && element.dataset.trackingPlacement) {
+      return cleanText(element.dataset.trackingPlacement, 80);
+    }
+
+    var container = element.closest && element.closest("section, nav, header, footer, [role='dialog']");
+    if (!container) return "Page";
+    if (container.id) return cleanText(container.id, 80);
+    if (container.getAttribute("aria-label")) {
+      return cleanText(container.getAttribute("aria-label"), 80);
+    }
+
+    return cleanText(container.tagName || "Page", 80);
+  }
+
+  function getSafeDestination(element, locationObject) {
+    if (!element) return "No navigation";
+    var rawDestination = element.getAttribute("href") || element.getAttribute("formaction") || "";
+
+    if (!rawDestination) return "No navigation";
+    if (/^mailto:/i.test(rawDestination)) return "Email link";
+    if (/^tel:/i.test(rawDestination)) return "Phone link";
+    if (/^javascript:/i.test(rawDestination)) return "In-page control";
+
+    try {
+      var destination = new URL(rawDestination, locationObject.href);
+      var path = destination.pathname + destination.hash;
+      return destination.origin === locationObject.origin
+        ? cleanText(path, 180)
+        : cleanText(destination.hostname + path, 180);
+    } catch (error) {
+      return "Unavailable";
+    }
+  }
+
+  function hashIdentifier(value) {
+    var hash = 2166136261;
+    var text = String(value || "");
+
+    for (var index = 0; index < text.length; index += 1) {
+      hash ^= text.charCodeAt(index);
+      hash = Math.imul(hash, 16777619);
+    }
+
+    return (hash >>> 0).toString(36);
+  }
+
+  function buildInteractionDetails(element, locationObject) {
+    var tagName = String(element && element.tagName || "control").toLowerCase();
+    var role = element && element.getAttribute("role");
+
+    return {
+      controlLabel: getControlLabel(element),
+      controlType: role || (tagName === "a" ? "link" : tagName),
+      placement: getControlPlacement(element),
+      destination: getSafeDestination(element, locationObject)
+    };
+  }
+
   return {
     isValidMeasurementId: isValidMeasurementId,
     prefersNoTracking: prefersNoTracking,
@@ -188,6 +263,11 @@
     isOutsideCooldown: isOutsideCooldown,
     markNotification: markNotification,
     clearNotificationMark: clearNotificationMark,
-    getBrowserStorage: getBrowserStorage
+    getBrowserStorage: getBrowserStorage,
+    getControlLabel: getControlLabel,
+    getControlPlacement: getControlPlacement,
+    getSafeDestination: getSafeDestination,
+    hashIdentifier: hashIdentifier,
+    buildInteractionDetails: buildInteractionDetails
   };
 }));
