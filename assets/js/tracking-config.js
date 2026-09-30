@@ -21,6 +21,12 @@
       visitDelayMs: 10000,
       visitCooldownHours: 24,
       clickCooldownMinutes: 30
+    }),
+    interactions: Object.freeze({
+      enabled: true,
+      notifyByEmail: true,
+      selector: "button, a[href], [role='button'], input[type='button'], input[type='submit']",
+      maxEmailAlertsPerSession: 12
     })
   });
 }(window));
