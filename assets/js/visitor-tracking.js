@@ -21,6 +21,7 @@
   function sendVisitNotification() {
     var cooldownMs = config.notifications.visitCooldownHours * 60 * 60 * 1000;
     var now = Date.now();
+    var storage = core.getBrowserStorage(window, "localStorage");
 
     visitTimer = null;
     if (document.visibilityState === "hidden") return;
@@ -30,17 +31,18 @@
       engagement_seconds: Math.round(config.notifications.visitDelayMs / 1000)
     });
 
-    if (!notificationsAreAllowed() || !emailClient ||
-        !core.isOutsideCooldown(window.localStorage, visitStorageKey, cooldownMs, now)) {
+    if (!notificationsAreAllowed() || !emailClient || !storage ||
+        !core.isOutsideCooldown(storage, visitStorageKey, cooldownMs, now)) {
       return;
     }
 
-    core.markNotification(window.localStorage, visitStorageKey, now);
+    if (!core.markNotification(storage, visitStorageKey, now)) return;
+
     emailClient.sendEventNotification(
       "engaged_visit",
       core.buildEventContext(window, document)
     ).catch(function () {
-      core.clearNotificationMark(window.localStorage, visitStorageKey);
+      core.clearNotificationMark(storage, visitStorageKey);
     });
   }
 
@@ -77,20 +79,26 @@
     var clickStorageKey = "lukas-alert-" + eventName + "-v1";
     var clickCooldownMs = config.notifications.clickCooldownMinutes * 60 * 1000;
     var now = Date.now();
+    var sessionStorage = core.getBrowserStorage(window, "sessionStorage");
+    var localStorage = core.getBrowserStorage(window, "localStorage");
 
-    if (!core.isOutsideCooldown(window.sessionStorage, clickStorageKey, clickCooldownMs, now)) {
+    if (!sessionStorage || !localStorage ||
+        !core.isOutsideCooldown(sessionStorage, clickStorageKey, clickCooldownMs, now)) {
       return;
     }
 
-    core.markNotification(window.sessionStorage, clickStorageKey, now);
-    core.markNotification(window.localStorage, visitStorageKey, now);
+    if (!core.markNotification(sessionStorage, clickStorageKey, now) ||
+        !core.markNotification(localStorage, visitStorageKey, now)) {
+      core.clearNotificationMark(sessionStorage, clickStorageKey);
+      return;
+    }
 
     emailClient.sendEventNotification(
       eventName,
       core.buildEventContext(window, document),
       { placement: placement }
     ).catch(function () {
-      core.clearNotificationMark(window.sessionStorage, clickStorageKey);
+      core.clearNotificationMark(sessionStorage, clickStorageKey);
     });
   }
 

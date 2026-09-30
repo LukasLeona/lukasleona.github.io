@@ -164,6 +164,14 @@
     }
   }
 
+  function getBrowserStorage(windowObject, storageName) {
+    try {
+      return windowObject[storageName] || null;
+    } catch (error) {
+      return null;
+    }
+  }
+
   return {
     isValidMeasurementId: isValidMeasurementId,
     prefersNoTracking: prefersNoTracking,
@@ -179,6 +187,7 @@
     readTimestamp: readTimestamp,
     isOutsideCooldown: isOutsideCooldown,
     markNotification: markNotification,
-    clearNotificationMark: clearNotificationMark
+    clearNotificationMark: clearNotificationMark,
+    getBrowserStorage: getBrowserStorage
   };
 }));

@@ -73,6 +73,16 @@ test("enforces and clears notification cooldown timestamps", () => {
   assert.equal(core.isOutsideCooldown(storage, "visit", 60_000, now + 1), true);
 });
 
+test("fails closed when browser storage is blocked", () => {
+  const windowObject = {};
+  Object.defineProperty(windowObject, "localStorage", {
+    get() { throw new Error("Storage disabled"); }
+  });
+
+  assert.equal(core.getBrowserStorage(windowObject, "localStorage"), null);
+  assert.equal(core.markNotification(null, "visit", Date.now()), false);
+});
+
 test("queues analytics configuration without exposing precise location", () => {
   const appendedScripts = [];
   const windowObject = { navigator: {}, dataLayer: [] };

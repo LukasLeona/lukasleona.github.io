@@ -17,3 +17,8 @@ Important after deployment:
 5. Keep project pages publicly accessible and avoid blocking /assets/ or /preview/.
 
 Dark mode is the first-visit default. A manual visitor choice is stored under lukas-theme-preference-v2.
+
+Visitor tracking:
+- EmailJS alerts are enabled for engaged live-site visits and the home Explore My Work CTA.
+- GA4 event support is ready but requires a Measurement ID.
+- See TRACKING-SETUP.md for activation, privacy safeguards, cooldowns, and testing.
