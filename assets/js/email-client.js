@@ -42,7 +42,10 @@
     ];
 
     if (details && details.placement) {
-      lines.push("Button placement: " + details.placement);
+      lines.push("Control: " + details.controlLabel);
+      lines.push("Control type: " + details.controlType);
+      lines.push("Placement: " + details.placement);
+      lines.push("Destination: " + details.destination);
     }
 
     lines.push("", "Privacy note: no IP address, exact location, or fingerprint was collected by the site.");
@@ -51,9 +54,10 @@
 
   function sendEventNotification(eventType, context, details) {
     var config = getEmailConfig();
-    var isClick = eventType === "explore_work_click";
-    var label = isClick
-      ? "A visitor clicked Explore My Work"
+    var isInteraction = eventType !== "engaged_visit";
+    var controlLabel = details && details.controlLabel || "a website control";
+    var label = isInteraction
+      ? "A visitor clicked: " + controlLabel
       : "An engaged visitor opened your portfolio";
     var message = createNotificationMessage(label, context, details);
 
@@ -66,7 +70,7 @@
       email: config.recipient,
       reply_to: config.recipient,
       to_email: config.recipient,
-      subject: isClick ? "Explore My Work click" : "Portfolio visit",
+      subject: isInteraction ? "Website click: " + controlLabel.slice(0, 70) : "Portfolio visit",
       title: label,
       comments: message,
       message: message,
@@ -74,7 +78,11 @@
       event_time: context.timestamp,
       page: context.pagePath,
       referrer: context.referrer,
-      device: context.device
+      device: context.device,
+      control_label: isInteraction ? controlLabel : "",
+      control_type: isInteraction ? details.controlType : "",
+      control_placement: isInteraction ? details.placement : "",
+      destination: isInteraction ? details.destination : ""
     });
   }
 

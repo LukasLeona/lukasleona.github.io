@@ -6,6 +6,8 @@
   var emailClient = window.LukasEmailClient;
   var visitTimer = null;
   var visitStorageKey = "lukas-portfolio-visit-alert-v1";
+  var sessionAlertCountKey = "lukas-interaction-alert-count-v1";
+  var clicksBound = false;
 
   if (!config || !core) return;
 
@@ -62,27 +64,55 @@
   }
 
   function handleTrackedClick(event) {
-    var target = event.currentTarget;
-    var eventName = target.dataset.trackingEvent;
-    var placement = target.dataset.trackingPlacement || "Unspecified";
-
-    core.trackEvent(window, eventName, {
-      button_text: (target.textContent || "").trim().slice(0, 80),
-      button_placement: placement,
-      destination: target.getAttribute("href") || ""
-    });
-
-    if (target.dataset.notifyOwner !== "true" || !notificationsAreAllowed() || !emailClient) {
+    if (!config.interactions || config.interactions.enabled === false || event.isTrusted === false) {
       return;
     }
 
-    var clickStorageKey = "lukas-alert-" + eventName + "-v1";
+    var eventTarget = event.target && event.target.closest
+      ? event.target
+      : event.target && event.target.parentElement;
+    var target = eventTarget && eventTarget.closest(config.interactions.selector);
+
+    if (!target || target.disabled || target.getAttribute("aria-disabled") === "true" ||
+        target.hasAttribute("data-tracking-ignore")) {
+      return;
+    }
+
+    var details = core.buildInteractionDetails(target, window.location);
+    var eventName = target.dataset.trackingEvent || "button_click";
+
+    core.trackEvent(window, eventName, {
+      control_label: details.controlLabel,
+      control_type: details.controlType,
+      control_placement: details.placement,
+      destination: details.destination
+    });
+
+    if (config.interactions.notifyByEmail === false || !notificationsAreAllowed() || !emailClient) {
+      return;
+    }
+
+    var interactionId = [
+      eventName,
+      details.controlLabel,
+      details.placement,
+      details.destination
+    ].join("|");
+    var clickStorageKey = "lukas-alert-" + core.hashIdentifier(interactionId) + "-v2";
     var clickCooldownMs = config.notifications.clickCooldownMinutes * 60 * 1000;
     var now = Date.now();
     var sessionStorage = core.getBrowserStorage(window, "sessionStorage");
     var localStorage = core.getBrowserStorage(window, "localStorage");
+    var alertCount = 0;
+
+    try {
+      alertCount = Number(sessionStorage && sessionStorage.getItem(sessionAlertCountKey)) || 0;
+    } catch (error) {
+      return;
+    }
 
     if (!sessionStorage || !localStorage ||
+        alertCount >= config.interactions.maxEmailAlertsPerSession ||
         !core.isOutsideCooldown(sessionStorage, clickStorageKey, clickCooldownMs, now)) {
       return;
     }
@@ -93,22 +123,23 @@
       return;
     }
 
+    sessionStorage.setItem(sessionAlertCountKey, String(alertCount + 1));
+
     emailClient.sendEventNotification(
       eventName,
       core.buildEventContext(window, document),
-      { placement: placement }
+      details
     ).catch(function () {
       core.clearNotificationMark(sessionStorage, clickStorageKey);
+      core.clearNotificationMark(localStorage, visitStorageKey);
+      sessionStorage.setItem(sessionAlertCountKey, String(Math.max(0, alertCount)));
     });
   }
 
   function bindTrackedClicks() {
-    Array.prototype.forEach.call(
-      document.querySelectorAll("[data-tracking-event]"),
-      function (element) {
-        element.addEventListener("click", handleTrackedClick);
-      }
-    );
+    if (clicksBound) return;
+    document.addEventListener("click", handleTrackedClick, true);
+    clicksBound = true;
   }
 
   document.addEventListener("visibilitychange", handleVisibilityChange);
