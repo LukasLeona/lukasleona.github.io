@@ -690,7 +690,10 @@
 
                 <!-- CTA Button -->
                 <div class="hero-actions">
-                  <a href="#portfolio" class="primary-button hero-work-btn" id="seeMyWorkBtn">
+                  <a href="#portfolio" class="primary-button hero-work-btn" id="seeMyWorkBtn"
+                    data-tracking-event="explore_work_click"
+                    data-tracking-placement="Home hero"
+                    data-notify-owner="true">
                     Explore My Work
                     <span class="hero-work-arrow">→</span>
                   </a>
@@ -2402,6 +2405,8 @@
         <a
           href="#portfolio"
           class="about-v2-outline-btn"
+          data-tracking-event="explore_work_click"
+          data-tracking-placement="About section"
         >
 
           Explore My Work
@@ -5149,7 +5154,7 @@
 
     <div class="blog-journal-cta">
       <div><span class="blog-journal-cta-eyebrow">Have a challenge worth exploring?</span><h3>Take an idea from the journal, <span>then let’s turn it into working digital progress.</span></h3></div>
-      <div class="blog-journal-cta-actions"><a class="blog-journal-cta-button" href="#portfolio">Explore My Work</a><a class="blog-journal-cta-button blog-journal-cta-button-primary" href="#contact">Let’s Work Together →</a></div>
+      <div class="blog-journal-cta-actions"><a class="blog-journal-cta-button" href="#portfolio" data-tracking-event="explore_work_click" data-tracking-placement="Journal section">Explore My Work</a><a class="blog-journal-cta-button blog-journal-cta-button-primary" href="#contact">Let’s Work Together →</a></div>
     </div>
   </div>
 </section>
@@ -5501,17 +5506,17 @@
     data-cf-beacon='{"version":"2024.11.0","token":"398d0e35186742219fc4b15efc701f63","r":1,"server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}'
     crossorigin="anonymous"></script>
 
-  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script src="assets/js/tracking-config.js"></script>
+  <script src="assets/js/tracking-core.js"></script>
+  <script src="assets/js/email-client.js"></script>
+  <script src="assets/js/visitor-tracking.js"></script>
 
   <script>
-    (function () {
-      emailjs.init("96_UPP64ognZ8mIif");
-    })();
-
     document.getElementById("contactForm").addEventListener("submit", function (event) {
       event.preventDefault();
 
-      emailjs.sendForm("service_2ter3tn", "template_52y6bwx", this)
+      window.LukasEmailClient.sendForm(this)
         .then(function () {
           alert("Message sent successfully! I’ll get back to you soon.");
           document.getElementById("contactForm").reset();

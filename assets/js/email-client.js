@@ -83,4 +83,6 @@
     sendForm: sendForm,
     sendEventNotification: sendEventNotification
   };
+
+  initialize();
 }(window));
