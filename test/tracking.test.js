@@ -83,6 +83,62 @@ test("fails closed when browser storage is blocked", () => {
   assert.equal(core.markNotification(null, "visit", Date.now()), false);
 });
 
+test("describes a control while removing destination query parameters", () => {
+  const section = {
+    id: "portfolio",
+    tagName: "SECTION",
+    getAttribute() { return null; }
+  };
+  const element = {
+    tagName: "A",
+    dataset: {},
+    textContent: "View project",
+    value: "",
+    id: "",
+    getAttribute(name) {
+      const attributes = {
+        href: "https://lukasleona.com/project.html?visitor=private#details",
+        "aria-label": "Open featured project",
+        title: null,
+        name: null,
+        role: null,
+        formaction: null
+      };
+      return attributes[name] || null;
+    },
+    closest() { return section; }
+  };
+  const locationObject = {
+    href: "https://lukasleona.com/",
+    origin: "https://lukasleona.com"
+  };
+  const details = core.buildInteractionDetails(element, locationObject);
+
+  assert.deepEqual(details, {
+    controlLabel: "Open featured project",
+    controlType: "link",
+    placement: "portfolio",
+    destination: "/project.html#details"
+  });
+  assert.equal(JSON.stringify(details).includes("visitor=private"), false);
+});
+
+test("uses privacy-safe names for email and phone destinations", () => {
+  const locationObject = {
+    href: "https://lukasleona.com/",
+    origin: "https://lukasleona.com"
+  };
+  const createLink = (href) => ({ getAttribute(name) { return name === "href" ? href : null; } });
+
+  assert.equal(core.getSafeDestination(createLink("mailto:private@example.com"), locationObject), "Email link");
+  assert.equal(core.getSafeDestination(createLink("tel:+630000000000"), locationObject), "Phone link");
+});
+
+test("creates stable per-control identifiers", () => {
+  assert.equal(core.hashIdentifier("Portfolio|View work"), core.hashIdentifier("Portfolio|View work"));
+  assert.notEqual(core.hashIdentifier("Portfolio|View work"), core.hashIdentifier("Contact|Send"));
+});
+
 test("queues analytics configuration without exposing precise location", () => {
   const appendedScripts = [];
   const windowObject = { navigator: {}, dataLayer: [] };
@@ -111,4 +167,13 @@ test("homepage loads tracking in dependency order and marks the hero CTA", () =>
   assert.ok(configIndex > -1 && configIndex < coreIndex);
   assert.ok(coreIndex < emailIndex && emailIndex < trackerIndex);
   assert.match(html, /id="seeMyWorkBtn"[\s\S]{0,240}data-notify-owner="true"/);
+});
+
+test("tracker delegates clicks for controls added anywhere on the page", () => {
+  const tracker = fs.readFileSync(path.join(__dirname, "..", "assets", "js", "visitor-tracking.js"), "utf8");
+  const config = fs.readFileSync(path.join(__dirname, "..", "assets", "js", "tracking-config.js"), "utf8");
+
+  assert.match(config, /button, a\[href\], \[role='button'\]/);
+  assert.match(tracker, /document\.addEventListener\("click", handleTrackedClick, true\)/);
+  assert.match(tracker, /maxEmailAlertsPerSession/);
 });

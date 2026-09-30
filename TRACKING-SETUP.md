@@ -3,14 +3,14 @@
 The homepage now supports two free tracking paths:
 
 - EmailJS sends Luke an alert after a real-looking visitor keeps the live portfolio visible for 10 seconds.
-- EmailJS sends Luke an immediate alert when the home hero’s **Explore My Work** button is selected.
-- Google Analytics 4 support is ready for aggregate page and CTA reporting once a Measurement ID is supplied.
+- EmailJS sends Luke an immediate alert when a visitor activates a button, navigation link, project link, form control, carousel control, or other button-like element.
+- Google Analytics 4 support is ready for aggregate page and interaction reporting once a Measurement ID is supplied.
 
 ## Current notification behavior
 
 Email notifications run only on `lukasleona.com` and `www.lukasleona.com`. They are disabled on localhost, GitHub previews, and other copied hosts.
 
-Visit notifications are limited to one per browser every 24 hours. Explore-button notifications are limited to one every 30 minutes in the same browser tab session. A quick Explore click also suppresses the ordinary visit alert, avoiding two emails for the same short visit.
+Visit notifications are limited to one per browser every 24 hours. Each distinct control can produce one email every 30 minutes in the same browser tab session. Email alerts are capped at 12 distinct controls per session so one visitor cannot exhaust the free allowance. Every supported control is still passed to GA4 when analytics is configured. A quick interaction also suppresses the ordinary visit alert, avoiding two emails for the same short visit.
 
 Obvious crawlers, link-preview bots, automated browsers, hidden tabs, Do Not Track, and Global Privacy Control are excluded. Messages contain only:
 
@@ -19,7 +19,7 @@ Obvious crawlers, link-preview bots, automated browsers, hidden tabs, Do Not Tra
 - referring domain, without its page path
 - broad device category
 - browser language
-- CTA placement for button-click alerts
+- control label, type, page section, and a destination with query parameters removed
 
 The site does not add the visitor’s IP address, exact location, or fingerprint to the notification.
 
@@ -31,7 +31,7 @@ The site does not add the visitor’s IP address, exact location, or fingerprint
 4. Replace the empty `measurementId` value with the real ID.
 5. Deploy and check GA4 Realtime while visiting the live domain.
 
-When enabled, GA4 records its standard page view and the custom events `engaged_visit` and `explore_work_click`. The configuration requests IP anonymization and respects supported browser privacy signals.
+When enabled, GA4 records its standard page view and the custom events `engaged_visit`, `explore_work_click`, and `button_click`. The configuration requests IP anonymization and respects supported browser privacy signals.
 
 ## Confirm EmailJS protection
 
