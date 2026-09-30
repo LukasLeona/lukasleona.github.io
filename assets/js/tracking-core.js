@@ -64,10 +64,69 @@
     return true;
   }
 
+  function cleanText(value, maximumLength) {
+    return String(value || "")
+      .replace(/[\u0000-\u001f\u007f]+/g, " ")
+      .replace(/\s+/g, " ")
+      .trim()
+      .slice(0, maximumLength || 160);
+  }
+
+  function classifyDevice(windowObject) {
+    var width = Number(windowObject.innerWidth) || 0;
+    var navigatorObject = windowObject.navigator || {};
+    var touchPoints = Number(navigatorObject.maxTouchPoints) || 0;
+
+    if (width > 0 && width < 768) return "Mobile";
+    if (width > 0 && width < 1100 && touchPoints > 0) return "Tablet";
+    return "Desktop";
+  }
+
+  function getReferrerSource(documentObject) {
+    if (!documentObject.referrer) return "Direct / unavailable";
+
+    try {
+      return cleanText(new URL(documentObject.referrer).hostname, 120) || "Direct / unavailable";
+    } catch (error) {
+      return "Unavailable";
+    }
+  }
+
+  function formatManilaTime(date) {
+    try {
+      return new Intl.DateTimeFormat("en-PH", {
+        timeZone: "Asia/Manila",
+        dateStyle: "medium",
+        timeStyle: "medium"
+      }).format(date || new Date());
+    } catch (error) {
+      return (date || new Date()).toISOString();
+    }
+  }
+
+  function buildEventContext(windowObject, documentObject, date) {
+    var locationObject = windowObject.location || {};
+    var navigatorObject = windowObject.navigator || {};
+
+    return {
+      timestamp: formatManilaTime(date),
+      pageTitle: cleanText(documentObject.title, 140) || "Luke's portfolio",
+      pagePath: cleanText(locationObject.pathname || "/", 180),
+      referrer: getReferrerSource(documentObject),
+      device: classifyDevice(windowObject),
+      language: cleanText(navigatorObject.language || "Unavailable", 40)
+    };
+  }
+
   return {
     isValidMeasurementId: isValidMeasurementId,
     prefersNoTracking: prefersNoTracking,
     loadAnalytics: loadAnalytics,
-    trackEvent: trackEvent
+    trackEvent: trackEvent,
+    cleanText: cleanText,
+    classifyDevice: classifyDevice,
+    getReferrerSource: getReferrerSource,
+    formatManilaTime: formatManilaTime,
+    buildEventContext: buildEventContext
   };
 }));
