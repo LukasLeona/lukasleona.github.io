@@ -199,6 +199,8 @@ main, footer { width: min(1220px, calc(100% - 40px)); margin: 0 auto; }
 .inquiry-copy { position: sticky; top: 112px; }
 .inquiry-copy h2 { margin-bottom: 18px; }
 .inquiry-copy a { display: inline-block; margin-top: 22px; color: var(--gold); font-size: 13px; font-weight: 600; }
+.inquiry-copy .book-demo-inline { display: flex; width: fit-content; align-items: center; gap: 8px; margin-top: 12px; color: #f4f4f1; }
+.inquiry-copy .book-demo-inline:hover, .inquiry-copy .book-demo-inline:focus-visible { color: var(--gold); }
 .package-form { padding: 28px; display: grid; grid-template-columns: 1fr 1fr; gap: 16px; color: #282b31; background: var(--paper); border-radius: 18px; }
 .package-form label:not(.form-consent) { display: grid; gap: 6px; }
 .package-form label > span { color: #555a62; font-size: 9px; font-weight: 700; }
@@ -248,7 +250,7 @@ footer a { color: #c6c8cd; }
   .packages-header { min-height: 66px; gap: 12px; }
   .packages-brand { font-size: 18px; }
   .packages-header nav { gap: 9px; font-size: 10px; }
-  .packages-header nav a:first-child { display: none; }
+  .packages-header nav a:nth-child(-n+2) { display: none; }
   .packages-header nav a:last-child { min-height: 40px; padding: 9px 11px; display: inline-flex; align-items: center; }
   .package-section, .inquiry-section { padding: 54px 0; }
   .website-package-section { padding-top: 20px; }
