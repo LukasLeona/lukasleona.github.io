@@ -1772,11 +1772,8 @@ function heroImageReveal() {
   let previousFrameTime = 0;
 
   function sizeCanvas() {
-    const rect = portrait.getBoundingClientRect();
-    const baseStyle = window.getComputedStyle(baseImage);
-
-    canvasWidth = Math.max(1, rect.width);
-    canvasHeight = Math.max(1, rect.height);
+    canvasWidth = Math.max(1, portrait.clientWidth);
+    canvasHeight = Math.max(1, portrait.clientHeight);
     pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
 
     brushCanvas.width = Math.round(canvasWidth * pixelRatio);
@@ -1786,14 +1783,6 @@ function heroImageReveal() {
 
     brushContext.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
     maskContext.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
-
-    /*
-      Keep the painted canvas on the exact transform used by the visible
-      portrait. This prevents responsive hero overrides from moving or
-      scaling the two layers independently.
-    */
-    brushCanvas.style.transform = baseStyle.transform;
-    brushCanvas.style.transformOrigin = baseStyle.transformOrigin;
 
     lastPoint = null;
     maskEnergy = 0;
