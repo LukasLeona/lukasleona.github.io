@@ -76,6 +76,15 @@
   color: #17181b !important;
 }
 
+@media (max-width: 991px) {
+  #hero .hero-work-arrow,
+  #hero .hero-work-btn:hover .hero-work-arrow,
+  #hero .hero-work-btn:focus-visible .hero-work-arrow {
+    color: #f6b916 !important;
+    background: #17181b !important;
+  }
+}
+
 html[data-theme="light"] #hero,
 html[data-theme="light"] #main > section#hero {
   --hero-star: rgba(69, 73, 81, .4);
