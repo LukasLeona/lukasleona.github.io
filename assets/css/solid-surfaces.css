@@ -122,7 +122,7 @@
   }
 }
 
-@keyframes mobile-hero-star-drift {
+@keyframes hero-star-drift {
   0% {
     transform: translate3d(-3px, 10px, 0) scale(.98);
     opacity: .58;
@@ -139,10 +139,16 @@
   }
 }
 
+@media (prefers-reduced-motion: no-preference) {
+  #hero::after {
+    animation: hero-star-drift 14s ease-in-out infinite alternate !important;
+    will-change: transform, opacity;
+  }
+}
+
 @media (max-width: 991px) and (prefers-reduced-motion: no-preference) {
   #hero::after {
-    animation: mobile-hero-star-drift 11s ease-in-out infinite alternate !important;
-    will-change: transform, opacity;
+    animation-duration: 11s !important;
   }
 }
 
