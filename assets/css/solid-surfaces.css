@@ -85,6 +85,30 @@
   }
 }
 
+@keyframes mobile-hero-star-drift {
+  0% {
+    transform: translate3d(-3px, 10px, 0) scale(.98);
+    opacity: .58;
+  }
+
+  45% {
+    transform: translate3d(6px, -8px, 0) scale(1.03);
+    opacity: .92;
+  }
+
+  100% {
+    transform: translate3d(-5px, -18px, 0) scale(1);
+    opacity: .7;
+  }
+}
+
+@media (max-width: 991px) and (prefers-reduced-motion: no-preference) {
+  #hero::after {
+    animation: mobile-hero-star-drift 11s ease-in-out infinite alternate !important;
+    will-change: transform, opacity;
+  }
+}
+
 html[data-theme="light"] #hero,
 html[data-theme="light"] #main > section#hero {
   --hero-star: rgba(69, 73, 81, .4);
