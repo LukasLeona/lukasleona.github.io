@@ -1109,6 +1109,12 @@ html[data-theme="light"] .chat-message.bot-system-message .chat-message-bubble {
   }
 }
 
+@media (max-width: 991px) {
+  #main > section {
+    overscroll-behavior-y: contain;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .star-field-canvas {
     opacity: .7;
