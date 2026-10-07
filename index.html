@@ -86,7 +86,7 @@
 <script src="assets/js/shell-revision.js"></script>
 
   <!-- Iconify - coded technology/tool logos -->
-<script
+<script defer
   src="https://code.iconify.design/iconify-icon/3.0.0/iconify-icon.min.js">
 </script>
 
@@ -211,6 +211,43 @@
   <div id="line-loader">
     <div class="middle-line"></div>
   </div>
+
+  <script>
+    (function () {
+      "use strict";
+
+      var loader = document.getElementById("line-loader");
+      var dismissed = false;
+
+      if (!loader) {
+        return;
+      }
+
+      function dismissPreloader() {
+        if (dismissed) {
+          return;
+        }
+
+        dismissed = true;
+        loader.classList.add("preloaded");
+        loader.setAttribute("aria-hidden", "true");
+
+        window.setTimeout(function () {
+          if (loader.parentNode) {
+            loader.parentNode.removeChild(loader);
+          }
+        }, 1000);
+      }
+
+      window.addEventListener("load", dismissPreloader, { once: true });
+      document.addEventListener("DOMContentLoaded", function () {
+        window.setTimeout(dismissPreloader, 700);
+      }, { once: true });
+
+      // Never let a delayed third-party resource keep the site covered.
+      window.setTimeout(dismissPreloader, 4000);
+    }());
+  </script>
 
   <!--   Menu Overlay Mobile -->
   <div class="menu-overlay d-none"></div>
@@ -5500,8 +5537,6 @@
   <script src="assets/js/isotope.pkgd.min.js"></script>
   <!--  Magnific Popup Js  -->
   <script src="assets/js/jquery.magnific-popup.min.js"></script>
-  <!-- Map Js -->
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDRemITiP7JRWpZwLhVt-T2x5MeUFE2KWs"></script>
   <!--  Luke Js  -->
   <script src="assets/js/luke.js"></script>
   <script src="assets/js/layoutforge-integration.js"></script>
